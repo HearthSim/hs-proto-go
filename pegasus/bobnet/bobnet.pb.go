@@ -10,7 +10,6 @@ It is generated from these files:
 
 It has these top-level messages:
 	PACKETTYPES
-	AutoLogin
 	DebugConsoleGetCmdList
 	DebugConsoleCommand
 	DebugConsoleUpdateFromPane
@@ -22,15 +21,11 @@ It has these top-level messages:
 	DebugConsoleZones
 	Deadend
 	DeadendUtil
-	Pong
-	AuroraHandshake
-	Ping
 */
 package bobnet
 
 import proto "github.com/golang/protobuf/proto"
 import math "math"
-import shared "github.com/HearthSim/hs-proto-go/pegasus/shared"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -63,36 +58,6 @@ func (x *PACKETTYPES_BobNetCount) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*x = PACKETTYPES_BobNetCount(value)
-	return nil
-}
-
-type AutoLogin_PacketID int32
-
-const (
-	AutoLogin_ID AutoLogin_PacketID = 103
-)
-
-var AutoLogin_PacketID_name = map[int32]string{
-	103: "ID",
-}
-var AutoLogin_PacketID_value = map[string]int32{
-	"ID": 103,
-}
-
-func (x AutoLogin_PacketID) Enum() *AutoLogin_PacketID {
-	p := new(AutoLogin_PacketID)
-	*p = x
-	return p
-}
-func (x AutoLogin_PacketID) String() string {
-	return proto.EnumName(AutoLogin_PacketID_name, int32(x))
-}
-func (x *AutoLogin_PacketID) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(AutoLogin_PacketID_value, data, "AutoLogin_PacketID")
-	if err != nil {
-		return err
-	}
-	*x = AutoLogin_PacketID(value)
 	return nil
 }
 
@@ -459,96 +424,6 @@ func (x *DeadendUtil_PacketID) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type Pong_PacketID int32
-
-const (
-	Pong_ID Pong_PacketID = 116
-)
-
-var Pong_PacketID_name = map[int32]string{
-	116: "ID",
-}
-var Pong_PacketID_value = map[string]int32{
-	"ID": 116,
-}
-
-func (x Pong_PacketID) Enum() *Pong_PacketID {
-	p := new(Pong_PacketID)
-	*p = x
-	return p
-}
-func (x Pong_PacketID) String() string {
-	return proto.EnumName(Pong_PacketID_name, int32(x))
-}
-func (x *Pong_PacketID) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(Pong_PacketID_value, data, "Pong_PacketID")
-	if err != nil {
-		return err
-	}
-	*x = Pong_PacketID(value)
-	return nil
-}
-
-type AuroraHandshake_PacketID int32
-
-const (
-	AuroraHandshake_ID AuroraHandshake_PacketID = 168
-)
-
-var AuroraHandshake_PacketID_name = map[int32]string{
-	168: "ID",
-}
-var AuroraHandshake_PacketID_value = map[string]int32{
-	"ID": 168,
-}
-
-func (x AuroraHandshake_PacketID) Enum() *AuroraHandshake_PacketID {
-	p := new(AuroraHandshake_PacketID)
-	*p = x
-	return p
-}
-func (x AuroraHandshake_PacketID) String() string {
-	return proto.EnumName(AuroraHandshake_PacketID_name, int32(x))
-}
-func (x *AuroraHandshake_PacketID) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(AuroraHandshake_PacketID_value, data, "AuroraHandshake_PacketID")
-	if err != nil {
-		return err
-	}
-	*x = AuroraHandshake_PacketID(value)
-	return nil
-}
-
-type Ping_PacketID int32
-
-const (
-	Ping_ID Ping_PacketID = 115
-)
-
-var Ping_PacketID_name = map[int32]string{
-	115: "ID",
-}
-var Ping_PacketID_value = map[string]int32{
-	"ID": 115,
-}
-
-func (x Ping_PacketID) Enum() *Ping_PacketID {
-	p := new(Ping_PacketID)
-	*p = x
-	return p
-}
-func (x Ping_PacketID) String() string {
-	return proto.EnumName(Ping_PacketID_name, int32(x))
-}
-func (x *Ping_PacketID) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(Ping_PacketID_value, data, "Ping_PacketID")
-	if err != nil {
-		return err
-	}
-	*x = Ping_PacketID(value)
-	return nil
-}
-
 type PACKETTYPES struct {
 	XXX_unrecognized []byte `json:"-"`
 }
@@ -556,54 +431,6 @@ type PACKETTYPES struct {
 func (m *PACKETTYPES) Reset()         { *m = PACKETTYPES{} }
 func (m *PACKETTYPES) String() string { return proto.CompactTextString(m) }
 func (*PACKETTYPES) ProtoMessage()    {}
-
-type AutoLogin struct {
-	User             *string `protobuf:"bytes,1,req,name=user" json:"user,omitempty"`
-	Pwd              *string `protobuf:"bytes,2,req,name=pwd" json:"pwd,omitempty"`
-	BuildId          *int32  `protobuf:"varint,3,req,name=build_id" json:"build_id,omitempty"`
-	DebugName        *string `protobuf:"bytes,4,req,name=debug_name" json:"debug_name,omitempty"`
-	Source           *int32  `protobuf:"varint,5,req,name=source" json:"source,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
-}
-
-func (m *AutoLogin) Reset()         { *m = AutoLogin{} }
-func (m *AutoLogin) String() string { return proto.CompactTextString(m) }
-func (*AutoLogin) ProtoMessage()    {}
-
-func (m *AutoLogin) GetUser() string {
-	if m != nil && m.User != nil {
-		return *m.User
-	}
-	return ""
-}
-
-func (m *AutoLogin) GetPwd() string {
-	if m != nil && m.Pwd != nil {
-		return *m.Pwd
-	}
-	return ""
-}
-
-func (m *AutoLogin) GetBuildId() int32 {
-	if m != nil && m.BuildId != nil {
-		return *m.BuildId
-	}
-	return 0
-}
-
-func (m *AutoLogin) GetDebugName() string {
-	if m != nil && m.DebugName != nil {
-		return *m.DebugName
-	}
-	return ""
-}
-
-func (m *AutoLogin) GetSource() int32 {
-	if m != nil && m.Source != nil {
-		return *m.Source
-	}
-	return 0
-}
 
 type DebugConsoleGetCmdList struct {
 	XXX_unrecognized []byte `json:"-"`
@@ -929,89 +756,8 @@ func (m *DeadendUtil) GetReply3() string {
 	return ""
 }
 
-type Pong struct {
-	XXX_unrecognized []byte `json:"-"`
-}
-
-func (m *Pong) Reset()         { *m = Pong{} }
-func (m *Pong) String() string { return proto.CompactTextString(m) }
-func (*Pong) ProtoMessage()    {}
-
-type AuroraHandshake struct {
-	GameHandle       *int32           `protobuf:"varint,1,req,name=game_handle" json:"game_handle,omitempty"`
-	Password         *string          `protobuf:"bytes,2,req,name=password" json:"password,omitempty"`
-	ClientHandle     *int64           `protobuf:"varint,3,req,name=client_handle" json:"client_handle,omitempty"`
-	Mission          *int32           `protobuf:"varint,4,opt,name=mission" json:"mission,omitempty"`
-	Version          *string          `protobuf:"bytes,5,req,name=version" json:"version,omitempty"`
-	OldPlatform      *int32           `protobuf:"varint,6,req,name=old_platform" json:"old_platform,omitempty"`
-	Platform         *shared.Platform `protobuf:"bytes,7,opt,name=platform" json:"platform,omitempty"`
-	XXX_unrecognized []byte           `json:"-"`
-}
-
-func (m *AuroraHandshake) Reset()         { *m = AuroraHandshake{} }
-func (m *AuroraHandshake) String() string { return proto.CompactTextString(m) }
-func (*AuroraHandshake) ProtoMessage()    {}
-
-func (m *AuroraHandshake) GetGameHandle() int32 {
-	if m != nil && m.GameHandle != nil {
-		return *m.GameHandle
-	}
-	return 0
-}
-
-func (m *AuroraHandshake) GetPassword() string {
-	if m != nil && m.Password != nil {
-		return *m.Password
-	}
-	return ""
-}
-
-func (m *AuroraHandshake) GetClientHandle() int64 {
-	if m != nil && m.ClientHandle != nil {
-		return *m.ClientHandle
-	}
-	return 0
-}
-
-func (m *AuroraHandshake) GetMission() int32 {
-	if m != nil && m.Mission != nil {
-		return *m.Mission
-	}
-	return 0
-}
-
-func (m *AuroraHandshake) GetVersion() string {
-	if m != nil && m.Version != nil {
-		return *m.Version
-	}
-	return ""
-}
-
-func (m *AuroraHandshake) GetOldPlatform() int32 {
-	if m != nil && m.OldPlatform != nil {
-		return *m.OldPlatform
-	}
-	return 0
-}
-
-func (m *AuroraHandshake) GetPlatform() *shared.Platform {
-	if m != nil {
-		return m.Platform
-	}
-	return nil
-}
-
-type Ping struct {
-	XXX_unrecognized []byte `json:"-"`
-}
-
-func (m *Ping) Reset()         { *m = Ping{} }
-func (m *Ping) String() string { return proto.CompactTextString(m) }
-func (*Ping) ProtoMessage()    {}
-
 func init() {
 	proto.RegisterEnum("bobnet.PACKETTYPES_BobNetCount", PACKETTYPES_BobNetCount_name, PACKETTYPES_BobNetCount_value)
-	proto.RegisterEnum("bobnet.AutoLogin_PacketID", AutoLogin_PacketID_name, AutoLogin_PacketID_value)
 	proto.RegisterEnum("bobnet.DebugConsoleGetCmdList_PacketID", DebugConsoleGetCmdList_PacketID_name, DebugConsoleGetCmdList_PacketID_value)
 	proto.RegisterEnum("bobnet.DebugConsoleCommand_PacketID", DebugConsoleCommand_PacketID_name, DebugConsoleCommand_PacketID_value)
 	proto.RegisterEnum("bobnet.DebugConsoleUpdateFromPane_PacketID", DebugConsoleUpdateFromPane_PacketID_name, DebugConsoleUpdateFromPane_PacketID_value)
@@ -1024,7 +770,4 @@ func init() {
 	proto.RegisterEnum("bobnet.DebugConsoleZones_PacketID", DebugConsoleZones_PacketID_name, DebugConsoleZones_PacketID_value)
 	proto.RegisterEnum("bobnet.Deadend_PacketID", Deadend_PacketID_name, Deadend_PacketID_value)
 	proto.RegisterEnum("bobnet.DeadendUtil_PacketID", DeadendUtil_PacketID_name, DeadendUtil_PacketID_value)
-	proto.RegisterEnum("bobnet.Pong_PacketID", Pong_PacketID_name, Pong_PacketID_value)
-	proto.RegisterEnum("bobnet.AuroraHandshake_PacketID", AuroraHandshake_PacketID_name, AuroraHandshake_PacketID_value)
-	proto.RegisterEnum("bobnet.Ping_PacketID", Ping_PacketID_name, Ping_PacketID_value)
 }

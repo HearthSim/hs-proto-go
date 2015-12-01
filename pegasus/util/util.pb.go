@@ -30,10 +30,8 @@ It has these top-level messages:
 	AssetResponse
 	DeckSetData
 	ValidateAchieve
-	CloseCardMarket
 	UpdateLogin
 	DevBnetIdentify
-	UtilHandshake
 	SetOptions
 	GetOptions
 	GetAccountInfo
@@ -44,9 +42,9 @@ It has these top-level messages:
 	AckNotice
 	OpenBooster
 	Subscribe
+	Unsubscribe
 	OneClientTracking
 	ClientTracking
-	GuardianTrack
 	SetProgress
 	AckCardSeen
 	CardBacks
@@ -89,7 +87,6 @@ It has these top-level messages:
 	Disconnected
 	ValidateAchieveResponse
 	PlayQueue
-	DroppedRequest
 	GuardianVars
 	ArcaneDustBalance
 	GoldBalance
@@ -103,22 +100,17 @@ It has these top-level messages:
 	DraftRewardsAcked
 	DraftChoicesAndContents
 	DraftChosen
-	UtilAuth
 	ClientOptions
-	ProfileLastLogin
 	ProfileDeckLimit
 	ProfileProgress
 	ProfileNotices
 	DeckList
-	DebugAuth
 	Collection
 	DeckContents
 	DBAction
 	DeckCreated
 	DeckDeleted
 	DeckRenamed
-	DeckGainedCard
-	DeckLostCard
 	BoosterList
 	BoosterTallyList
 	BoosterContent
@@ -129,12 +121,10 @@ It has these top-level messages:
 	PurchaseResponse
 	BattlePayConfigResponse
 	BattlePayStatusResponse
-	Error37
 	MassDisenchantResponse
 	PlayerRecords
 	RewardProgress
 	CancelPurchaseResponse
-	CheckLicensesResponse
 	PurchaseWithGoldResponse
 	CancelQuestResponse
 	HeroXP
@@ -153,6 +143,13 @@ It has these top-level messages:
 	GetAssetResponse
 	DebugCommandResponse
 	AccountLicensesInfoResponse
+	GenericData
+	GenericResponse
+	GenericRequest
+	GenericRequestList
+	ClientRequestResponse
+	CheckAccountLicensesResponse
+	CheckGameLicensesResponse
 */
 package util
 
@@ -174,6 +171,7 @@ const (
 	ProductType_PRODUCT_TYPE_BRM       ProductType = 4
 	ProductType_PRODUCT_TYPE_CARD_BACK ProductType = 5
 	ProductType_PRODUCT_TYPE_HERO      ProductType = 6
+	ProductType_PRODUCT_TYPE_LOE       ProductType = 7
 )
 
 var ProductType_name = map[int32]string{
@@ -184,6 +182,7 @@ var ProductType_name = map[int32]string{
 	4: "PRODUCT_TYPE_BRM",
 	5: "PRODUCT_TYPE_CARD_BACK",
 	6: "PRODUCT_TYPE_HERO",
+	7: "PRODUCT_TYPE_LOE",
 }
 var ProductType_value = map[string]int32{
 	"PRODUCT_TYPE_UNKNOWN":   0,
@@ -193,6 +192,7 @@ var ProductType_value = map[string]int32{
 	"PRODUCT_TYPE_BRM":       4,
 	"PRODUCT_TYPE_CARD_BACK": 5,
 	"PRODUCT_TYPE_HERO":      6,
+	"PRODUCT_TYPE_LOE":       7,
 }
 
 func (x ProductType) Enum() *ProductType {
@@ -410,39 +410,6 @@ func (x *ValidateAchieve_PacketID) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type CloseCardMarket_PacketID int32
-
-const (
-	CloseCardMarket_ID     CloseCardMarket_PacketID = 263
-	CloseCardMarket_System CloseCardMarket_PacketID = 0
-)
-
-var CloseCardMarket_PacketID_name = map[int32]string{
-	263: "ID",
-	0:   "System",
-}
-var CloseCardMarket_PacketID_value = map[string]int32{
-	"ID":     263,
-	"System": 0,
-}
-
-func (x CloseCardMarket_PacketID) Enum() *CloseCardMarket_PacketID {
-	p := new(CloseCardMarket_PacketID)
-	*p = x
-	return p
-}
-func (x CloseCardMarket_PacketID) String() string {
-	return proto.EnumName(CloseCardMarket_PacketID_name, int32(x))
-}
-func (x *CloseCardMarket_PacketID) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(CloseCardMarket_PacketID_value, data, "CloseCardMarket_PacketID")
-	if err != nil {
-		return err
-	}
-	*x = CloseCardMarket_PacketID(value)
-	return nil
-}
-
 type UpdateLogin_PacketID int32
 
 const (
@@ -506,36 +473,6 @@ func (x *DevBnetIdentify_PacketID) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*x = DevBnetIdentify_PacketID(value)
-	return nil
-}
-
-type UtilHandshake_PacketID int32
-
-const (
-	UtilHandshake_ID UtilHandshake_PacketID = 203
-)
-
-var UtilHandshake_PacketID_name = map[int32]string{
-	203: "ID",
-}
-var UtilHandshake_PacketID_value = map[string]int32{
-	"ID": 203,
-}
-
-func (x UtilHandshake_PacketID) Enum() *UtilHandshake_PacketID {
-	p := new(UtilHandshake_PacketID)
-	*p = x
-	return p
-}
-func (x UtilHandshake_PacketID) String() string {
-	return proto.EnumName(UtilHandshake_PacketID_name, int32(x))
-}
-func (x *UtilHandshake_PacketID) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(UtilHandshake_PacketID_value, data, "UtilHandshake_PacketID")
-	if err != nil {
-		return err
-	}
-	*x = UtilHandshake_PacketID(value)
 	return nil
 }
 
@@ -977,6 +914,36 @@ func (x *Subscribe_PacketID) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+type Unsubscribe_PacketID int32
+
+const (
+	Unsubscribe_ID Unsubscribe_PacketID = 329
+)
+
+var Unsubscribe_PacketID_name = map[int32]string{
+	329: "ID",
+}
+var Unsubscribe_PacketID_value = map[string]int32{
+	"ID": 329,
+}
+
+func (x Unsubscribe_PacketID) Enum() *Unsubscribe_PacketID {
+	p := new(Unsubscribe_PacketID)
+	*p = x
+	return p
+}
+func (x Unsubscribe_PacketID) String() string {
+	return proto.EnumName(Unsubscribe_PacketID_name, int32(x))
+}
+func (x *Unsubscribe_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(Unsubscribe_PacketID_value, data, "Unsubscribe_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = Unsubscribe_PacketID(value)
+	return nil
+}
+
 type OneClientTracking_Level int32
 
 const (
@@ -1043,39 +1010,6 @@ func (x *ClientTracking_PacketID) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*x = ClientTracking_PacketID(value)
-	return nil
-}
-
-type GuardianTrack_PacketID int32
-
-const (
-	GuardianTrack_ID     GuardianTrack_PacketID = 261
-	GuardianTrack_System GuardianTrack_PacketID = 0
-)
-
-var GuardianTrack_PacketID_name = map[int32]string{
-	261: "ID",
-	0:   "System",
-}
-var GuardianTrack_PacketID_value = map[string]int32{
-	"ID":     261,
-	"System": 0,
-}
-
-func (x GuardianTrack_PacketID) Enum() *GuardianTrack_PacketID {
-	p := new(GuardianTrack_PacketID)
-	*p = x
-	return p
-}
-func (x GuardianTrack_PacketID) String() string {
-	return proto.EnumName(GuardianTrack_PacketID_name, int32(x))
-}
-func (x *GuardianTrack_PacketID) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(GuardianTrack_PacketID_value, data, "GuardianTrack_PacketID")
-	if err != nil {
-		return err
-	}
-	*x = GuardianTrack_PacketID(value)
 	return nil
 }
 
@@ -2423,36 +2357,6 @@ func (x *PlayQueue_PacketID) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type DroppedRequest_PacketID int32
-
-const (
-	DroppedRequest_ID DroppedRequest_PacketID = 0
-)
-
-var DroppedRequest_PacketID_name = map[int32]string{
-	0: "ID",
-}
-var DroppedRequest_PacketID_value = map[string]int32{
-	"ID": 0,
-}
-
-func (x DroppedRequest_PacketID) Enum() *DroppedRequest_PacketID {
-	p := new(DroppedRequest_PacketID)
-	*p = x
-	return p
-}
-func (x DroppedRequest_PacketID) String() string {
-	return proto.EnumName(DroppedRequest_PacketID_name, int32(x))
-}
-func (x *DroppedRequest_PacketID) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(DroppedRequest_PacketID_value, data, "DroppedRequest_PacketID")
-	if err != nil {
-		return err
-	}
-	*x = DroppedRequest_PacketID(value)
-	return nil
-}
-
 type GuardianVars_PacketID int32
 
 const (
@@ -2948,75 +2852,6 @@ func (x *DraftChosen_PacketID) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type UtilAuth_Result int32
-
-const (
-	UtilAuth_UNKNOWN   UtilAuth_Result = 0
-	UtilAuth_ALLOWED   UtilAuth_Result = 1
-	UtilAuth_INVALID   UtilAuth_Result = 2
-	UtilAuth_NO_SERVER UtilAuth_Result = 3
-)
-
-var UtilAuth_Result_name = map[int32]string{
-	0: "UNKNOWN",
-	1: "ALLOWED",
-	2: "INVALID",
-	3: "NO_SERVER",
-}
-var UtilAuth_Result_value = map[string]int32{
-	"UNKNOWN":   0,
-	"ALLOWED":   1,
-	"INVALID":   2,
-	"NO_SERVER": 3,
-}
-
-func (x UtilAuth_Result) Enum() *UtilAuth_Result {
-	p := new(UtilAuth_Result)
-	*p = x
-	return p
-}
-func (x UtilAuth_Result) String() string {
-	return proto.EnumName(UtilAuth_Result_name, int32(x))
-}
-func (x *UtilAuth_Result) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(UtilAuth_Result_value, data, "UtilAuth_Result")
-	if err != nil {
-		return err
-	}
-	*x = UtilAuth_Result(value)
-	return nil
-}
-
-type UtilAuth_PacketID int32
-
-const (
-	UtilAuth_ID UtilAuth_PacketID = 204
-)
-
-var UtilAuth_PacketID_name = map[int32]string{
-	204: "ID",
-}
-var UtilAuth_PacketID_value = map[string]int32{
-	"ID": 204,
-}
-
-func (x UtilAuth_PacketID) Enum() *UtilAuth_PacketID {
-	p := new(UtilAuth_PacketID)
-	*p = x
-	return p
-}
-func (x UtilAuth_PacketID) String() string {
-	return proto.EnumName(UtilAuth_PacketID_name, int32(x))
-}
-func (x *UtilAuth_PacketID) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(UtilAuth_PacketID_value, data, "UtilAuth_PacketID")
-	if err != nil {
-		return err
-	}
-	*x = UtilAuth_PacketID(value)
-	return nil
-}
-
 type ClientOptions_PacketID int32
 
 const (
@@ -3044,36 +2879,6 @@ func (x *ClientOptions_PacketID) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*x = ClientOptions_PacketID(value)
-	return nil
-}
-
-type ProfileLastLogin_PacketID int32
-
-const (
-	ProfileLastLogin_ID ProfileLastLogin_PacketID = 227
-)
-
-var ProfileLastLogin_PacketID_name = map[int32]string{
-	227: "ID",
-}
-var ProfileLastLogin_PacketID_value = map[string]int32{
-	"ID": 227,
-}
-
-func (x ProfileLastLogin_PacketID) Enum() *ProfileLastLogin_PacketID {
-	p := new(ProfileLastLogin_PacketID)
-	*p = x
-	return p
-}
-func (x ProfileLastLogin_PacketID) String() string {
-	return proto.EnumName(ProfileLastLogin_PacketID_name, int32(x))
-}
-func (x *ProfileLastLogin_PacketID) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(ProfileLastLogin_PacketID_value, data, "ProfileLastLogin_PacketID")
-	if err != nil {
-		return err
-	}
-	*x = ProfileLastLogin_PacketID(value)
 	return nil
 }
 
@@ -3194,75 +2999,6 @@ func (x *DeckList_PacketID) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*x = DeckList_PacketID(value)
-	return nil
-}
-
-type DebugAuth_Result int32
-
-const (
-	DebugAuth_UNKNOWN      DebugAuth_Result = 0
-	DebugAuth_VALID        DebugAuth_Result = 1
-	DebugAuth_BAD_USER     DebugAuth_Result = 2
-	DebugAuth_BAD_PASSWORD DebugAuth_Result = 3
-)
-
-var DebugAuth_Result_name = map[int32]string{
-	0: "UNKNOWN",
-	1: "VALID",
-	2: "BAD_USER",
-	3: "BAD_PASSWORD",
-}
-var DebugAuth_Result_value = map[string]int32{
-	"UNKNOWN":      0,
-	"VALID":        1,
-	"BAD_USER":     2,
-	"BAD_PASSWORD": 3,
-}
-
-func (x DebugAuth_Result) Enum() *DebugAuth_Result {
-	p := new(DebugAuth_Result)
-	*p = x
-	return p
-}
-func (x DebugAuth_Result) String() string {
-	return proto.EnumName(DebugAuth_Result_name, int32(x))
-}
-func (x *DebugAuth_Result) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(DebugAuth_Result_value, data, "DebugAuth_Result")
-	if err != nil {
-		return err
-	}
-	*x = DebugAuth_Result(value)
-	return nil
-}
-
-type DebugAuth_PacketID int32
-
-const (
-	DebugAuth_ID DebugAuth_PacketID = 206
-)
-
-var DebugAuth_PacketID_name = map[int32]string{
-	206: "ID",
-}
-var DebugAuth_PacketID_value = map[string]int32{
-	"ID": 206,
-}
-
-func (x DebugAuth_PacketID) Enum() *DebugAuth_PacketID {
-	p := new(DebugAuth_PacketID)
-	*p = x
-	return p
-}
-func (x DebugAuth_PacketID) String() string {
-	return proto.EnumName(DebugAuth_PacketID_name, int32(x))
-}
-func (x *DebugAuth_PacketID) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(DebugAuth_PacketID_value, data, "DebugAuth_PacketID")
-	if err != nil {
-		return err
-	}
-	*x = DebugAuth_PacketID(value)
 	return nil
 }
 
@@ -3443,66 +3179,6 @@ func (x *DeckRenamed_PacketID) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*x = DeckRenamed_PacketID(value)
-	return nil
-}
-
-type DeckGainedCard_PacketID int32
-
-const (
-	DeckGainedCard_ID DeckGainedCard_PacketID = 220
-)
-
-var DeckGainedCard_PacketID_name = map[int32]string{
-	220: "ID",
-}
-var DeckGainedCard_PacketID_value = map[string]int32{
-	"ID": 220,
-}
-
-func (x DeckGainedCard_PacketID) Enum() *DeckGainedCard_PacketID {
-	p := new(DeckGainedCard_PacketID)
-	*p = x
-	return p
-}
-func (x DeckGainedCard_PacketID) String() string {
-	return proto.EnumName(DeckGainedCard_PacketID_name, int32(x))
-}
-func (x *DeckGainedCard_PacketID) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(DeckGainedCard_PacketID_value, data, "DeckGainedCard_PacketID")
-	if err != nil {
-		return err
-	}
-	*x = DeckGainedCard_PacketID(value)
-	return nil
-}
-
-type DeckLostCard_PacketID int32
-
-const (
-	DeckLostCard_ID DeckLostCard_PacketID = 221
-)
-
-var DeckLostCard_PacketID_name = map[int32]string{
-	221: "ID",
-}
-var DeckLostCard_PacketID_value = map[string]int32{
-	"ID": 221,
-}
-
-func (x DeckLostCard_PacketID) Enum() *DeckLostCard_PacketID {
-	p := new(DeckLostCard_PacketID)
-	*p = x
-	return p
-}
-func (x DeckLostCard_PacketID) String() string {
-	return proto.EnumName(DeckLostCard_PacketID_name, int32(x))
-}
-func (x *DeckLostCard_PacketID) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(DeckLostCard_PacketID_value, data, "DeckLostCard_PacketID")
-	if err != nil {
-		return err
-	}
-	*x = DeckLostCard_PacketID(value)
 	return nil
 }
 
@@ -3842,66 +3518,6 @@ func (x *BattlePayStatusResponse_PacketID) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type Error37_ThrottleReason int32
-
-const (
-	Error37_TR_DB_LOAD Error37_ThrottleReason = 0
-)
-
-var Error37_ThrottleReason_name = map[int32]string{
-	0: "TR_DB_LOAD",
-}
-var Error37_ThrottleReason_value = map[string]int32{
-	"TR_DB_LOAD": 0,
-}
-
-func (x Error37_ThrottleReason) Enum() *Error37_ThrottleReason {
-	p := new(Error37_ThrottleReason)
-	*p = x
-	return p
-}
-func (x Error37_ThrottleReason) String() string {
-	return proto.EnumName(Error37_ThrottleReason_name, int32(x))
-}
-func (x *Error37_ThrottleReason) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(Error37_ThrottleReason_value, data, "Error37_ThrottleReason")
-	if err != nil {
-		return err
-	}
-	*x = Error37_ThrottleReason(value)
-	return nil
-}
-
-type Error37_PacketID int32
-
-const (
-	Error37_ID Error37_PacketID = 266
-)
-
-var Error37_PacketID_name = map[int32]string{
-	266: "ID",
-}
-var Error37_PacketID_value = map[string]int32{
-	"ID": 266,
-}
-
-func (x Error37_PacketID) Enum() *Error37_PacketID {
-	p := new(Error37_PacketID)
-	*p = x
-	return p
-}
-func (x Error37_PacketID) String() string {
-	return proto.EnumName(Error37_PacketID_name, int32(x))
-}
-func (x *Error37_PacketID) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(Error37_PacketID_value, data, "Error37_PacketID")
-	if err != nil {
-		return err
-	}
-	*x = Error37_PacketID(value)
-	return nil
-}
-
 type MassDisenchantResponse_PacketID int32
 
 const (
@@ -4055,36 +3671,6 @@ func (x *CancelPurchaseResponse_PacketID) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*x = CancelPurchaseResponse_PacketID(value)
-	return nil
-}
-
-type CheckLicensesResponse_PacketID int32
-
-const (
-	CheckLicensesResponse_ID CheckLicensesResponse_PacketID = 277
-)
-
-var CheckLicensesResponse_PacketID_name = map[int32]string{
-	277: "ID",
-}
-var CheckLicensesResponse_PacketID_value = map[string]int32{
-	"ID": 277,
-}
-
-func (x CheckLicensesResponse_PacketID) Enum() *CheckLicensesResponse_PacketID {
-	p := new(CheckLicensesResponse_PacketID)
-	*p = x
-	return p
-}
-func (x CheckLicensesResponse_PacketID) String() string {
-	return proto.EnumName(CheckLicensesResponse_PacketID_name, int32(x))
-}
-func (x *CheckLicensesResponse_PacketID) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(CheckLicensesResponse_PacketID_value, data, "CheckLicensesResponse_PacketID")
-	if err != nil {
-		return err
-	}
-	*x = CheckLicensesResponse_PacketID(value)
 	return nil
 }
 
@@ -4547,6 +4133,39 @@ func (x *AccountLicenseAchieveResponse_PacketID) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
+type SubscribeResponse_ResponseResult int32
+
+const (
+	SubscribeResponse_SUCCESS            SubscribeResponse_ResponseResult = 1
+	SubscribeResponse_FAILED_UNAVAILABLE SubscribeResponse_ResponseResult = 2
+)
+
+var SubscribeResponse_ResponseResult_name = map[int32]string{
+	1: "SUCCESS",
+	2: "FAILED_UNAVAILABLE",
+}
+var SubscribeResponse_ResponseResult_value = map[string]int32{
+	"SUCCESS":            1,
+	"FAILED_UNAVAILABLE": 2,
+}
+
+func (x SubscribeResponse_ResponseResult) Enum() *SubscribeResponse_ResponseResult {
+	p := new(SubscribeResponse_ResponseResult)
+	*p = x
+	return p
+}
+func (x SubscribeResponse_ResponseResult) String() string {
+	return proto.EnumName(SubscribeResponse_ResponseResult_name, int32(x))
+}
+func (x *SubscribeResponse_ResponseResult) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(SubscribeResponse_ResponseResult_value, data, "SubscribeResponse_ResponseResult")
+	if err != nil {
+		return err
+	}
+	*x = SubscribeResponse_ResponseResult(value)
+	return nil
+}
+
 type SubscribeResponse_PacketID int32
 
 const (
@@ -4574,39 +4193,6 @@ func (x *SubscribeResponse_PacketID) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*x = SubscribeResponse_PacketID(value)
-	return nil
-}
-
-type SubscribeResponse_Features int32
-
-const (
-	SubscribeResponse_F_SYSTEM_0 SubscribeResponse_Features = 1
-	SubscribeResponse_F_SYSTEM_1 SubscribeResponse_Features = 2
-)
-
-var SubscribeResponse_Features_name = map[int32]string{
-	1: "F_SYSTEM_0",
-	2: "F_SYSTEM_1",
-}
-var SubscribeResponse_Features_value = map[string]int32{
-	"F_SYSTEM_0": 1,
-	"F_SYSTEM_1": 2,
-}
-
-func (x SubscribeResponse_Features) Enum() *SubscribeResponse_Features {
-	p := new(SubscribeResponse_Features)
-	*p = x
-	return p
-}
-func (x SubscribeResponse_Features) String() string {
-	return proto.EnumName(SubscribeResponse_Features_name, int32(x))
-}
-func (x *SubscribeResponse_Features) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(SubscribeResponse_Features_value, data, "SubscribeResponse_Features")
-	if err != nil {
-		return err
-	}
-	*x = SubscribeResponse_Features(value)
 	return nil
 }
 
@@ -4817,6 +4403,246 @@ func (x *AccountLicensesInfoResponse_PacketID) UnmarshalJSON(data []byte) error 
 		return err
 	}
 	*x = AccountLicensesInfoResponse_PacketID(value)
+	return nil
+}
+
+type GenericResponse_Result int32
+
+const (
+	GenericResponse_RESULT_OK                   GenericResponse_Result = 0
+	GenericResponse_RESULT_REQUEST_IN_PROCESS   GenericResponse_Result = 1
+	GenericResponse_RESULT_REQUEST_COMPLETE     GenericResponse_Result = 2
+	GenericResponse_RESULT_UNKNOWN_ERROR        GenericResponse_Result = 100
+	GenericResponse_RESULT_INTERNAL_ERROR       GenericResponse_Result = 101
+	GenericResponse_RESULT_DB_ERROR             GenericResponse_Result = 102
+	GenericResponse_RESULT_INVALID_REQUEST      GenericResponse_Result = 103
+	GenericResponse_RESULT_LOGIN_LOAD           GenericResponse_Result = 104
+	GenericResponse_RESULT_DATA_MIGRATION_ERROR GenericResponse_Result = 105
+)
+
+var GenericResponse_Result_name = map[int32]string{
+	0:   "RESULT_OK",
+	1:   "RESULT_REQUEST_IN_PROCESS",
+	2:   "RESULT_REQUEST_COMPLETE",
+	100: "RESULT_UNKNOWN_ERROR",
+	101: "RESULT_INTERNAL_ERROR",
+	102: "RESULT_DB_ERROR",
+	103: "RESULT_INVALID_REQUEST",
+	104: "RESULT_LOGIN_LOAD",
+	105: "RESULT_DATA_MIGRATION_ERROR",
+}
+var GenericResponse_Result_value = map[string]int32{
+	"RESULT_OK":                   0,
+	"RESULT_REQUEST_IN_PROCESS":   1,
+	"RESULT_REQUEST_COMPLETE":     2,
+	"RESULT_UNKNOWN_ERROR":        100,
+	"RESULT_INTERNAL_ERROR":       101,
+	"RESULT_DB_ERROR":             102,
+	"RESULT_INVALID_REQUEST":      103,
+	"RESULT_LOGIN_LOAD":           104,
+	"RESULT_DATA_MIGRATION_ERROR": 105,
+}
+
+func (x GenericResponse_Result) Enum() *GenericResponse_Result {
+	p := new(GenericResponse_Result)
+	*p = x
+	return p
+}
+func (x GenericResponse_Result) String() string {
+	return proto.EnumName(GenericResponse_Result_name, int32(x))
+}
+func (x *GenericResponse_Result) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GenericResponse_Result_value, data, "GenericResponse_Result")
+	if err != nil {
+		return err
+	}
+	*x = GenericResponse_Result(value)
+	return nil
+}
+
+type GenericResponse_PacketID int32
+
+const (
+	GenericResponse_ID GenericResponse_PacketID = 326
+)
+
+var GenericResponse_PacketID_name = map[int32]string{
+	326: "ID",
+}
+var GenericResponse_PacketID_value = map[string]int32{
+	"ID": 326,
+}
+
+func (x GenericResponse_PacketID) Enum() *GenericResponse_PacketID {
+	p := new(GenericResponse_PacketID)
+	*p = x
+	return p
+}
+func (x GenericResponse_PacketID) String() string {
+	return proto.EnumName(GenericResponse_PacketID_name, int32(x))
+}
+func (x *GenericResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GenericResponse_PacketID_value, data, "GenericResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = GenericResponse_PacketID(value)
+	return nil
+}
+
+type GenericRequestList_PacketID int32
+
+const (
+	GenericRequestList_ID     GenericRequestList_PacketID = 327
+	GenericRequestList_System GenericRequestList_PacketID = 0
+)
+
+var GenericRequestList_PacketID_name = map[int32]string{
+	327: "ID",
+	0:   "System",
+}
+var GenericRequestList_PacketID_value = map[string]int32{
+	"ID":     327,
+	"System": 0,
+}
+
+func (x GenericRequestList_PacketID) Enum() *GenericRequestList_PacketID {
+	p := new(GenericRequestList_PacketID)
+	*p = x
+	return p
+}
+func (x GenericRequestList_PacketID) String() string {
+	return proto.EnumName(GenericRequestList_PacketID_name, int32(x))
+}
+func (x *GenericRequestList_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GenericRequestList_PacketID_value, data, "GenericRequestList_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = GenericRequestList_PacketID(value)
+	return nil
+}
+
+type ClientRequestResponse_ClientRequestResponseFlags int32
+
+const (
+	ClientRequestResponse_CRRF_SERVICE_NONE        ClientRequestResponse_ClientRequestResponseFlags = 0
+	ClientRequestResponse_CRRF_SERVICE_UNAVAILABLE ClientRequestResponse_ClientRequestResponseFlags = 1
+)
+
+var ClientRequestResponse_ClientRequestResponseFlags_name = map[int32]string{
+	0: "CRRF_SERVICE_NONE",
+	1: "CRRF_SERVICE_UNAVAILABLE",
+}
+var ClientRequestResponse_ClientRequestResponseFlags_value = map[string]int32{
+	"CRRF_SERVICE_NONE":        0,
+	"CRRF_SERVICE_UNAVAILABLE": 1,
+}
+
+func (x ClientRequestResponse_ClientRequestResponseFlags) Enum() *ClientRequestResponse_ClientRequestResponseFlags {
+	p := new(ClientRequestResponse_ClientRequestResponseFlags)
+	*p = x
+	return p
+}
+func (x ClientRequestResponse_ClientRequestResponseFlags) String() string {
+	return proto.EnumName(ClientRequestResponse_ClientRequestResponseFlags_name, int32(x))
+}
+func (x *ClientRequestResponse_ClientRequestResponseFlags) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ClientRequestResponse_ClientRequestResponseFlags_value, data, "ClientRequestResponse_ClientRequestResponseFlags")
+	if err != nil {
+		return err
+	}
+	*x = ClientRequestResponse_ClientRequestResponseFlags(value)
+	return nil
+}
+
+type ClientRequestResponse_PacketID int32
+
+const (
+	ClientRequestResponse_ID ClientRequestResponse_PacketID = 328
+)
+
+var ClientRequestResponse_PacketID_name = map[int32]string{
+	328: "ID",
+}
+var ClientRequestResponse_PacketID_value = map[string]int32{
+	"ID": 328,
+}
+
+func (x ClientRequestResponse_PacketID) Enum() *ClientRequestResponse_PacketID {
+	p := new(ClientRequestResponse_PacketID)
+	*p = x
+	return p
+}
+func (x ClientRequestResponse_PacketID) String() string {
+	return proto.EnumName(ClientRequestResponse_PacketID_name, int32(x))
+}
+func (x *ClientRequestResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ClientRequestResponse_PacketID_value, data, "ClientRequestResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = ClientRequestResponse_PacketID(value)
+	return nil
+}
+
+type CheckAccountLicensesResponse_PacketID int32
+
+const (
+	CheckAccountLicensesResponse_ID CheckAccountLicensesResponse_PacketID = 330
+)
+
+var CheckAccountLicensesResponse_PacketID_name = map[int32]string{
+	330: "ID",
+}
+var CheckAccountLicensesResponse_PacketID_value = map[string]int32{
+	"ID": 330,
+}
+
+func (x CheckAccountLicensesResponse_PacketID) Enum() *CheckAccountLicensesResponse_PacketID {
+	p := new(CheckAccountLicensesResponse_PacketID)
+	*p = x
+	return p
+}
+func (x CheckAccountLicensesResponse_PacketID) String() string {
+	return proto.EnumName(CheckAccountLicensesResponse_PacketID_name, int32(x))
+}
+func (x *CheckAccountLicensesResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(CheckAccountLicensesResponse_PacketID_value, data, "CheckAccountLicensesResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = CheckAccountLicensesResponse_PacketID(value)
+	return nil
+}
+
+type CheckGameLicensesResponse_PacketID int32
+
+const (
+	CheckGameLicensesResponse_ID CheckGameLicensesResponse_PacketID = 331
+)
+
+var CheckGameLicensesResponse_PacketID_name = map[int32]string{
+	331: "ID",
+}
+var CheckGameLicensesResponse_PacketID_value = map[string]int32{
+	"ID": 331,
+}
+
+func (x CheckGameLicensesResponse_PacketID) Enum() *CheckGameLicensesResponse_PacketID {
+	p := new(CheckGameLicensesResponse_PacketID)
+	*p = x
+	return p
+}
+func (x CheckGameLicensesResponse_PacketID) String() string {
+	return proto.EnumName(CheckGameLicensesResponse_PacketID_name, int32(x))
+}
+func (x *CheckGameLicensesResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(CheckGameLicensesResponse_PacketID_value, data, "CheckGameLicensesResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = CheckGameLicensesResponse_PacketID(value)
 	return nil
 }
 
@@ -5812,14 +5638,6 @@ func (m *ValidateAchieve) GetAchieve() int32 {
 	return 0
 }
 
-type CloseCardMarket struct {
-	XXX_unrecognized []byte `json:"-"`
-}
-
-func (m *CloseCardMarket) Reset()         { *m = CloseCardMarket{} }
-func (m *CloseCardMarket) String() string { return proto.CompactTextString(m) }
-func (*CloseCardMarket) ProtoMessage()    {}
-
 type UpdateLogin struct {
 	ReplyRequired    *bool   `protobuf:"varint,1,opt,name=reply_required" json:"reply_required,omitempty"`
 	Referral         *string `protobuf:"bytes,2,opt,name=referral" json:"referral,omitempty"`
@@ -5866,30 +5684,6 @@ func (m *DevBnetIdentify) GetName() string {
 		return *m.Name
 	}
 	return ""
-}
-
-type UtilHandshake struct {
-	ClientHandle     *int32 `protobuf:"varint,1,req,name=client_handle" json:"client_handle,omitempty"`
-	Password         *int32 `protobuf:"varint,2,req,name=password" json:"password,omitempty"`
-	XXX_unrecognized []byte `json:"-"`
-}
-
-func (m *UtilHandshake) Reset()         { *m = UtilHandshake{} }
-func (m *UtilHandshake) String() string { return proto.CompactTextString(m) }
-func (*UtilHandshake) ProtoMessage()    {}
-
-func (m *UtilHandshake) GetClientHandle() int32 {
-	if m != nil && m.ClientHandle != nil {
-		return *m.ClientHandle
-	}
-	return 0
-}
-
-func (m *UtilHandshake) GetPassword() int32 {
-	if m != nil && m.Password != nil {
-		return *m.Password
-	}
-	return 0
 }
 
 type SetOptions struct {
@@ -6076,6 +5870,14 @@ func (m *Subscribe) Reset()         { *m = Subscribe{} }
 func (m *Subscribe) String() string { return proto.CompactTextString(m) }
 func (*Subscribe) ProtoMessage()    {}
 
+type Unsubscribe struct {
+	XXX_unrecognized []byte `json:"-"`
+}
+
+func (m *Unsubscribe) Reset()         { *m = Unsubscribe{} }
+func (m *Unsubscribe) String() string { return proto.CompactTextString(m) }
+func (*Unsubscribe) ProtoMessage()    {}
+
 type OneClientTracking struct {
 	Level            *OneClientTracking_Level `protobuf:"varint,1,req,name=level,enum=util.OneClientTracking_Level" json:"level,omitempty"`
 	What             *int32                   `protobuf:"varint,2,req,name=what" json:"what,omitempty"`
@@ -6130,22 +5932,6 @@ func (m *ClientTracking) GetInfo() []*OneClientTracking {
 		return m.Info
 	}
 	return nil
-}
-
-type GuardianTrack struct {
-	What             *int32 `protobuf:"varint,1,req,name=what" json:"what,omitempty"`
-	XXX_unrecognized []byte `json:"-"`
-}
-
-func (m *GuardianTrack) Reset()         { *m = GuardianTrack{} }
-func (m *GuardianTrack) String() string { return proto.CompactTextString(m) }
-func (*GuardianTrack) ProtoMessage()    {}
-
-func (m *GuardianTrack) GetWhat() int32 {
-	if m != nil && m.What != nil {
-		return *m.What
-	}
-	return 0
 }
 
 type SetProgress struct {
@@ -7022,14 +6808,6 @@ func (m *PlayQueue) GetQueue() *shared.PlayQueueInfo {
 	return nil
 }
 
-type DroppedRequest struct {
-	XXX_unrecognized []byte `json:"-"`
-}
-
-func (m *DroppedRequest) Reset()         { *m = DroppedRequest{} }
-func (m *DroppedRequest) String() string { return proto.CompactTextString(m) }
-func (*DroppedRequest) ProtoMessage()    {}
-
 type GuardianVars struct {
 	Tourney          *bool  `protobuf:"varint,1,opt,name=tourney" json:"tourney,omitempty"`
 	Practice         *bool  `protobuf:"varint,2,opt,name=practice" json:"practice,omitempty"`
@@ -7550,22 +7328,6 @@ func (m *DraftChosen) GetNextChoiceList() []*shared.CardDef {
 	return nil
 }
 
-type UtilAuth struct {
-	Result           *UtilAuth_Result `protobuf:"varint,1,req,name=result,enum=util.UtilAuth_Result" json:"result,omitempty"`
-	XXX_unrecognized []byte           `json:"-"`
-}
-
-func (m *UtilAuth) Reset()         { *m = UtilAuth{} }
-func (m *UtilAuth) String() string { return proto.CompactTextString(m) }
-func (*UtilAuth) ProtoMessage()    {}
-
-func (m *UtilAuth) GetResult() UtilAuth_Result {
-	if m != nil && m.Result != nil {
-		return *m.Result
-	}
-	return UtilAuth_UNKNOWN
-}
-
 type ClientOptions struct {
 	Options          []*ClientOption `protobuf:"bytes,1,rep,name=options" json:"options,omitempty"`
 	Failed           *bool           `protobuf:"varint,2,opt,name=failed" json:"failed,omitempty"`
@@ -7588,22 +7350,6 @@ func (m *ClientOptions) GetFailed() bool {
 		return *m.Failed
 	}
 	return false
-}
-
-type ProfileLastLogin struct {
-	LastLogin        *shared.Date `protobuf:"bytes,1,req,name=last_login" json:"last_login,omitempty"`
-	XXX_unrecognized []byte       `json:"-"`
-}
-
-func (m *ProfileLastLogin) Reset()         { *m = ProfileLastLogin{} }
-func (m *ProfileLastLogin) String() string { return proto.CompactTextString(m) }
-func (*ProfileLastLogin) ProtoMessage()    {}
-
-func (m *ProfileLastLogin) GetLastLogin() *shared.Date {
-	if m != nil {
-		return m.LastLogin
-	}
-	return nil
 }
 
 type ProfileDeckLimit struct {
@@ -7702,30 +7448,6 @@ func (m *DeckList) GetDecks() []*shared.DeckInfo {
 		return m.Decks
 	}
 	return nil
-}
-
-type DebugAuth struct {
-	Result           *DebugAuth_Result `protobuf:"varint,1,req,name=result,enum=util.DebugAuth_Result" json:"result,omitempty"`
-	PlayerId         *int64            `protobuf:"varint,2,req,name=player_id" json:"player_id,omitempty"`
-	XXX_unrecognized []byte            `json:"-"`
-}
-
-func (m *DebugAuth) Reset()         { *m = DebugAuth{} }
-func (m *DebugAuth) String() string { return proto.CompactTextString(m) }
-func (*DebugAuth) ProtoMessage()    {}
-
-func (m *DebugAuth) GetResult() DebugAuth_Result {
-	if m != nil && m.Result != nil {
-		return *m.Result
-	}
-	return DebugAuth_UNKNOWN
-}
-
-func (m *DebugAuth) GetPlayerId() int64 {
-	if m != nil && m.PlayerId != nil {
-		return *m.PlayerId
-	}
-	return 0
 }
 
 type Collection struct {
@@ -7856,54 +7578,6 @@ func (m *DeckRenamed) GetName() string {
 	return ""
 }
 
-type DeckGainedCard struct {
-	Deck             *int64 `protobuf:"varint,1,req,name=deck" json:"deck,omitempty"`
-	Card             *int64 `protobuf:"varint,2,req,name=card" json:"card,omitempty"`
-	XXX_unrecognized []byte `json:"-"`
-}
-
-func (m *DeckGainedCard) Reset()         { *m = DeckGainedCard{} }
-func (m *DeckGainedCard) String() string { return proto.CompactTextString(m) }
-func (*DeckGainedCard) ProtoMessage()    {}
-
-func (m *DeckGainedCard) GetDeck() int64 {
-	if m != nil && m.Deck != nil {
-		return *m.Deck
-	}
-	return 0
-}
-
-func (m *DeckGainedCard) GetCard() int64 {
-	if m != nil && m.Card != nil {
-		return *m.Card
-	}
-	return 0
-}
-
-type DeckLostCard struct {
-	Deck             *int64 `protobuf:"varint,1,req,name=deck" json:"deck,omitempty"`
-	Card             *int64 `protobuf:"varint,2,req,name=card" json:"card,omitempty"`
-	XXX_unrecognized []byte `json:"-"`
-}
-
-func (m *DeckLostCard) Reset()         { *m = DeckLostCard{} }
-func (m *DeckLostCard) String() string { return proto.CompactTextString(m) }
-func (*DeckLostCard) ProtoMessage()    {}
-
-func (m *DeckLostCard) GetDeck() int64 {
-	if m != nil && m.Deck != nil {
-		return *m.Deck
-	}
-	return 0
-}
-
-func (m *DeckLostCard) GetCard() int64 {
-	if m != nil && m.Card != nil {
-		return *m.Card
-	}
-	return 0
-}
-
 type BoosterList struct {
 	List             []*shared.BoosterInfo `protobuf:"bytes,1,rep,name=list" json:"list,omitempty"`
 	XXX_unrecognized []byte                `json:"-"`
@@ -7959,9 +7633,10 @@ type MedalInfo struct {
 	StarLevel        *int32 `protobuf:"varint,8,req,name=star_level" json:"star_level,omitempty"`
 	LevelStart       *int32 `protobuf:"varint,9,req,name=level_start" json:"level_start,omitempty"`
 	LevelEnd         *int32 `protobuf:"varint,10,req,name=level_end" json:"level_end,omitempty"`
-	CanLose          *bool  `protobuf:"varint,11,req,name=can_lose" json:"can_lose,omitempty"`
+	CanLoseLevel     *bool  `protobuf:"varint,11,req,name=can_lose_level" json:"can_lose_level,omitempty"`
 	LegendRank       *int32 `protobuf:"varint,13,opt,name=legend_rank" json:"legend_rank,omitempty"`
 	BestStarLevel    *int32 `protobuf:"varint,14,opt,name=best_star_level" json:"best_star_level,omitempty"`
+	CanLoseStars     *bool  `protobuf:"varint,15,opt,name=can_lose_stars" json:"can_lose_stars,omitempty"`
 	XXX_unrecognized []byte `json:"-"`
 }
 
@@ -8011,9 +7686,9 @@ func (m *MedalInfo) GetLevelEnd() int32 {
 	return 0
 }
 
-func (m *MedalInfo) GetCanLose() bool {
-	if m != nil && m.CanLose != nil {
-		return *m.CanLose
+func (m *MedalInfo) GetCanLoseLevel() bool {
+	if m != nil && m.CanLoseLevel != nil {
+		return *m.CanLoseLevel
 	}
 	return false
 }
@@ -8030,6 +7705,13 @@ func (m *MedalInfo) GetBestStarLevel() int32 {
 		return *m.BestStarLevel
 	}
 	return 0
+}
+
+func (m *MedalInfo) GetCanLoseStars() bool {
+	if m != nil && m.CanLoseStars != nil {
+		return *m.CanLoseStars
+	}
+	return false
 }
 
 type MedalHistory struct {
@@ -8362,30 +8044,6 @@ func (m *BattlePayStatusResponse) GetProvider() shared.BattlePayProvider {
 	return Default_BattlePayStatusResponse_Provider
 }
 
-type Error37 struct {
-	Reason           *Error37_ThrottleReason `protobuf:"varint,1,req,name=reason,enum=util.Error37_ThrottleReason" json:"reason,omitempty"`
-	RetryMillis      *int64                  `protobuf:"varint,2,req,name=retry_millis" json:"retry_millis,omitempty"`
-	XXX_unrecognized []byte                  `json:"-"`
-}
-
-func (m *Error37) Reset()         { *m = Error37{} }
-func (m *Error37) String() string { return proto.CompactTextString(m) }
-func (*Error37) ProtoMessage()    {}
-
-func (m *Error37) GetReason() Error37_ThrottleReason {
-	if m != nil && m.Reason != nil {
-		return *m.Reason
-	}
-	return Error37_TR_DB_LOAD
-}
-
-func (m *Error37) GetRetryMillis() int64 {
-	if m != nil && m.RetryMillis != nil {
-		return *m.RetryMillis
-	}
-	return 0
-}
-
 type MassDisenchantResponse struct {
 	Amount           *int32 `protobuf:"varint,1,req,name=amount" json:"amount,omitempty"`
 	XXX_unrecognized []byte `json:"-"`
@@ -8544,30 +8202,6 @@ func (m *CancelPurchaseResponse) GetCurrency() int32 {
 		return *m.Currency
 	}
 	return 0
-}
-
-type CheckLicensesResponse struct {
-	AccountLevel     *bool  `protobuf:"varint,1,req,name=account_level" json:"account_level,omitempty"`
-	Success          *bool  `protobuf:"varint,2,req,name=success" json:"success,omitempty"`
-	XXX_unrecognized []byte `json:"-"`
-}
-
-func (m *CheckLicensesResponse) Reset()         { *m = CheckLicensesResponse{} }
-func (m *CheckLicensesResponse) String() string { return proto.CompactTextString(m) }
-func (*CheckLicensesResponse) ProtoMessage()    {}
-
-func (m *CheckLicensesResponse) GetAccountLevel() bool {
-	if m != nil && m.AccountLevel != nil {
-		return *m.AccountLevel
-	}
-	return false
-}
-
-func (m *CheckLicensesResponse) GetSuccess() bool {
-	if m != nil && m.Success != nil {
-		return *m.Success
-	}
-	return false
 }
 
 type PurchaseWithGoldResponse struct {
@@ -8795,15 +8429,24 @@ func (m *AccountLicenseAchieveResponse) GetResult() AccountLicenseAchieveRespons
 }
 
 type SubscribeResponse struct {
-	Route             *uint64 `protobuf:"varint,1,opt,name=route" json:"route,omitempty"`
-	SupportedFeatures *uint64 `protobuf:"varint,2,opt,name=supported_features" json:"supported_features,omitempty"`
-	KeepAliveSecs     *uint64 `protobuf:"varint,3,opt,name=keep_alive_secs" json:"keep_alive_secs,omitempty"`
-	XXX_unrecognized  []byte  `json:"-"`
+	Route                   *uint64                           `protobuf:"varint,1,opt,name=route" json:"route,omitempty"`
+	KeepAliveSecs           *uint64                           `protobuf:"varint,3,opt,name=keep_alive_secs" json:"keep_alive_secs,omitempty"`
+	MaxResubscribeAttempts  *uint64                           `protobuf:"varint,4,opt,name=max_resubscribe_attempts,def=0" json:"max_resubscribe_attempts,omitempty"`
+	PendingResponseTimeout  *uint64                           `protobuf:"varint,5,opt,name=pending_response_timeout,def=0" json:"pending_response_timeout,omitempty"`
+	PendingSubscribeTimeout *uint64                           `protobuf:"varint,6,opt,name=pending_subscribe_timeout,def=0" json:"pending_subscribe_timeout,omitempty"`
+	Result                  *SubscribeResponse_ResponseResult `protobuf:"varint,7,opt,name=result,enum=util.SubscribeResponse_ResponseResult,def=1" json:"result,omitempty"`
+	RequestMaxWaitSecs      *uint64                           `protobuf:"varint,8,opt,name=request_max_wait_secs" json:"request_max_wait_secs,omitempty"`
+	XXX_unrecognized        []byte                            `json:"-"`
 }
 
 func (m *SubscribeResponse) Reset()         { *m = SubscribeResponse{} }
 func (m *SubscribeResponse) String() string { return proto.CompactTextString(m) }
 func (*SubscribeResponse) ProtoMessage()    {}
+
+const Default_SubscribeResponse_MaxResubscribeAttempts uint64 = 0
+const Default_SubscribeResponse_PendingResponseTimeout uint64 = 0
+const Default_SubscribeResponse_PendingSubscribeTimeout uint64 = 0
+const Default_SubscribeResponse_Result SubscribeResponse_ResponseResult = SubscribeResponse_SUCCESS
 
 func (m *SubscribeResponse) GetRoute() uint64 {
 	if m != nil && m.Route != nil {
@@ -8812,16 +8455,44 @@ func (m *SubscribeResponse) GetRoute() uint64 {
 	return 0
 }
 
-func (m *SubscribeResponse) GetSupportedFeatures() uint64 {
-	if m != nil && m.SupportedFeatures != nil {
-		return *m.SupportedFeatures
+func (m *SubscribeResponse) GetKeepAliveSecs() uint64 {
+	if m != nil && m.KeepAliveSecs != nil {
+		return *m.KeepAliveSecs
 	}
 	return 0
 }
 
-func (m *SubscribeResponse) GetKeepAliveSecs() uint64 {
-	if m != nil && m.KeepAliveSecs != nil {
-		return *m.KeepAliveSecs
+func (m *SubscribeResponse) GetMaxResubscribeAttempts() uint64 {
+	if m != nil && m.MaxResubscribeAttempts != nil {
+		return *m.MaxResubscribeAttempts
+	}
+	return Default_SubscribeResponse_MaxResubscribeAttempts
+}
+
+func (m *SubscribeResponse) GetPendingResponseTimeout() uint64 {
+	if m != nil && m.PendingResponseTimeout != nil {
+		return *m.PendingResponseTimeout
+	}
+	return Default_SubscribeResponse_PendingResponseTimeout
+}
+
+func (m *SubscribeResponse) GetPendingSubscribeTimeout() uint64 {
+	if m != nil && m.PendingSubscribeTimeout != nil {
+		return *m.PendingSubscribeTimeout
+	}
+	return Default_SubscribeResponse_PendingSubscribeTimeout
+}
+
+func (m *SubscribeResponse) GetResult() SubscribeResponse_ResponseResult {
+	if m != nil && m.Result != nil {
+		return *m.Result
+	}
+	return Default_SubscribeResponse_Result
+}
+
+func (m *SubscribeResponse) GetRequestMaxWaitSecs() uint64 {
+	if m != nil && m.RequestMaxWaitSecs != nil {
+		return *m.RequestMaxWaitSecs
 	}
 	return 0
 }
@@ -8851,45 +8522,13 @@ func (m *TavernBrawlInfo) GetNextStartSecondsFromNow() uint64 {
 }
 
 type TavernBrawlPlayerRecordResponse struct {
-	DeprecatedRewardProgress *int32                          `protobuf:"varint,1,req,name=deprecated_reward_progress" json:"deprecated_reward_progress,omitempty"`
-	DeprecatedGamesPlayed    *int32                          `protobuf:"varint,2,req,name=deprecated_games_played" json:"deprecated_games_played,omitempty"`
-	DeprecatedGamesWon       *int32                          `protobuf:"varint,3,req,name=deprecated_games_won" json:"deprecated_games_won,omitempty"`
-	DeprecatedWinStreak      *int32                          `protobuf:"varint,4,req,name=deprecated_win_streak" json:"deprecated_win_streak,omitempty"`
-	Record                   *shared.TavernBrawlPlayerRecord `protobuf:"bytes,6,opt,name=record" json:"record,omitempty"`
-	XXX_unrecognized         []byte                          `json:"-"`
+	Record           *shared.TavernBrawlPlayerRecord `protobuf:"bytes,6,opt,name=record" json:"record,omitempty"`
+	XXX_unrecognized []byte                          `json:"-"`
 }
 
 func (m *TavernBrawlPlayerRecordResponse) Reset()         { *m = TavernBrawlPlayerRecordResponse{} }
 func (m *TavernBrawlPlayerRecordResponse) String() string { return proto.CompactTextString(m) }
 func (*TavernBrawlPlayerRecordResponse) ProtoMessage()    {}
-
-func (m *TavernBrawlPlayerRecordResponse) GetDeprecatedRewardProgress() int32 {
-	if m != nil && m.DeprecatedRewardProgress != nil {
-		return *m.DeprecatedRewardProgress
-	}
-	return 0
-}
-
-func (m *TavernBrawlPlayerRecordResponse) GetDeprecatedGamesPlayed() int32 {
-	if m != nil && m.DeprecatedGamesPlayed != nil {
-		return *m.DeprecatedGamesPlayed
-	}
-	return 0
-}
-
-func (m *TavernBrawlPlayerRecordResponse) GetDeprecatedGamesWon() int32 {
-	if m != nil && m.DeprecatedGamesWon != nil {
-		return *m.DeprecatedGamesWon
-	}
-	return 0
-}
-
-func (m *TavernBrawlPlayerRecordResponse) GetDeprecatedWinStreak() int32 {
-	if m != nil && m.DeprecatedWinStreak != nil {
-		return *m.DeprecatedWinStreak
-	}
-	return 0
-}
 
 func (m *TavernBrawlPlayerRecordResponse) GetRecord() *shared.TavernBrawlPlayerRecord {
 	if m != nil {
@@ -8994,15 +8633,175 @@ func (m *AccountLicensesInfoResponse) GetList() []*shared.AccountLicenseInfo {
 	return nil
 }
 
+type GenericData struct {
+	TypeId           *uint32 `protobuf:"varint,1,req,name=type_id" json:"type_id,omitempty"`
+	Data             []byte  `protobuf:"bytes,2,req,name=data" json:"data,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
+}
+
+func (m *GenericData) Reset()         { *m = GenericData{} }
+func (m *GenericData) String() string { return proto.CompactTextString(m) }
+func (*GenericData) ProtoMessage()    {}
+
+func (m *GenericData) GetTypeId() uint32 {
+	if m != nil && m.TypeId != nil {
+		return *m.TypeId
+	}
+	return 0
+}
+
+func (m *GenericData) GetData() []byte {
+	if m != nil {
+		return m.Data
+	}
+	return nil
+}
+
+type GenericResponse struct {
+	ResultCode       *GenericResponse_Result `protobuf:"varint,1,req,name=result_code,enum=util.GenericResponse_Result" json:"result_code,omitempty"`
+	RequestId        *int32                  `protobuf:"varint,2,req,name=request_id" json:"request_id,omitempty"`
+	RequestSubId     *int32                  `protobuf:"varint,3,opt,name=request_sub_id" json:"request_sub_id,omitempty"`
+	GenericData      *GenericData            `protobuf:"bytes,4,opt,name=generic_data" json:"generic_data,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
+}
+
+func (m *GenericResponse) Reset()         { *m = GenericResponse{} }
+func (m *GenericResponse) String() string { return proto.CompactTextString(m) }
+func (*GenericResponse) ProtoMessage()    {}
+
+func (m *GenericResponse) GetResultCode() GenericResponse_Result {
+	if m != nil && m.ResultCode != nil {
+		return *m.ResultCode
+	}
+	return GenericResponse_RESULT_OK
+}
+
+func (m *GenericResponse) GetRequestId() int32 {
+	if m != nil && m.RequestId != nil {
+		return *m.RequestId
+	}
+	return 0
+}
+
+func (m *GenericResponse) GetRequestSubId() int32 {
+	if m != nil && m.RequestSubId != nil {
+		return *m.RequestSubId
+	}
+	return 0
+}
+
+func (m *GenericResponse) GetGenericData() *GenericData {
+	if m != nil {
+		return m.GenericData
+	}
+	return nil
+}
+
+type GenericRequest struct {
+	RequestId        *int32       `protobuf:"varint,1,req,name=request_id" json:"request_id,omitempty"`
+	GenericData      *GenericData `protobuf:"bytes,2,opt,name=generic_data" json:"generic_data,omitempty"`
+	RequestSubId     *int32       `protobuf:"varint,3,opt,name=request_sub_id" json:"request_sub_id,omitempty"`
+	XXX_unrecognized []byte       `json:"-"`
+}
+
+func (m *GenericRequest) Reset()         { *m = GenericRequest{} }
+func (m *GenericRequest) String() string { return proto.CompactTextString(m) }
+func (*GenericRequest) ProtoMessage()    {}
+
+func (m *GenericRequest) GetRequestId() int32 {
+	if m != nil && m.RequestId != nil {
+		return *m.RequestId
+	}
+	return 0
+}
+
+func (m *GenericRequest) GetGenericData() *GenericData {
+	if m != nil {
+		return m.GenericData
+	}
+	return nil
+}
+
+func (m *GenericRequest) GetRequestSubId() int32 {
+	if m != nil && m.RequestSubId != nil {
+		return *m.RequestSubId
+	}
+	return 0
+}
+
+type GenericRequestList struct {
+	Requests         []*GenericRequest `protobuf:"bytes,1,rep,name=requests" json:"requests,omitempty"`
+	XXX_unrecognized []byte            `json:"-"`
+}
+
+func (m *GenericRequestList) Reset()         { *m = GenericRequestList{} }
+func (m *GenericRequestList) String() string { return proto.CompactTextString(m) }
+func (*GenericRequestList) ProtoMessage()    {}
+
+func (m *GenericRequestList) GetRequests() []*GenericRequest {
+	if m != nil {
+		return m.Requests
+	}
+	return nil
+}
+
+type ClientRequestResponse struct {
+	ResponseFlags    *ClientRequestResponse_ClientRequestResponseFlags `protobuf:"varint,1,opt,name=response_flags,enum=util.ClientRequestResponse_ClientRequestResponseFlags,def=0" json:"response_flags,omitempty"`
+	XXX_unrecognized []byte                                            `json:"-"`
+}
+
+func (m *ClientRequestResponse) Reset()         { *m = ClientRequestResponse{} }
+func (m *ClientRequestResponse) String() string { return proto.CompactTextString(m) }
+func (*ClientRequestResponse) ProtoMessage()    {}
+
+const Default_ClientRequestResponse_ResponseFlags ClientRequestResponse_ClientRequestResponseFlags = ClientRequestResponse_CRRF_SERVICE_NONE
+
+func (m *ClientRequestResponse) GetResponseFlags() ClientRequestResponse_ClientRequestResponseFlags {
+	if m != nil && m.ResponseFlags != nil {
+		return *m.ResponseFlags
+	}
+	return Default_ClientRequestResponse_ResponseFlags
+}
+
+type CheckAccountLicensesResponse struct {
+	Success          *bool  `protobuf:"varint,1,req,name=success" json:"success,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
+}
+
+func (m *CheckAccountLicensesResponse) Reset()         { *m = CheckAccountLicensesResponse{} }
+func (m *CheckAccountLicensesResponse) String() string { return proto.CompactTextString(m) }
+func (*CheckAccountLicensesResponse) ProtoMessage()    {}
+
+func (m *CheckAccountLicensesResponse) GetSuccess() bool {
+	if m != nil && m.Success != nil {
+		return *m.Success
+	}
+	return false
+}
+
+type CheckGameLicensesResponse struct {
+	Success          *bool  `protobuf:"varint,1,req,name=success" json:"success,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
+}
+
+func (m *CheckGameLicensesResponse) Reset()         { *m = CheckGameLicensesResponse{} }
+func (m *CheckGameLicensesResponse) String() string { return proto.CompactTextString(m) }
+func (*CheckGameLicensesResponse) ProtoMessage()    {}
+
+func (m *CheckGameLicensesResponse) GetSuccess() bool {
+	if m != nil && m.Success != nil {
+		return *m.Success
+	}
+	return false
+}
+
 func init() {
 	proto.RegisterEnum("util.ProductType", ProductType_name, ProductType_value)
 	proto.RegisterEnum("util.PurchaseError_Error", PurchaseError_Error_name, PurchaseError_Error_value)
 	proto.RegisterEnum("util.DeckSetData_PacketID", DeckSetData_PacketID_name, DeckSetData_PacketID_value)
 	proto.RegisterEnum("util.ValidateAchieve_PacketID", ValidateAchieve_PacketID_name, ValidateAchieve_PacketID_value)
-	proto.RegisterEnum("util.CloseCardMarket_PacketID", CloseCardMarket_PacketID_name, CloseCardMarket_PacketID_value)
 	proto.RegisterEnum("util.UpdateLogin_PacketID", UpdateLogin_PacketID_name, UpdateLogin_PacketID_value)
 	proto.RegisterEnum("util.DevBnetIdentify_PacketID", DevBnetIdentify_PacketID_name, DevBnetIdentify_PacketID_value)
-	proto.RegisterEnum("util.UtilHandshake_PacketID", UtilHandshake_PacketID_name, UtilHandshake_PacketID_value)
 	proto.RegisterEnum("util.SetOptions_PacketID", SetOptions_PacketID_name, SetOptions_PacketID_value)
 	proto.RegisterEnum("util.GetOptions_PacketID", GetOptions_PacketID_name, GetOptions_PacketID_value)
 	proto.RegisterEnum("util.GetAccountInfo_Request", GetAccountInfo_Request_name, GetAccountInfo_Request_value)
@@ -9014,9 +8813,9 @@ func init() {
 	proto.RegisterEnum("util.AckNotice_PacketID", AckNotice_PacketID_name, AckNotice_PacketID_value)
 	proto.RegisterEnum("util.OpenBooster_PacketID", OpenBooster_PacketID_name, OpenBooster_PacketID_value)
 	proto.RegisterEnum("util.Subscribe_PacketID", Subscribe_PacketID_name, Subscribe_PacketID_value)
+	proto.RegisterEnum("util.Unsubscribe_PacketID", Unsubscribe_PacketID_name, Unsubscribe_PacketID_value)
 	proto.RegisterEnum("util.OneClientTracking_Level", OneClientTracking_Level_name, OneClientTracking_Level_value)
 	proto.RegisterEnum("util.ClientTracking_PacketID", ClientTracking_PacketID_name, ClientTracking_PacketID_value)
-	proto.RegisterEnum("util.GuardianTrack_PacketID", GuardianTrack_PacketID_name, GuardianTrack_PacketID_value)
 	proto.RegisterEnum("util.SetProgress_PacketID", SetProgress_PacketID_name, SetProgress_PacketID_value)
 	proto.RegisterEnum("util.AckCardSeen_PacketID", AckCardSeen_PacketID_name, AckCardSeen_PacketID_value)
 	proto.RegisterEnum("util.CardBacks_PacketID", CardBacks_PacketID_name, CardBacks_PacketID_value)
@@ -9058,7 +8857,6 @@ func init() {
 	proto.RegisterEnum("util.Disconnected_PacketID", Disconnected_PacketID_name, Disconnected_PacketID_value)
 	proto.RegisterEnum("util.ValidateAchieveResponse_PacketID", ValidateAchieveResponse_PacketID_name, ValidateAchieveResponse_PacketID_value)
 	proto.RegisterEnum("util.PlayQueue_PacketID", PlayQueue_PacketID_name, PlayQueue_PacketID_value)
-	proto.RegisterEnum("util.DroppedRequest_PacketID", DroppedRequest_PacketID_name, DroppedRequest_PacketID_value)
 	proto.RegisterEnum("util.GuardianVars_PacketID", GuardianVars_PacketID_name, GuardianVars_PacketID_value)
 	proto.RegisterEnum("util.ArcaneDustBalance_PacketID", ArcaneDustBalance_PacketID_name, ArcaneDustBalance_PacketID_value)
 	proto.RegisterEnum("util.GoldBalance_PacketID", GoldBalance_PacketID_name, GoldBalance_PacketID_value)
@@ -9074,24 +8872,17 @@ func init() {
 	proto.RegisterEnum("util.DraftRewardsAcked_PacketID", DraftRewardsAcked_PacketID_name, DraftRewardsAcked_PacketID_value)
 	proto.RegisterEnum("util.DraftChoicesAndContents_PacketID", DraftChoicesAndContents_PacketID_name, DraftChoicesAndContents_PacketID_value)
 	proto.RegisterEnum("util.DraftChosen_PacketID", DraftChosen_PacketID_name, DraftChosen_PacketID_value)
-	proto.RegisterEnum("util.UtilAuth_Result", UtilAuth_Result_name, UtilAuth_Result_value)
-	proto.RegisterEnum("util.UtilAuth_PacketID", UtilAuth_PacketID_name, UtilAuth_PacketID_value)
 	proto.RegisterEnum("util.ClientOptions_PacketID", ClientOptions_PacketID_name, ClientOptions_PacketID_value)
-	proto.RegisterEnum("util.ProfileLastLogin_PacketID", ProfileLastLogin_PacketID_name, ProfileLastLogin_PacketID_value)
 	proto.RegisterEnum("util.ProfileDeckLimit_PacketID", ProfileDeckLimit_PacketID_name, ProfileDeckLimit_PacketID_value)
 	proto.RegisterEnum("util.ProfileProgress_PacketID", ProfileProgress_PacketID_name, ProfileProgress_PacketID_value)
 	proto.RegisterEnum("util.ProfileNotices_PacketID", ProfileNotices_PacketID_name, ProfileNotices_PacketID_value)
 	proto.RegisterEnum("util.DeckList_PacketID", DeckList_PacketID_name, DeckList_PacketID_value)
-	proto.RegisterEnum("util.DebugAuth_Result", DebugAuth_Result_name, DebugAuth_Result_value)
-	proto.RegisterEnum("util.DebugAuth_PacketID", DebugAuth_PacketID_name, DebugAuth_PacketID_value)
 	proto.RegisterEnum("util.Collection_PacketID", Collection_PacketID_name, Collection_PacketID_value)
 	proto.RegisterEnum("util.DeckContents_PacketID", DeckContents_PacketID_name, DeckContents_PacketID_value)
 	proto.RegisterEnum("util.DBAction_PacketID", DBAction_PacketID_name, DBAction_PacketID_value)
 	proto.RegisterEnum("util.DeckCreated_PacketID", DeckCreated_PacketID_name, DeckCreated_PacketID_value)
 	proto.RegisterEnum("util.DeckDeleted_PacketID", DeckDeleted_PacketID_name, DeckDeleted_PacketID_value)
 	proto.RegisterEnum("util.DeckRenamed_PacketID", DeckRenamed_PacketID_name, DeckRenamed_PacketID_value)
-	proto.RegisterEnum("util.DeckGainedCard_PacketID", DeckGainedCard_PacketID_name, DeckGainedCard_PacketID_value)
-	proto.RegisterEnum("util.DeckLostCard_PacketID", DeckLostCard_PacketID_name, DeckLostCard_PacketID_value)
 	proto.RegisterEnum("util.BoosterList_PacketID", BoosterList_PacketID_name, BoosterList_PacketID_value)
 	proto.RegisterEnum("util.BoosterTallyList_PacketID", BoosterTallyList_PacketID_name, BoosterTallyList_PacketID_value)
 	proto.RegisterEnum("util.BoosterContent_PacketID", BoosterContent_PacketID_name, BoosterContent_PacketID_value)
@@ -9103,14 +8894,11 @@ func init() {
 	proto.RegisterEnum("util.BattlePayConfigResponse_PacketID", BattlePayConfigResponse_PacketID_name, BattlePayConfigResponse_PacketID_value)
 	proto.RegisterEnum("util.BattlePayStatusResponse_PurchaseState", BattlePayStatusResponse_PurchaseState_name, BattlePayStatusResponse_PurchaseState_value)
 	proto.RegisterEnum("util.BattlePayStatusResponse_PacketID", BattlePayStatusResponse_PacketID_name, BattlePayStatusResponse_PacketID_value)
-	proto.RegisterEnum("util.Error37_ThrottleReason", Error37_ThrottleReason_name, Error37_ThrottleReason_value)
-	proto.RegisterEnum("util.Error37_PacketID", Error37_PacketID_name, Error37_PacketID_value)
 	proto.RegisterEnum("util.MassDisenchantResponse_PacketID", MassDisenchantResponse_PacketID_name, MassDisenchantResponse_PacketID_value)
 	proto.RegisterEnum("util.PlayerRecords_PacketID", PlayerRecords_PacketID_name, PlayerRecords_PacketID_value)
 	proto.RegisterEnum("util.RewardProgress_PacketID", RewardProgress_PacketID_name, RewardProgress_PacketID_value)
 	proto.RegisterEnum("util.CancelPurchaseResponse_CancelResult", CancelPurchaseResponse_CancelResult_name, CancelPurchaseResponse_CancelResult_value)
 	proto.RegisterEnum("util.CancelPurchaseResponse_PacketID", CancelPurchaseResponse_PacketID_name, CancelPurchaseResponse_PacketID_value)
-	proto.RegisterEnum("util.CheckLicensesResponse_PacketID", CheckLicensesResponse_PacketID_name, CheckLicensesResponse_PacketID_value)
 	proto.RegisterEnum("util.PurchaseWithGoldResponse_PurchaseResult", PurchaseWithGoldResponse_PurchaseResult_name, PurchaseWithGoldResponse_PurchaseResult_value)
 	proto.RegisterEnum("util.PurchaseWithGoldResponse_PacketID", PurchaseWithGoldResponse_PacketID_name, PurchaseWithGoldResponse_PacketID_value)
 	proto.RegisterEnum("util.CancelQuestResponse_PacketID", CancelQuestResponse_PacketID_name, CancelQuestResponse_PacketID_value)
@@ -9125,8 +8913,8 @@ func init() {
 	proto.RegisterEnum("util.AdventureProgressResponse_PacketID", AdventureProgressResponse_PacketID_name, AdventureProgressResponse_PacketID_value)
 	proto.RegisterEnum("util.AccountLicenseAchieveResponse_Result", AccountLicenseAchieveResponse_Result_name, AccountLicenseAchieveResponse_Result_value)
 	proto.RegisterEnum("util.AccountLicenseAchieveResponse_PacketID", AccountLicenseAchieveResponse_PacketID_name, AccountLicenseAchieveResponse_PacketID_value)
+	proto.RegisterEnum("util.SubscribeResponse_ResponseResult", SubscribeResponse_ResponseResult_name, SubscribeResponse_ResponseResult_value)
 	proto.RegisterEnum("util.SubscribeResponse_PacketID", SubscribeResponse_PacketID_name, SubscribeResponse_PacketID_value)
-	proto.RegisterEnum("util.SubscribeResponse_Features", SubscribeResponse_Features_name, SubscribeResponse_Features_value)
 	proto.RegisterEnum("util.TavernBrawlInfo_PacketID", TavernBrawlInfo_PacketID_name, TavernBrawlInfo_PacketID_value)
 	proto.RegisterEnum("util.TavernBrawlPlayerRecordResponse_PacketID", TavernBrawlPlayerRecordResponse_PacketID_name, TavernBrawlPlayerRecordResponse_PacketID_value)
 	proto.RegisterEnum("util.FavoriteHeroesResponse_PacketID", FavoriteHeroesResponse_PacketID_name, FavoriteHeroesResponse_PacketID_value)
@@ -9134,4 +8922,11 @@ func init() {
 	proto.RegisterEnum("util.GetAssetResponse_PacketID", GetAssetResponse_PacketID_name, GetAssetResponse_PacketID_value)
 	proto.RegisterEnum("util.DebugCommandResponse_PacketID", DebugCommandResponse_PacketID_name, DebugCommandResponse_PacketID_value)
 	proto.RegisterEnum("util.AccountLicensesInfoResponse_PacketID", AccountLicensesInfoResponse_PacketID_name, AccountLicensesInfoResponse_PacketID_value)
+	proto.RegisterEnum("util.GenericResponse_Result", GenericResponse_Result_name, GenericResponse_Result_value)
+	proto.RegisterEnum("util.GenericResponse_PacketID", GenericResponse_PacketID_name, GenericResponse_PacketID_value)
+	proto.RegisterEnum("util.GenericRequestList_PacketID", GenericRequestList_PacketID_name, GenericRequestList_PacketID_value)
+	proto.RegisterEnum("util.ClientRequestResponse_ClientRequestResponseFlags", ClientRequestResponse_ClientRequestResponseFlags_name, ClientRequestResponse_ClientRequestResponseFlags_value)
+	proto.RegisterEnum("util.ClientRequestResponse_PacketID", ClientRequestResponse_PacketID_name, ClientRequestResponse_PacketID_value)
+	proto.RegisterEnum("util.CheckAccountLicensesResponse_PacketID", CheckAccountLicensesResponse_PacketID_name, CheckAccountLicensesResponse_PacketID_value)
+	proto.RegisterEnum("util.CheckGameLicensesResponse_PacketID", CheckGameLicensesResponse_PacketID_name, CheckGameLicensesResponse_PacketID_value)
 }

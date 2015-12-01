@@ -14,15 +14,17 @@ It has these top-level messages:
 	SubOption
 	Option
 	Player
-	ClientPacket
+	Handshake
+	Ping
 	GetGameState
 	ChooseOption
 	ChooseEntities
 	MouseInfo
 	UserUI
-	GiveUp
+	Concede
 	InviteToSpectate
 	RemoveSpectators
+	Pong
 	GameSetup
 	DebugMessage
 	AllOptions
@@ -94,33 +96,63 @@ func (x *Option_Type) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type ClientPacket_PacketID int32
+type Handshake_PacketID int32
 
 const (
-	ClientPacket_ID ClientPacket_PacketID = 6
+	Handshake_ID Handshake_PacketID = 168
 )
 
-var ClientPacket_PacketID_name = map[int32]string{
-	6: "ID",
+var Handshake_PacketID_name = map[int32]string{
+	168: "ID",
 }
-var ClientPacket_PacketID_value = map[string]int32{
-	"ID": 6,
+var Handshake_PacketID_value = map[string]int32{
+	"ID": 168,
 }
 
-func (x ClientPacket_PacketID) Enum() *ClientPacket_PacketID {
-	p := new(ClientPacket_PacketID)
+func (x Handshake_PacketID) Enum() *Handshake_PacketID {
+	p := new(Handshake_PacketID)
 	*p = x
 	return p
 }
-func (x ClientPacket_PacketID) String() string {
-	return proto.EnumName(ClientPacket_PacketID_name, int32(x))
+func (x Handshake_PacketID) String() string {
+	return proto.EnumName(Handshake_PacketID_name, int32(x))
 }
-func (x *ClientPacket_PacketID) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(ClientPacket_PacketID_value, data, "ClientPacket_PacketID")
+func (x *Handshake_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(Handshake_PacketID_value, data, "Handshake_PacketID")
 	if err != nil {
 		return err
 	}
-	*x = ClientPacket_PacketID(value)
+	*x = Handshake_PacketID(value)
+	return nil
+}
+
+type Ping_PacketID int32
+
+const (
+	Ping_ID Ping_PacketID = 115
+)
+
+var Ping_PacketID_name = map[int32]string{
+	115: "ID",
+}
+var Ping_PacketID_value = map[string]int32{
+	"ID": 115,
+}
+
+func (x Ping_PacketID) Enum() *Ping_PacketID {
+	p := new(Ping_PacketID)
+	*p = x
+	return p
+}
+func (x Ping_PacketID) String() string {
+	return proto.EnumName(Ping_PacketID_name, int32(x))
+}
+func (x *Ping_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(Ping_PacketID_value, data, "Ping_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = Ping_PacketID(value)
 	return nil
 }
 
@@ -244,33 +276,33 @@ func (x *UserUI_PacketID) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type GiveUp_PacketID int32
+type Concede_PacketID int32
 
 const (
-	GiveUp_ID GiveUp_PacketID = 11
+	Concede_ID Concede_PacketID = 11
 )
 
-var GiveUp_PacketID_name = map[int32]string{
+var Concede_PacketID_name = map[int32]string{
 	11: "ID",
 }
-var GiveUp_PacketID_value = map[string]int32{
+var Concede_PacketID_value = map[string]int32{
 	"ID": 11,
 }
 
-func (x GiveUp_PacketID) Enum() *GiveUp_PacketID {
-	p := new(GiveUp_PacketID)
+func (x Concede_PacketID) Enum() *Concede_PacketID {
+	p := new(Concede_PacketID)
 	*p = x
 	return p
 }
-func (x GiveUp_PacketID) String() string {
-	return proto.EnumName(GiveUp_PacketID_name, int32(x))
+func (x Concede_PacketID) String() string {
+	return proto.EnumName(Concede_PacketID_name, int32(x))
 }
-func (x *GiveUp_PacketID) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(GiveUp_PacketID_value, data, "GiveUp_PacketID")
+func (x *Concede_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(Concede_PacketID_value, data, "Concede_PacketID")
 	if err != nil {
 		return err
 	}
-	*x = GiveUp_PacketID(value)
+	*x = Concede_PacketID(value)
 	return nil
 }
 
@@ -331,6 +363,36 @@ func (x *RemoveSpectators_PacketID) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*x = RemoveSpectators_PacketID(value)
+	return nil
+}
+
+type Pong_PacketID int32
+
+const (
+	Pong_ID Pong_PacketID = 116
+)
+
+var Pong_PacketID_name = map[int32]string{
+	116: "ID",
+}
+var Pong_PacketID_value = map[string]int32{
+	"ID": 116,
+}
+
+func (x Pong_PacketID) Enum() *Pong_PacketID {
+	p := new(Pong_PacketID)
+	*p = x
+	return p
+}
+func (x Pong_PacketID) String() string {
+	return proto.EnumName(Pong_PacketID_name, int32(x))
+}
+func (x *Pong_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(Pong_PacketID_value, data, "Pong_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = Pong_PacketID(value)
 	return nil
 }
 
@@ -1054,21 +1116,69 @@ func (m *Player) GetEntity() *Entity {
 	return nil
 }
 
-type ClientPacket struct {
-	Packet           []byte `protobuf:"bytes,1,req,name=packet" json:"packet,omitempty"`
-	XXX_unrecognized []byte `json:"-"`
+type Handshake struct {
+	GameHandle       *int32           `protobuf:"varint,1,req,name=game_handle" json:"game_handle,omitempty"`
+	Password         *string          `protobuf:"bytes,2,req,name=password" json:"password,omitempty"`
+	ClientHandle     *int64           `protobuf:"varint,3,req,name=client_handle" json:"client_handle,omitempty"`
+	Mission          *int32           `protobuf:"varint,4,opt,name=mission" json:"mission,omitempty"`
+	Version          *string          `protobuf:"bytes,5,req,name=version" json:"version,omitempty"`
+	Platform         *shared.Platform `protobuf:"bytes,7,req,name=platform" json:"platform,omitempty"`
+	XXX_unrecognized []byte           `json:"-"`
 }
 
-func (m *ClientPacket) Reset()         { *m = ClientPacket{} }
-func (m *ClientPacket) String() string { return proto.CompactTextString(m) }
-func (*ClientPacket) ProtoMessage()    {}
+func (m *Handshake) Reset()         { *m = Handshake{} }
+func (m *Handshake) String() string { return proto.CompactTextString(m) }
+func (*Handshake) ProtoMessage()    {}
 
-func (m *ClientPacket) GetPacket() []byte {
+func (m *Handshake) GetGameHandle() int32 {
+	if m != nil && m.GameHandle != nil {
+		return *m.GameHandle
+	}
+	return 0
+}
+
+func (m *Handshake) GetPassword() string {
+	if m != nil && m.Password != nil {
+		return *m.Password
+	}
+	return ""
+}
+
+func (m *Handshake) GetClientHandle() int64 {
+	if m != nil && m.ClientHandle != nil {
+		return *m.ClientHandle
+	}
+	return 0
+}
+
+func (m *Handshake) GetMission() int32 {
+	if m != nil && m.Mission != nil {
+		return *m.Mission
+	}
+	return 0
+}
+
+func (m *Handshake) GetVersion() string {
+	if m != nil && m.Version != nil {
+		return *m.Version
+	}
+	return ""
+}
+
+func (m *Handshake) GetPlatform() *shared.Platform {
 	if m != nil {
-		return m.Packet
+		return m.Platform
 	}
 	return nil
 }
+
+type Ping struct {
+	XXX_unrecognized []byte `json:"-"`
+}
+
+func (m *Ping) Reset()         { *m = Ping{} }
+func (m *Ping) String() string { return proto.CompactTextString(m) }
+func (*Ping) ProtoMessage()    {}
 
 type GetGameState struct {
 	XXX_unrecognized []byte `json:"-"`
@@ -1079,14 +1189,12 @@ func (m *GetGameState) String() string { return proto.CompactTextString(m) }
 func (*GetGameState) ProtoMessage()    {}
 
 type ChooseOption struct {
-	Id               *int32           `protobuf:"varint,1,req,name=id" json:"id,omitempty"`
-	Index            *int32           `protobuf:"varint,2,req,name=index" json:"index,omitempty"`
-	Target           *int32           `protobuf:"varint,3,req,name=target" json:"target,omitempty"`
-	SubOption        *int32           `protobuf:"varint,4,opt,name=sub_option" json:"sub_option,omitempty"`
-	Position         *int32           `protobuf:"varint,5,opt,name=position" json:"position,omitempty"`
-	OldPlatform      *int32           `protobuf:"varint,6,req,name=old_platform" json:"old_platform,omitempty"`
-	Platform         *shared.Platform `protobuf:"bytes,7,opt,name=platform" json:"platform,omitempty"`
-	XXX_unrecognized []byte           `json:"-"`
+	Id               *int32 `protobuf:"varint,1,req,name=id" json:"id,omitempty"`
+	Index            *int32 `protobuf:"varint,2,req,name=index" json:"index,omitempty"`
+	Target           *int32 `protobuf:"varint,3,req,name=target" json:"target,omitempty"`
+	SubOption        *int32 `protobuf:"varint,4,opt,name=sub_option" json:"sub_option,omitempty"`
+	Position         *int32 `protobuf:"varint,5,opt,name=position" json:"position,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *ChooseOption) Reset()         { *m = ChooseOption{} }
@@ -1126,20 +1234,6 @@ func (m *ChooseOption) GetPosition() int32 {
 		return *m.Position
 	}
 	return 0
-}
-
-func (m *ChooseOption) GetOldPlatform() int32 {
-	if m != nil && m.OldPlatform != nil {
-		return *m.OldPlatform
-	}
-	return 0
-}
-
-func (m *ChooseOption) GetPlatform() *shared.Platform {
-	if m != nil {
-		return m.Platform
-	}
-	return nil
 }
 
 type ChooseEntities struct {
@@ -1246,29 +1340,13 @@ func (m *UserUI) GetPlayerId() int32 {
 	return 0
 }
 
-type GiveUp struct {
-	OldPlatform      *int32           `protobuf:"varint,1,req,name=old_platform" json:"old_platform,omitempty"`
-	Platform         *shared.Platform `protobuf:"bytes,2,opt,name=platform" json:"platform,omitempty"`
-	XXX_unrecognized []byte           `json:"-"`
+type Concede struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *GiveUp) Reset()         { *m = GiveUp{} }
-func (m *GiveUp) String() string { return proto.CompactTextString(m) }
-func (*GiveUp) ProtoMessage()    {}
-
-func (m *GiveUp) GetOldPlatform() int32 {
-	if m != nil && m.OldPlatform != nil {
-		return *m.OldPlatform
-	}
-	return 0
-}
-
-func (m *GiveUp) GetPlatform() *shared.Platform {
-	if m != nil {
-		return m.Platform
-	}
-	return nil
-}
+func (m *Concede) Reset()         { *m = Concede{} }
+func (m *Concede) String() string { return proto.CompactTextString(m) }
+func (*Concede) ProtoMessage()    {}
 
 type InviteToSpectate struct {
 	TargetBnetAccountId *shared.BnetId `protobuf:"bytes,1,opt,name=target_bnet_account_id" json:"target_bnet_account_id,omitempty"`
@@ -1328,6 +1406,14 @@ func (m *RemoveSpectators) GetRegenerateSpectatorPassword() bool {
 	}
 	return Default_RemoveSpectators_RegenerateSpectatorPassword
 }
+
+type Pong struct {
+	XXX_unrecognized []byte `json:"-"`
+}
+
+func (m *Pong) Reset()         { *m = Pong{} }
+func (m *Pong) String() string { return proto.CompactTextString(m) }
+func (*Pong) ProtoMessage()    {}
 
 type GameSetup struct {
 	Board                       *int32 `protobuf:"varint,1,req,name=board" json:"board,omitempty"`
@@ -2029,14 +2115,16 @@ func (m *SpectatorNotify) GetSpectatorRemoved() *SpectatorRemoved {
 
 func init() {
 	proto.RegisterEnum("game.Option_Type", Option_Type_name, Option_Type_value)
-	proto.RegisterEnum("game.ClientPacket_PacketID", ClientPacket_PacketID_name, ClientPacket_PacketID_value)
+	proto.RegisterEnum("game.Handshake_PacketID", Handshake_PacketID_name, Handshake_PacketID_value)
+	proto.RegisterEnum("game.Ping_PacketID", Ping_PacketID_name, Ping_PacketID_value)
 	proto.RegisterEnum("game.GetGameState_PacketID", GetGameState_PacketID_name, GetGameState_PacketID_value)
 	proto.RegisterEnum("game.ChooseOption_PacketID", ChooseOption_PacketID_name, ChooseOption_PacketID_value)
 	proto.RegisterEnum("game.ChooseEntities_PacketID", ChooseEntities_PacketID_name, ChooseEntities_PacketID_value)
 	proto.RegisterEnum("game.UserUI_PacketID", UserUI_PacketID_name, UserUI_PacketID_value)
-	proto.RegisterEnum("game.GiveUp_PacketID", GiveUp_PacketID_name, GiveUp_PacketID_value)
+	proto.RegisterEnum("game.Concede_PacketID", Concede_PacketID_name, Concede_PacketID_value)
 	proto.RegisterEnum("game.InviteToSpectate_PacketID", InviteToSpectate_PacketID_name, InviteToSpectate_PacketID_value)
 	proto.RegisterEnum("game.RemoveSpectators_PacketID", RemoveSpectators_PacketID_name, RemoveSpectators_PacketID_value)
+	proto.RegisterEnum("game.Pong_PacketID", Pong_PacketID_name, Pong_PacketID_value)
 	proto.RegisterEnum("game.GameSetup_PacketID", GameSetup_PacketID_name, GameSetup_PacketID_value)
 	proto.RegisterEnum("game.DebugMessage_PacketID", DebugMessage_PacketID_name, DebugMessage_PacketID_value)
 	proto.RegisterEnum("game.AllOptions_PacketID", AllOptions_PacketID_name, AllOptions_PacketID_value)

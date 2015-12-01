@@ -68,6 +68,7 @@ const (
 	GameType_GT_RANKED      GameType = 7
 	GameType_GT_UNRANKED    GameType = 8
 	GameType_GT_TAVERNBRAWL GameType = 16
+	GameType_GT_TB_2P_COOP  GameType = 18
 	GameType_GT_LAST        GameType = 17
 )
 
@@ -81,6 +82,7 @@ var GameType_name = map[int32]string{
 	7:  "GT_RANKED",
 	8:  "GT_UNRANKED",
 	16: "GT_TAVERNBRAWL",
+	18: "GT_TB_2P_COOP",
 	17: "GT_LAST",
 }
 var GameType_value = map[string]int32{
@@ -93,6 +95,7 @@ var GameType_value = map[string]int32{
 	"GT_RANKED":      7,
 	"GT_UNRANKED":    8,
 	"GT_TAVERNBRAWL": 16,
+	"GT_TB_2P_COOP":  18,
 	"GT_LAST":        17,
 }
 
@@ -116,20 +119,21 @@ func (x *GameType) UnmarshalJSON(data []byte) error {
 type BnetGameType int32
 
 const (
-	BnetGameType_BGT_UNKNOWN         BnetGameType = 0
-	BnetGameType_BGT_FRIENDS         BnetGameType = 1
-	BnetGameType_BGT_RANKED          BnetGameType = 2
-	BnetGameType_BGT_ARENA           BnetGameType = 3
-	BnetGameType_BGT_VS_AI           BnetGameType = 4
-	BnetGameType_BGT_TUTORIAL        BnetGameType = 5
-	BnetGameType_BGT_ASYNC           BnetGameType = 6
-	BnetGameType_BGT_NEWBIE          BnetGameType = 9
-	BnetGameType_BGT_NORMAL          BnetGameType = 10
-	BnetGameType_BGT_TEST1           BnetGameType = 11
-	BnetGameType_BGT_TEST2           BnetGameType = 12
-	BnetGameType_BGT_TEST3           BnetGameType = 13
-	BnetGameType_BGT_TAVERNBRAWL_PVP BnetGameType = 16
-	BnetGameType_BGT_LAST            BnetGameType = 18
+	BnetGameType_BGT_UNKNOWN             BnetGameType = 0
+	BnetGameType_BGT_FRIENDS             BnetGameType = 1
+	BnetGameType_BGT_RANKED              BnetGameType = 2
+	BnetGameType_BGT_ARENA               BnetGameType = 3
+	BnetGameType_BGT_VS_AI               BnetGameType = 4
+	BnetGameType_BGT_TUTORIAL            BnetGameType = 5
+	BnetGameType_BGT_ASYNC               BnetGameType = 6
+	BnetGameType_BGT_NEWBIE              BnetGameType = 9
+	BnetGameType_BGT_NORMAL              BnetGameType = 10
+	BnetGameType_BGT_TEST1               BnetGameType = 11
+	BnetGameType_BGT_TEST2               BnetGameType = 12
+	BnetGameType_BGT_TEST3               BnetGameType = 13
+	BnetGameType_BGT_TAVERNBRAWL_PVP     BnetGameType = 16
+	BnetGameType_BGT_TAVERNBRAWL_2P_COOP BnetGameType = 18
+	BnetGameType_BGT_LAST                BnetGameType = 19
 )
 
 var BnetGameType_name = map[int32]string{
@@ -146,23 +150,25 @@ var BnetGameType_name = map[int32]string{
 	12: "BGT_TEST2",
 	13: "BGT_TEST3",
 	16: "BGT_TAVERNBRAWL_PVP",
-	18: "BGT_LAST",
+	18: "BGT_TAVERNBRAWL_2P_COOP",
+	19: "BGT_LAST",
 }
 var BnetGameType_value = map[string]int32{
-	"BGT_UNKNOWN":         0,
-	"BGT_FRIENDS":         1,
-	"BGT_RANKED":          2,
-	"BGT_ARENA":           3,
-	"BGT_VS_AI":           4,
-	"BGT_TUTORIAL":        5,
-	"BGT_ASYNC":           6,
-	"BGT_NEWBIE":          9,
-	"BGT_NORMAL":          10,
-	"BGT_TEST1":           11,
-	"BGT_TEST2":           12,
-	"BGT_TEST3":           13,
-	"BGT_TAVERNBRAWL_PVP": 16,
-	"BGT_LAST":            18,
+	"BGT_UNKNOWN":             0,
+	"BGT_FRIENDS":             1,
+	"BGT_RANKED":              2,
+	"BGT_ARENA":               3,
+	"BGT_VS_AI":               4,
+	"BGT_TUTORIAL":            5,
+	"BGT_ASYNC":               6,
+	"BGT_NEWBIE":              9,
+	"BGT_NORMAL":              10,
+	"BGT_TEST1":               11,
+	"BGT_TEST2":               12,
+	"BGT_TEST3":               13,
+	"BGT_TAVERNBRAWL_PVP":     16,
+	"BGT_TAVERNBRAWL_2P_COOP": 18,
+	"BGT_LAST":                19,
 }
 
 func (x BnetGameType) Enum() *BnetGameType {
@@ -257,6 +263,120 @@ func (x *RuleType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*x = RuleType(value)
+	return nil
+}
+
+type RewardType int32
+
+const (
+	RewardType_REWARD_UNKNOWN                     RewardType = 0
+	RewardType_REWARD_NONE                        RewardType = 1
+	RewardType_REWARD_ADVENTURE_PROGRESS          RewardType = 2
+	RewardType_REWARD_ARCANE_DUST                 RewardType = 3
+	RewardType_REWARD_BASIC_CARD                  RewardType = 4
+	RewardType_REWARD_BOOSTER_PACKS               RewardType = 5
+	RewardType_REWARD_CARD_BACK                   RewardType = 6
+	RewardType_REWARD_CARD_ID                     RewardType = 7
+	RewardType_REWARD_CARD_ID_2X                  RewardType = 8
+	RewardType_REWARD_CARD_SET                    RewardType = 9
+	RewardType_DEPRECATED_REWARD_CRAFTABLE_GOLDEN RewardType = 10
+	RewardType_REWARD_GOLD                        RewardType = 11
+	RewardType_REWARD_GOLD_HERO                   RewardType = 12
+	RewardType_REWARD_FORGE_TICKETS               RewardType = 13
+	RewardType_REWARD_HERO                        RewardType = 14
+	RewardType_REWARD_EXTERNAL_GAME_MOUNT         RewardType = 15
+)
+
+var RewardType_name = map[int32]string{
+	0:  "REWARD_UNKNOWN",
+	1:  "REWARD_NONE",
+	2:  "REWARD_ADVENTURE_PROGRESS",
+	3:  "REWARD_ARCANE_DUST",
+	4:  "REWARD_BASIC_CARD",
+	5:  "REWARD_BOOSTER_PACKS",
+	6:  "REWARD_CARD_BACK",
+	7:  "REWARD_CARD_ID",
+	8:  "REWARD_CARD_ID_2X",
+	9:  "REWARD_CARD_SET",
+	10: "DEPRECATED_REWARD_CRAFTABLE_GOLDEN",
+	11: "REWARD_GOLD",
+	12: "REWARD_GOLD_HERO",
+	13: "REWARD_FORGE_TICKETS",
+	14: "REWARD_HERO",
+	15: "REWARD_EXTERNAL_GAME_MOUNT",
+}
+var RewardType_value = map[string]int32{
+	"REWARD_UNKNOWN":                     0,
+	"REWARD_NONE":                        1,
+	"REWARD_ADVENTURE_PROGRESS":          2,
+	"REWARD_ARCANE_DUST":                 3,
+	"REWARD_BASIC_CARD":                  4,
+	"REWARD_BOOSTER_PACKS":               5,
+	"REWARD_CARD_BACK":                   6,
+	"REWARD_CARD_ID":                     7,
+	"REWARD_CARD_ID_2X":                  8,
+	"REWARD_CARD_SET":                    9,
+	"DEPRECATED_REWARD_CRAFTABLE_GOLDEN": 10,
+	"REWARD_GOLD":                        11,
+	"REWARD_GOLD_HERO":                   12,
+	"REWARD_FORGE_TICKETS":               13,
+	"REWARD_HERO":                        14,
+	"REWARD_EXTERNAL_GAME_MOUNT":         15,
+}
+
+func (x RewardType) Enum() *RewardType {
+	p := new(RewardType)
+	*p = x
+	return p
+}
+func (x RewardType) String() string {
+	return proto.EnumName(RewardType_name, int32(x))
+}
+func (x *RewardType) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(RewardType_value, data, "RewardType")
+	if err != nil {
+		return err
+	}
+	*x = RewardType(value)
+	return nil
+}
+
+type RewardTrigger int32
+
+const (
+	RewardTrigger_REWARD_TRIGGER_UNKNOWN     RewardTrigger = 0
+	RewardTrigger_REWARD_TRIGGER_NONE        RewardTrigger = 1
+	RewardTrigger_REWARD_TRIGGER_WIN_GAME    RewardTrigger = 2
+	RewardTrigger_REWARD_TRIGGER_FINISH_GAME RewardTrigger = 3
+)
+
+var RewardTrigger_name = map[int32]string{
+	0: "REWARD_TRIGGER_UNKNOWN",
+	1: "REWARD_TRIGGER_NONE",
+	2: "REWARD_TRIGGER_WIN_GAME",
+	3: "REWARD_TRIGGER_FINISH_GAME",
+}
+var RewardTrigger_value = map[string]int32{
+	"REWARD_TRIGGER_UNKNOWN":     0,
+	"REWARD_TRIGGER_NONE":        1,
+	"REWARD_TRIGGER_WIN_GAME":    2,
+	"REWARD_TRIGGER_FINISH_GAME": 3,
+}
+
+func (x RewardTrigger) Enum() *RewardTrigger {
+	p := new(RewardTrigger)
+	*p = x
+	return p
+}
+func (x RewardTrigger) String() string {
+	return proto.EnumName(RewardTrigger_name, int32(x))
+}
+func (x *RewardTrigger) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(RewardTrigger_value, data, "RewardTrigger")
+	if err != nil {
+		return err
+	}
+	*x = RewardTrigger(value)
 	return nil
 }
 
@@ -2202,6 +2322,7 @@ type ScenarioDbRecord struct {
 	TavernBrawlTexture            *string            `protobuf:"bytes,12,opt,name=tavern_brawl_texture" json:"tavern_brawl_texture,omitempty"`
 	TavernBrawlTexturePhone       *string            `protobuf:"bytes,13,opt,name=tavern_brawl_texture_phone" json:"tavern_brawl_texture_phone,omitempty"`
 	TavernBrawlTexturePhoneOffset *Vector2           `protobuf:"bytes,14,opt,name=tavern_brawl_texture_phone_offset" json:"tavern_brawl_texture_phone_offset,omitempty"`
+	IsCoop                        *bool              `protobuf:"varint,15,opt,name=is_coop" json:"is_coop,omitempty"`
 	Strings                       []*LocalizedString `protobuf:"bytes,100,rep,name=strings" json:"strings,omitempty"`
 	Rules                         []*GameSetupRule   `protobuf:"bytes,101,rep,name=rules" json:"rules,omitempty"`
 	XXX_unrecognized              []byte             `json:"-"`
@@ -2309,6 +2430,13 @@ func (m *ScenarioDbRecord) GetTavernBrawlTexturePhoneOffset() *Vector2 {
 	return nil
 }
 
+func (m *ScenarioDbRecord) GetIsCoop() bool {
+	if m != nil && m.IsCoop != nil {
+		return *m.IsCoop
+	}
+	return false
+}
+
 func (m *ScenarioDbRecord) GetStrings() []*LocalizedString {
 	if m != nil {
 		return m.Strings
@@ -2328,9 +2456,10 @@ type TavernBrawlSpec struct {
 	ScenarioId             *int32                   `protobuf:"varint,2,req,name=scenario_id" json:"scenario_id,omitempty"`
 	ScenarioRecordByteSize *uint32                  `protobuf:"varint,3,req,name=scenario_record_byte_size" json:"scenario_record_byte_size,omitempty"`
 	ScenarioRecordHash     []byte                   `protobuf:"bytes,4,req,name=scenario_record_hash" json:"scenario_record_hash,omitempty"`
-	RewardType             *int32                   `protobuf:"varint,5,req,name=reward_type" json:"reward_type,omitempty"`
+	RewardType             *RewardType              `protobuf:"varint,5,req,name=reward_type,enum=shared.RewardType" json:"reward_type,omitempty"`
 	RewardData1            *int64                   `protobuf:"varint,6,req,name=reward_data1" json:"reward_data1,omitempty"`
 	RewardData2            *int64                   `protobuf:"varint,7,req,name=reward_data2" json:"reward_data2,omitempty"`
+	RewardTrigger          *RewardTrigger           `protobuf:"varint,8,opt,name=reward_trigger,enum=shared.RewardTrigger,def=0" json:"reward_trigger,omitempty"`
 	SeasonId               *int32                   `protobuf:"varint,11,req,name=season_id" json:"season_id,omitempty"`
 	MyRecord               *TavernBrawlPlayerRecord `protobuf:"bytes,105,req,name=my_record" json:"my_record,omitempty"`
 	XXX_unrecognized       []byte                   `json:"-"`
@@ -2339,6 +2468,8 @@ type TavernBrawlSpec struct {
 func (m *TavernBrawlSpec) Reset()         { *m = TavernBrawlSpec{} }
 func (m *TavernBrawlSpec) String() string { return proto.CompactTextString(m) }
 func (*TavernBrawlSpec) ProtoMessage()    {}
+
+const Default_TavernBrawlSpec_RewardTrigger RewardTrigger = RewardTrigger_REWARD_TRIGGER_UNKNOWN
 
 func (m *TavernBrawlSpec) GetEndSecondsFromNow() uint64 {
 	if m != nil && m.EndSecondsFromNow != nil {
@@ -2368,11 +2499,11 @@ func (m *TavernBrawlSpec) GetScenarioRecordHash() []byte {
 	return nil
 }
 
-func (m *TavernBrawlSpec) GetRewardType() int32 {
+func (m *TavernBrawlSpec) GetRewardType() RewardType {
 	if m != nil && m.RewardType != nil {
 		return *m.RewardType
 	}
-	return 0
+	return RewardType_REWARD_UNKNOWN
 }
 
 func (m *TavernBrawlSpec) GetRewardData1() int64 {
@@ -2387,6 +2518,13 @@ func (m *TavernBrawlSpec) GetRewardData2() int64 {
 		return *m.RewardData2
 	}
 	return 0
+}
+
+func (m *TavernBrawlSpec) GetRewardTrigger() RewardTrigger {
+	if m != nil && m.RewardTrigger != nil {
+		return *m.RewardTrigger
+	}
+	return Default_TavernBrawlSpec_RewardTrigger
 }
 
 func (m *TavernBrawlSpec) GetSeasonId() int32 {
@@ -2448,6 +2586,8 @@ func init() {
 	proto.RegisterEnum("shared.BnetGameType", BnetGameType_name, BnetGameType_value)
 	proto.RegisterEnum("shared.DeckType", DeckType_name, DeckType_value)
 	proto.RegisterEnum("shared.RuleType", RuleType_name, RuleType_value)
+	proto.RegisterEnum("shared.RewardType", RewardType_name, RewardType_value)
+	proto.RegisterEnum("shared.RewardTrigger", RewardTrigger_name, RewardTrigger_value)
 	proto.RegisterEnum("shared.DatabaseResult", DatabaseResult_name, DatabaseResult_value)
 	proto.RegisterEnum("shared.BattlePayProvider", BattlePayProvider_name, BattlePayProvider_value)
 	proto.RegisterEnum("shared.AssetType", AssetType_name, AssetType_value)
