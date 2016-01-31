@@ -635,15 +635,16 @@ type Telemetry struct {
 	Locale                 *Telemetry_Locale     `protobuf:"varint,3,req,name=locale,enum=patching.Telemetry_Locale" json:"locale,omitempty"`
 	Version                *string               `protobuf:"bytes,4,req,name=version" json:"version,omitempty"`
 	Platform               *Telemetry_Platform   `protobuf:"varint,5,req,name=platform,enum=patching.Telemetry_Platform" json:"platform,omitempty"`
-	ScreenUI               *Telemetry_ScreenUI   `protobuf:"varint,6,req,name=screen_u_i,enum=patching.Telemetry_ScreenUI" json:"screen_u_i,omitempty"`
-	Store                  *Telemetry_Store      `protobuf:"varint,7,req,name=store,enum=patching.Telemetry_Store" json:"store,omitempty"`
-	SessionId              *string               `protobuf:"bytes,8,req,name=session_id" json:"session_id,omitempty"`
-	DeviceUniqueIdentifier *string               `protobuf:"bytes,9,req,name=device_unique_identifier" json:"device_unique_identifier,omitempty"`
-	Event                  *uint64               `protobuf:"varint,10,req,name=event" json:"event,omitempty"`
-	BnetRegion             *Telemetry_BnetRegion `protobuf:"varint,11,opt,name=bnet_region,enum=patching.Telemetry_BnetRegion,def=-1" json:"bnet_region,omitempty"`
-	GameAccountId          *uint64               `protobuf:"varint,12,opt,name=game_account_id" json:"game_account_id,omitempty"`
-	ErrorCode              *int64                `protobuf:"varint,13,opt,name=error_code" json:"error_code,omitempty"`
-	Message                *string               `protobuf:"bytes,14,opt,name=message" json:"message,omitempty"`
+	Os                     *string               `protobuf:"bytes,6,req,name=os" json:"os,omitempty"`
+	ScreenUI               *Telemetry_ScreenUI   `protobuf:"varint,7,req,name=screen_u_i,enum=patching.Telemetry_ScreenUI" json:"screen_u_i,omitempty"`
+	Store                  *Telemetry_Store      `protobuf:"varint,8,req,name=store,enum=patching.Telemetry_Store" json:"store,omitempty"`
+	SessionId              *string               `protobuf:"bytes,9,req,name=session_id" json:"session_id,omitempty"`
+	DeviceUniqueIdentifier *string               `protobuf:"bytes,10,req,name=device_unique_identifier" json:"device_unique_identifier,omitempty"`
+	Event                  *uint64               `protobuf:"varint,11,req,name=event" json:"event,omitempty"`
+	BnetRegion             *Telemetry_BnetRegion `protobuf:"varint,12,opt,name=bnet_region,enum=patching.Telemetry_BnetRegion,def=-1" json:"bnet_region,omitempty"`
+	GameAccountId          *uint64               `protobuf:"varint,13,opt,name=game_account_id" json:"game_account_id,omitempty"`
+	ErrorCode              *int64                `protobuf:"varint,14,opt,name=error_code" json:"error_code,omitempty"`
+	Message                *string               `protobuf:"bytes,15,opt,name=message" json:"message,omitempty"`
 	XXX_unrecognized       []byte                `json:"-"`
 }
 
@@ -686,6 +687,13 @@ func (m *Telemetry) GetPlatform() Telemetry_Platform {
 		return *m.Platform
 	}
 	return Telemetry_PLATFORM_UNKNOWN
+}
+
+func (m *Telemetry) GetOs() string {
+	if m != nil && m.Os != nil {
+		return *m.Os
+	}
+	return ""
 }
 
 func (m *Telemetry) GetScreenUI() Telemetry_ScreenUI {
