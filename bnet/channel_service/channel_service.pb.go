@@ -28,13 +28,19 @@ It has these top-level messages:
 package channel_service
 
 import proto "github.com/golang/protobuf/proto"
+import fmt "fmt"
 import math "math"
 import channel_types "github.com/HearthSim/hs-proto-go/bnet/channel_types"
 import entity "github.com/HearthSim/hs-proto-go/bnet/entity"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
+var _ = fmt.Errorf
 var _ = math.Inf
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the proto package it is being compiled against.
+const _ = proto.ProtoPackageIsVersion1
 
 type AddMemberRequest struct {
 	AgentId          *entity.EntityId           `protobuf:"bytes,1,opt,name=agent_id" json:"agent_id,omitempty"`
@@ -45,9 +51,10 @@ type AddMemberRequest struct {
 	XXX_unrecognized []byte                     `json:"-"`
 }
 
-func (m *AddMemberRequest) Reset()         { *m = AddMemberRequest{} }
-func (m *AddMemberRequest) String() string { return proto.CompactTextString(m) }
-func (*AddMemberRequest) ProtoMessage()    {}
+func (m *AddMemberRequest) Reset()                    { *m = AddMemberRequest{} }
+func (m *AddMemberRequest) String() string            { return proto.CompactTextString(m) }
+func (*AddMemberRequest) ProtoMessage()               {}
+func (*AddMemberRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
 const Default_AddMemberRequest_Subscribe bool = true
 
@@ -93,9 +100,10 @@ type RemoveMemberRequest struct {
 	XXX_unrecognized []byte           `json:"-"`
 }
 
-func (m *RemoveMemberRequest) Reset()         { *m = RemoveMemberRequest{} }
-func (m *RemoveMemberRequest) String() string { return proto.CompactTextString(m) }
-func (*RemoveMemberRequest) ProtoMessage()    {}
+func (m *RemoveMemberRequest) Reset()                    { *m = RemoveMemberRequest{} }
+func (m *RemoveMemberRequest) String() string            { return proto.CompactTextString(m) }
+func (*RemoveMemberRequest) ProtoMessage()               {}
+func (*RemoveMemberRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
 func (m *RemoveMemberRequest) GetAgentId() *entity.EntityId {
 	if m != nil {
@@ -124,9 +132,10 @@ type UnsubscribeMemberRequest struct {
 	XXX_unrecognized []byte           `json:"-"`
 }
 
-func (m *UnsubscribeMemberRequest) Reset()         { *m = UnsubscribeMemberRequest{} }
-func (m *UnsubscribeMemberRequest) String() string { return proto.CompactTextString(m) }
-func (*UnsubscribeMemberRequest) ProtoMessage()    {}
+func (m *UnsubscribeMemberRequest) Reset()                    { *m = UnsubscribeMemberRequest{} }
+func (m *UnsubscribeMemberRequest) String() string            { return proto.CompactTextString(m) }
+func (*UnsubscribeMemberRequest) ProtoMessage()               {}
+func (*UnsubscribeMemberRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
 
 func (m *UnsubscribeMemberRequest) GetAgentId() *entity.EntityId {
 	if m != nil {
@@ -149,9 +158,10 @@ type SendMessageRequest struct {
 	XXX_unrecognized   []byte                 `json:"-"`
 }
 
-func (m *SendMessageRequest) Reset()         { *m = SendMessageRequest{} }
-func (m *SendMessageRequest) String() string { return proto.CompactTextString(m) }
-func (*SendMessageRequest) ProtoMessage()    {}
+func (m *SendMessageRequest) Reset()                    { *m = SendMessageRequest{} }
+func (m *SendMessageRequest) String() string            { return proto.CompactTextString(m) }
+func (*SendMessageRequest) ProtoMessage()               {}
+func (*SendMessageRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
 
 const Default_SendMessageRequest_RequiredPrivileges uint64 = 0
 
@@ -182,9 +192,10 @@ type UpdateChannelStateRequest struct {
 	XXX_unrecognized []byte                      `json:"-"`
 }
 
-func (m *UpdateChannelStateRequest) Reset()         { *m = UpdateChannelStateRequest{} }
-func (m *UpdateChannelStateRequest) String() string { return proto.CompactTextString(m) }
-func (*UpdateChannelStateRequest) ProtoMessage()    {}
+func (m *UpdateChannelStateRequest) Reset()                    { *m = UpdateChannelStateRequest{} }
+func (m *UpdateChannelStateRequest) String() string            { return proto.CompactTextString(m) }
+func (*UpdateChannelStateRequest) ProtoMessage()               {}
+func (*UpdateChannelStateRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
 
 func (m *UpdateChannelStateRequest) GetAgentId() *entity.EntityId {
 	if m != nil {
@@ -207,9 +218,10 @@ type UpdateMemberStateRequest struct {
 	XXX_unrecognized []byte                  `json:"-"`
 }
 
-func (m *UpdateMemberStateRequest) Reset()         { *m = UpdateMemberStateRequest{} }
-func (m *UpdateMemberStateRequest) String() string { return proto.CompactTextString(m) }
-func (*UpdateMemberStateRequest) ProtoMessage()    {}
+func (m *UpdateMemberStateRequest) Reset()                    { *m = UpdateMemberStateRequest{} }
+func (m *UpdateMemberStateRequest) String() string            { return proto.CompactTextString(m) }
+func (*UpdateMemberStateRequest) ProtoMessage()               {}
+func (*UpdateMemberStateRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
 
 func (m *UpdateMemberStateRequest) GetAgentId() *entity.EntityId {
 	if m != nil {
@@ -238,9 +250,10 @@ type DissolveRequest struct {
 	XXX_unrecognized []byte           `json:"-"`
 }
 
-func (m *DissolveRequest) Reset()         { *m = DissolveRequest{} }
-func (m *DissolveRequest) String() string { return proto.CompactTextString(m) }
-func (*DissolveRequest) ProtoMessage()    {}
+func (m *DissolveRequest) Reset()                    { *m = DissolveRequest{} }
+func (m *DissolveRequest) String() string            { return proto.CompactTextString(m) }
+func (*DissolveRequest) ProtoMessage()               {}
+func (*DissolveRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
 
 func (m *DissolveRequest) GetAgentId() *entity.EntityId {
 	if m != nil {
@@ -263,9 +276,10 @@ type SetRolesRequest struct {
 	XXX_unrecognized []byte             `json:"-"`
 }
 
-func (m *SetRolesRequest) Reset()         { *m = SetRolesRequest{} }
-func (m *SetRolesRequest) String() string { return proto.CompactTextString(m) }
-func (*SetRolesRequest) ProtoMessage()    {}
+func (m *SetRolesRequest) Reset()                    { *m = SetRolesRequest{} }
+func (m *SetRolesRequest) String() string            { return proto.CompactTextString(m) }
+func (*SetRolesRequest) ProtoMessage()               {}
+func (*SetRolesRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{7} }
 
 func (m *SetRolesRequest) GetAgentId() *entity.EntityId {
 	if m != nil {
@@ -295,9 +309,10 @@ type AddNotification struct {
 	XXX_unrecognized []byte                      `json:"-"`
 }
 
-func (m *AddNotification) Reset()         { *m = AddNotification{} }
-func (m *AddNotification) String() string { return proto.CompactTextString(m) }
-func (*AddNotification) ProtoMessage()    {}
+func (m *AddNotification) Reset()                    { *m = AddNotification{} }
+func (m *AddNotification) String() string            { return proto.CompactTextString(m) }
+func (*AddNotification) ProtoMessage()               {}
+func (*AddNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{8} }
 
 func (m *AddNotification) GetSelf() *channel_types.Member {
 	if m != nil {
@@ -325,9 +340,10 @@ type JoinNotification struct {
 	XXX_unrecognized []byte                `json:"-"`
 }
 
-func (m *JoinNotification) Reset()         { *m = JoinNotification{} }
-func (m *JoinNotification) String() string { return proto.CompactTextString(m) }
-func (*JoinNotification) ProtoMessage()    {}
+func (m *JoinNotification) Reset()                    { *m = JoinNotification{} }
+func (m *JoinNotification) String() string            { return proto.CompactTextString(m) }
+func (*JoinNotification) ProtoMessage()               {}
+func (*JoinNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9} }
 
 func (m *JoinNotification) GetMember() *channel_types.Member {
 	if m != nil {
@@ -343,9 +359,10 @@ type RemoveNotification struct {
 	XXX_unrecognized []byte           `json:"-"`
 }
 
-func (m *RemoveNotification) Reset()         { *m = RemoveNotification{} }
-func (m *RemoveNotification) String() string { return proto.CompactTextString(m) }
-func (*RemoveNotification) ProtoMessage()    {}
+func (m *RemoveNotification) Reset()                    { *m = RemoveNotification{} }
+func (m *RemoveNotification) String() string            { return proto.CompactTextString(m) }
+func (*RemoveNotification) ProtoMessage()               {}
+func (*RemoveNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{10} }
 
 func (m *RemoveNotification) GetAgentId() *entity.EntityId {
 	if m != nil {
@@ -375,9 +392,10 @@ type LeaveNotification struct {
 	XXX_unrecognized []byte           `json:"-"`
 }
 
-func (m *LeaveNotification) Reset()         { *m = LeaveNotification{} }
-func (m *LeaveNotification) String() string { return proto.CompactTextString(m) }
-func (*LeaveNotification) ProtoMessage()    {}
+func (m *LeaveNotification) Reset()                    { *m = LeaveNotification{} }
+func (m *LeaveNotification) String() string            { return proto.CompactTextString(m) }
+func (*LeaveNotification) ProtoMessage()               {}
+func (*LeaveNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{11} }
 
 func (m *LeaveNotification) GetAgentId() *entity.EntityId {
 	if m != nil {
@@ -407,9 +425,10 @@ type SendMessageNotification struct {
 	XXX_unrecognized   []byte                 `json:"-"`
 }
 
-func (m *SendMessageNotification) Reset()         { *m = SendMessageNotification{} }
-func (m *SendMessageNotification) String() string { return proto.CompactTextString(m) }
-func (*SendMessageNotification) ProtoMessage()    {}
+func (m *SendMessageNotification) Reset()                    { *m = SendMessageNotification{} }
+func (m *SendMessageNotification) String() string            { return proto.CompactTextString(m) }
+func (*SendMessageNotification) ProtoMessage()               {}
+func (*SendMessageNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{12} }
 
 const Default_SendMessageNotification_RequiredPrivileges uint64 = 0
 
@@ -440,9 +459,10 @@ type UpdateChannelStateNotification struct {
 	XXX_unrecognized []byte                      `json:"-"`
 }
 
-func (m *UpdateChannelStateNotification) Reset()         { *m = UpdateChannelStateNotification{} }
-func (m *UpdateChannelStateNotification) String() string { return proto.CompactTextString(m) }
-func (*UpdateChannelStateNotification) ProtoMessage()    {}
+func (m *UpdateChannelStateNotification) Reset()                    { *m = UpdateChannelStateNotification{} }
+func (m *UpdateChannelStateNotification) String() string            { return proto.CompactTextString(m) }
+func (*UpdateChannelStateNotification) ProtoMessage()               {}
+func (*UpdateChannelStateNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{13} }
 
 func (m *UpdateChannelStateNotification) GetAgentId() *entity.EntityId {
 	if m != nil {
@@ -465,9 +485,10 @@ type UpdateMemberStateNotification struct {
 	XXX_unrecognized []byte                  `json:"-"`
 }
 
-func (m *UpdateMemberStateNotification) Reset()         { *m = UpdateMemberStateNotification{} }
-func (m *UpdateMemberStateNotification) String() string { return proto.CompactTextString(m) }
-func (*UpdateMemberStateNotification) ProtoMessage()    {}
+func (m *UpdateMemberStateNotification) Reset()                    { *m = UpdateMemberStateNotification{} }
+func (m *UpdateMemberStateNotification) String() string            { return proto.CompactTextString(m) }
+func (*UpdateMemberStateNotification) ProtoMessage()               {}
+func (*UpdateMemberStateNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{14} }
 
 func (m *UpdateMemberStateNotification) GetAgentId() *entity.EntityId {
 	if m != nil {
@@ -488,4 +509,63 @@ func (m *UpdateMemberStateNotification) GetRemovedRole() []uint32 {
 		return m.RemovedRole
 	}
 	return nil
+}
+
+func init() {
+	proto.RegisterType((*AddMemberRequest)(nil), "channel_service.AddMemberRequest")
+	proto.RegisterType((*RemoveMemberRequest)(nil), "channel_service.RemoveMemberRequest")
+	proto.RegisterType((*UnsubscribeMemberRequest)(nil), "channel_service.UnsubscribeMemberRequest")
+	proto.RegisterType((*SendMessageRequest)(nil), "channel_service.SendMessageRequest")
+	proto.RegisterType((*UpdateChannelStateRequest)(nil), "channel_service.UpdateChannelStateRequest")
+	proto.RegisterType((*UpdateMemberStateRequest)(nil), "channel_service.UpdateMemberStateRequest")
+	proto.RegisterType((*DissolveRequest)(nil), "channel_service.DissolveRequest")
+	proto.RegisterType((*SetRolesRequest)(nil), "channel_service.SetRolesRequest")
+	proto.RegisterType((*AddNotification)(nil), "channel_service.AddNotification")
+	proto.RegisterType((*JoinNotification)(nil), "channel_service.JoinNotification")
+	proto.RegisterType((*RemoveNotification)(nil), "channel_service.RemoveNotification")
+	proto.RegisterType((*LeaveNotification)(nil), "channel_service.LeaveNotification")
+	proto.RegisterType((*SendMessageNotification)(nil), "channel_service.SendMessageNotification")
+	proto.RegisterType((*UpdateChannelStateNotification)(nil), "channel_service.UpdateChannelStateNotification")
+	proto.RegisterType((*UpdateMemberStateNotification)(nil), "channel_service.UpdateMemberStateNotification")
+}
+
+var fileDescriptor0 = []byte{
+	// 586 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xbc, 0x54, 0x5d, 0x6f, 0x12, 0x41,
+	0x14, 0xcd, 0xc0, 0xda, 0x96, 0x2b, 0x2d, 0xb0, 0x44, 0xbb, 0x62, 0x6c, 0x9a, 0x35, 0x46, 0x8c,
+	0x29, 0x54, 0xde, 0xda, 0x37, 0x3f, 0x1a, 0xad, 0x9f, 0x09, 0xa4, 0xcf, 0x64, 0x3f, 0x6e, 0x61,
+	0xcc, 0xee, 0x0c, 0xce, 0x0c, 0x34, 0x7d, 0xf4, 0x41, 0x1f, 0x7c, 0xf3, 0x17, 0xf9, 0xd7, 0x1c,
+	0x66, 0x17, 0x0a, 0x6c, 0x6d, 0x5c, 0xd3, 0xfa, 0xb4, 0x5f, 0xe7, 0x9e, 0x73, 0xee, 0xdc, 0x7b,
+	0x16, 0xde, 0x0d, 0xa8, 0x1a, 0x8e, 0xfd, 0x56, 0xc0, 0xe3, 0xf6, 0x1b, 0xf4, 0x84, 0x1a, 0xf6,
+	0x68, 0xdc, 0x1e, 0xca, 0xbd, 0x91, 0xe0, 0x8a, 0xef, 0x0d, 0x78, 0xdb, 0x67, 0xa8, 0xda, 0xc1,
+	0xd0, 0x63, 0x0c, 0xa3, 0xbe, 0x44, 0x31, 0xa1, 0x01, 0xae, 0x3e, 0xb7, 0x0c, 0xda, 0xae, 0xac,
+	0xbc, 0x6e, 0xbc, 0xce, 0xc7, 0xae, 0xce, 0x47, 0x28, 0x97, 0x9f, 0x12, 0xe6, 0xc6, 0xc1, 0xdf,
+	0x11, 0x21, 0x53, 0x54, 0x9d, 0xa7, 0x97, 0xa4, 0xd4, 0xfd, 0x45, 0xa0, 0xfa, 0x3c, 0x0c, 0x3f,
+	0x60, 0xec, 0xa3, 0xe8, 0xe2, 0x97, 0x31, 0x4a, 0x65, 0xbb, 0xb0, 0xe1, 0x0d, 0x34, 0xac, 0x4f,
+	0x43, 0x87, 0xec, 0x92, 0xe6, 0xed, 0x4e, 0xb5, 0x95, 0x56, 0x1d, 0x99, 0xcb, 0x71, 0x68, 0x3f,
+	0x81, 0x4a, 0x6c, 0x8a, 0x34, 0x28, 0xf9, 0xe6, 0x14, 0x76, 0x0b, 0x8b, 0xd0, 0xe3, 0xf4, 0xbd,
+	0xbd, 0x0f, 0xe5, 0x14, 0x2a, 0x95, 0xa7, 0xd0, 0x29, 0x1a, 0x5c, 0xa3, 0xb5, 0xdc, 0x4a, 0x62,
+	0xa1, 0x37, 0x45, 0xd8, 0x35, 0x28, 0x71, 0xff, 0x33, 0x06, 0xc6, 0x81, 0xa5, 0xe1, 0x96, 0xbd,
+	0x0d, 0x25, 0x39, 0xf6, 0x65, 0x20, 0xa8, 0x8f, 0xce, 0x2d, 0x6d, 0x6a, 0xe3, 0xd0, 0x52, 0x62,
+	0x8c, 0x2e, 0x83, 0x7a, 0x17, 0x63, 0x3e, 0xc1, 0xfc, 0x3d, 0x3c, 0x84, 0xd2, 0xbc, 0x87, 0x55,
+	0xf7, 0x73, 0xd0, 0x16, 0xac, 0x09, 0xf4, 0x24, 0x67, 0xda, 0x37, 0x69, 0x6e, 0xba, 0x01, 0x38,
+	0x27, 0x6c, 0x6e, 0xe5, 0x66, 0x44, 0xdd, 0xaf, 0x04, 0xec, 0x1e, 0x32, 0x3d, 0x17, 0x29, 0x35,
+	0x63, 0x1e, 0xfe, 0xc7, 0xb0, 0x1e, 0x27, 0x55, 0x29, 0xfb, 0xdd, 0xcc, 0x41, 0x9b, 0xaf, 0xf6,
+	0x0e, 0xd4, 0x85, 0xe6, 0xa5, 0x02, 0xc3, 0xfe, 0x48, 0xd0, 0x09, 0x8d, 0x70, 0x80, 0xd2, 0x74,
+	0x69, 0x1d, 0x92, 0x7d, 0x57, 0xc0, 0xbd, 0x93, 0x51, 0xa8, 0xc7, 0xf1, 0x32, 0x29, 0x37, 0xa3,
+	0xc9, 0xe3, 0xe4, 0x19, 0x94, 0xcd, 0xc0, 0xfb, 0x53, 0xfd, 0xb9, 0x9d, 0xfb, 0x2b, 0x76, 0x16,
+	0xd9, 0xdd, 0x6f, 0x44, 0x9f, 0xae, 0x11, 0x5d, 0x58, 0x87, 0x3c, 0x9a, 0x4f, 0x33, 0x9a, 0x45,
+	0x8d, 0xbb, 0x73, 0xe9, 0xae, 0xd9, 0x0e, 0x94, 0x85, 0x59, 0x9d, 0xb0, 0x2f, 0x78, 0x34, 0x5d,
+	0xcc, 0x62, 0x73, 0xf3, 0x45, 0xa1, 0x4a, 0xdc, 0x23, 0xa8, 0xbc, 0xa2, 0x52, 0xf2, 0x68, 0x92,
+	0x4b, 0xfd, 0x62, 0x57, 0x0a, 0x66, 0x57, 0x22, 0xa8, 0xf4, 0x50, 0x75, 0x35, 0xb7, 0xcc, 0x43,
+	0x53, 0x05, 0xcb, 0xf8, 0x29, 0xcc, 0xfc, 0x2c, 0x2f, 0x4d, 0xd1, 0xf4, 0x94, 0x5d, 0x9a, 0x9f,
+	0x04, 0x2a, 0x3a, 0xcb, 0x1f, 0xb9, 0xa2, 0xa7, 0x34, 0xf0, 0x14, 0xe5, 0x4c, 0x17, 0x5a, 0x12,
+	0xa3, 0xd3, 0x54, 0xea, 0x0f, 0xe7, 0xf0, 0x08, 0xd6, 0x12, 0xf6, 0xab, 0x8f, 0xab, 0x03, 0x9b,
+	0xf3, 0x5f, 0xd8, 0x42, 0x90, 0xaf, 0x1c, 0xe8, 0x01, 0x54, 0xdf, 0x72, 0xca, 0x96, 0x3c, 0x5d,
+	0xc8, 0x11, 0x43, 0x70, 0xb9, 0x9c, 0x1b, 0x83, 0x9d, 0x04, 0x7b, 0xa9, 0xf8, 0xc6, 0x72, 0x1d,
+	0x41, 0xed, 0x3d, 0x7a, 0xff, 0x4b, 0xed, 0x3b, 0x81, 0xed, 0x85, 0x80, 0xe7, 0x16, 0xbd, 0xb6,
+	0x94, 0x9f, 0xc1, 0x4e, 0x36, 0xe5, 0xb9, 0xed, 0xfc, 0x43, 0xd4, 0x7f, 0x10, 0x78, 0x90, 0x89,
+	0x7a, 0x6e, 0xe1, 0xeb, 0xc9, 0x7b, 0xa7, 0x04, 0xeb, 0xa9, 0xb9, 0xce, 0x16, 0x94, 0xd3, 0xdb,
+	0x4f, 0x67, 0x0c, 0x45, 0xa7, 0x0e, 0xb5, 0x99, 0xef, 0xd9, 0x4f, 0x5f, 0xfc, 0x0e, 0x00, 0x00,
+	0xff, 0xff, 0x54, 0xa7, 0x35, 0xb6, 0x19, 0x08, 0x00, 0x00,
 }

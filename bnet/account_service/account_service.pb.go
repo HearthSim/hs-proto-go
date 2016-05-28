@@ -49,13 +49,19 @@ It has these top-level messages:
 package account_service
 
 import proto "github.com/golang/protobuf/proto"
+import fmt "fmt"
 import math "math"
 import account_types "github.com/HearthSim/hs-proto-go/bnet/account_types"
 import entity "github.com/HearthSim/hs-proto-go/bnet/entity"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
+var _ = fmt.Errorf
 var _ = math.Inf
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the proto package it is being compiled against.
+const _ = proto.ProtoPackageIsVersion1
 
 type GetAccountRequest struct {
 	Ref                   *account_types.AccountReference `protobuf:"bytes,1,opt,name=ref" json:"ref,omitempty"`
@@ -70,9 +76,10 @@ type GetAccountRequest struct {
 	XXX_unrecognized      []byte                          `json:"-"`
 }
 
-func (m *GetAccountRequest) Reset()         { *m = GetAccountRequest{} }
-func (m *GetAccountRequest) String() string { return proto.CompactTextString(m) }
-func (*GetAccountRequest) ProtoMessage()    {}
+func (m *GetAccountRequest) Reset()                    { *m = GetAccountRequest{} }
+func (m *GetAccountRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetAccountRequest) ProtoMessage()               {}
+func (*GetAccountRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
 const Default_GetAccountRequest_FetchAll bool = false
 const Default_GetAccountRequest_FetchBlob bool = false
@@ -157,9 +164,10 @@ type GetAccountResponse struct {
 	XXX_unrecognized    []byte                             `json:"-"`
 }
 
-func (m *GetAccountResponse) Reset()         { *m = GetAccountResponse{} }
-func (m *GetAccountResponse) String() string { return proto.CompactTextString(m) }
-func (*GetAccountResponse) ProtoMessage()    {}
+func (m *GetAccountResponse) Reset()                    { *m = GetAccountResponse{} }
+func (m *GetAccountResponse) String() string            { return proto.CompactTextString(m) }
+func (*GetAccountResponse) ProtoMessage()               {}
+func (*GetAccountResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
 func (m *GetAccountResponse) GetBlob() *account_types.AccountBlob {
 	if m != nil {
@@ -218,9 +226,10 @@ type CreateGameAccountRequest struct {
 	XXX_unrecognized []byte                   `json:"-"`
 }
 
-func (m *CreateGameAccountRequest) Reset()         { *m = CreateGameAccountRequest{} }
-func (m *CreateGameAccountRequest) String() string { return proto.CompactTextString(m) }
-func (*CreateGameAccountRequest) ProtoMessage()    {}
+func (m *CreateGameAccountRequest) Reset()                    { *m = CreateGameAccountRequest{} }
+func (m *CreateGameAccountRequest) String() string            { return proto.CompactTextString(m) }
+func (*CreateGameAccountRequest) ProtoMessage()               {}
+func (*CreateGameAccountRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
 
 const Default_CreateGameAccountRequest_RealmPermissions uint32 = 1
 
@@ -259,9 +268,10 @@ type CacheExpireRequest struct {
 	XXX_unrecognized []byte                             `json:"-"`
 }
 
-func (m *CacheExpireRequest) Reset()         { *m = CacheExpireRequest{} }
-func (m *CacheExpireRequest) String() string { return proto.CompactTextString(m) }
-func (*CacheExpireRequest) ProtoMessage()    {}
+func (m *CacheExpireRequest) Reset()                    { *m = CacheExpireRequest{} }
+func (m *CacheExpireRequest) String() string            { return proto.CompactTextString(m) }
+func (*CacheExpireRequest) ProtoMessage()               {}
+func (*CacheExpireRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
 
 func (m *CacheExpireRequest) GetAccount() []*account_types.AccountId {
 	if m != nil {
@@ -292,9 +302,10 @@ type CredentialUpdateRequest struct {
 	XXX_unrecognized []byte                             `json:"-"`
 }
 
-func (m *CredentialUpdateRequest) Reset()         { *m = CredentialUpdateRequest{} }
-func (m *CredentialUpdateRequest) String() string { return proto.CompactTextString(m) }
-func (*CredentialUpdateRequest) ProtoMessage()    {}
+func (m *CredentialUpdateRequest) Reset()                    { *m = CredentialUpdateRequest{} }
+func (m *CredentialUpdateRequest) String() string            { return proto.CompactTextString(m) }
+func (*CredentialUpdateRequest) ProtoMessage()               {}
+func (*CredentialUpdateRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
 
 func (m *CredentialUpdateRequest) GetAccount() *account_types.AccountId {
 	if m != nil {
@@ -328,9 +339,10 @@ type CredentialUpdateResponse struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *CredentialUpdateResponse) Reset()         { *m = CredentialUpdateResponse{} }
-func (m *CredentialUpdateResponse) String() string { return proto.CompactTextString(m) }
-func (*CredentialUpdateResponse) ProtoMessage()    {}
+func (m *CredentialUpdateResponse) Reset()                    { *m = CredentialUpdateResponse{} }
+func (m *CredentialUpdateResponse) String() string            { return proto.CompactTextString(m) }
+func (*CredentialUpdateResponse) ProtoMessage()               {}
+func (*CredentialUpdateResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
 
 type FlagUpdateRequest struct {
 	Account          *account_types.AccountId `protobuf:"bytes,1,req,name=account" json:"account,omitempty"`
@@ -340,9 +352,10 @@ type FlagUpdateRequest struct {
 	XXX_unrecognized []byte                   `json:"-"`
 }
 
-func (m *FlagUpdateRequest) Reset()         { *m = FlagUpdateRequest{} }
-func (m *FlagUpdateRequest) String() string { return proto.CompactTextString(m) }
-func (*FlagUpdateRequest) ProtoMessage()    {}
+func (m *FlagUpdateRequest) Reset()                    { *m = FlagUpdateRequest{} }
+func (m *FlagUpdateRequest) String() string            { return proto.CompactTextString(m) }
+func (*FlagUpdateRequest) ProtoMessage()               {}
+func (*FlagUpdateRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
 
 func (m *FlagUpdateRequest) GetAccount() *account_types.AccountId {
 	if m != nil {
@@ -376,9 +389,10 @@ type FlagUpdateResponse struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *FlagUpdateResponse) Reset()         { *m = FlagUpdateResponse{} }
-func (m *FlagUpdateResponse) String() string { return proto.CompactTextString(m) }
-func (*FlagUpdateResponse) ProtoMessage()    {}
+func (m *FlagUpdateResponse) Reset()                    { *m = FlagUpdateResponse{} }
+func (m *FlagUpdateResponse) String() string            { return proto.CompactTextString(m) }
+func (*FlagUpdateResponse) ProtoMessage()               {}
+func (*FlagUpdateResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{7} }
 
 type GetWalletListRequest struct {
 	AccountId        *account_types.AccountId `protobuf:"bytes,1,req,name=account_id" json:"account_id,omitempty"`
@@ -386,9 +400,10 @@ type GetWalletListRequest struct {
 	XXX_unrecognized []byte                   `json:"-"`
 }
 
-func (m *GetWalletListRequest) Reset()         { *m = GetWalletListRequest{} }
-func (m *GetWalletListRequest) String() string { return proto.CompactTextString(m) }
-func (*GetWalletListRequest) ProtoMessage()    {}
+func (m *GetWalletListRequest) Reset()                    { *m = GetWalletListRequest{} }
+func (m *GetWalletListRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetWalletListRequest) ProtoMessage()               {}
+func (*GetWalletListRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{8} }
 
 const Default_GetWalletListRequest_Refresh bool = false
 
@@ -411,9 +426,10 @@ type GetWalletListResponse struct {
 	XXX_unrecognized []byte                  `json:"-"`
 }
 
-func (m *GetWalletListResponse) Reset()         { *m = GetWalletListResponse{} }
-func (m *GetWalletListResponse) String() string { return proto.CompactTextString(m) }
-func (*GetWalletListResponse) ProtoMessage()    {}
+func (m *GetWalletListResponse) Reset()                    { *m = GetWalletListResponse{} }
+func (m *GetWalletListResponse) String() string            { return proto.CompactTextString(m) }
+func (*GetWalletListResponse) ProtoMessage()               {}
+func (*GetWalletListResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9} }
 
 func (m *GetWalletListResponse) GetWallets() []*account_types.Wallet {
 	if m != nil {
@@ -429,9 +445,10 @@ type GetEBalanceRequest struct {
 	XXX_unrecognized   []byte                   `json:"-"`
 }
 
-func (m *GetEBalanceRequest) Reset()         { *m = GetEBalanceRequest{} }
-func (m *GetEBalanceRequest) String() string { return proto.CompactTextString(m) }
-func (*GetEBalanceRequest) ProtoMessage()    {}
+func (m *GetEBalanceRequest) Reset()                    { *m = GetEBalanceRequest{} }
+func (m *GetEBalanceRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetEBalanceRequest) ProtoMessage()               {}
+func (*GetEBalanceRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{10} }
 
 func (m *GetEBalanceRequest) GetAccountId() *account_types.AccountId {
 	if m != nil {
@@ -459,9 +476,10 @@ type GetEBalanceResponse struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *GetEBalanceResponse) Reset()         { *m = GetEBalanceResponse{} }
-func (m *GetEBalanceResponse) String() string { return proto.CompactTextString(m) }
-func (*GetEBalanceResponse) ProtoMessage()    {}
+func (m *GetEBalanceResponse) Reset()                    { *m = GetEBalanceResponse{} }
+func (m *GetEBalanceResponse) String() string            { return proto.CompactTextString(m) }
+func (*GetEBalanceResponse) ProtoMessage()               {}
+func (*GetEBalanceResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{11} }
 
 func (m *GetEBalanceResponse) GetBalance() string {
 	if m != nil && m.Balance != nil {
@@ -475,9 +493,10 @@ type GetEBalanceRestrictionsRequest struct {
 	XXX_unrecognized   []byte  `json:"-"`
 }
 
-func (m *GetEBalanceRestrictionsRequest) Reset()         { *m = GetEBalanceRestrictionsRequest{} }
-func (m *GetEBalanceRestrictionsRequest) String() string { return proto.CompactTextString(m) }
-func (*GetEBalanceRestrictionsRequest) ProtoMessage()    {}
+func (m *GetEBalanceRestrictionsRequest) Reset()                    { *m = GetEBalanceRestrictionsRequest{} }
+func (m *GetEBalanceRestrictionsRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetEBalanceRestrictionsRequest) ProtoMessage()               {}
+func (*GetEBalanceRestrictionsRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{12} }
 
 func (m *GetEBalanceRestrictionsRequest) GetCurrencyHomeRegion() uint32 {
 	if m != nil && m.CurrencyHomeRegion != nil {
@@ -494,6 +513,9 @@ type GetEBalanceRestrictionsResponse struct {
 func (m *GetEBalanceRestrictionsResponse) Reset()         { *m = GetEBalanceRestrictionsResponse{} }
 func (m *GetEBalanceRestrictionsResponse) String() string { return proto.CompactTextString(m) }
 func (*GetEBalanceRestrictionsResponse) ProtoMessage()    {}
+func (*GetEBalanceRestrictionsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor0, []int{13}
+}
 
 func (m *GetEBalanceRestrictionsResponse) GetCurrencyRestrictions() []*account_types.CurrencyRestriction {
 	if m != nil {
@@ -507,9 +529,10 @@ type SubscriptionUpdateRequest struct {
 	XXX_unrecognized []byte                               `json:"-"`
 }
 
-func (m *SubscriptionUpdateRequest) Reset()         { *m = SubscriptionUpdateRequest{} }
-func (m *SubscriptionUpdateRequest) String() string { return proto.CompactTextString(m) }
-func (*SubscriptionUpdateRequest) ProtoMessage()    {}
+func (m *SubscriptionUpdateRequest) Reset()                    { *m = SubscriptionUpdateRequest{} }
+func (m *SubscriptionUpdateRequest) String() string            { return proto.CompactTextString(m) }
+func (*SubscriptionUpdateRequest) ProtoMessage()               {}
+func (*SubscriptionUpdateRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{14} }
 
 func (m *SubscriptionUpdateRequest) GetRef() []*account_types.SubscriberReference {
 	if m != nil {
@@ -523,9 +546,10 @@ type SubscriptionUpdateResponse struct {
 	XXX_unrecognized []byte                               `json:"-"`
 }
 
-func (m *SubscriptionUpdateResponse) Reset()         { *m = SubscriptionUpdateResponse{} }
-func (m *SubscriptionUpdateResponse) String() string { return proto.CompactTextString(m) }
-func (*SubscriptionUpdateResponse) ProtoMessage()    {}
+func (m *SubscriptionUpdateResponse) Reset()                    { *m = SubscriptionUpdateResponse{} }
+func (m *SubscriptionUpdateResponse) String() string            { return proto.CompactTextString(m) }
+func (*SubscriptionUpdateResponse) ProtoMessage()               {}
+func (*SubscriptionUpdateResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{15} }
 
 func (m *SubscriptionUpdateResponse) GetRef() []*account_types.SubscriberReference {
 	if m != nil {
@@ -540,9 +564,10 @@ type IsIgrAddressRequest struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *IsIgrAddressRequest) Reset()         { *m = IsIgrAddressRequest{} }
-func (m *IsIgrAddressRequest) String() string { return proto.CompactTextString(m) }
-func (*IsIgrAddressRequest) ProtoMessage()    {}
+func (m *IsIgrAddressRequest) Reset()                    { *m = IsIgrAddressRequest{} }
+func (m *IsIgrAddressRequest) String() string            { return proto.CompactTextString(m) }
+func (*IsIgrAddressRequest) ProtoMessage()               {}
+func (*IsIgrAddressRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{16} }
 
 func (m *IsIgrAddressRequest) GetClientAddress() string {
 	if m != nil && m.ClientAddress != nil {
@@ -564,9 +589,10 @@ type AccountServiceRegion struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *AccountServiceRegion) Reset()         { *m = AccountServiceRegion{} }
-func (m *AccountServiceRegion) String() string { return proto.CompactTextString(m) }
-func (*AccountServiceRegion) ProtoMessage()    {}
+func (m *AccountServiceRegion) Reset()                    { *m = AccountServiceRegion{} }
+func (m *AccountServiceRegion) String() string            { return proto.CompactTextString(m) }
+func (*AccountServiceRegion) ProtoMessage()               {}
+func (*AccountServiceRegion) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{17} }
 
 func (m *AccountServiceRegion) GetId() uint32 {
 	if m != nil && m.Id != nil {
@@ -587,9 +613,10 @@ type AccountServiceConfig struct {
 	XXX_unrecognized []byte                  `json:"-"`
 }
 
-func (m *AccountServiceConfig) Reset()         { *m = AccountServiceConfig{} }
-func (m *AccountServiceConfig) String() string { return proto.CompactTextString(m) }
-func (*AccountServiceConfig) ProtoMessage()    {}
+func (m *AccountServiceConfig) Reset()                    { *m = AccountServiceConfig{} }
+func (m *AccountServiceConfig) String() string            { return proto.CompactTextString(m) }
+func (*AccountServiceConfig) ProtoMessage()               {}
+func (*AccountServiceConfig) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{18} }
 
 func (m *AccountServiceConfig) GetRegion() []*AccountServiceRegion {
 	if m != nil {
@@ -607,9 +634,10 @@ type GetAccountStateRequest struct {
 	XXX_unrecognized []byte                             `json:"-"`
 }
 
-func (m *GetAccountStateRequest) Reset()         { *m = GetAccountStateRequest{} }
-func (m *GetAccountStateRequest) String() string { return proto.CompactTextString(m) }
-func (*GetAccountStateRequest) ProtoMessage()    {}
+func (m *GetAccountStateRequest) Reset()                    { *m = GetAccountStateRequest{} }
+func (m *GetAccountStateRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetAccountStateRequest) ProtoMessage()               {}
+func (*GetAccountStateRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{19} }
 
 func (m *GetAccountStateRequest) GetEntityId() *entity.EntityId {
 	if m != nil {
@@ -652,9 +680,10 @@ type GetAccountStateResponse struct {
 	XXX_unrecognized []byte                          `json:"-"`
 }
 
-func (m *GetAccountStateResponse) Reset()         { *m = GetAccountStateResponse{} }
-func (m *GetAccountStateResponse) String() string { return proto.CompactTextString(m) }
-func (*GetAccountStateResponse) ProtoMessage()    {}
+func (m *GetAccountStateResponse) Reset()                    { *m = GetAccountStateResponse{} }
+func (m *GetAccountStateResponse) String() string            { return proto.CompactTextString(m) }
+func (*GetAccountStateResponse) ProtoMessage()               {}
+func (*GetAccountStateResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{20} }
 
 func (m *GetAccountStateResponse) GetState() *account_types.AccountState {
 	if m != nil {
@@ -678,9 +707,10 @@ type GetGameAccountStateRequest struct {
 	XXX_unrecognized []byte                                 `json:"-"`
 }
 
-func (m *GetGameAccountStateRequest) Reset()         { *m = GetGameAccountStateRequest{} }
-func (m *GetGameAccountStateRequest) String() string { return proto.CompactTextString(m) }
-func (*GetGameAccountStateRequest) ProtoMessage()    {}
+func (m *GetGameAccountStateRequest) Reset()                    { *m = GetGameAccountStateRequest{} }
+func (m *GetGameAccountStateRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetGameAccountStateRequest) ProtoMessage()               {}
+func (*GetGameAccountStateRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{21} }
 
 func (m *GetGameAccountStateRequest) GetAccountId() *entity.EntityId {
 	if m != nil {
@@ -716,9 +746,10 @@ type GetGameAccountStateResponse struct {
 	XXX_unrecognized []byte                              `json:"-"`
 }
 
-func (m *GetGameAccountStateResponse) Reset()         { *m = GetGameAccountStateResponse{} }
-func (m *GetGameAccountStateResponse) String() string { return proto.CompactTextString(m) }
-func (*GetGameAccountStateResponse) ProtoMessage()    {}
+func (m *GetGameAccountStateResponse) Reset()                    { *m = GetGameAccountStateResponse{} }
+func (m *GetGameAccountStateResponse) String() string            { return proto.CompactTextString(m) }
+func (*GetGameAccountStateResponse) ProtoMessage()               {}
+func (*GetGameAccountStateResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{22} }
 
 func (m *GetGameAccountStateResponse) GetState() *account_types.GameAccountState {
 	if m != nil {
@@ -744,9 +775,10 @@ type GetLicensesRequest struct {
 	XXX_unrecognized          []byte           `json:"-"`
 }
 
-func (m *GetLicensesRequest) Reset()         { *m = GetLicensesRequest{} }
-func (m *GetLicensesRequest) String() string { return proto.CompactTextString(m) }
-func (*GetLicensesRequest) ProtoMessage()    {}
+func (m *GetLicensesRequest) Reset()                    { *m = GetLicensesRequest{} }
+func (m *GetLicensesRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetLicensesRequest) ProtoMessage()               {}
+func (*GetLicensesRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{23} }
 
 const Default_GetLicensesRequest_ExcludeUnknownProgram bool = false
 
@@ -797,9 +829,10 @@ type GetLicensesResponse struct {
 	XXX_unrecognized []byte                          `json:"-"`
 }
 
-func (m *GetLicensesResponse) Reset()         { *m = GetLicensesResponse{} }
-func (m *GetLicensesResponse) String() string { return proto.CompactTextString(m) }
-func (*GetLicensesResponse) ProtoMessage()    {}
+func (m *GetLicensesResponse) Reset()                    { *m = GetLicensesResponse{} }
+func (m *GetLicensesResponse) String() string            { return proto.CompactTextString(m) }
+func (*GetLicensesResponse) ProtoMessage()               {}
+func (*GetLicensesResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{24} }
 
 func (m *GetLicensesResponse) GetLicenses() []*account_types.AccountLicense {
 	if m != nil {
@@ -813,9 +846,10 @@ type GetGameSessionInfoRequest struct {
 	XXX_unrecognized []byte           `json:"-"`
 }
 
-func (m *GetGameSessionInfoRequest) Reset()         { *m = GetGameSessionInfoRequest{} }
-func (m *GetGameSessionInfoRequest) String() string { return proto.CompactTextString(m) }
-func (*GetGameSessionInfoRequest) ProtoMessage()    {}
+func (m *GetGameSessionInfoRequest) Reset()                    { *m = GetGameSessionInfoRequest{} }
+func (m *GetGameSessionInfoRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetGameSessionInfoRequest) ProtoMessage()               {}
+func (*GetGameSessionInfoRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{25} }
 
 func (m *GetGameSessionInfoRequest) GetEntityId() *entity.EntityId {
 	if m != nil {
@@ -829,9 +863,10 @@ type GetGameSessionInfoResponse struct {
 	XXX_unrecognized []byte                         `json:"-"`
 }
 
-func (m *GetGameSessionInfoResponse) Reset()         { *m = GetGameSessionInfoResponse{} }
-func (m *GetGameSessionInfoResponse) String() string { return proto.CompactTextString(m) }
-func (*GetGameSessionInfoResponse) ProtoMessage()    {}
+func (m *GetGameSessionInfoResponse) Reset()                    { *m = GetGameSessionInfoResponse{} }
+func (m *GetGameSessionInfoResponse) String() string            { return proto.CompactTextString(m) }
+func (*GetGameSessionInfoResponse) ProtoMessage()               {}
+func (*GetGameSessionInfoResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{26} }
 
 func (m *GetGameSessionInfoResponse) GetSessionInfo() *account_types.GameSessionInfo {
 	if m != nil {
@@ -849,6 +884,9 @@ type GetGameTimeRemainingInfoRequest struct {
 func (m *GetGameTimeRemainingInfoRequest) Reset()         { *m = GetGameTimeRemainingInfoRequest{} }
 func (m *GetGameTimeRemainingInfoRequest) String() string { return proto.CompactTextString(m) }
 func (*GetGameTimeRemainingInfoRequest) ProtoMessage()    {}
+func (*GetGameTimeRemainingInfoRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor0, []int{27}
+}
 
 func (m *GetGameTimeRemainingInfoRequest) GetGameAccountId() *entity.EntityId {
 	if m != nil {
@@ -872,6 +910,9 @@ type GetGameTimeRemainingInfoResponse struct {
 func (m *GetGameTimeRemainingInfoResponse) Reset()         { *m = GetGameTimeRemainingInfoResponse{} }
 func (m *GetGameTimeRemainingInfoResponse) String() string { return proto.CompactTextString(m) }
 func (*GetGameTimeRemainingInfoResponse) ProtoMessage()    {}
+func (*GetGameTimeRemainingInfoResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor0, []int{28}
+}
 
 func (m *GetGameTimeRemainingInfoResponse) GetGameTimeRemainingInfo() *account_types.GameTimeRemainingInfo {
 	if m != nil {
@@ -885,9 +926,10 @@ type GetCAISInfoRequest struct {
 	XXX_unrecognized []byte           `json:"-"`
 }
 
-func (m *GetCAISInfoRequest) Reset()         { *m = GetCAISInfoRequest{} }
-func (m *GetCAISInfoRequest) String() string { return proto.CompactTextString(m) }
-func (*GetCAISInfoRequest) ProtoMessage()    {}
+func (m *GetCAISInfoRequest) Reset()                    { *m = GetCAISInfoRequest{} }
+func (m *GetCAISInfoRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetCAISInfoRequest) ProtoMessage()               {}
+func (*GetCAISInfoRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{29} }
 
 func (m *GetCAISInfoRequest) GetEntityId() *entity.EntityId {
 	if m != nil {
@@ -901,9 +943,10 @@ type GetCAISInfoResponse struct {
 	XXX_unrecognized []byte              `json:"-"`
 }
 
-func (m *GetCAISInfoResponse) Reset()         { *m = GetCAISInfoResponse{} }
-func (m *GetCAISInfoResponse) String() string { return proto.CompactTextString(m) }
-func (*GetCAISInfoResponse) ProtoMessage()    {}
+func (m *GetCAISInfoResponse) Reset()                    { *m = GetCAISInfoResponse{} }
+func (m *GetCAISInfoResponse) String() string            { return proto.CompactTextString(m) }
+func (*GetCAISInfoResponse) ProtoMessage()               {}
+func (*GetCAISInfoResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{30} }
 
 func (m *GetCAISInfoResponse) GetCaisInfo() *account_types.CAIS {
 	if m != nil {
@@ -917,9 +960,10 @@ type ForwardCacheExpireRequest struct {
 	XXX_unrecognized []byte           `json:"-"`
 }
 
-func (m *ForwardCacheExpireRequest) Reset()         { *m = ForwardCacheExpireRequest{} }
-func (m *ForwardCacheExpireRequest) String() string { return proto.CompactTextString(m) }
-func (*ForwardCacheExpireRequest) ProtoMessage()    {}
+func (m *ForwardCacheExpireRequest) Reset()                    { *m = ForwardCacheExpireRequest{} }
+func (m *ForwardCacheExpireRequest) String() string            { return proto.CompactTextString(m) }
+func (*ForwardCacheExpireRequest) ProtoMessage()               {}
+func (*ForwardCacheExpireRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{31} }
 
 func (m *ForwardCacheExpireRequest) GetEntityId() *entity.EntityId {
 	if m != nil {
@@ -936,9 +980,10 @@ type AccountStateNotification struct {
 	XXX_unrecognized      []byte                          `json:"-"`
 }
 
-func (m *AccountStateNotification) Reset()         { *m = AccountStateNotification{} }
-func (m *AccountStateNotification) String() string { return proto.CompactTextString(m) }
-func (*AccountStateNotification) ProtoMessage()    {}
+func (m *AccountStateNotification) Reset()                    { *m = AccountStateNotification{} }
+func (m *AccountStateNotification) String() string            { return proto.CompactTextString(m) }
+func (*AccountStateNotification) ProtoMessage()               {}
+func (*AccountStateNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{32} }
 
 func (m *AccountStateNotification) GetState() *account_types.AccountState {
 	if m != nil {
@@ -976,9 +1021,10 @@ type GameAccountStateNotification struct {
 	XXX_unrecognized      []byte                              `json:"-"`
 }
 
-func (m *GameAccountStateNotification) Reset()         { *m = GameAccountStateNotification{} }
-func (m *GameAccountStateNotification) String() string { return proto.CompactTextString(m) }
-func (*GameAccountStateNotification) ProtoMessage()    {}
+func (m *GameAccountStateNotification) Reset()                    { *m = GameAccountStateNotification{} }
+func (m *GameAccountStateNotification) String() string            { return proto.CompactTextString(m) }
+func (*GameAccountStateNotification) ProtoMessage()               {}
+func (*GameAccountStateNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{33} }
 
 func (m *GameAccountStateNotification) GetState() *account_types.GameAccountState {
 	if m != nil {
@@ -1015,9 +1061,10 @@ type GameAccountNotification struct {
 	XXX_unrecognized []byte                           `json:"-"`
 }
 
-func (m *GameAccountNotification) Reset()         { *m = GameAccountNotification{} }
-func (m *GameAccountNotification) String() string { return proto.CompactTextString(m) }
-func (*GameAccountNotification) ProtoMessage()    {}
+func (m *GameAccountNotification) Reset()                    { *m = GameAccountNotification{} }
+func (m *GameAccountNotification) String() string            { return proto.CompactTextString(m) }
+func (*GameAccountNotification) ProtoMessage()               {}
+func (*GameAccountNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{34} }
 
 func (m *GameAccountNotification) GetRegionDelta() []*account_types.GameAccountList {
 	if m != nil {
@@ -1046,9 +1093,10 @@ type GameAccountSessionNotification struct {
 	XXX_unrecognized []byte                               `json:"-"`
 }
 
-func (m *GameAccountSessionNotification) Reset()         { *m = GameAccountSessionNotification{} }
-func (m *GameAccountSessionNotification) String() string { return proto.CompactTextString(m) }
-func (*GameAccountSessionNotification) ProtoMessage()    {}
+func (m *GameAccountSessionNotification) Reset()                    { *m = GameAccountSessionNotification{} }
+func (m *GameAccountSessionNotification) String() string            { return proto.CompactTextString(m) }
+func (*GameAccountSessionNotification) ProtoMessage()               {}
+func (*GameAccountSessionNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{35} }
 
 func (m *GameAccountSessionNotification) GetGameAccount() *account_types.GameAccountHandle {
 	if m != nil {
@@ -1062,4 +1110,137 @@ func (m *GameAccountSessionNotification) GetSessionInfo() *account_types.GameSes
 		return m.SessionInfo
 	}
 	return nil
+}
+
+func init() {
+	proto.RegisterType((*GetAccountRequest)(nil), "account_service.GetAccountRequest")
+	proto.RegisterType((*GetAccountResponse)(nil), "account_service.GetAccountResponse")
+	proto.RegisterType((*CreateGameAccountRequest)(nil), "account_service.CreateGameAccountRequest")
+	proto.RegisterType((*CacheExpireRequest)(nil), "account_service.CacheExpireRequest")
+	proto.RegisterType((*CredentialUpdateRequest)(nil), "account_service.CredentialUpdateRequest")
+	proto.RegisterType((*CredentialUpdateResponse)(nil), "account_service.CredentialUpdateResponse")
+	proto.RegisterType((*FlagUpdateRequest)(nil), "account_service.FlagUpdateRequest")
+	proto.RegisterType((*FlagUpdateResponse)(nil), "account_service.FlagUpdateResponse")
+	proto.RegisterType((*GetWalletListRequest)(nil), "account_service.GetWalletListRequest")
+	proto.RegisterType((*GetWalletListResponse)(nil), "account_service.GetWalletListResponse")
+	proto.RegisterType((*GetEBalanceRequest)(nil), "account_service.GetEBalanceRequest")
+	proto.RegisterType((*GetEBalanceResponse)(nil), "account_service.GetEBalanceResponse")
+	proto.RegisterType((*GetEBalanceRestrictionsRequest)(nil), "account_service.GetEBalanceRestrictionsRequest")
+	proto.RegisterType((*GetEBalanceRestrictionsResponse)(nil), "account_service.GetEBalanceRestrictionsResponse")
+	proto.RegisterType((*SubscriptionUpdateRequest)(nil), "account_service.SubscriptionUpdateRequest")
+	proto.RegisterType((*SubscriptionUpdateResponse)(nil), "account_service.SubscriptionUpdateResponse")
+	proto.RegisterType((*IsIgrAddressRequest)(nil), "account_service.IsIgrAddressRequest")
+	proto.RegisterType((*AccountServiceRegion)(nil), "account_service.AccountServiceRegion")
+	proto.RegisterType((*AccountServiceConfig)(nil), "account_service.AccountServiceConfig")
+	proto.RegisterType((*GetAccountStateRequest)(nil), "account_service.GetAccountStateRequest")
+	proto.RegisterType((*GetAccountStateResponse)(nil), "account_service.GetAccountStateResponse")
+	proto.RegisterType((*GetGameAccountStateRequest)(nil), "account_service.GetGameAccountStateRequest")
+	proto.RegisterType((*GetGameAccountStateResponse)(nil), "account_service.GetGameAccountStateResponse")
+	proto.RegisterType((*GetLicensesRequest)(nil), "account_service.GetLicensesRequest")
+	proto.RegisterType((*GetLicensesResponse)(nil), "account_service.GetLicensesResponse")
+	proto.RegisterType((*GetGameSessionInfoRequest)(nil), "account_service.GetGameSessionInfoRequest")
+	proto.RegisterType((*GetGameSessionInfoResponse)(nil), "account_service.GetGameSessionInfoResponse")
+	proto.RegisterType((*GetGameTimeRemainingInfoRequest)(nil), "account_service.GetGameTimeRemainingInfoRequest")
+	proto.RegisterType((*GetGameTimeRemainingInfoResponse)(nil), "account_service.GetGameTimeRemainingInfoResponse")
+	proto.RegisterType((*GetCAISInfoRequest)(nil), "account_service.GetCAISInfoRequest")
+	proto.RegisterType((*GetCAISInfoResponse)(nil), "account_service.GetCAISInfoResponse")
+	proto.RegisterType((*ForwardCacheExpireRequest)(nil), "account_service.ForwardCacheExpireRequest")
+	proto.RegisterType((*AccountStateNotification)(nil), "account_service.AccountStateNotification")
+	proto.RegisterType((*GameAccountStateNotification)(nil), "account_service.GameAccountStateNotification")
+	proto.RegisterType((*GameAccountNotification)(nil), "account_service.GameAccountNotification")
+	proto.RegisterType((*GameAccountSessionNotification)(nil), "account_service.GameAccountSessionNotification")
+}
+
+var fileDescriptor0 = []byte{
+	// 1429 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xac, 0x57, 0xcb, 0x6e, 0xdb, 0x46,
+	0x17, 0x06, 0x29, 0x39, 0xb6, 0x8e, 0x2f, 0xb2, 0x19, 0x5f, 0x68, 0xc5, 0x7f, 0x9c, 0x9f, 0x71,
+	0x0d, 0xa7, 0x68, 0x6c, 0xd8, 0xbd, 0x21, 0x01, 0x92, 0xd6, 0x31, 0xe2, 0xc4, 0x68, 0x7a, 0x41,
+	0x9c, 0xa2, 0x9b, 0x02, 0xc4, 0x88, 0x1c, 0x49, 0x6c, 0x28, 0x52, 0xe5, 0x8c, 0xe2, 0x78, 0xd7,
+	0x45, 0xd1, 0x55, 0x97, 0xdd, 0xf6, 0x1d, 0xba, 0xe8, 0x13, 0x14, 0xe8, 0xa6, 0x6f, 0x50, 0xa0,
+	0x0f, 0xd3, 0xc3, 0x99, 0x11, 0x35, 0x64, 0x48, 0x5b, 0x0e, 0xba, 0x32, 0xcc, 0xf9, 0xce, 0xed,
+	0x3b, 0x57, 0xc1, 0x67, 0xdd, 0x80, 0xf7, 0x86, 0xed, 0x5d, 0x2f, 0xee, 0xef, 0x3d, 0xa5, 0x24,
+	0xe1, 0xbd, 0xd3, 0xa0, 0xbf, 0xd7, 0x63, 0x77, 0x07, 0x49, 0xcc, 0xe3, 0xbb, 0xdd, 0x78, 0xaf,
+	0x1d, 0x51, 0xbe, 0x47, 0x3c, 0x2f, 0x1e, 0x46, 0xdc, 0x65, 0x34, 0x79, 0x15, 0x78, 0xb4, 0xf8,
+	0xff, 0xae, 0x40, 0x5b, 0xcd, 0xc2, 0xe7, 0xd6, 0x93, 0xab, 0x69, 0xe7, 0xe7, 0x03, 0xca, 0xf2,
+	0xff, 0x49, 0xcd, 0xad, 0x7b, 0x93, 0x29, 0xa2, 0x11, 0x0f, 0xf8, 0xb9, 0xfa, 0x23, 0x45, 0x9d,
+	0xdf, 0x4c, 0x58, 0x7a, 0x42, 0xf9, 0xa1, 0xd4, 0xfa, 0x9c, 0x7e, 0x3f, 0xa4, 0x8c, 0x5b, 0xef,
+	0x41, 0x2d, 0xa1, 0x1d, 0xdb, 0xb8, 0x65, 0xec, 0xcc, 0x1e, 0x6c, 0xee, 0xe6, 0x6d, 0x66, 0xd8,
+	0x0e, 0x4d, 0x68, 0xe4, 0x51, 0xcb, 0x86, 0x46, 0x87, 0x72, 0xaf, 0xe7, 0x92, 0x30, 0xb4, 0x01,
+	0x65, 0x66, 0xee, 0x4f, 0x75, 0x48, 0xc8, 0xa8, 0xb5, 0x0e, 0x20, 0x5f, 0xda, 0x61, 0xdc, 0xb6,
+	0x67, 0xf5, 0xa7, 0x35, 0x98, 0x91, 0x4f, 0x81, 0x6f, 0xcf, 0xe9, 0x0f, 0x2d, 0x98, 0x95, 0x0f,
+	0xb4, 0x4f, 0x82, 0xd0, 0x9e, 0xd7, 0xdf, 0x36, 0x61, 0x51, 0xe9, 0x23, 0x9c, 0x87, 0xd4, 0xe5,
+	0xa4, 0x6b, 0x2f, 0xe8, 0x80, 0x9b, 0xd0, 0x94, 0x80, 0xce, 0x30, 0x0c, 0xdd, 0x88, 0xf4, 0xa9,
+	0xdd, 0x2c, 0x55, 0x1e, 0x06, 0xd1, 0x4b, 0x66, 0x2f, 0xea, 0x6f, 0xdb, 0xb0, 0x26, 0xdf, 0x06,
+	0x04, 0xe3, 0xe2, 0x24, 0x74, 0xbd, 0x38, 0xe2, 0x49, 0x1c, 0x32, 0x7b, 0x49, 0xc3, 0x39, 0x3f,
+	0x9b, 0x60, 0xe9, 0x94, 0xb1, 0x41, 0x1c, 0xa1, 0xf8, 0x0e, 0xd4, 0xb3, 0x28, 0x67, 0x0f, 0x5a,
+	0xe5, 0xa4, 0x3d, 0x42, 0x84, 0xb5, 0x05, 0xa6, 0x0a, 0x7a, 0xf6, 0xc0, 0x2e, 0xc7, 0x9d, 0xf8,
+	0xd6, 0x3c, 0x4c, 0x8d, 0x18, 0xa8, 0xed, 0x34, 0x2c, 0x0b, 0xa0, 0x10, 0x74, 0xc3, 0x5a, 0x42,
+	0xe2, 0x73, 0x71, 0x36, 0xac, 0xbb, 0x30, 0x35, 0x0a, 0xad, 0x86, 0xea, 0x6f, 0x16, 0xd4, 0x3f,
+	0x41, 0xa4, 0x32, 0xf1, 0x0c, 0x61, 0xd6, 0x21, 0xac, 0x14, 0xa3, 0x75, 0x83, 0xa8, 0x13, 0x8b,
+	0x88, 0x67, 0x0f, 0x9c, 0x82, 0xf8, 0x57, 0x0a, 0x7b, 0x24, 0xa1, 0x27, 0x88, 0x74, 0x7e, 0x34,
+	0xc0, 0x3e, 0x4a, 0x28, 0xe1, 0x54, 0x53, 0x3e, 0x2a, 0xa4, 0x3b, 0x30, 0xad, 0x34, 0xa8, 0x62,
+	0xaa, 0x8e, 0x77, 0x01, 0xae, 0x25, 0xb4, 0x1b, 0xc4, 0x91, 0x6d, 0x22, 0x72, 0xde, 0x6a, 0xc2,
+	0x34, 0x96, 0x68, 0x37, 0x21, 0x7d, 0xbb, 0x86, 0x1f, 0xa6, 0xad, 0x0d, 0x58, 0x42, 0x33, 0x61,
+	0xdf, 0x1d, 0xd0, 0xa4, 0x1f, 0x30, 0x86, 0x50, 0x66, 0xd7, 0x53, 0xec, 0x7d, 0x63, 0xdf, 0xf9,
+	0xc9, 0x00, 0xeb, 0x88, 0x78, 0x3d, 0xfa, 0xf8, 0xf5, 0x20, 0x48, 0x68, 0xa9, 0x03, 0xb5, 0x0b,
+	0x1d, 0xf8, 0x08, 0xe6, 0xba, 0x18, 0x81, 0x3b, 0xc2, 0x9b, 0x02, 0x7f, 0xab, 0x9a, 0xc1, 0xa7,
+	0x24, 0xf2, 0x43, 0x3a, 0x4e, 0x54, 0x2d, 0x4d, 0x94, 0xf3, 0x97, 0x01, 0x6b, 0xc8, 0x87, 0x9f,
+	0xb6, 0x19, 0x09, 0xbf, 0x1e, 0xf8, 0xc8, 0x4c, 0xa9, 0x37, 0xe6, 0x85, 0xde, 0xdc, 0x83, 0x66,
+	0x1c, 0xfa, 0xae, 0x97, 0x69, 0x62, 0x15, 0x0e, 0x29, 0x91, 0xb1, 0xc9, 0x54, 0x34, 0xa2, 0x67,
+	0x39, 0xd1, 0xda, 0x84, 0xa2, 0xe3, 0x24, 0x08, 0x62, 0x9d, 0x96, 0xc8, 0x6d, 0x21, 0x16, 0x59,
+	0xf0, 0x4e, 0x08, 0x4b, 0xc7, 0x21, 0xe9, 0xbe, 0x75, 0x84, 0xc5, 0x84, 0xcf, 0x41, 0xbd, 0x83,
+	0xfa, 0xd0, 0x57, 0x73, 0xa7, 0x9e, 0xbe, 0x12, 0x8f, 0x07, 0xaf, 0x28, 0x7a, 0x62, 0xee, 0xcc,
+	0x38, 0xcb, 0x60, 0xe9, 0xd6, 0x94, 0x0f, 0xdf, 0xc2, 0x32, 0xb6, 0xe2, 0x37, 0x38, 0x78, 0x28,
+	0x16, 0x34, 0xd3, 0x06, 0x18, 0x8c, 0xcc, 0x62, 0xab, 0x5d, 0xe6, 0xc9, 0x2a, 0x4c, 0xe3, 0xb8,
+	0x4b, 0x28, 0xeb, 0x09, 0x57, 0xb2, 0x4e, 0xff, 0x04, 0x56, 0x0a, 0xda, 0x55, 0xaf, 0x6f, 0xc3,
+	0xf4, 0x99, 0xf8, 0xca, 0x54, 0x55, 0xad, 0x14, 0x74, 0x4b, 0x19, 0x27, 0x11, 0x93, 0xe2, 0xf1,
+	0x23, 0x12, 0x12, 0x1c, 0x94, 0x6f, 0xe7, 0xdc, 0x22, 0xcc, 0x78, 0xc3, 0x24, 0x9d, 0xb4, 0xe7,
+	0xe8, 0x9d, 0x89, 0x3d, 0xbe, 0x01, 0xcb, 0xa3, 0x2f, 0x6e, 0x2f, 0xc6, 0x8a, 0x55, 0x34, 0xd6,
+	0x44, 0xca, 0xb6, 0xe1, 0x7a, 0xce, 0xa6, 0x72, 0x19, 0xdb, 0xa9, 0x2d, 0x3f, 0x89, 0x4e, 0x6c,
+	0x38, 0x0f, 0xe1, 0x66, 0x1e, 0xc7, 0x93, 0x00, 0x09, 0x47, 0xf0, 0xc8, 0xcf, 0x2a, 0x3b, 0x86,
+	0xb0, 0xe3, 0xc3, 0x66, 0xa5, 0xbc, 0xb2, 0x89, 0xd3, 0x25, 0x53, 0x90, 0x68, 0x00, 0x45, 0x5a,
+	0x71, 0xba, 0x1c, 0x29, 0xac, 0xa6, 0xcb, 0x79, 0x06, 0xeb, 0xa7, 0xc3, 0x36, 0xf3, 0x92, 0x60,
+	0x90, 0xfe, 0x9f, 0x2f, 0xb6, 0x3d, 0xb9, 0xa6, 0xcc, 0x52, 0x6d, 0x4a, 0xac, 0x4d, 0x93, 0x6c,
+	0x53, 0x39, 0x9f, 0x43, 0xab, 0x4c, 0x9b, 0x72, 0x77, 0x6f, 0xb4, 0xf5, 0x26, 0x55, 0xf7, 0x00,
+	0xae, 0x9f, 0xb0, 0x93, 0x6e, 0x72, 0xe8, 0xfb, 0x18, 0x5e, 0xc6, 0xdb, 0x2a, 0x2c, 0x78, 0x61,
+	0x80, 0x3d, 0xe3, 0x12, 0xf9, 0x20, 0x19, 0x2f, 0x16, 0xbc, 0xb3, 0x0f, 0xcb, 0x2a, 0xcd, 0xa7,
+	0xf2, 0x22, 0x78, 0x2e, 0x5e, 0x71, 0xd2, 0x9b, 0xaa, 0x2e, 0xe6, 0xd3, 0xe1, 0xc2, 0x7a, 0x24,
+	0xf1, 0x65, 0xea, 0x31, 0x80, 0x82, 0x08, 0x4e, 0xe2, 0x4e, 0xd0, 0xb5, 0x3e, 0xcc, 0x54, 0x4b,
+	0xef, 0xdf, 0xd9, 0x2d, 0xde, 0x20, 0x65, 0x96, 0x9c, 0x3f, 0x0c, 0x58, 0x1d, 0xaf, 0xb2, 0x53,
+	0xae, 0x71, 0x7b, 0x1b, 0x1a, 0xf2, 0x50, 0x90, 0x35, 0x9a, 0xce, 0xee, 0xc5, 0x5d, 0x75, 0x3a,
+	0x3c, 0x16, 0x7f, 0xb0, 0x36, 0xb5, 0x19, 0x2d, 0x7b, 0x78, 0x1c, 0xa2, 0x28, 0x46, 0xeb, 0x7d,
+	0x98, 0x8e, 0x07, 0x32, 0xe7, 0x50, 0xba, 0x51, 0x94, 0xe9, 0xe3, 0x80, 0x86, 0xfe, 0x97, 0x12,
+	0x89, 0x3b, 0xac, 0x8e, 0x3b, 0x8e, 0xa9, 0x4d, 0xba, 0x79, 0x81, 0xc4, 0x0b, 0x84, 0x39, 0x1c,
+	0xd6, 0xde, 0x88, 0x41, 0x65, 0xf4, 0x5d, 0x64, 0x2f, 0xfd, 0xa0, 0x02, 0xb8, 0x51, 0xae, 0x4a,
+	0xc8, 0x64, 0x56, 0xcd, 0xc9, 0xac, 0xfe, 0x6d, 0x40, 0x0b, 0xcd, 0x6a, 0xeb, 0x20, 0x47, 0xdf,
+	0x56, 0xa1, 0xc7, 0xcb, 0xf9, 0xbb, 0x03, 0x4d, 0x7d, 0xe5, 0xa4, 0x50, 0xb3, 0x02, 0xfa, 0x71,
+	0x91, 0xc9, 0xed, 0xea, 0xc5, 0x94, 0x63, 0x73, 0x3f, 0xc7, 0xe6, 0xed, 0x4b, 0xa4, 0x44, 0x6c,
+	0x3f, 0x18, 0x70, 0xa3, 0x34, 0x36, 0x45, 0xeb, 0x6e, 0x9e, 0xd6, 0xcd, 0x6a, 0x9d, 0x92, 0xda,
+	0xfd, 0x1c, 0xb5, 0x13, 0xb9, 0xf0, 0x8f, 0x21, 0x46, 0xe7, 0x33, 0xac, 0x55, 0xb4, 0xc8, 0xb4,
+	0xaa, 0xe4, 0x24, 0xe9, 0xd2, 0x0b, 0x59, 0xc5, 0xb9, 0x95, 0x22, 0x46, 0x56, 0x42, 0xa5, 0x43,
+	0xce, 0x76, 0xeb, 0xff, 0xb0, 0x9e, 0xbe, 0xe6, 0x78, 0xcf, 0x20, 0x35, 0x01, 0xd9, 0x82, 0x8d,
+	0x14, 0xe2, 0x9f, 0xe3, 0x61, 0x15, 0x78, 0x6f, 0xa2, 0xea, 0x02, 0x85, 0x7d, 0xaa, 0x8a, 0x3f,
+	0x75, 0x66, 0x4a, 0xdc, 0x28, 0x78, 0x43, 0xd2, 0xd7, 0x5e, 0x38, 0xf4, 0xa9, 0x3b, 0x8c, 0x5e,
+	0x46, 0xf1, 0x59, 0xe4, 0x8e, 0x1a, 0xe4, 0x9a, 0xbe, 0x59, 0x8e, 0xc5, 0x90, 0x1e, 0x47, 0x97,
+	0x4d, 0xa0, 0x99, 0xcc, 0x88, 0x6c, 0xe4, 0xff, 0x95, 0xd7, 0xa1, 0x92, 0x74, 0x3e, 0x85, 0x75,
+	0x95, 0xa8, 0x53, 0x2a, 0x2e, 0xa2, 0xf4, 0x24, 0xbb, 0x4a, 0x0b, 0x3b, 0xcf, 0xb3, 0x32, 0xce,
+	0x69, 0x50, 0x0e, 0x7d, 0x00, 0x73, 0x4c, 0x7e, 0x96, 0x67, 0xa1, 0xcc, 0x60, 0xd9, 0x55, 0xa9,
+	0x49, 0xe3, 0xda, 0xdb, 0x54, 0x3a, 0x5f, 0x04, 0x7d, 0x2c, 0x1b, 0xbc, 0x8e, 0xa2, 0x20, 0xea,
+	0xea, 0xbe, 0x95, 0x54, 0x7e, 0x55, 0x3a, 0xf3, 0xad, 0x54, 0xd1, 0x1f, 0xce, 0x77, 0x70, 0xab,
+	0xda, 0xa6, 0x8a, 0xe6, 0x18, 0x6c, 0x61, 0x94, 0x07, 0x62, 0x99, 0x29, 0x88, 0x8c, 0x4c, 0x5a,
+	0xdf, 0x2a, 0x89, 0xec, 0x0d, 0x7d, 0xce, 0x3d, 0x51, 0x9b, 0x47, 0x87, 0x27, 0xa7, 0x57, 0xa6,
+	0xfb, 0x81, 0x48, 0xfc, 0x58, 0x34, 0x3b, 0x28, 0x1a, 0x1e, 0x09, 0x98, 0xee, 0xca, 0xf5, 0xe2,
+	0x76, 0x44, 0x99, 0x34, 0xdf, 0xc7, 0x71, 0x72, 0x86, 0x0b, 0xa1, 0xe4, 0xd6, 0x9d, 0xc8, 0x81,
+	0xdf, 0xf1, 0x5c, 0xd7, 0x9b, 0xf3, 0x8b, 0x98, 0x07, 0x9d, 0xc0, 0x23, 0xe9, 0xb0, 0xb8, 0xd2,
+	0xbc, 0x5c, 0x81, 0x79, 0x96, 0xed, 0xc4, 0x51, 0x66, 0xea, 0xb8, 0x89, 0xe6, 0x32, 0xa1, 0xb4,
+	0xe7, 0x6b, 0x13, 0x8d, 0x53, 0xfc, 0xe1, 0xb6, 0xca, 0xb4, 0xcd, 0x8c, 0x3f, 0x46, 0xfa, 0x03,
+	0xbc, 0xa0, 0xa8, 0x2f, 0x9b, 0xcd, 0xf9, 0xd3, 0x80, 0x8d, 0xe2, 0x5c, 0xc9, 0xb9, 0x7e, 0xd5,
+	0x99, 0x54, 0xe1, 0xfe, 0x43, 0x58, 0xca, 0xd5, 0xa5, 0x16, 0xc3, 0x24, 0x73, 0xeb, 0xd2, 0x38,
+	0x7e, 0xc5, 0x5f, 0x07, 0x9a, 0x60, 0x2e, 0x04, 0x6c, 0x36, 0xb9, 0x3c, 0x5d, 0x9f, 0x86, 0x9c,
+	0xa8, 0x09, 0x70, 0xe1, 0x4f, 0x38, 0xcc, 0xfa, 0x7f, 0x9a, 0x07, 0xe7, 0x17, 0x03, 0xcf, 0x42,
+	0x8d, 0x2b, 0xd9, 0xd5, 0x39, 0x37, 0x8b, 0xbf, 0x93, 0x24, 0xe1, 0x97, 0xff, 0x4e, 0xba, 0x5f,
+	0x3a, 0x4b, 0xb6, 0xaa, 0x67, 0x89, 0x3c, 0xcf, 0xd2, 0x3e, 0x39, 0x58, 0x84, 0x85, 0xfc, 0x01,
+	0x73, 0xd0, 0x84, 0x79, 0x9d, 0xc3, 0xf3, 0x7f, 0x03, 0x00, 0x00, 0xff, 0xff, 0x4b, 0x32, 0xfd,
+	0x66, 0xac, 0x11, 0x00, 0x00,
 }

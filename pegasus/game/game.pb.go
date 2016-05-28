@@ -33,6 +33,7 @@ It has these top-level messages:
 	EntitiesChosen
 	HistoryBlock
 	HistoryMeta
+	ClientHistoryMeta
 	PowerHistoryCreateGame
 	PowerHistoryEntity
 	PowerHistoryHide
@@ -53,12 +54,18 @@ It has these top-level messages:
 package game
 
 import proto "github.com/golang/protobuf/proto"
+import fmt "fmt"
 import math "math"
 import shared "github.com/HearthSim/hs-proto-go/pegasus/shared"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
+var _ = fmt.Errorf
 var _ = math.Inf
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the proto package it is being compiled against.
+const _ = proto.ProtoPackageIsVersion1
 
 type Option_Type int32
 
@@ -95,6 +102,7 @@ func (x *Option_Type) UnmarshalJSON(data []byte) error {
 	*x = Option_Type(value)
 	return nil
 }
+func (Option_Type) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{3, 0} }
 
 type Handshake_PacketID int32
 
@@ -125,6 +133,7 @@ func (x *Handshake_PacketID) UnmarshalJSON(data []byte) error {
 	*x = Handshake_PacketID(value)
 	return nil
 }
+func (Handshake_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{5, 0} }
 
 type Ping_PacketID int32
 
@@ -155,6 +164,7 @@ func (x *Ping_PacketID) UnmarshalJSON(data []byte) error {
 	*x = Ping_PacketID(value)
 	return nil
 }
+func (Ping_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{6, 0} }
 
 type GetGameState_PacketID int32
 
@@ -185,6 +195,7 @@ func (x *GetGameState_PacketID) UnmarshalJSON(data []byte) error {
 	*x = GetGameState_PacketID(value)
 	return nil
 }
+func (GetGameState_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{7, 0} }
 
 type ChooseOption_PacketID int32
 
@@ -215,6 +226,7 @@ func (x *ChooseOption_PacketID) UnmarshalJSON(data []byte) error {
 	*x = ChooseOption_PacketID(value)
 	return nil
 }
+func (ChooseOption_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{8, 0} }
 
 type ChooseEntities_PacketID int32
 
@@ -245,6 +257,7 @@ func (x *ChooseEntities_PacketID) UnmarshalJSON(data []byte) error {
 	*x = ChooseEntities_PacketID(value)
 	return nil
 }
+func (ChooseEntities_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{9, 0} }
 
 type UserUI_PacketID int32
 
@@ -275,6 +288,7 @@ func (x *UserUI_PacketID) UnmarshalJSON(data []byte) error {
 	*x = UserUI_PacketID(value)
 	return nil
 }
+func (UserUI_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{11, 0} }
 
 type Concede_PacketID int32
 
@@ -305,6 +319,7 @@ func (x *Concede_PacketID) UnmarshalJSON(data []byte) error {
 	*x = Concede_PacketID(value)
 	return nil
 }
+func (Concede_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{12, 0} }
 
 type InviteToSpectate_PacketID int32
 
@@ -334,6 +349,9 @@ func (x *InviteToSpectate_PacketID) UnmarshalJSON(data []byte) error {
 	}
 	*x = InviteToSpectate_PacketID(value)
 	return nil
+}
+func (InviteToSpectate_PacketID) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor0, []int{13, 0}
 }
 
 type RemoveSpectators_PacketID int32
@@ -365,6 +383,9 @@ func (x *RemoveSpectators_PacketID) UnmarshalJSON(data []byte) error {
 	*x = RemoveSpectators_PacketID(value)
 	return nil
 }
+func (RemoveSpectators_PacketID) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor0, []int{14, 0}
+}
 
 type Pong_PacketID int32
 
@@ -395,6 +416,7 @@ func (x *Pong_PacketID) UnmarshalJSON(data []byte) error {
 	*x = Pong_PacketID(value)
 	return nil
 }
+func (Pong_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{15, 0} }
 
 type GameSetup_PacketID int32
 
@@ -425,6 +447,7 @@ func (x *GameSetup_PacketID) UnmarshalJSON(data []byte) error {
 	*x = GameSetup_PacketID(value)
 	return nil
 }
+func (GameSetup_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{16, 0} }
 
 type DebugMessage_PacketID int32
 
@@ -455,6 +478,7 @@ func (x *DebugMessage_PacketID) UnmarshalJSON(data []byte) error {
 	*x = DebugMessage_PacketID(value)
 	return nil
 }
+func (DebugMessage_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{17, 0} }
 
 type AllOptions_PacketID int32
 
@@ -485,6 +509,7 @@ func (x *AllOptions_PacketID) UnmarshalJSON(data []byte) error {
 	*x = AllOptions_PacketID(value)
 	return nil
 }
+func (AllOptions_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{18, 0} }
 
 type NAckOption_PacketID int32
 
@@ -515,6 +540,7 @@ func (x *NAckOption_PacketID) UnmarshalJSON(data []byte) error {
 	*x = NAckOption_PacketID(value)
 	return nil
 }
+func (NAckOption_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{19, 0} }
 
 type EntityChoices_PacketID int32
 
@@ -545,6 +571,7 @@ func (x *EntityChoices_PacketID) UnmarshalJSON(data []byte) error {
 	*x = EntityChoices_PacketID(value)
 	return nil
 }
+func (EntityChoices_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{20, 0} }
 
 type EntitiesChosen_PacketID int32
 
@@ -575,10 +602,12 @@ func (x *EntitiesChosen_PacketID) UnmarshalJSON(data []byte) error {
 	*x = EntitiesChosen_PacketID(value)
 	return nil
 }
+func (EntitiesChosen_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{21, 0} }
 
 type HistoryBlock_Type int32
 
 const (
+	HistoryBlock_INVALID HistoryBlock_Type = 0
 	HistoryBlock_ATTACK  HistoryBlock_Type = 1
 	HistoryBlock_JOUST   HistoryBlock_Type = 2
 	HistoryBlock_POWER   HistoryBlock_Type = 3
@@ -586,9 +615,11 @@ const (
 	HistoryBlock_DEATHS  HistoryBlock_Type = 6
 	HistoryBlock_PLAY    HistoryBlock_Type = 7
 	HistoryBlock_FATIGUE HistoryBlock_Type = 8
+	HistoryBlock_RITUAL  HistoryBlock_Type = 9
 )
 
 var HistoryBlock_Type_name = map[int32]string{
+	0: "INVALID",
 	1: "ATTACK",
 	2: "JOUST",
 	3: "POWER",
@@ -596,8 +627,10 @@ var HistoryBlock_Type_name = map[int32]string{
 	6: "DEATHS",
 	7: "PLAY",
 	8: "FATIGUE",
+	9: "RITUAL",
 }
 var HistoryBlock_Type_value = map[string]int32{
+	"INVALID": 0,
 	"ATTACK":  1,
 	"JOUST":   2,
 	"POWER":   3,
@@ -605,6 +638,7 @@ var HistoryBlock_Type_value = map[string]int32{
 	"DEATHS":  6,
 	"PLAY":    7,
 	"FATIGUE": 8,
+	"RITUAL":  9,
 }
 
 func (x HistoryBlock_Type) Enum() *HistoryBlock_Type {
@@ -623,14 +657,16 @@ func (x *HistoryBlock_Type) UnmarshalJSON(data []byte) error {
 	*x = HistoryBlock_Type(value)
 	return nil
 }
+func (HistoryBlock_Type) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{22, 0} }
 
 type HistoryMeta_Type int32
 
 const (
-	HistoryMeta_TARGET  HistoryMeta_Type = 0
-	HistoryMeta_DAMAGE  HistoryMeta_Type = 1
-	HistoryMeta_HEALING HistoryMeta_Type = 2
-	HistoryMeta_JOUST   HistoryMeta_Type = 3
+	HistoryMeta_TARGET         HistoryMeta_Type = 0
+	HistoryMeta_DAMAGE         HistoryMeta_Type = 1
+	HistoryMeta_HEALING        HistoryMeta_Type = 2
+	HistoryMeta_JOUST          HistoryMeta_Type = 3
+	HistoryMeta_CLIENT_HISTORY HistoryMeta_Type = 4
 )
 
 var HistoryMeta_Type_name = map[int32]string{
@@ -638,12 +674,14 @@ var HistoryMeta_Type_name = map[int32]string{
 	1: "DAMAGE",
 	2: "HEALING",
 	3: "JOUST",
+	4: "CLIENT_HISTORY",
 }
 var HistoryMeta_Type_value = map[string]int32{
-	"TARGET":  0,
-	"DAMAGE":  1,
-	"HEALING": 2,
-	"JOUST":   3,
+	"TARGET":         0,
+	"DAMAGE":         1,
+	"HEALING":        2,
+	"JOUST":          3,
+	"CLIENT_HISTORY": 4,
 }
 
 func (x HistoryMeta_Type) Enum() *HistoryMeta_Type {
@@ -662,6 +700,44 @@ func (x *HistoryMeta_Type) UnmarshalJSON(data []byte) error {
 	*x = HistoryMeta_Type(value)
 	return nil
 }
+func (HistoryMeta_Type) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{23, 0} }
+
+type ClientHistoryMeta_Type int32
+
+const (
+	ClientHistoryMeta_INVALID            ClientHistoryMeta_Type = 0
+	ClientHistoryMeta_SHOW_BIG_CARD      ClientHistoryMeta_Type = 1
+	ClientHistoryMeta_EFFECT_TIMING_HINT ClientHistoryMeta_Type = 2
+)
+
+var ClientHistoryMeta_Type_name = map[int32]string{
+	0: "INVALID",
+	1: "SHOW_BIG_CARD",
+	2: "EFFECT_TIMING_HINT",
+}
+var ClientHistoryMeta_Type_value = map[string]int32{
+	"INVALID":            0,
+	"SHOW_BIG_CARD":      1,
+	"EFFECT_TIMING_HINT": 2,
+}
+
+func (x ClientHistoryMeta_Type) Enum() *ClientHistoryMeta_Type {
+	p := new(ClientHistoryMeta_Type)
+	*p = x
+	return p
+}
+func (x ClientHistoryMeta_Type) String() string {
+	return proto.EnumName(ClientHistoryMeta_Type_name, int32(x))
+}
+func (x *ClientHistoryMeta_Type) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ClientHistoryMeta_Type_value, data, "ClientHistoryMeta_Type")
+	if err != nil {
+		return err
+	}
+	*x = ClientHistoryMeta_Type(value)
+	return nil
+}
+func (ClientHistoryMeta_Type) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{24, 0} }
 
 type PowerHistory_PacketID int32
 
@@ -692,6 +768,7 @@ func (x *PowerHistory_PacketID) UnmarshalJSON(data []byte) error {
 	*x = PowerHistory_PacketID(value)
 	return nil
 }
+func (PowerHistory_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{33, 0} }
 
 type TurnTimer_PacketID int32
 
@@ -722,6 +799,7 @@ func (x *TurnTimer_PacketID) UnmarshalJSON(data []byte) error {
 	*x = TurnTimer_PacketID(value)
 	return nil
 }
+func (TurnTimer_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{34, 0} }
 
 type GameCanceled_Reason int32
 
@@ -752,6 +830,7 @@ func (x *GameCanceled_Reason) UnmarshalJSON(data []byte) error {
 	*x = GameCanceled_Reason(value)
 	return nil
 }
+func (GameCanceled_Reason) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{35, 0} }
 
 type GameCanceled_PacketID int32
 
@@ -782,6 +861,7 @@ func (x *GameCanceled_PacketID) UnmarshalJSON(data []byte) error {
 	*x = GameCanceled_PacketID(value)
 	return nil
 }
+func (GameCanceled_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{35, 1} }
 
 type SpectatorHandshake_PacketID int32
 
@@ -811,6 +891,9 @@ func (x *SpectatorHandshake_PacketID) UnmarshalJSON(data []byte) error {
 	}
 	*x = SpectatorHandshake_PacketID(value)
 	return nil
+}
+func (SpectatorHandshake_PacketID) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor0, []int{36, 0}
 }
 
 type ServerResult_Code int32
@@ -848,6 +931,7 @@ func (x *ServerResult_Code) UnmarshalJSON(data []byte) error {
 	*x = ServerResult_Code(value)
 	return nil
 }
+func (ServerResult_Code) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{37, 0} }
 
 type ServerResult_Constants int32
 
@@ -878,6 +962,7 @@ func (x *ServerResult_Constants) UnmarshalJSON(data []byte) error {
 	*x = ServerResult_Constants(value)
 	return nil
 }
+func (ServerResult_Constants) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{37, 1} }
 
 type ServerResult_PacketID int32
 
@@ -908,6 +993,7 @@ func (x *ServerResult_PacketID) UnmarshalJSON(data []byte) error {
 	*x = ServerResult_PacketID(value)
 	return nil
 }
+func (ServerResult_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{37, 2} }
 
 type SpectatorRemoved_SpectatorRemovedReason int32
 
@@ -941,6 +1027,9 @@ func (x *SpectatorRemoved_SpectatorRemovedReason) UnmarshalJSON(data []byte) err
 	*x = SpectatorRemoved_SpectatorRemovedReason(value)
 	return nil
 }
+func (SpectatorRemoved_SpectatorRemovedReason) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor0, []int{39, 0}
+}
 
 type SpectatorNotify_PacketID int32
 
@@ -971,6 +1060,7 @@ func (x *SpectatorNotify_PacketID) UnmarshalJSON(data []byte) error {
 	*x = SpectatorNotify_PacketID(value)
 	return nil
 }
+func (SpectatorNotify_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{40, 0} }
 
 type Tag struct {
 	Name             *int32 `protobuf:"varint,1,req,name=name" json:"name,omitempty"`
@@ -978,9 +1068,10 @@ type Tag struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *Tag) Reset()         { *m = Tag{} }
-func (m *Tag) String() string { return proto.CompactTextString(m) }
-func (*Tag) ProtoMessage()    {}
+func (m *Tag) Reset()                    { *m = Tag{} }
+func (m *Tag) String() string            { return proto.CompactTextString(m) }
+func (*Tag) ProtoMessage()               {}
+func (*Tag) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
 func (m *Tag) GetName() int32 {
 	if m != nil && m.Name != nil {
@@ -1002,9 +1093,10 @@ type Entity struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *Entity) Reset()         { *m = Entity{} }
-func (m *Entity) String() string { return proto.CompactTextString(m) }
-func (*Entity) ProtoMessage()    {}
+func (m *Entity) Reset()                    { *m = Entity{} }
+func (m *Entity) String() string            { return proto.CompactTextString(m) }
+func (*Entity) ProtoMessage()               {}
+func (*Entity) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
 func (m *Entity) GetId() int32 {
 	if m != nil && m.Id != nil {
@@ -1026,9 +1118,10 @@ type SubOption struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *SubOption) Reset()         { *m = SubOption{} }
-func (m *SubOption) String() string { return proto.CompactTextString(m) }
-func (*SubOption) ProtoMessage()    {}
+func (m *SubOption) Reset()                    { *m = SubOption{} }
+func (m *SubOption) String() string            { return proto.CompactTextString(m) }
+func (*SubOption) ProtoMessage()               {}
+func (*SubOption) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
 
 func (m *SubOption) GetId() int32 {
 	if m != nil && m.Id != nil {
@@ -1051,9 +1144,10 @@ type Option struct {
 	XXX_unrecognized []byte       `json:"-"`
 }
 
-func (m *Option) Reset()         { *m = Option{} }
-func (m *Option) String() string { return proto.CompactTextString(m) }
-func (*Option) ProtoMessage()    {}
+func (m *Option) Reset()                    { *m = Option{} }
+func (m *Option) String() string            { return proto.CompactTextString(m) }
+func (*Option) ProtoMessage()               {}
+func (*Option) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
 
 func (m *Option) GetType() Option_Type {
 	if m != nil && m.Type != nil {
@@ -1084,9 +1178,10 @@ type Player struct {
 	XXX_unrecognized []byte         `json:"-"`
 }
 
-func (m *Player) Reset()         { *m = Player{} }
-func (m *Player) String() string { return proto.CompactTextString(m) }
-func (*Player) ProtoMessage()    {}
+func (m *Player) Reset()                    { *m = Player{} }
+func (m *Player) String() string            { return proto.CompactTextString(m) }
+func (*Player) ProtoMessage()               {}
+func (*Player) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
 
 func (m *Player) GetId() int32 {
 	if m != nil && m.Id != nil {
@@ -1126,9 +1221,10 @@ type Handshake struct {
 	XXX_unrecognized []byte           `json:"-"`
 }
 
-func (m *Handshake) Reset()         { *m = Handshake{} }
-func (m *Handshake) String() string { return proto.CompactTextString(m) }
-func (*Handshake) ProtoMessage()    {}
+func (m *Handshake) Reset()                    { *m = Handshake{} }
+func (m *Handshake) String() string            { return proto.CompactTextString(m) }
+func (*Handshake) ProtoMessage()               {}
+func (*Handshake) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
 
 func (m *Handshake) GetGameHandle() int32 {
 	if m != nil && m.GameHandle != nil {
@@ -1176,17 +1272,19 @@ type Ping struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *Ping) Reset()         { *m = Ping{} }
-func (m *Ping) String() string { return proto.CompactTextString(m) }
-func (*Ping) ProtoMessage()    {}
+func (m *Ping) Reset()                    { *m = Ping{} }
+func (m *Ping) String() string            { return proto.CompactTextString(m) }
+func (*Ping) ProtoMessage()               {}
+func (*Ping) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
 
 type GetGameState struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *GetGameState) Reset()         { *m = GetGameState{} }
-func (m *GetGameState) String() string { return proto.CompactTextString(m) }
-func (*GetGameState) ProtoMessage()    {}
+func (m *GetGameState) Reset()                    { *m = GetGameState{} }
+func (m *GetGameState) String() string            { return proto.CompactTextString(m) }
+func (*GetGameState) ProtoMessage()               {}
+func (*GetGameState) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{7} }
 
 type ChooseOption struct {
 	Id               *int32 `protobuf:"varint,1,req,name=id" json:"id,omitempty"`
@@ -1197,9 +1295,10 @@ type ChooseOption struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *ChooseOption) Reset()         { *m = ChooseOption{} }
-func (m *ChooseOption) String() string { return proto.CompactTextString(m) }
-func (*ChooseOption) ProtoMessage()    {}
+func (m *ChooseOption) Reset()                    { *m = ChooseOption{} }
+func (m *ChooseOption) String() string            { return proto.CompactTextString(m) }
+func (*ChooseOption) ProtoMessage()               {}
+func (*ChooseOption) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{8} }
 
 func (m *ChooseOption) GetId() int32 {
 	if m != nil && m.Id != nil {
@@ -1242,9 +1341,10 @@ type ChooseEntities struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *ChooseEntities) Reset()         { *m = ChooseEntities{} }
-func (m *ChooseEntities) String() string { return proto.CompactTextString(m) }
-func (*ChooseEntities) ProtoMessage()    {}
+func (m *ChooseEntities) Reset()                    { *m = ChooseEntities{} }
+func (m *ChooseEntities) String() string            { return proto.CompactTextString(m) }
+func (*ChooseEntities) ProtoMessage()               {}
+func (*ChooseEntities) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9} }
 
 func (m *ChooseEntities) GetId() int32 {
 	if m != nil && m.Id != nil {
@@ -1269,9 +1369,10 @@ type MouseInfo struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *MouseInfo) Reset()         { *m = MouseInfo{} }
-func (m *MouseInfo) String() string { return proto.CompactTextString(m) }
-func (*MouseInfo) ProtoMessage()    {}
+func (m *MouseInfo) Reset()                    { *m = MouseInfo{} }
+func (m *MouseInfo) String() string            { return proto.CompactTextString(m) }
+func (*MouseInfo) ProtoMessage()               {}
+func (*MouseInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{10} }
 
 func (m *MouseInfo) GetArrowOrigin() int32 {
 	if m != nil && m.ArrowOrigin != nil {
@@ -1315,9 +1416,10 @@ type UserUI struct {
 	XXX_unrecognized []byte     `json:"-"`
 }
 
-func (m *UserUI) Reset()         { *m = UserUI{} }
-func (m *UserUI) String() string { return proto.CompactTextString(m) }
-func (*UserUI) ProtoMessage()    {}
+func (m *UserUI) Reset()                    { *m = UserUI{} }
+func (m *UserUI) String() string            { return proto.CompactTextString(m) }
+func (*UserUI) ProtoMessage()               {}
+func (*UserUI) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{11} }
 
 func (m *UserUI) GetMouseInfo() *MouseInfo {
 	if m != nil {
@@ -1344,9 +1446,10 @@ type Concede struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *Concede) Reset()         { *m = Concede{} }
-func (m *Concede) String() string { return proto.CompactTextString(m) }
-func (*Concede) ProtoMessage()    {}
+func (m *Concede) Reset()                    { *m = Concede{} }
+func (m *Concede) String() string            { return proto.CompactTextString(m) }
+func (*Concede) ProtoMessage()               {}
+func (*Concede) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{12} }
 
 type InviteToSpectate struct {
 	TargetBnetAccountId *shared.BnetId `protobuf:"bytes,1,opt,name=target_bnet_account_id" json:"target_bnet_account_id,omitempty"`
@@ -1354,9 +1457,10 @@ type InviteToSpectate struct {
 	XXX_unrecognized    []byte         `json:"-"`
 }
 
-func (m *InviteToSpectate) Reset()         { *m = InviteToSpectate{} }
-func (m *InviteToSpectate) String() string { return proto.CompactTextString(m) }
-func (*InviteToSpectate) ProtoMessage()    {}
+func (m *InviteToSpectate) Reset()                    { *m = InviteToSpectate{} }
+func (m *InviteToSpectate) String() string            { return proto.CompactTextString(m) }
+func (*InviteToSpectate) ProtoMessage()               {}
+func (*InviteToSpectate) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{13} }
 
 func (m *InviteToSpectate) GetTargetBnetAccountId() *shared.BnetId {
 	if m != nil {
@@ -1379,9 +1483,10 @@ type RemoveSpectators struct {
 	XXX_unrecognized            []byte           `json:"-"`
 }
 
-func (m *RemoveSpectators) Reset()         { *m = RemoveSpectators{} }
-func (m *RemoveSpectators) String() string { return proto.CompactTextString(m) }
-func (*RemoveSpectators) ProtoMessage()    {}
+func (m *RemoveSpectators) Reset()                    { *m = RemoveSpectators{} }
+func (m *RemoveSpectators) String() string            { return proto.CompactTextString(m) }
+func (*RemoveSpectators) ProtoMessage()               {}
+func (*RemoveSpectators) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{14} }
 
 const Default_RemoveSpectators_KickAllSpectators bool = false
 const Default_RemoveSpectators_RegenerateSpectatorPassword bool = false
@@ -1411,21 +1516,24 @@ type Pong struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *Pong) Reset()         { *m = Pong{} }
-func (m *Pong) String() string { return proto.CompactTextString(m) }
-func (*Pong) ProtoMessage()    {}
+func (m *Pong) Reset()                    { *m = Pong{} }
+func (m *Pong) String() string            { return proto.CompactTextString(m) }
+func (*Pong) ProtoMessage()               {}
+func (*Pong) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{15} }
 
 type GameSetup struct {
 	Board                       *int32 `protobuf:"varint,1,req,name=board" json:"board,omitempty"`
 	MaxSecretsPerPlayer         *int32 `protobuf:"varint,2,req,name=max_secrets_per_player" json:"max_secrets_per_player,omitempty"`
 	MaxFriendlyMinionsPerPlayer *int32 `protobuf:"varint,3,req,name=max_friendly_minions_per_player" json:"max_friendly_minions_per_player,omitempty"`
-	KeepAliveFrequency          *int32 `protobuf:"varint,4,opt,name=keep_alive_frequency" json:"keep_alive_frequency,omitempty"`
+	KeepAliveFrequencySeconds   *int32 `protobuf:"varint,4,opt,name=keep_alive_frequency_seconds" json:"keep_alive_frequency_seconds,omitempty"`
+	DisconnectWhenStuckSeconds  *int32 `protobuf:"varint,5,opt,name=disconnect_when_stuck_seconds" json:"disconnect_when_stuck_seconds,omitempty"`
 	XXX_unrecognized            []byte `json:"-"`
 }
 
-func (m *GameSetup) Reset()         { *m = GameSetup{} }
-func (m *GameSetup) String() string { return proto.CompactTextString(m) }
-func (*GameSetup) ProtoMessage()    {}
+func (m *GameSetup) Reset()                    { *m = GameSetup{} }
+func (m *GameSetup) String() string            { return proto.CompactTextString(m) }
+func (*GameSetup) ProtoMessage()               {}
+func (*GameSetup) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{16} }
 
 func (m *GameSetup) GetBoard() int32 {
 	if m != nil && m.Board != nil {
@@ -1448,9 +1556,16 @@ func (m *GameSetup) GetMaxFriendlyMinionsPerPlayer() int32 {
 	return 0
 }
 
-func (m *GameSetup) GetKeepAliveFrequency() int32 {
-	if m != nil && m.KeepAliveFrequency != nil {
-		return *m.KeepAliveFrequency
+func (m *GameSetup) GetKeepAliveFrequencySeconds() int32 {
+	if m != nil && m.KeepAliveFrequencySeconds != nil {
+		return *m.KeepAliveFrequencySeconds
+	}
+	return 0
+}
+
+func (m *GameSetup) GetDisconnectWhenStuckSeconds() int32 {
+	if m != nil && m.DisconnectWhenStuckSeconds != nil {
+		return *m.DisconnectWhenStuckSeconds
 	}
 	return 0
 }
@@ -1460,9 +1575,10 @@ type DebugMessage struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *DebugMessage) Reset()         { *m = DebugMessage{} }
-func (m *DebugMessage) String() string { return proto.CompactTextString(m) }
-func (*DebugMessage) ProtoMessage()    {}
+func (m *DebugMessage) Reset()                    { *m = DebugMessage{} }
+func (m *DebugMessage) String() string            { return proto.CompactTextString(m) }
+func (*DebugMessage) ProtoMessage()               {}
+func (*DebugMessage) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{17} }
 
 func (m *DebugMessage) GetMessage() string {
 	if m != nil && m.Message != nil {
@@ -1477,9 +1593,10 @@ type AllOptions struct {
 	XXX_unrecognized []byte    `json:"-"`
 }
 
-func (m *AllOptions) Reset()         { *m = AllOptions{} }
-func (m *AllOptions) String() string { return proto.CompactTextString(m) }
-func (*AllOptions) ProtoMessage()    {}
+func (m *AllOptions) Reset()                    { *m = AllOptions{} }
+func (m *AllOptions) String() string            { return proto.CompactTextString(m) }
+func (*AllOptions) ProtoMessage()               {}
+func (*AllOptions) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{18} }
 
 func (m *AllOptions) GetId() int32 {
 	if m != nil && m.Id != nil {
@@ -1500,9 +1617,10 @@ type NAckOption struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *NAckOption) Reset()         { *m = NAckOption{} }
-func (m *NAckOption) String() string { return proto.CompactTextString(m) }
-func (*NAckOption) ProtoMessage()    {}
+func (m *NAckOption) Reset()                    { *m = NAckOption{} }
+func (m *NAckOption) String() string            { return proto.CompactTextString(m) }
+func (*NAckOption) ProtoMessage()               {}
+func (*NAckOption) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{19} }
 
 func (m *NAckOption) GetId() int32 {
 	if m != nil && m.Id != nil {
@@ -1522,9 +1640,10 @@ type EntityChoices struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *EntityChoices) Reset()         { *m = EntityChoices{} }
-func (m *EntityChoices) String() string { return proto.CompactTextString(m) }
-func (*EntityChoices) ProtoMessage()    {}
+func (m *EntityChoices) Reset()                    { *m = EntityChoices{} }
+func (m *EntityChoices) String() string            { return proto.CompactTextString(m) }
+func (*EntityChoices) ProtoMessage()               {}
+func (*EntityChoices) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{20} }
 
 func (m *EntityChoices) GetId() int32 {
 	if m != nil && m.Id != nil {
@@ -1581,9 +1700,10 @@ type EntitiesChosen struct {
 	XXX_unrecognized []byte          `json:"-"`
 }
 
-func (m *EntitiesChosen) Reset()         { *m = EntitiesChosen{} }
-func (m *EntitiesChosen) String() string { return proto.CompactTextString(m) }
-func (*EntitiesChosen) ProtoMessage()    {}
+func (m *EntitiesChosen) Reset()                    { *m = EntitiesChosen{} }
+func (m *EntitiesChosen) String() string            { return proto.CompactTextString(m) }
+func (*EntitiesChosen) ProtoMessage()               {}
+func (*EntitiesChosen) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{21} }
 
 func (m *EntitiesChosen) GetChooseEntities() *ChooseEntities {
 	if m != nil {
@@ -1603,17 +1723,28 @@ type HistoryBlock struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *HistoryBlock) Reset()         { *m = HistoryBlock{} }
-func (m *HistoryBlock) String() string { return proto.CompactTextString(m) }
-func (*HistoryBlock) ProtoMessage()    {}
+func (m *HistoryBlock) Reset()                    { *m = HistoryBlock{} }
+func (m *HistoryBlock) String() string            { return proto.CompactTextString(m) }
+func (*HistoryBlock) ProtoMessage()               {}
+func (*HistoryBlock) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{22} }
 
 type HistoryMeta struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *HistoryMeta) Reset()         { *m = HistoryMeta{} }
-func (m *HistoryMeta) String() string { return proto.CompactTextString(m) }
-func (*HistoryMeta) ProtoMessage()    {}
+func (m *HistoryMeta) Reset()                    { *m = HistoryMeta{} }
+func (m *HistoryMeta) String() string            { return proto.CompactTextString(m) }
+func (*HistoryMeta) ProtoMessage()               {}
+func (*HistoryMeta) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{23} }
+
+type ClientHistoryMeta struct {
+	XXX_unrecognized []byte `json:"-"`
+}
+
+func (m *ClientHistoryMeta) Reset()                    { *m = ClientHistoryMeta{} }
+func (m *ClientHistoryMeta) String() string            { return proto.CompactTextString(m) }
+func (*ClientHistoryMeta) ProtoMessage()               {}
+func (*ClientHistoryMeta) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{24} }
 
 type PowerHistoryCreateGame struct {
 	GameEntity       *Entity   `protobuf:"bytes,1,req,name=game_entity" json:"game_entity,omitempty"`
@@ -1621,9 +1752,10 @@ type PowerHistoryCreateGame struct {
 	XXX_unrecognized []byte    `json:"-"`
 }
 
-func (m *PowerHistoryCreateGame) Reset()         { *m = PowerHistoryCreateGame{} }
-func (m *PowerHistoryCreateGame) String() string { return proto.CompactTextString(m) }
-func (*PowerHistoryCreateGame) ProtoMessage()    {}
+func (m *PowerHistoryCreateGame) Reset()                    { *m = PowerHistoryCreateGame{} }
+func (m *PowerHistoryCreateGame) String() string            { return proto.CompactTextString(m) }
+func (*PowerHistoryCreateGame) ProtoMessage()               {}
+func (*PowerHistoryCreateGame) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{25} }
 
 func (m *PowerHistoryCreateGame) GetGameEntity() *Entity {
 	if m != nil {
@@ -1646,9 +1778,10 @@ type PowerHistoryEntity struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *PowerHistoryEntity) Reset()         { *m = PowerHistoryEntity{} }
-func (m *PowerHistoryEntity) String() string { return proto.CompactTextString(m) }
-func (*PowerHistoryEntity) ProtoMessage()    {}
+func (m *PowerHistoryEntity) Reset()                    { *m = PowerHistoryEntity{} }
+func (m *PowerHistoryEntity) String() string            { return proto.CompactTextString(m) }
+func (*PowerHistoryEntity) ProtoMessage()               {}
+func (*PowerHistoryEntity) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{26} }
 
 func (m *PowerHistoryEntity) GetEntity() int32 {
 	if m != nil && m.Entity != nil {
@@ -1677,9 +1810,10 @@ type PowerHistoryHide struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *PowerHistoryHide) Reset()         { *m = PowerHistoryHide{} }
-func (m *PowerHistoryHide) String() string { return proto.CompactTextString(m) }
-func (*PowerHistoryHide) ProtoMessage()    {}
+func (m *PowerHistoryHide) Reset()                    { *m = PowerHistoryHide{} }
+func (m *PowerHistoryHide) String() string            { return proto.CompactTextString(m) }
+func (*PowerHistoryHide) ProtoMessage()               {}
+func (*PowerHistoryHide) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{27} }
 
 func (m *PowerHistoryHide) GetEntity() int32 {
 	if m != nil && m.Entity != nil {
@@ -1702,9 +1836,10 @@ type PowerHistoryTagChange struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *PowerHistoryTagChange) Reset()         { *m = PowerHistoryTagChange{} }
-func (m *PowerHistoryTagChange) String() string { return proto.CompactTextString(m) }
-func (*PowerHistoryTagChange) ProtoMessage()    {}
+func (m *PowerHistoryTagChange) Reset()                    { *m = PowerHistoryTagChange{} }
+func (m *PowerHistoryTagChange) String() string            { return proto.CompactTextString(m) }
+func (*PowerHistoryTagChange) ProtoMessage()               {}
+func (*PowerHistoryTagChange) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{28} }
 
 func (m *PowerHistoryTagChange) GetEntity() int32 {
 	if m != nil && m.Entity != nil {
@@ -1734,9 +1869,10 @@ type PowerHistoryMetaData struct {
 	XXX_unrecognized []byte            `json:"-"`
 }
 
-func (m *PowerHistoryMetaData) Reset()         { *m = PowerHistoryMetaData{} }
-func (m *PowerHistoryMetaData) String() string { return proto.CompactTextString(m) }
-func (*PowerHistoryMetaData) ProtoMessage()    {}
+func (m *PowerHistoryMetaData) Reset()                    { *m = PowerHistoryMetaData{} }
+func (m *PowerHistoryMetaData) String() string            { return proto.CompactTextString(m) }
+func (*PowerHistoryMetaData) ProtoMessage()               {}
+func (*PowerHistoryMetaData) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{29} }
 
 const Default_PowerHistoryMetaData_Type HistoryMeta_Type = HistoryMeta_TARGET
 
@@ -1766,18 +1902,20 @@ type PowerHistoryStart struct {
 	Index            *int32             `protobuf:"varint,2,req,name=index" json:"index,omitempty"`
 	Source           *int32             `protobuf:"varint,3,req,name=source" json:"source,omitempty"`
 	Target           *int32             `protobuf:"varint,4,req,name=target" json:"target,omitempty"`
+	EffectCardId     *string            `protobuf:"bytes,5,opt,name=effect_card_id" json:"effect_card_id,omitempty"`
 	XXX_unrecognized []byte             `json:"-"`
 }
 
-func (m *PowerHistoryStart) Reset()         { *m = PowerHistoryStart{} }
-func (m *PowerHistoryStart) String() string { return proto.CompactTextString(m) }
-func (*PowerHistoryStart) ProtoMessage()    {}
+func (m *PowerHistoryStart) Reset()                    { *m = PowerHistoryStart{} }
+func (m *PowerHistoryStart) String() string            { return proto.CompactTextString(m) }
+func (*PowerHistoryStart) ProtoMessage()               {}
+func (*PowerHistoryStart) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{30} }
 
 func (m *PowerHistoryStart) GetType() HistoryBlock_Type {
 	if m != nil && m.Type != nil {
 		return *m.Type
 	}
-	return HistoryBlock_ATTACK
+	return HistoryBlock_INVALID
 }
 
 func (m *PowerHistoryStart) GetIndex() int32 {
@@ -1801,13 +1939,21 @@ func (m *PowerHistoryStart) GetTarget() int32 {
 	return 0
 }
 
+func (m *PowerHistoryStart) GetEffectCardId() string {
+	if m != nil && m.EffectCardId != nil {
+		return *m.EffectCardId
+	}
+	return ""
+}
+
 type PowerHistoryEnd struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *PowerHistoryEnd) Reset()         { *m = PowerHistoryEnd{} }
-func (m *PowerHistoryEnd) String() string { return proto.CompactTextString(m) }
-func (*PowerHistoryEnd) ProtoMessage()    {}
+func (m *PowerHistoryEnd) Reset()                    { *m = PowerHistoryEnd{} }
+func (m *PowerHistoryEnd) String() string            { return proto.CompactTextString(m) }
+func (*PowerHistoryEnd) ProtoMessage()               {}
+func (*PowerHistoryEnd) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{31} }
 
 type PowerHistoryData struct {
 	FullEntity       *PowerHistoryEntity     `protobuf:"bytes,1,opt,name=full_entity" json:"full_entity,omitempty"`
@@ -1818,12 +1964,14 @@ type PowerHistoryData struct {
 	PowerStart       *PowerHistoryStart      `protobuf:"bytes,6,opt,name=power_start" json:"power_start,omitempty"`
 	PowerEnd         *PowerHistoryEnd        `protobuf:"bytes,7,opt,name=power_end" json:"power_end,omitempty"`
 	MetaData         *PowerHistoryMetaData   `protobuf:"bytes,8,opt,name=meta_data" json:"meta_data,omitempty"`
+	ChangeEntity     *PowerHistoryEntity     `protobuf:"bytes,9,opt,name=change_entity" json:"change_entity,omitempty"`
 	XXX_unrecognized []byte                  `json:"-"`
 }
 
-func (m *PowerHistoryData) Reset()         { *m = PowerHistoryData{} }
-func (m *PowerHistoryData) String() string { return proto.CompactTextString(m) }
-func (*PowerHistoryData) ProtoMessage()    {}
+func (m *PowerHistoryData) Reset()                    { *m = PowerHistoryData{} }
+func (m *PowerHistoryData) String() string            { return proto.CompactTextString(m) }
+func (*PowerHistoryData) ProtoMessage()               {}
+func (*PowerHistoryData) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{32} }
 
 func (m *PowerHistoryData) GetFullEntity() *PowerHistoryEntity {
 	if m != nil {
@@ -1881,14 +2029,22 @@ func (m *PowerHistoryData) GetMetaData() *PowerHistoryMetaData {
 	return nil
 }
 
+func (m *PowerHistoryData) GetChangeEntity() *PowerHistoryEntity {
+	if m != nil {
+		return m.ChangeEntity
+	}
+	return nil
+}
+
 type PowerHistory struct {
 	List             []*PowerHistoryData `protobuf:"bytes,1,rep,name=list" json:"list,omitempty"`
 	XXX_unrecognized []byte              `json:"-"`
 }
 
-func (m *PowerHistory) Reset()         { *m = PowerHistory{} }
-func (m *PowerHistory) String() string { return proto.CompactTextString(m) }
-func (*PowerHistory) ProtoMessage()    {}
+func (m *PowerHistory) Reset()                    { *m = PowerHistory{} }
+func (m *PowerHistory) String() string            { return proto.CompactTextString(m) }
+func (*PowerHistory) ProtoMessage()               {}
+func (*PowerHistory) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{33} }
 
 func (m *PowerHistory) GetList() []*PowerHistoryData {
 	if m != nil {
@@ -1904,9 +2060,10 @@ type TurnTimer struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *TurnTimer) Reset()         { *m = TurnTimer{} }
-func (m *TurnTimer) String() string { return proto.CompactTextString(m) }
-func (*TurnTimer) ProtoMessage()    {}
+func (m *TurnTimer) Reset()                    { *m = TurnTimer{} }
+func (m *TurnTimer) String() string            { return proto.CompactTextString(m) }
+func (*TurnTimer) ProtoMessage()               {}
+func (*TurnTimer) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{34} }
 
 func (m *TurnTimer) GetSeconds() int32 {
 	if m != nil && m.Seconds != nil {
@@ -1934,9 +2091,10 @@ type GameCanceled struct {
 	XXX_unrecognized []byte               `json:"-"`
 }
 
-func (m *GameCanceled) Reset()         { *m = GameCanceled{} }
-func (m *GameCanceled) String() string { return proto.CompactTextString(m) }
-func (*GameCanceled) ProtoMessage()    {}
+func (m *GameCanceled) Reset()                    { *m = GameCanceled{} }
+func (m *GameCanceled) String() string            { return proto.CompactTextString(m) }
+func (*GameCanceled) ProtoMessage()               {}
+func (*GameCanceled) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{35} }
 
 func (m *GameCanceled) GetReason() GameCanceled_Reason {
 	if m != nil && m.Reason != nil {
@@ -1954,9 +2112,10 @@ type SpectatorHandshake struct {
 	XXX_unrecognized []byte           `json:"-"`
 }
 
-func (m *SpectatorHandshake) Reset()         { *m = SpectatorHandshake{} }
-func (m *SpectatorHandshake) String() string { return proto.CompactTextString(m) }
-func (*SpectatorHandshake) ProtoMessage()    {}
+func (m *SpectatorHandshake) Reset()                    { *m = SpectatorHandshake{} }
+func (m *SpectatorHandshake) String() string            { return proto.CompactTextString(m) }
+func (*SpectatorHandshake) ProtoMessage()               {}
+func (*SpectatorHandshake) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{36} }
 
 func (m *SpectatorHandshake) GetGameHandle() int32 {
 	if m != nil && m.GameHandle != nil {
@@ -1999,9 +2158,10 @@ type ServerResult struct {
 	XXX_unrecognized  []byte   `json:"-"`
 }
 
-func (m *ServerResult) Reset()         { *m = ServerResult{} }
-func (m *ServerResult) String() string { return proto.CompactTextString(m) }
-func (*ServerResult) ProtoMessage()    {}
+func (m *ServerResult) Reset()                    { *m = ServerResult{} }
+func (m *ServerResult) String() string            { return proto.CompactTextString(m) }
+func (*ServerResult) ProtoMessage()               {}
+func (*ServerResult) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{37} }
 
 func (m *ServerResult) GetResultCode() int32 {
 	if m != nil && m.ResultCode != nil {
@@ -2023,9 +2183,10 @@ type SpectatorChange struct {
 	XXX_unrecognized []byte         `json:"-"`
 }
 
-func (m *SpectatorChange) Reset()         { *m = SpectatorChange{} }
-func (m *SpectatorChange) String() string { return proto.CompactTextString(m) }
-func (*SpectatorChange) ProtoMessage()    {}
+func (m *SpectatorChange) Reset()                    { *m = SpectatorChange{} }
+func (m *SpectatorChange) String() string            { return proto.CompactTextString(m) }
+func (*SpectatorChange) ProtoMessage()               {}
+func (*SpectatorChange) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{38} }
 
 func (m *SpectatorChange) GetGameAccountId() *shared.BnetId {
 	if m != nil {
@@ -2047,9 +2208,10 @@ type SpectatorRemoved struct {
 	XXX_unrecognized []byte         `json:"-"`
 }
 
-func (m *SpectatorRemoved) Reset()         { *m = SpectatorRemoved{} }
-func (m *SpectatorRemoved) String() string { return proto.CompactTextString(m) }
-func (*SpectatorRemoved) ProtoMessage()    {}
+func (m *SpectatorRemoved) Reset()                    { *m = SpectatorRemoved{} }
+func (m *SpectatorRemoved) String() string            { return proto.CompactTextString(m) }
+func (*SpectatorRemoved) ProtoMessage()               {}
+func (*SpectatorRemoved) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{39} }
 
 func (m *SpectatorRemoved) GetReasonCode() int32 {
 	if m != nil && m.ReasonCode != nil {
@@ -2074,9 +2236,10 @@ type SpectatorNotify struct {
 	XXX_unrecognized        []byte             `json:"-"`
 }
 
-func (m *SpectatorNotify) Reset()         { *m = SpectatorNotify{} }
-func (m *SpectatorNotify) String() string { return proto.CompactTextString(m) }
-func (*SpectatorNotify) ProtoMessage()    {}
+func (m *SpectatorNotify) Reset()                    { *m = SpectatorNotify{} }
+func (m *SpectatorNotify) String() string            { return proto.CompactTextString(m) }
+func (*SpectatorNotify) ProtoMessage()               {}
+func (*SpectatorNotify) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{40} }
 
 func (m *SpectatorNotify) GetPlayerId() int32 {
 	if m != nil && m.PlayerId != nil {
@@ -2114,6 +2277,47 @@ func (m *SpectatorNotify) GetSpectatorRemoved() *SpectatorRemoved {
 }
 
 func init() {
+	proto.RegisterType((*Tag)(nil), "game.Tag")
+	proto.RegisterType((*Entity)(nil), "game.Entity")
+	proto.RegisterType((*SubOption)(nil), "game.SubOption")
+	proto.RegisterType((*Option)(nil), "game.Option")
+	proto.RegisterType((*Player)(nil), "game.Player")
+	proto.RegisterType((*Handshake)(nil), "game.Handshake")
+	proto.RegisterType((*Ping)(nil), "game.Ping")
+	proto.RegisterType((*GetGameState)(nil), "game.GetGameState")
+	proto.RegisterType((*ChooseOption)(nil), "game.ChooseOption")
+	proto.RegisterType((*ChooseEntities)(nil), "game.ChooseEntities")
+	proto.RegisterType((*MouseInfo)(nil), "game.MouseInfo")
+	proto.RegisterType((*UserUI)(nil), "game.UserUI")
+	proto.RegisterType((*Concede)(nil), "game.Concede")
+	proto.RegisterType((*InviteToSpectate)(nil), "game.InviteToSpectate")
+	proto.RegisterType((*RemoveSpectators)(nil), "game.RemoveSpectators")
+	proto.RegisterType((*Pong)(nil), "game.Pong")
+	proto.RegisterType((*GameSetup)(nil), "game.GameSetup")
+	proto.RegisterType((*DebugMessage)(nil), "game.DebugMessage")
+	proto.RegisterType((*AllOptions)(nil), "game.AllOptions")
+	proto.RegisterType((*NAckOption)(nil), "game.NAckOption")
+	proto.RegisterType((*EntityChoices)(nil), "game.EntityChoices")
+	proto.RegisterType((*EntitiesChosen)(nil), "game.EntitiesChosen")
+	proto.RegisterType((*HistoryBlock)(nil), "game.HistoryBlock")
+	proto.RegisterType((*HistoryMeta)(nil), "game.HistoryMeta")
+	proto.RegisterType((*ClientHistoryMeta)(nil), "game.ClientHistoryMeta")
+	proto.RegisterType((*PowerHistoryCreateGame)(nil), "game.PowerHistoryCreateGame")
+	proto.RegisterType((*PowerHistoryEntity)(nil), "game.PowerHistoryEntity")
+	proto.RegisterType((*PowerHistoryHide)(nil), "game.PowerHistoryHide")
+	proto.RegisterType((*PowerHistoryTagChange)(nil), "game.PowerHistoryTagChange")
+	proto.RegisterType((*PowerHistoryMetaData)(nil), "game.PowerHistoryMetaData")
+	proto.RegisterType((*PowerHistoryStart)(nil), "game.PowerHistoryStart")
+	proto.RegisterType((*PowerHistoryEnd)(nil), "game.PowerHistoryEnd")
+	proto.RegisterType((*PowerHistoryData)(nil), "game.PowerHistoryData")
+	proto.RegisterType((*PowerHistory)(nil), "game.PowerHistory")
+	proto.RegisterType((*TurnTimer)(nil), "game.TurnTimer")
+	proto.RegisterType((*GameCanceled)(nil), "game.GameCanceled")
+	proto.RegisterType((*SpectatorHandshake)(nil), "game.SpectatorHandshake")
+	proto.RegisterType((*ServerResult)(nil), "game.ServerResult")
+	proto.RegisterType((*SpectatorChange)(nil), "game.SpectatorChange")
+	proto.RegisterType((*SpectatorRemoved)(nil), "game.SpectatorRemoved")
+	proto.RegisterType((*SpectatorNotify)(nil), "game.SpectatorNotify")
 	proto.RegisterEnum("game.Option_Type", Option_Type_name, Option_Type_value)
 	proto.RegisterEnum("game.Handshake_PacketID", Handshake_PacketID_name, Handshake_PacketID_value)
 	proto.RegisterEnum("game.Ping_PacketID", Ping_PacketID_name, Ping_PacketID_value)
@@ -2133,6 +2337,7 @@ func init() {
 	proto.RegisterEnum("game.EntitiesChosen_PacketID", EntitiesChosen_PacketID_name, EntitiesChosen_PacketID_value)
 	proto.RegisterEnum("game.HistoryBlock_Type", HistoryBlock_Type_name, HistoryBlock_Type_value)
 	proto.RegisterEnum("game.HistoryMeta_Type", HistoryMeta_Type_name, HistoryMeta_Type_value)
+	proto.RegisterEnum("game.ClientHistoryMeta_Type", ClientHistoryMeta_Type_name, ClientHistoryMeta_Type_value)
 	proto.RegisterEnum("game.PowerHistory_PacketID", PowerHistory_PacketID_name, PowerHistory_PacketID_value)
 	proto.RegisterEnum("game.TurnTimer_PacketID", TurnTimer_PacketID_name, TurnTimer_PacketID_value)
 	proto.RegisterEnum("game.GameCanceled_Reason", GameCanceled_Reason_name, GameCanceled_Reason_value)
@@ -2143,4 +2348,132 @@ func init() {
 	proto.RegisterEnum("game.ServerResult_PacketID", ServerResult_PacketID_name, ServerResult_PacketID_value)
 	proto.RegisterEnum("game.SpectatorRemoved_SpectatorRemovedReason", SpectatorRemoved_SpectatorRemovedReason_name, SpectatorRemoved_SpectatorRemovedReason_value)
 	proto.RegisterEnum("game.SpectatorNotify_PacketID", SpectatorNotify_PacketID_name, SpectatorNotify_PacketID_value)
+}
+
+var fileDescriptor0 = []byte{
+	// 1984 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0x94, 0x57, 0xcd, 0x6e, 0xdb, 0xd8,
+	0x15, 0x2e, 0x4d, 0x49, 0x16, 0x8f, 0x14, 0x99, 0xa6, 0x13, 0xc7, 0xc9, 0x24, 0x93, 0xe6, 0xce,
+	0x4c, 0x27, 0x41, 0x63, 0xbb, 0x75, 0x37, 0xc5, 0xa0, 0x28, 0xc0, 0x48, 0xb4, 0xac, 0xb1, 0x2d,
+	0x19, 0x12, 0x9d, 0x69, 0x0a, 0x14, 0x04, 0x4d, 0x5e, 0x49, 0x84, 0x25, 0x52, 0x43, 0x52, 0x4e,
+	0xd4, 0x5d, 0x37, 0x7d, 0x8e, 0x02, 0xed, 0x62, 0x36, 0x5d, 0x74, 0x59, 0xa0, 0xcb, 0x3e, 0x4d,
+	0x9f, 0xa2, 0xe7, 0xfe, 0x48, 0xa2, 0x24, 0xba, 0xcd, 0x6c, 0x6c, 0xea, 0xf2, 0xbb, 0xe7, 0xff,
+	0x7c, 0xe7, 0x10, 0x7e, 0x3d, 0x08, 0xd2, 0xe1, 0xf4, 0xe6, 0xc8, 0x8b, 0xc6, 0xc7, 0x67, 0xd4,
+	0x8d, 0xd3, 0x61, 0x2f, 0x18, 0x1f, 0x0f, 0x93, 0xc3, 0x49, 0x1c, 0xa5, 0xd1, 0xe1, 0x20, 0x3a,
+	0x9e, 0xd0, 0x81, 0x9b, 0x4c, 0x93, 0xe3, 0x81, 0x3b, 0xa6, 0xfc, 0xcf, 0x11, 0x7f, 0x65, 0x14,
+	0xd8, 0xf3, 0xd3, 0xdf, 0x7c, 0xf2, 0xfd, 0x64, 0xe8, 0xc6, 0xd4, 0x97, 0xff, 0x84, 0x0c, 0x42,
+	0x40, 0xb5, 0xdd, 0x81, 0x51, 0x85, 0x42, 0x88, 0xc2, 0x0e, 0x94, 0x9f, 0x6e, 0xbd, 0x2a, 0x1a,
+	0x0f, 0xa0, 0x78, 0xe7, 0x8e, 0xa6, 0xf4, 0x60, 0x8b, 0xfd, 0x24, 0x87, 0x50, 0xb2, 0xc2, 0x34,
+	0x48, 0x67, 0x06, 0xc0, 0x56, 0xe0, 0x4b, 0xd0, 0x63, 0x28, 0xa4, 0xee, 0x20, 0x41, 0x8c, 0xfa,
+	0xaa, 0x72, 0xa2, 0x1d, 0x71, 0xc3, 0x50, 0x16, 0x79, 0x03, 0x5a, 0x6f, 0x7a, 0xd3, 0x99, 0xa4,
+	0x41, 0x14, 0xae, 0xdc, 0xd8, 0x83, 0xed, 0xd4, 0x8d, 0x07, 0x34, 0x4d, 0x0e, 0x54, 0xbc, 0x54,
+	0x7c, 0xbb, 0xa5, 0x2b, 0xe4, 0x2f, 0x0a, 0x94, 0x24, 0xf6, 0x05, 0x4a, 0x9c, 0x4d, 0x84, 0x11,
+	0xb5, 0x93, 0x5d, 0x21, 0x51, 0xbc, 0x3b, 0xb2, 0xf1, 0x85, 0xf1, 0x25, 0x54, 0xc6, 0x6e, 0x10,
+	0x3a, 0x11, 0x3f, 0x43, 0xcd, 0x0a, 0x6a, 0xde, 0x11, 0xb8, 0xa5, 0x4a, 0x44, 0x25, 0xd3, 0x1b,
+	0x09, 0x12, 0xaa, 0x36, 0x51, 0xe4, 0x35, 0x14, 0xb8, 0xcc, 0x32, 0x14, 0xae, 0xcc, 0x5e, 0x4f,
+	0x57, 0x30, 0x06, 0x65, 0xab, 0xdd, 0x70, 0xec, 0xeb, 0x6e, 0x5b, 0xdf, 0x32, 0x34, 0x28, 0x5e,
+	0x75, 0xbe, 0xb3, 0xba, 0xba, 0x4a, 0x42, 0x28, 0x5d, 0x8d, 0xdc, 0x19, 0x8d, 0x57, 0xbc, 0xf9,
+	0x1a, 0x76, 0x98, 0x48, 0xc7, 0xf5, 0xbc, 0x68, 0x1a, 0xa6, 0x0e, 0xbe, 0x60, 0xe1, 0xaa, 0x9c,
+	0xd4, 0x8e, 0x64, 0x84, 0xdf, 0x86, 0x34, 0x6d, 0xf9, 0xc6, 0x2e, 0x68, 0x9e, 0x1b, 0xfb, 0xce,
+	0x8d, 0xeb, 0xdd, 0xa2, 0x35, 0xec, 0xee, 0x33, 0x28, 0x51, 0x1e, 0xd1, 0x83, 0x02, 0xbf, 0x52,
+	0x15, 0xd6, 0x89, 0x28, 0x93, 0xbf, 0x29, 0xa0, 0x9d, 0xb9, 0xa1, 0x8f, 0x62, 0x6e, 0x29, 0x46,
+	0xad, 0xc2, 0xf5, 0x0c, 0xf1, 0x64, 0x34, 0xcf, 0x90, 0x0e, 0xe5, 0x89, 0x9b, 0x24, 0x1f, 0xa2,
+	0x58, 0x68, 0xd5, 0x8c, 0x47, 0xf0, 0xc0, 0x1b, 0x05, 0x28, 0x75, 0x0e, 0x64, 0x9a, 0x54, 0x63,
+	0x07, 0xb6, 0xc7, 0x41, 0x92, 0xb0, 0x70, 0x15, 0x30, 0x5c, 0x45, 0x76, 0x70, 0x47, 0x63, 0x7e,
+	0x50, 0xe4, 0x17, 0x09, 0x8a, 0x1a, 0xb9, 0x69, 0x3f, 0x8a, 0xc7, 0x07, 0xdb, 0xdc, 0x1a, 0x7d,
+	0xee, 0xc0, 0x95, 0x3c, 0x27, 0x7b, 0x50, 0xbe, 0x42, 0xeb, 0xd1, 0x9d, 0x86, 0xb1, 0x0d, 0x5b,
+	0xad, 0x86, 0xfe, 0x83, 0x42, 0x9e, 0x62, 0xe4, 0x82, 0x70, 0x40, 0x8c, 0xcc, 0xcb, 0x12, 0x7f,
+	0x99, 0x60, 0x59, 0x55, 0x9b, 0x34, 0x6d, 0xa2, 0xdd, 0xbd, 0xd4, 0x4d, 0x69, 0x0e, 0x46, 0x21,
+	0x09, 0x54, 0xeb, 0xc3, 0x28, 0x4a, 0x68, 0x4e, 0xa9, 0x60, 0x05, 0x06, 0xa1, 0x4f, 0x3f, 0x8a,
+	0x0a, 0x34, 0x6a, 0x50, 0x12, 0x95, 0x23, 0xe3, 0x87, 0xd8, 0x65, 0x8a, 0xa5, 0x63, 0x2c, 0x24,
+	0x51, 0x12, 0xa4, 0xc2, 0x33, 0x3c, 0xc9, 0x51, 0xba, 0x45, 0x4e, 0xa1, 0x26, 0x94, 0xf2, 0x58,
+	0x07, 0x34, 0x59, 0x51, 0xfb, 0x10, 0xca, 0x54, 0x9e, 0xf3, 0xba, 0x16, 0x25, 0xba, 0x29, 0x47,
+	0x25, 0x7f, 0x00, 0xed, 0x32, 0x9a, 0x26, 0xb4, 0x15, 0xf6, 0x23, 0xbc, 0x56, 0x75, 0xe3, 0x38,
+	0xfa, 0xe0, 0x44, 0x71, 0x30, 0x08, 0x42, 0x29, 0x0c, 0xf3, 0x3e, 0xa4, 0x23, 0xdf, 0x61, 0xc9,
+	0x97, 0x7e, 0xe0, 0x51, 0x84, 0xd1, 0x17, 0x47, 0xc2, 0x15, 0x0d, 0x94, 0x8f, 0xbc, 0x0a, 0xf8,
+	0xe3, 0x8c, 0x27, 0xa5, 0x48, 0x3c, 0x28, 0x5d, 0x27, 0x34, 0xbe, 0x6e, 0x19, 0x5f, 0x00, 0x8c,
+	0x99, 0x22, 0x27, 0x40, 0x4d, 0x28, 0x39, 0x53, 0xf2, 0x4b, 0x03, 0x30, 0x5c, 0x74, 0x1c, 0xa5,
+	0x94, 0xb7, 0x04, 0x57, 0x33, 0xe1, 0x05, 0xcb, 0x8a, 0x52, 0xbd, 0x27, 0x16, 0x3b, 0xe4, 0x39,
+	0x6c, 0xd7, 0xa3, 0xd0, 0xa3, 0x7e, 0x5e, 0x7e, 0x2a, 0xe4, 0xcf, 0x0a, 0xe8, 0xad, 0xf0, 0x2e,
+	0x48, 0xa9, 0x1d, 0xf5, 0x26, 0xd4, 0x63, 0x89, 0x34, 0x8e, 0x60, 0x5f, 0x64, 0xc2, 0xb9, 0xc1,
+	0xea, 0xce, 0x16, 0xbf, 0x30, 0x6d, 0xbd, 0xf8, 0x97, 0xf8, 0x4f, 0x6a, 0x96, 0x1c, 0x43, 0x9e,
+	0x90, 0x1f, 0xd0, 0x90, 0x2e, 0xfa, 0x77, 0x47, 0xa5, 0x19, 0x51, 0x9c, 0xac, 0x09, 0x5e, 0xca,
+	0x4d, 0xd0, 0x10, 0x35, 0xc7, 0x10, 0x02, 0x7b, 0xb7, 0x81, 0x77, 0xeb, 0xb8, 0xa3, 0x91, 0x93,
+	0x2c, 0xc4, 0xf0, 0x80, 0x95, 0xbf, 0x29, 0xf6, 0xdd, 0x51, 0x42, 0x8d, 0x37, 0xf0, 0x3c, 0xa6,
+	0x03, 0x1a, 0xd2, 0x18, 0x5d, 0x5d, 0xa2, 0x9c, 0x45, 0xab, 0xa9, 0x19, 0x74, 0x8e, 0xa9, 0x4f,
+	0x79, 0x4f, 0x44, 0xb9, 0x3d, 0x91, 0x92, 0x7f, 0x63, 0x5b, 0xf3, 0x8e, 0xa0, 0xe9, 0x74, 0xc2,
+	0x52, 0x76, 0x13, 0xb1, 0x32, 0x10, 0xc5, 0xf2, 0x39, 0xec, 0x8f, 0xdd, 0x8f, 0x4e, 0x42, 0xbd,
+	0x18, 0xf9, 0xd1, 0x99, 0x60, 0xee, 0x44, 0x0a, 0x65, 0xe5, 0x7c, 0x0d, 0x2f, 0xd8, 0xfb, 0x7e,
+	0x8c, 0x2d, 0xee, 0x8f, 0x66, 0xce, 0x38, 0x08, 0x19, 0xbb, 0x65, 0x81, 0xa2, 0x9e, 0xbe, 0x84,
+	0x67, 0xb7, 0x94, 0x4e, 0xd0, 0xcf, 0xe0, 0x8e, 0x22, 0x9e, 0x7e, 0x3f, 0xa5, 0xa1, 0x37, 0x63,
+	0x92, 0x23, 0xa4, 0x14, 0xd9, 0x2c, 0x5f, 0xc1, 0x73, 0x3f, 0x48, 0xf0, 0x24, 0x44, 0x1f, 0x9d,
+	0x0f, 0x43, 0x1a, 0x3a, 0x49, 0x3a, 0xc5, 0xf0, 0xcc, 0x61, 0xf7, 0x75, 0x90, 0x4e, 0x7e, 0x05,
+	0xd5, 0x06, 0xbd, 0x99, 0x0e, 0x2e, 0x69, 0x92, 0xb8, 0x03, 0xca, 0x19, 0x46, 0x3c, 0x72, 0x57,
+	0xb4, 0x9c, 0x4b, 0x45, 0x72, 0x0e, 0x60, 0x8e, 0x46, 0xa2, 0xd1, 0x57, 0x5b, 0x0e, 0x8b, 0x70,
+	0xce, 0xd4, 0x62, 0x92, 0x54, 0xb3, 0xbc, 0x9f, 0x23, 0xac, 0x86, 0x03, 0x06, 0xda, 0xa6, 0x77,
+	0xbb, 0x49, 0x1b, 0x39, 0x68, 0x20, 0x7f, 0x55, 0xe0, 0x81, 0x20, 0x56, 0x6c, 0xfc, 0xc0, 0x5b,
+	0xeb, 0x78, 0x64, 0x57, 0x8f, 0x1f, 0x3b, 0x7c, 0xf4, 0x2c, 0xda, 0x54, 0x94, 0x13, 0x46, 0x59,
+	0xf6, 0xe6, 0xf2, 0xc8, 0xfd, 0x28, 0x7a, 0x74, 0x85, 0x2c, 0x4a, 0x73, 0xb2, 0x60, 0x54, 0x95,
+	0x44, 0xd3, 0xd8, 0xa3, 0x48, 0xa6, 0x1b, 0xbd, 0x58, 0xbe, 0xc7, 0xca, 0x5d, 0xd2, 0x87, 0xda,
+	0x9c, 0x91, 0xd0, 0xcc, 0x84, 0x86, 0xc6, 0x21, 0xec, 0x78, 0x9c, 0xa9, 0x9c, 0x85, 0x16, 0x95,
+	0xb7, 0xcc, 0x43, 0x11, 0xa0, 0x35, 0x1a, 0x5b, 0xd1, 0x53, 0xb8, 0x47, 0xcf, 0x03, 0xf2, 0x27,
+	0x05, 0xaa, 0x67, 0x41, 0x82, 0x55, 0x3d, 0x7b, 0x3b, 0x8a, 0xbc, 0x5b, 0xf2, 0xbd, 0x9c, 0x83,
+	0x15, 0xd8, 0x6e, 0xb5, 0xdf, 0x99, 0x17, 0x88, 0xfa, 0x09, 0x46, 0xa8, 0x64, 0xda, 0xb6, 0x59,
+	0x3f, 0x47, 0x87, 0x70, 0x10, 0x7e, 0xdb, 0xb9, 0xee, 0xd9, 0x2b, 0x33, 0x91, 0xc1, 0xed, 0x6e,
+	0xab, 0xd9, 0xc4, 0x1f, 0x45, 0x06, 0x6f, 0x58, 0xa6, 0x7d, 0xd6, 0xd3, 0x4b, 0x7c, 0x9e, 0x5e,
+	0x98, 0xef, 0xf5, 0x6d, 0x06, 0x39, 0x35, 0xed, 0x56, 0xf3, 0xda, 0xd2, 0xcb, 0x0c, 0xd2, 0x6d,
+	0xd9, 0xd7, 0xe6, 0x85, 0xae, 0x91, 0xf7, 0x50, 0x91, 0x26, 0x5c, 0xd2, 0xd4, 0x25, 0xdf, 0x4a,
+	0x0b, 0x10, 0x62, 0x9b, 0xdd, 0xa6, 0x65, 0x0b, 0x03, 0x1a, 0xe6, 0xa5, 0xd9, 0xb4, 0xd0, 0x00,
+	0x94, 0x73, 0x66, 0xa1, 0x61, 0xed, 0xa6, 0x30, 0x41, 0x58, 0xa3, 0xe2, 0x10, 0xa8, 0xd5, 0x2f,
+	0x5a, 0x56, 0xdb, 0x76, 0xce, 0x5a, 0x3d, 0xbb, 0xd3, 0x7d, 0xaf, 0x17, 0x48, 0x0f, 0x76, 0xeb,
+	0x7c, 0x0a, 0x66, 0x15, 0xfc, 0x36, 0xcf, 0xc5, 0x5d, 0x78, 0xd0, 0x3b, 0xeb, 0x7c, 0xe7, 0xbc,
+	0x6d, 0x35, 0x9d, 0xba, 0xd9, 0xc5, 0x81, 0x64, 0xec, 0x83, 0x61, 0x9d, 0x9e, 0x5a, 0x75, 0xdb,
+	0xb1, 0x5b, 0x97, 0xa8, 0x0e, 0xe5, 0xb6, 0xd1, 0x6d, 0xf2, 0x7b, 0xd8, 0xbf, 0x8a, 0x3e, 0xd0,
+	0x58, 0xca, 0xac, 0xc7, 0x14, 0xe9, 0x81, 0x75, 0xb2, 0xf1, 0x52, 0xce, 0x66, 0x39, 0xcc, 0x95,
+	0xcd, 0x61, 0xce, 0xea, 0x5b, 0xe4, 0x65, 0xad, 0xbe, 0xc5, 0x46, 0x81, 0x8d, 0x61, 0x64, 0x65,
+	0xcb, 0x4b, 0xb5, 0xc5, 0x7e, 0x20, 0xaa, 0x74, 0xbe, 0x9e, 0x89, 0x51, 0x3f, 0xdf, 0xbc, 0xd4,
+	0xf5, 0xcd, 0xeb, 0x17, 0xa0, 0x67, 0x85, 0x9d, 0x05, 0x3e, 0xcd, 0x13, 0xf5, 0xc7, 0x28, 0x9c,
+	0xaf, 0x76, 0x75, 0x78, 0x94, 0xbd, 0x81, 0x42, 0xea, 0xb8, 0x3e, 0x0c, 0x36, 0xaf, 0x55, 0x40,
+	0x45, 0x9d, 0xb2, 0x3f, 0x16, 0xfb, 0x21, 0xa7, 0x1c, 0xe2, 0xc3, 0xc3, 0xac, 0x10, 0x16, 0xf3,
+	0x86, 0x9b, 0xba, 0x38, 0x91, 0x0b, 0x7c, 0x68, 0x2d, 0x26, 0x29, 0x12, 0xac, 0xd8, 0xf0, 0x18,
+	0x8f, 0xd6, 0x4e, 0xf6, 0x85, 0xe5, 0x99, 0x6b, 0x7c, 0xcd, 0xfb, 0x46, 0x96, 0x01, 0x33, 0xd5,
+	0x47, 0x39, 0x82, 0xb2, 0x58, 0xe5, 0xee, 0x66, 0xd5, 0xe0, 0x62, 0x11, 0xa7, 0x48, 0x64, 0xd9,
+	0x9d, 0xf1, 0xf1, 0x8a, 0x44, 0x5e, 0xe0, 0x62, 0x73, 0xdc, 0xdc, 0x27, 0x64, 0x93, 0xaa, 0x6b,
+	0xfb, 0x85, 0xe8, 0xf6, 0x7d, 0xa8, 0xd1, 0x7e, 0x9f, 0x51, 0x23, 0xdf, 0xdc, 0xb0, 0xa3, 0x18,
+	0x1f, 0x6a, 0x64, 0x17, 0x76, 0x56, 0xb3, 0xe5, 0x93, 0x7f, 0xaa, 0xab, 0x41, 0xe7, 0x9e, 0x1f,
+	0x42, 0xa5, 0x3f, 0xc5, 0x41, 0xb3, 0x08, 0x21, 0x1b, 0x8d, 0x07, 0x32, 0xf1, 0x9b, 0xe9, 0x46,
+	0x78, 0x32, 0xc4, 0xf5, 0x41, 0xc2, 0xb7, 0xfe, 0x0f, 0xfc, 0xe7, 0x50, 0x19, 0x62, 0x6a, 0xe7,
+	0x70, 0x95, 0xc3, 0xf7, 0x37, 0xe1, 0x3c, 0xff, 0xc7, 0x00, 0x98, 0x38, 0xc7, 0xe3, 0x69, 0xe5,
+	0xa1, 0xac, 0x9c, 0x7c, 0xb6, 0x89, 0x5d, 0x66, 0xfe, 0x97, 0xc8, 0x88, 0xbc, 0xc2, 0xf9, 0x60,
+	0xe5, 0x8e, 0x57, 0x4e, 0x9e, 0x6d, 0xde, 0xc8, 0xb4, 0xc1, 0x1b, 0xa8, 0x4c, 0xd8, 0x1b, 0x9c,
+	0x21, 0x98, 0x13, 0x24, 0x43, 0x76, 0xe5, 0xf1, 0xe6, 0x15, 0x91, 0xb2, 0x57, 0xc8, 0x54, 0x1c,
+	0x8d, 0x93, 0x8c, 0x93, 0x64, 0xe5, 0xe4, 0x51, 0x9e, 0xaf, 0x3e, 0xc6, 0x45, 0x1b, 0x63, 0x55,
+	0x38, 0xbc, 0x0a, 0xca, 0x1c, 0xf9, 0x74, 0x13, 0xb9, 0xa8, 0xb7, 0x63, 0x5c, 0x81, 0xb9, 0x0f,
+	0xf3, 0xc8, 0x68, 0xff, 0x3b, 0x90, 0xe4, 0x0c, 0xaa, 0xd9, 0x53, 0x9c, 0x9d, 0x85, 0x11, 0x3e,
+	0xca, 0x0d, 0x22, 0x27, 0xa2, 0x4c, 0x4d, 0x0e, 0xad, 0xee, 0x91, 0x0b, 0xd0, 0xec, 0x69, 0x1c,
+	0xda, 0xc1, 0x18, 0xbf, 0x12, 0x70, 0x22, 0xce, 0xc7, 0xe8, 0xa2, 0xe7, 0x52, 0x7c, 0x2b, 0x8b,
+	0x0f, 0x7f, 0xb1, 0x6c, 0xf3, 0xd2, 0x2b, 0xe7, 0x48, 0xd3, 0xc8, 0x18, 0xb7, 0x67, 0x54, 0x5d,
+	0x77, 0x71, 0x39, 0x1b, 0x51, 0xdf, 0x78, 0x0d, 0x25, 0x0c, 0x76, 0x12, 0x85, 0xb2, 0xcc, 0x9f,
+	0x08, 0xcb, 0xb2, 0x98, 0xa3, 0x2e, 0x07, 0x90, 0xcf, 0x91, 0x67, 0xf9, 0x13, 0x8e, 0x27, 0xbd,
+	0x73, 0x75, 0xd5, 0x69, 0x33, 0x82, 0x44, 0x3e, 0xb3, 0x3a, 0xd7, 0x76, 0xee, 0x2e, 0x5b, 0x25,
+	0x7f, 0x57, 0xc0, 0x58, 0x6c, 0x56, 0x3f, 0xfa, 0xc3, 0x23, 0xf3, 0x41, 0xa1, 0x6e, 0x7c, 0x50,
+	0x14, 0xf2, 0x3f, 0x28, 0xf2, 0x3e, 0x9e, 0x8a, 0x9f, 0xb8, 0x0f, 0xee, 0x93, 0x7f, 0xe1, 0x0c,
+	0xeb, 0xd1, 0x18, 0xb5, 0x76, 0x69, 0x32, 0x1d, 0xa5, 0xcc, 0xd2, 0x98, 0x3f, 0x39, 0x5e, 0xe4,
+	0xcf, 0x2d, 0xfd, 0x0c, 0xf6, 0x70, 0x95, 0x8a, 0x67, 0x8e, 0x4f, 0x91, 0x6a, 0x17, 0x8b, 0x0d,
+	0x6b, 0xae, 0x2d, 0x36, 0x12, 0xea, 0x08, 0x45, 0x5e, 0xd0, 0xba, 0x56, 0xef, 0xfa, 0xc2, 0x76,
+	0x3a, 0xe7, 0x38, 0x14, 0x74, 0xa8, 0xca, 0x9f, 0x5d, 0xcb, 0xc6, 0x81, 0xa2, 0xe0, 0x67, 0xd5,
+	0xae, 0x3c, 0x69, 0x77, 0x6c, 0xc7, 0xfa, 0x1d, 0x4e, 0x9a, 0x1e, 0x8e, 0x84, 0x9f, 0x81, 0x86,
+	0xab, 0x33, 0x96, 0x7b, 0x98, 0x26, 0xc6, 0x13, 0x78, 0xd4, 0xb0, 0x4e, 0xcd, 0xc5, 0x35, 0xa7,
+	0x67, 0xd5, 0x3b, 0xed, 0x06, 0xc3, 0x6d, 0x9a, 0xff, 0x98, 0xb4, 0x61, 0x67, 0x11, 0x6d, 0xd9,
+	0x73, 0x39, 0xe1, 0x50, 0x72, 0xbf, 0x25, 0x71, 0x30, 0x06, 0x89, 0x13, 0xf3, 0x65, 0x58, 0x24,
+	0xa0, 0x4c, 0xfe, 0x81, 0xeb, 0xf1, 0x42, 0xa0, 0xd8, 0x93, 0x7d, 0x11, 0x12, 0x56, 0x07, 0xd9,
+	0x90, 0x10, 0x00, 0x79, 0xd5, 0xb9, 0x99, 0xd3, 0xcc, 0x7a, 0xc0, 0x7d, 0xd8, 0x5f, 0x17, 0x26,
+	0x0b, 0xea, 0x0b, 0x78, 0xd1, 0xbb, 0xc2, 0xe9, 0x68, 0xe2, 0xac, 0x45, 0x47, 0x2f, 0x3b, 0xef,
+	0xac, 0x06, 0xfe, 0x37, 0x7b, 0x9d, 0xb6, 0x73, 0xde, 0xaa, 0x9f, 0x5b, 0x6c, 0xac, 0x7e, 0x05,
+	0x2f, 0xef, 0x05, 0x35, 0x4d, 0xac, 0xc2, 0x77, 0xb8, 0x31, 0x28, 0xe4, 0x3f, 0x4a, 0x26, 0x08,
+	0xed, 0x28, 0x0d, 0xfa, 0xb3, 0xd5, 0x0d, 0x46, 0x18, 0xfc, 0x9a, 0x75, 0x34, 0xdf, 0x81, 0x56,
+	0x3e, 0xf9, 0x8d, 0xec, 0x06, 0x24, 0xd7, 0xc0, 0x63, 0xd0, 0x97, 0x0b, 0xfb, 0x82, 0xed, 0xd4,
+	0x25, 0xb9, 0xac, 0xc7, 0xfc, 0x25, 0x3c, 0xd9, 0xdc, 0xf0, 0x9d, 0xe9, 0x04, 0xc9, 0x46, 0xb0,
+	0x9e, 0x86, 0x54, 0xb8, 0xbb, 0x84, 0xcc, 0x83, 0x5e, 0xca, 0xd2, 0xed, 0x7a, 0xa8, 0x72, 0x12,
+	0x7e, 0xf0, 0xdf, 0x00, 0x00, 0x00, 0xff, 0xff, 0x3b, 0xe1, 0x2c, 0x0e, 0xe2, 0x11, 0x00, 0x00,
 }

@@ -32,6 +32,7 @@ It has these top-level messages:
 package channel_invitation_service
 
 import proto "github.com/golang/protobuf/proto"
+import fmt "fmt"
 import math "math"
 import channel_invitation_types "github.com/HearthSim/hs-proto-go/bnet/channel_invitation_types"
 import channel_types "github.com/HearthSim/hs-proto-go/bnet/channel_types"
@@ -40,7 +41,12 @@ import invitation_types "github.com/HearthSim/hs-proto-go/bnet/invitation_types"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
+var _ = fmt.Errorf
 var _ = math.Inf
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the proto package it is being compiled against.
+const _ = proto.ProtoPackageIsVersion1
 
 type AcceptInvitationRequest struct {
 	AgentId          *entity.EntityId           `protobuf:"bytes,1,opt,name=agent_id" json:"agent_id,omitempty"`
@@ -53,9 +59,10 @@ type AcceptInvitationRequest struct {
 	XXX_unrecognized []byte                     `json:"-"`
 }
 
-func (m *AcceptInvitationRequest) Reset()         { *m = AcceptInvitationRequest{} }
-func (m *AcceptInvitationRequest) String() string { return proto.CompactTextString(m) }
-func (*AcceptInvitationRequest) ProtoMessage()    {}
+func (m *AcceptInvitationRequest) Reset()                    { *m = AcceptInvitationRequest{} }
+func (m *AcceptInvitationRequest) String() string            { return proto.CompactTextString(m) }
+func (*AcceptInvitationRequest) ProtoMessage()               {}
+func (*AcceptInvitationRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
 const Default_AcceptInvitationRequest_LocalSubscriber bool = true
 
@@ -113,9 +120,10 @@ type AcceptInvitationResponse struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *AcceptInvitationResponse) Reset()         { *m = AcceptInvitationResponse{} }
-func (m *AcceptInvitationResponse) String() string { return proto.CompactTextString(m) }
-func (*AcceptInvitationResponse) ProtoMessage()    {}
+func (m *AcceptInvitationResponse) Reset()                    { *m = AcceptInvitationResponse{} }
+func (m *AcceptInvitationResponse) String() string            { return proto.CompactTextString(m) }
+func (*AcceptInvitationResponse) ProtoMessage()               {}
+func (*AcceptInvitationResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
 func (m *AcceptInvitationResponse) GetObjectId() uint64 {
 	if m != nil && m.ObjectId != nil {
@@ -130,9 +138,10 @@ type SubscribeRequest struct {
 	XXX_unrecognized []byte           `json:"-"`
 }
 
-func (m *SubscribeRequest) Reset()         { *m = SubscribeRequest{} }
-func (m *SubscribeRequest) String() string { return proto.CompactTextString(m) }
-func (*SubscribeRequest) ProtoMessage()    {}
+func (m *SubscribeRequest) Reset()                    { *m = SubscribeRequest{} }
+func (m *SubscribeRequest) String() string            { return proto.CompactTextString(m) }
+func (*SubscribeRequest) ProtoMessage()               {}
+func (*SubscribeRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
 
 func (m *SubscribeRequest) GetAgentId() *entity.EntityId {
 	if m != nil {
@@ -154,9 +163,10 @@ type SubscribeResponse struct {
 	XXX_unrecognized   []byte                                           `json:"-"`
 }
 
-func (m *SubscribeResponse) Reset()         { *m = SubscribeResponse{} }
-func (m *SubscribeResponse) String() string { return proto.CompactTextString(m) }
-func (*SubscribeResponse) ProtoMessage()    {}
+func (m *SubscribeResponse) Reset()                    { *m = SubscribeResponse{} }
+func (m *SubscribeResponse) String() string            { return proto.CompactTextString(m) }
+func (*SubscribeResponse) ProtoMessage()               {}
+func (*SubscribeResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
 
 func (m *SubscribeResponse) GetCollection() []*channel_invitation_types.InvitationCollection {
 	if m != nil {
@@ -177,9 +187,10 @@ type UnsubscribeRequest struct {
 	XXX_unrecognized []byte           `json:"-"`
 }
 
-func (m *UnsubscribeRequest) Reset()         { *m = UnsubscribeRequest{} }
-func (m *UnsubscribeRequest) String() string { return proto.CompactTextString(m) }
-func (*UnsubscribeRequest) ProtoMessage()    {}
+func (m *UnsubscribeRequest) Reset()                    { *m = UnsubscribeRequest{} }
+func (m *UnsubscribeRequest) String() string            { return proto.CompactTextString(m) }
+func (*UnsubscribeRequest) ProtoMessage()               {}
+func (*UnsubscribeRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
 
 func (m *UnsubscribeRequest) GetAgentId() *entity.EntityId {
 	if m != nil {
@@ -198,9 +209,10 @@ type SuggestInvitationRequest struct {
 	XXX_unrecognized []byte              `json:"-"`
 }
 
-func (m *SuggestInvitationRequest) Reset()         { *m = SuggestInvitationRequest{} }
-func (m *SuggestInvitationRequest) String() string { return proto.CompactTextString(m) }
-func (*SuggestInvitationRequest) ProtoMessage()    {}
+func (m *SuggestInvitationRequest) Reset()                    { *m = SuggestInvitationRequest{} }
+func (m *SuggestInvitationRequest) String() string            { return proto.CompactTextString(m) }
+func (*SuggestInvitationRequest) ProtoMessage()               {}
+func (*SuggestInvitationRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
 
 func (m *SuggestInvitationRequest) GetAgentId() *entity.EntityId {
 	if m != nil {
@@ -252,9 +264,10 @@ type RevokeInvitationRequest struct {
 	XXX_unrecognized []byte           `json:"-"`
 }
 
-func (m *RevokeInvitationRequest) Reset()         { *m = RevokeInvitationRequest{} }
-func (m *RevokeInvitationRequest) String() string { return proto.CompactTextString(m) }
-func (*RevokeInvitationRequest) ProtoMessage()    {}
+func (m *RevokeInvitationRequest) Reset()                    { *m = RevokeInvitationRequest{} }
+func (m *RevokeInvitationRequest) String() string            { return proto.CompactTextString(m) }
+func (*RevokeInvitationRequest) ProtoMessage()               {}
+func (*RevokeInvitationRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
 
 func (m *RevokeInvitationRequest) GetAgentId() *entity.EntityId {
 	if m != nil {
@@ -291,9 +304,10 @@ type HasRoomForInvitationRequest struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *HasRoomForInvitationRequest) Reset()         { *m = HasRoomForInvitationRequest{} }
-func (m *HasRoomForInvitationRequest) String() string { return proto.CompactTextString(m) }
-func (*HasRoomForInvitationRequest) ProtoMessage()    {}
+func (m *HasRoomForInvitationRequest) Reset()                    { *m = HasRoomForInvitationRequest{} }
+func (m *HasRoomForInvitationRequest) String() string            { return proto.CompactTextString(m) }
+func (*HasRoomForInvitationRequest) ProtoMessage()               {}
+func (*HasRoomForInvitationRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{7} }
 
 const Default_HasRoomForInvitationRequest_ChannelType string = "default"
 
@@ -326,9 +340,10 @@ type ChannelCountDescription struct {
 	XXX_unrecognized []byte           `json:"-"`
 }
 
-func (m *ChannelCountDescription) Reset()         { *m = ChannelCountDescription{} }
-func (m *ChannelCountDescription) String() string { return proto.CompactTextString(m) }
-func (*ChannelCountDescription) ProtoMessage()    {}
+func (m *ChannelCountDescription) Reset()                    { *m = ChannelCountDescription{} }
+func (m *ChannelCountDescription) String() string            { return proto.CompactTextString(m) }
+func (*ChannelCountDescription) ProtoMessage()               {}
+func (*ChannelCountDescription) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{8} }
 
 const Default_ChannelCountDescription_ChannelType string = "default"
 
@@ -366,9 +381,10 @@ type IncrementChannelCountRequest struct {
 	XXX_unrecognized []byte                     `json:"-"`
 }
 
-func (m *IncrementChannelCountRequest) Reset()         { *m = IncrementChannelCountRequest{} }
-func (m *IncrementChannelCountRequest) String() string { return proto.CompactTextString(m) }
-func (*IncrementChannelCountRequest) ProtoMessage()    {}
+func (m *IncrementChannelCountRequest) Reset()                    { *m = IncrementChannelCountRequest{} }
+func (m *IncrementChannelCountRequest) String() string            { return proto.CompactTextString(m) }
+func (*IncrementChannelCountRequest) ProtoMessage()               {}
+func (*IncrementChannelCountRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9} }
 
 func (m *IncrementChannelCountRequest) GetAgentId() *entity.EntityId {
 	if m != nil {
@@ -389,9 +405,10 @@ type IncrementChannelCountResponse struct {
 	XXX_unrecognized  []byte   `json:"-"`
 }
 
-func (m *IncrementChannelCountResponse) Reset()         { *m = IncrementChannelCountResponse{} }
-func (m *IncrementChannelCountResponse) String() string { return proto.CompactTextString(m) }
-func (*IncrementChannelCountResponse) ProtoMessage()    {}
+func (m *IncrementChannelCountResponse) Reset()                    { *m = IncrementChannelCountResponse{} }
+func (m *IncrementChannelCountResponse) String() string            { return proto.CompactTextString(m) }
+func (*IncrementChannelCountResponse) ProtoMessage()               {}
+func (*IncrementChannelCountResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{10} }
 
 func (m *IncrementChannelCountResponse) GetReservationTokens() []uint64 {
 	if m != nil {
@@ -407,9 +424,10 @@ type DecrementChannelCountRequest struct {
 	XXX_unrecognized []byte           `json:"-"`
 }
 
-func (m *DecrementChannelCountRequest) Reset()         { *m = DecrementChannelCountRequest{} }
-func (m *DecrementChannelCountRequest) String() string { return proto.CompactTextString(m) }
-func (*DecrementChannelCountRequest) ProtoMessage()    {}
+func (m *DecrementChannelCountRequest) Reset()                    { *m = DecrementChannelCountRequest{} }
+func (m *DecrementChannelCountRequest) String() string            { return proto.CompactTextString(m) }
+func (*DecrementChannelCountRequest) ProtoMessage()               {}
+func (*DecrementChannelCountRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{11} }
 
 func (m *DecrementChannelCountRequest) GetAgentId() *entity.EntityId {
 	if m != nil {
@@ -439,9 +457,10 @@ type UpdateChannelCountRequest struct {
 	XXX_unrecognized []byte           `json:"-"`
 }
 
-func (m *UpdateChannelCountRequest) Reset()         { *m = UpdateChannelCountRequest{} }
-func (m *UpdateChannelCountRequest) String() string { return proto.CompactTextString(m) }
-func (*UpdateChannelCountRequest) ProtoMessage()    {}
+func (m *UpdateChannelCountRequest) Reset()                    { *m = UpdateChannelCountRequest{} }
+func (m *UpdateChannelCountRequest) String() string            { return proto.CompactTextString(m) }
+func (*UpdateChannelCountRequest) ProtoMessage()               {}
+func (*UpdateChannelCountRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{12} }
 
 func (m *UpdateChannelCountRequest) GetAgentId() *entity.EntityId {
 	if m != nil {
@@ -471,9 +490,10 @@ type ListChannelCountRequest struct {
 	XXX_unrecognized []byte           `json:"-"`
 }
 
-func (m *ListChannelCountRequest) Reset()         { *m = ListChannelCountRequest{} }
-func (m *ListChannelCountRequest) String() string { return proto.CompactTextString(m) }
-func (*ListChannelCountRequest) ProtoMessage()    {}
+func (m *ListChannelCountRequest) Reset()                    { *m = ListChannelCountRequest{} }
+func (m *ListChannelCountRequest) String() string            { return proto.CompactTextString(m) }
+func (*ListChannelCountRequest) ProtoMessage()               {}
+func (*ListChannelCountRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{13} }
 
 func (m *ListChannelCountRequest) GetMemberId() *entity.EntityId {
 	if m != nil {
@@ -502,9 +522,10 @@ type ChannelCount struct {
 	XXX_unrecognized []byte           `json:"-"`
 }
 
-func (m *ChannelCount) Reset()         { *m = ChannelCount{} }
-func (m *ChannelCount) String() string { return proto.CompactTextString(m) }
-func (*ChannelCount) ProtoMessage()    {}
+func (m *ChannelCount) Reset()                    { *m = ChannelCount{} }
+func (m *ChannelCount) String() string            { return proto.CompactTextString(m) }
+func (*ChannelCount) ProtoMessage()               {}
+func (*ChannelCount) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{14} }
 
 const Default_ChannelCount_ChannelType string = "default"
 
@@ -527,9 +548,10 @@ type ListChannelCountResponse struct {
 	XXX_unrecognized []byte          `json:"-"`
 }
 
-func (m *ListChannelCountResponse) Reset()         { *m = ListChannelCountResponse{} }
-func (m *ListChannelCountResponse) String() string { return proto.CompactTextString(m) }
-func (*ListChannelCountResponse) ProtoMessage()    {}
+func (m *ListChannelCountResponse) Reset()                    { *m = ListChannelCountResponse{} }
+func (m *ListChannelCountResponse) String() string            { return proto.CompactTextString(m) }
+func (*ListChannelCountResponse) ProtoMessage()               {}
+func (*ListChannelCountResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{15} }
 
 func (m *ListChannelCountResponse) GetChannel() []*ChannelCount {
 	if m != nil {
@@ -543,9 +565,10 @@ type InvitationAddedNotification struct {
 	XXX_unrecognized []byte                       `json:"-"`
 }
 
-func (m *InvitationAddedNotification) Reset()         { *m = InvitationAddedNotification{} }
-func (m *InvitationAddedNotification) String() string { return proto.CompactTextString(m) }
-func (*InvitationAddedNotification) ProtoMessage()    {}
+func (m *InvitationAddedNotification) Reset()                    { *m = InvitationAddedNotification{} }
+func (m *InvitationAddedNotification) String() string            { return proto.CompactTextString(m) }
+func (*InvitationAddedNotification) ProtoMessage()               {}
+func (*InvitationAddedNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{16} }
 
 func (m *InvitationAddedNotification) GetInvitation() *invitation_types.Invitation {
 	if m != nil {
@@ -560,9 +583,10 @@ type InvitationRemovedNotification struct {
 	XXX_unrecognized []byte                       `json:"-"`
 }
 
-func (m *InvitationRemovedNotification) Reset()         { *m = InvitationRemovedNotification{} }
-func (m *InvitationRemovedNotification) String() string { return proto.CompactTextString(m) }
-func (*InvitationRemovedNotification) ProtoMessage()    {}
+func (m *InvitationRemovedNotification) Reset()                    { *m = InvitationRemovedNotification{} }
+func (m *InvitationRemovedNotification) String() string            { return proto.CompactTextString(m) }
+func (*InvitationRemovedNotification) ProtoMessage()               {}
+func (*InvitationRemovedNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{17} }
 
 func (m *InvitationRemovedNotification) GetInvitation() *invitation_types.Invitation {
 	if m != nil {
@@ -583,13 +607,91 @@ type SuggestionAddedNotification struct {
 	XXX_unrecognized []byte                       `json:"-"`
 }
 
-func (m *SuggestionAddedNotification) Reset()         { *m = SuggestionAddedNotification{} }
-func (m *SuggestionAddedNotification) String() string { return proto.CompactTextString(m) }
-func (*SuggestionAddedNotification) ProtoMessage()    {}
+func (m *SuggestionAddedNotification) Reset()                    { *m = SuggestionAddedNotification{} }
+func (m *SuggestionAddedNotification) String() string            { return proto.CompactTextString(m) }
+func (*SuggestionAddedNotification) ProtoMessage()               {}
+func (*SuggestionAddedNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{18} }
 
 func (m *SuggestionAddedNotification) GetSuggestion() *invitation_types.Suggestion {
 	if m != nil {
 		return m.Suggestion
 	}
 	return nil
+}
+
+func init() {
+	proto.RegisterType((*AcceptInvitationRequest)(nil), "channel_invitation_service.AcceptInvitationRequest")
+	proto.RegisterType((*AcceptInvitationResponse)(nil), "channel_invitation_service.AcceptInvitationResponse")
+	proto.RegisterType((*SubscribeRequest)(nil), "channel_invitation_service.SubscribeRequest")
+	proto.RegisterType((*SubscribeResponse)(nil), "channel_invitation_service.SubscribeResponse")
+	proto.RegisterType((*UnsubscribeRequest)(nil), "channel_invitation_service.UnsubscribeRequest")
+	proto.RegisterType((*SuggestInvitationRequest)(nil), "channel_invitation_service.SuggestInvitationRequest")
+	proto.RegisterType((*RevokeInvitationRequest)(nil), "channel_invitation_service.RevokeInvitationRequest")
+	proto.RegisterType((*HasRoomForInvitationRequest)(nil), "channel_invitation_service.HasRoomForInvitationRequest")
+	proto.RegisterType((*ChannelCountDescription)(nil), "channel_invitation_service.ChannelCountDescription")
+	proto.RegisterType((*IncrementChannelCountRequest)(nil), "channel_invitation_service.IncrementChannelCountRequest")
+	proto.RegisterType((*IncrementChannelCountResponse)(nil), "channel_invitation_service.IncrementChannelCountResponse")
+	proto.RegisterType((*DecrementChannelCountRequest)(nil), "channel_invitation_service.DecrementChannelCountRequest")
+	proto.RegisterType((*UpdateChannelCountRequest)(nil), "channel_invitation_service.UpdateChannelCountRequest")
+	proto.RegisterType((*ListChannelCountRequest)(nil), "channel_invitation_service.ListChannelCountRequest")
+	proto.RegisterType((*ChannelCount)(nil), "channel_invitation_service.ChannelCount")
+	proto.RegisterType((*ListChannelCountResponse)(nil), "channel_invitation_service.ListChannelCountResponse")
+	proto.RegisterType((*InvitationAddedNotification)(nil), "channel_invitation_service.InvitationAddedNotification")
+	proto.RegisterType((*InvitationRemovedNotification)(nil), "channel_invitation_service.InvitationRemovedNotification")
+	proto.RegisterType((*SuggestionAddedNotification)(nil), "channel_invitation_service.SuggestionAddedNotification")
+}
+
+var fileDescriptor0 = []byte{
+	// 803 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xa4, 0x55, 0xcf, 0x4f, 0xdb, 0x4a,
+	0x10, 0x96, 0x4d, 0x1e, 0x81, 0x21, 0xe1, 0x81, 0x79, 0x4f, 0x98, 0x00, 0x15, 0xda, 0xb6, 0x6a,
+	0x2e, 0x38, 0x55, 0x7a, 0x29, 0xf4, 0x44, 0xa1, 0x2d, 0x91, 0x4a, 0x2b, 0x11, 0x71, 0xac, 0x22,
+	0xc7, 0x9e, 0x24, 0x6e, 0x63, 0x6f, 0xea, 0xdd, 0x44, 0xe2, 0x56, 0x09, 0xf5, 0xd8, 0x4b, 0xff,
+	0x81, 0xfe, 0x95, 0xbd, 0x77, 0xed, 0x6c, 0xe2, 0x1f, 0xb1, 0xd3, 0x10, 0x4e, 0x96, 0x3c, 0xb3,
+	0xdf, 0xf7, 0xcd, 0xcc, 0x37, 0xbb, 0x60, 0x76, 0x1d, 0xde, 0x1b, 0xb6, 0x0d, 0x8b, 0xba, 0xb5,
+	0x4b, 0x34, 0x7d, 0xde, 0x6b, 0x3a, 0x6e, 0xad, 0xc7, 0x8e, 0x07, 0x3e, 0xe5, 0xf4, 0xb8, 0x4b,
+	0x6b, 0x6d, 0x0f, 0x79, 0xcd, 0xea, 0x99, 0x9e, 0x87, 0xfd, 0x96, 0xe3, 0x8d, 0x1c, 0x6e, 0x72,
+	0x87, 0x7a, 0x2d, 0x86, 0xfe, 0xc8, 0xb1, 0x70, 0x4e, 0xc8, 0x08, 0x31, 0xb4, 0x4a, 0x7e, 0x46,
+	0xe5, 0xd3, 0xd2, 0xf4, 0xfc, 0x76, 0x80, 0x2c, 0x37, 0x30, 0xa6, 0xae, 0xbc, 0xbb, 0x1f, 0x7c,
+	0x12, 0x33, 0x0e, 0x74, 0xb2, 0x18, 0x10, 0x7a, 0xdc, 0xe1, 0xb7, 0xf2, 0x23, 0x8f, 0x5e, 0x2d,
+	0x76, 0x74, 0xa6, 0xb4, 0xec, 0x92, 0xc8, 0x6f, 0x05, 0x76, 0xcf, 0x2c, 0x0b, 0x07, 0xbc, 0x31,
+	0x4d, 0xb8, 0xc6, 0xaf, 0x43, 0x64, 0x5c, 0x23, 0xb0, 0x66, 0x76, 0x05, 0x79, 0xcb, 0xb1, 0x75,
+	0xe5, 0x48, 0xa9, 0x6e, 0xd4, 0xb7, 0x0c, 0xa9, 0xe5, 0x4d, 0xf8, 0x69, 0xd8, 0xda, 0x73, 0x28,
+	0xb9, 0xe8, 0xb6, 0xd1, 0x6f, 0x31, 0x71, 0x18, 0x75, 0x35, 0xcc, 0xab, 0x18, 0xc9, 0xaa, 0xaf,
+	0xc2, 0x94, 0x66, 0x90, 0xa1, 0xfd, 0x0f, 0xe5, 0x98, 0x16, 0x01, 0xbd, 0x72, 0xa4, 0x56, 0x57,
+	0xb5, 0x6d, 0x58, 0xa7, 0xed, 0xcf, 0x68, 0x85, 0x6c, 0x05, 0xf1, 0xab, 0xa0, 0x3d, 0x01, 0x98,
+	0x0e, 0xc4, 0xd6, 0xff, 0xc9, 0x51, 0xf0, 0x1f, 0x94, 0xe4, 0xf8, 0x43, 0x32, 0x7d, 0x55, 0xe4,
+	0x95, 0xb5, 0x47, 0xb0, 0xd5, 0xa7, 0x96, 0xd9, 0x6f, 0xb1, 0x61, 0x9b, 0x59, 0xbe, 0x23, 0xe8,
+	0xf5, 0xa2, 0x88, 0xac, 0x9d, 0x16, 0xb8, 0x3f, 0x44, 0x72, 0x0c, 0xfa, 0x6c, 0xd9, 0x6c, 0x40,
+	0x3d, 0x86, 0x49, 0x29, 0x4a, 0x20, 0x85, 0x34, 0x60, 0xab, 0x39, 0x01, 0xba, 0x4f, 0x7b, 0x12,
+	0x50, 0x6a, 0x08, 0xf5, 0x53, 0x81, 0xed, 0x18, 0x96, 0xe4, 0x7c, 0x2d, 0x6a, 0xa5, 0xfd, 0xbe,
+	0xc8, 0x14, 0x4a, 0x04, 0xdc, 0x8a, 0x80, 0x33, 0x8c, 0x5c, 0x3f, 0x46, 0xaa, 0xcf, 0xa7, 0xa7,
+	0xb4, 0x13, 0xd8, 0xf1, 0xd1, 0x42, 0x67, 0x84, 0x76, 0xec, 0x84, 0xa0, 0x0d, 0xc0, 0x0e, 0x8c,
+	0x39, 0x20, 0xe4, 0x25, 0x68, 0x37, 0x1e, 0x5b, 0xa2, 0x42, 0x72, 0xa7, 0x82, 0xde, 0x1c, 0x76,
+	0xbb, 0x22, 0x7f, 0x39, 0x07, 0x25, 0xa7, 0x1c, 0xf4, 0x28, 0x2b, 0xeb, 0x31, 0xac, 0x73, 0xd3,
+	0xef, 0x22, 0x9f, 0x38, 0x26, 0x2b, 0xe9, 0x29, 0x6c, 0x98, 0x03, 0xe1, 0xeb, 0x91, 0xd9, 0x1f,
+	0xbb, 0x28, 0x9b, 0xb1, 0x0a, 0x9b, 0x13, 0x55, 0xe3, 0x50, 0xda, 0x5b, 0x0d, 0xf9, 0x5f, 0x7b,
+	0x06, 0x20, 0x33, 0xbd, 0x0e, 0x0d, 0x9d, 0xb5, 0x51, 0xdf, 0x99, 0x64, 0x09, 0xff, 0xd0, 0xa1,
+	0x27, 0xaa, 0xee, 0x50, 0xf2, 0x4b, 0xac, 0xd1, 0x35, 0x8e, 0xe8, 0x17, 0x5c, 0xae, 0x09, 0x89,
+	0xf2, 0xd4, 0x9c, 0xa4, 0x9c, 0xcd, 0x49, 0x36, 0xb0, 0x90, 0xdd, 0x1b, 0x62, 0xc1, 0xfe, 0xa5,
+	0xc9, 0xae, 0x29, 0x75, 0xdf, 0x52, 0x7f, 0x56, 0x64, 0x7a, 0x8b, 0x02, 0xdb, 0x97, 0xb5, 0x7f,
+	0xa1, 0x28, 0xda, 0xd9, 0xf5, 0x4d, 0x37, 0x14, 0x55, 0xd4, 0x0e, 0xa1, 0x14, 0xdf, 0x6c, 0xa1,
+	0x40, 0xa9, 0xae, 0x9f, 0x16, 0x6d, 0xec, 0x98, 0xc3, 0x3e, 0x27, 0xdf, 0x45, 0x1b, 0xce, 0xc7,
+	0xf1, 0xf3, 0xa0, 0x37, 0x17, 0x18, 0x18, 0x6a, 0x10, 0xba, 0x73, 0x01, 0x06, 0xf5, 0xaf, 0x0c,
+	0x33, 0xc5, 0x66, 0x9b, 0xf2, 0x87, 0x02, 0x07, 0x0d, 0xcf, 0xf2, 0xd1, 0x15, 0x91, 0xb8, 0xa0,
+	0xec, 0x99, 0x64, 0xbb, 0xa9, 0x01, 0x25, 0x3b, 0xd2, 0xcf, 0xe4, 0x1e, 0xbd, 0x30, 0xe6, 0xbc,
+	0x50, 0x39, 0xb5, 0x93, 0x57, 0x70, 0x98, 0x23, 0x47, 0xae, 0x7f, 0x05, 0x34, 0x1f, 0x03, 0x14,
+	0xb9, 0x9f, 0xc2, 0x48, 0x82, 0x31, 0xb8, 0x06, 0x0a, 0xe4, 0x4e, 0x14, 0x73, 0x81, 0x0f, 0x2c,
+	0x26, 0xbd, 0x65, 0xd9, 0x0e, 0xdb, 0x83, 0xed, 0x19, 0x19, 0xe1, 0x04, 0x0a, 0xe4, 0x9b, 0x02,
+	0x7b, 0x37, 0x03, 0x5b, 0xdc, 0xe0, 0xcb, 0x4a, 0xc8, 0x04, 0x0f, 0x94, 0xa4, 0x6f, 0xfa, 0x9c,
+	0xf5, 0x26, 0x08, 0xbb, 0xef, 0x1d, 0x96, 0xd9, 0x02, 0xb1, 0x3f, 0xf2, 0x19, 0x9a, 0x23, 0x20,
+	0xed, 0x40, 0x35, 0xed, 0xc0, 0xa0, 0xd2, 0x22, 0x69, 0x42, 0x29, 0x4e, 0x91, 0x12, 0x97, 0xb7,
+	0xc1, 0x69, 0xdf, 0xaa, 0xc9, 0xcd, 0xb8, 0x01, 0x7d, 0x56, 0xbb, 0x1c, 0xfe, 0x09, 0x14, 0xe5,
+	0x51, 0x79, 0xf1, 0x57, 0x17, 0xf5, 0x18, 0xf9, 0x08, 0xfb, 0xd1, 0x2e, 0x9f, 0xd9, 0x36, 0xda,
+	0x1f, 0x28, 0x77, 0x3a, 0x8e, 0x15, 0xfe, 0x10, 0xaf, 0x33, 0xc4, 0x1e, 0x82, 0x71, 0x5f, 0xe6,
+	0x3f, 0x04, 0x66, 0xe0, 0xd4, 0xe8, 0x72, 0x70, 0xe9, 0xe8, 0xa1, 0x90, 0xda, 0x26, 0xac, 0xfa,
+	0x68, 0x32, 0x3a, 0x1e, 0x76, 0x39, 0xd0, 0x2c, 0x1f, 0x8c, 0x3c, 0xcd, 0x6c, 0x1a, 0xce, 0x27,
+	0x88, 0x20, 0xea, 0x15, 0xd0, 0x65, 0x53, 0x22, 0xd6, 0xe6, 0xb8, 0x5b, 0xf5, 0xbd, 0xe9, 0x85,
+	0x14, 0xc5, 0x42, 0xba, 0xdb, 0x3f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x96, 0xb0, 0x3a, 0x2a, 0xac,
+	0x0a, 0x00, 0x00,
 }

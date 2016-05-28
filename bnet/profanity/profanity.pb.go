@@ -15,11 +15,17 @@ It has these top-level messages:
 package profanity
 
 import proto "github.com/golang/protobuf/proto"
+import fmt "fmt"
 import math "math"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
+var _ = fmt.Errorf
 var _ = math.Inf
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the proto package it is being compiled against.
+const _ = proto.ProtoPackageIsVersion1
 
 type WordFilter struct {
 	Type             *string `protobuf:"bytes,1,req,name=type" json:"type,omitempty"`
@@ -27,9 +33,10 @@ type WordFilter struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *WordFilter) Reset()         { *m = WordFilter{} }
-func (m *WordFilter) String() string { return proto.CompactTextString(m) }
-func (*WordFilter) ProtoMessage()    {}
+func (m *WordFilter) Reset()                    { *m = WordFilter{} }
+func (m *WordFilter) String() string            { return proto.CompactTextString(m) }
+func (*WordFilter) ProtoMessage()               {}
+func (*WordFilter) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
 func (m *WordFilter) GetType() string {
 	if m != nil && m.Type != nil {
@@ -50,13 +57,33 @@ type WordFilters struct {
 	XXX_unrecognized []byte        `json:"-"`
 }
 
-func (m *WordFilters) Reset()         { *m = WordFilters{} }
-func (m *WordFilters) String() string { return proto.CompactTextString(m) }
-func (*WordFilters) ProtoMessage()    {}
+func (m *WordFilters) Reset()                    { *m = WordFilters{} }
+func (m *WordFilters) String() string            { return proto.CompactTextString(m) }
+func (*WordFilters) ProtoMessage()               {}
+func (*WordFilters) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
 func (m *WordFilters) GetFilters() []*WordFilter {
 	if m != nil {
 		return m.Filters
 	}
 	return nil
+}
+
+func init() {
+	proto.RegisterType((*WordFilter)(nil), "profanity.WordFilter")
+	proto.RegisterType((*WordFilters)(nil), "profanity.WordFilters")
+}
+
+var fileDescriptor0 = []byte{
+	// 147 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xe2, 0xb2, 0x4f, 0xcf, 0x2c, 0xc9,
+	0x28, 0x4d, 0xd2, 0x4b, 0xce, 0xcf, 0xd5, 0xf7, 0x48, 0x4d, 0x2c, 0x2a, 0xc9, 0x08, 0xce, 0xcc,
+	0xd5, 0xcf, 0x28, 0xd6, 0x2d, 0x28, 0xca, 0x2f, 0xc9, 0xd7, 0x4d, 0xcf, 0xd7, 0x4f, 0xca, 0x4b,
+	0x2d, 0xd1, 0x07, 0xf2, 0xd2, 0x12, 0xf3, 0x32, 0x4b, 0x2a, 0x11, 0x2c, 0x3d, 0xb0, 0x0a, 0x21,
+	0x4e, 0xb8, 0x80, 0x92, 0x26, 0x17, 0x57, 0x78, 0x7e, 0x51, 0x8a, 0x5b, 0x66, 0x4e, 0x49, 0x6a,
+	0x91, 0x10, 0x0f, 0x17, 0x4b, 0x49, 0x65, 0x41, 0xaa, 0x04, 0xa3, 0x02, 0x93, 0x06, 0xa7, 0x10,
+	0x2f, 0x17, 0x6b, 0x51, 0x6a, 0x7a, 0x6a, 0x85, 0x04, 0x13, 0x88, 0xab, 0x64, 0xca, 0xc5, 0x8d,
+	0x50, 0x5a, 0x2c, 0xa4, 0xc6, 0xc5, 0x9e, 0x06, 0x61, 0x02, 0x95, 0x33, 0x6b, 0x70, 0x1b, 0x89,
+	0xea, 0x21, 0xec, 0x41, 0x28, 0x04, 0x04, 0x00, 0x00, 0xff, 0xff, 0x71, 0x8f, 0xd1, 0xb4, 0xae,
+	0x00, 0x00, 0x00,
 }
