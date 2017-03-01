@@ -1,3 +1,4 @@
+# PowerShell.exe -ExecutionPolicy Unrestricted .\build.ps1 "D:\Git\proto-extractor\bin\Debug\proto-out"
 param(
     # First positional parameter - The root directory of all .proto files.
     # Point this path to the output directory of the Proto-Extrator project!
@@ -32,6 +33,9 @@ if(!$GO_PATH) {
 #  === $GOPATH/github.com/HearthSim/hs-proto-go/ === 
 $Compiled_Proto_Path = Join-Path $GO_PATH -ChildPath "src" | Join-Path -ChildPath $Import_Prefix
 
+Write-Host "Compiled protobuffer files are written to: "$Compiled_Proto_Path
+Write-Host
+
 # Create directory if it did not exist.
 # Out-Null is used to pipe output of the command to a null stream.
 New-Item -ItemType Directory -Force -Path $Compiled_Proto_Path | Out-Null
@@ -40,9 +44,9 @@ Set-Location $Compiled_Proto_Path
 # Compile all proto files per package.
 # So we take each subdirectory of the $PROTO_IN path and compile all
 # .proto files found inside that directory at the same time.
-$Packages = Get-ChildItem $PROTO_IN -Recurse -Directory
+$Packages = Get-ChildItem -Path $PROTO_IN -Recurse -Directory
 $Packages | ForEach-Object {
-    $Proto_Files = Get-ChildItem $_.FullName -Filter "*.proto"
+    $Proto_Files = Get-ChildItem $_.FullName -Filter *.proto -File
     $PackageName = $_.Name.ToLower()
 
     if($Proto_Files.Length -gt 0) {
@@ -53,7 +57,20 @@ $Packages | ForEach-Object {
         }
 
         Write-Host "Building package: "$_.FullName
-        protoc --proto_path="$PROTO_IN" --go_out="import_prefix=${Import_Prefix},import_path=${PackageName}:." $File_List
+        protoc --proto_path="$PROTO_IN" --go_out="import_prefix=${Import_Prefix}:." $File_List
         Write-Host
     }    
+}
+
+Write-Host "Initiating fixes.."
+
+# Fix for greedy prefixing of import statements by the GO compiler
+Get-ChildItem -Path $Compiled_Proto_Path -Recurse -Filter *.go -File |
+ForEach-Object {
+    $File_Path = $_.FullName
+    $Contents = (Get-Content $File_Path)
+
+    # Do simple string replacement
+    $Contents.Replace('"github.com/HearthSim/hs-proto-go/github.com/golang/protobuf/proto"', '"github.com/golang/protobuf/proto"') |
+    Set-Content $File_Path
 }
