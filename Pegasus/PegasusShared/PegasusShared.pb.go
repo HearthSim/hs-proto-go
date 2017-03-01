@@ -3,7 +3,7 @@
 // DO NOT EDIT!
 
 /*
-Package pegasus_pegasusshared is a generated protocol buffer package.
+Package pegasusshared is a generated protocol buffer package.
 
 It is generated from these files:
 	Pegasus/PegasusShared/PegasusShared.proto
@@ -61,9 +61,9 @@ It has these top-level messages:
 	TavernBrawlSpec
 	Vector2
 */
-package pegasus_pegasusshared
+package pegasusshared
 
-import proto "github.com/golang/protobuf/proto"
+import proto "github.com/HearthSim/hs-proto-go/github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 

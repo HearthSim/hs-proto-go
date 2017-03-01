@@ -3,7 +3,7 @@
 // DO NOT EDIT!
 
 /*
-Package bnet_protocol_authentication is a generated protocol buffer package.
+Package authentication is a generated protocol buffer package.
 
 It is generated from these files:
 	bnet/protocol/authentication/authentication.proto
@@ -28,13 +28,13 @@ It has these top-level messages:
 	VersionInfo
 	VersionInfoNotification
 */
-package bnet_protocol_authentication
+package authentication
 
-import proto "github.com/golang/protobuf/proto"
+import proto "github.com/HearthSim/hs-proto-go/github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import bnet_protocol_account "bnet/protocol/account"
-import bnet_protocol "bnet/protocol"
+import bnet_protocol_account "github.com/HearthSim/hs-proto-go/bnet/protocol/account"
+import bnet_protocol "github.com/HearthSim/hs-proto-go/bnet/protocol"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal

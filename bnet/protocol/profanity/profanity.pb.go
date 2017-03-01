@@ -3,7 +3,7 @@
 // DO NOT EDIT!
 
 /*
-Package bnet_protocol_profanity is a generated protocol buffer package.
+Package profanity is a generated protocol buffer package.
 
 It is generated from these files:
 	bnet/protocol/profanity/profanity.proto
@@ -12,9 +12,9 @@ It has these top-level messages:
 	WordFilter
 	WordFilters
 */
-package bnet_protocol_profanity
+package profanity
 
-import proto "github.com/golang/protobuf/proto"
+import proto "github.com/HearthSim/hs-proto-go/github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 

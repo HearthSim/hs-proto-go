@@ -3,7 +3,7 @@
 // DO NOT EDIT!
 
 /*
-Package bnet_protocol_game_master is a generated protocol buffer package.
+Package game_master is a generated protocol buffer package.
 
 It is generated from these files:
 	bnet/protocol/game_master/game_master.proto
@@ -39,14 +39,14 @@ It has these top-level messages:
 	UnregisterUtilitiesRequest
 	UnsubscribeRequest
 */
-package bnet_protocol_game_master
+package game_master
 
-import proto "github.com/golang/protobuf/proto"
+import proto "github.com/HearthSim/hs-proto-go/github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import bnet_protocol_attribute "bnet/protocol/attribute"
-import bnet_protocol "bnet/protocol"
-import bnet_protocol_server_pool "bnet/protocol/server_pool"
+import bnet_protocol_attribute "github.com/HearthSim/hs-proto-go/bnet/protocol/attribute"
+import bnet_protocol "github.com/HearthSim/hs-proto-go/bnet/protocol"
+import bnet_protocol_server_pool "github.com/HearthSim/hs-proto-go/bnet/protocol/server_pool"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal

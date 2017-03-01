@@ -3,7 +3,7 @@
 // DO NOT EDIT!
 
 /*
-Package pegasus_pegasusgame is a generated protocol buffer package.
+Package pegasusgame is a generated protocol buffer package.
 
 It is generated from these files:
 	Pegasus/PegasusGame/PegasusGame.proto
@@ -50,12 +50,12 @@ It has these top-level messages:
 	TurnTimer
 	UserUI
 */
-package pegasus_pegasusgame
+package pegasusgame
 
-import proto "github.com/golang/protobuf/proto"
+import proto "github.com/HearthSim/hs-proto-go/github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import pegasus_pegasusshared "Pegasus/PegasusShared"
+import pegasus_pegasusshared "github.com/HearthSim/hs-proto-go/Pegasus/PegasusShared"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal

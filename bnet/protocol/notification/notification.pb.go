@@ -3,7 +3,7 @@
 // DO NOT EDIT!
 
 /*
-Package bnet_protocol_notification is a generated protocol buffer package.
+Package notification is a generated protocol buffer package.
 
 It is generated from these files:
 	bnet/protocol/notification/notification.proto
@@ -15,12 +15,12 @@ It has these top-level messages:
 	RegisterClientRequest
 	UnregisterClientRequest
 */
-package bnet_protocol_notification
+package notification
 
-import proto "github.com/golang/protobuf/proto"
+import proto "github.com/HearthSim/hs-proto-go/github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import bnet_protocol "bnet/protocol"
+import bnet_protocol "github.com/HearthSim/hs-proto-go/bnet/protocol"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal

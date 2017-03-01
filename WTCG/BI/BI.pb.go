@@ -3,7 +3,7 @@
 // DO NOT EDIT!
 
 /*
-Package wtcg_bi is a generated protocol buffer package.
+Package bi is a generated protocol buffer package.
 
 It is generated from these files:
 	WTCG/BI/BI.proto
@@ -15,9 +15,9 @@ It has these top-level messages:
 	PresenceChange
 	Telemetry
 */
-package wtcg_bi
+package bi
 
-import proto "github.com/golang/protobuf/proto"
+import proto "github.com/HearthSim/hs-proto-go/github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 

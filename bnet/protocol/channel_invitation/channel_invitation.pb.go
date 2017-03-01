@@ -3,7 +3,7 @@
 // DO NOT EDIT!
 
 /*
-Package bnet_protocol_channel_invitation is a generated protocol buffer package.
+Package channel_invitation is a generated protocol buffer package.
 
 It is generated from these files:
 	bnet/protocol/channel_invitation/channel_invitation.proto
@@ -34,16 +34,16 @@ It has these top-level messages:
 	UpdateChannelCountRequest
 	UpdateInvitationRequest
 */
-package bnet_protocol_channel_invitation
+package channel_invitation
 
-import proto "github.com/golang/protobuf/proto"
+import proto "github.com/HearthSim/hs-proto-go/github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import bnet_protocol_channel "bnet/protocol/channel"
-import bnet_protocol_channel_extracted "bnet/protocol/channel/extracted"
-import bnet_protocol_friends "bnet/protocol/friends"
-import bnet_protocol_invitation "bnet/protocol/invitation"
-import bnet_protocol "bnet/protocol"
+import bnet_protocol_channel "github.com/HearthSim/hs-proto-go/bnet/protocol/channel"
+import bnet_protocol_channel_extracted "github.com/HearthSim/hs-proto-go/bnet/protocol/channel/extracted"
+import bnet_protocol_friends "github.com/HearthSim/hs-proto-go/bnet/protocol/friends"
+import bnet_protocol_invitation "github.com/HearthSim/hs-proto-go/bnet/protocol/invitation"
+import bnet_protocol "github.com/HearthSim/hs-proto-go/bnet/protocol"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal

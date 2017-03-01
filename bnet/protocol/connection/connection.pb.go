@@ -3,7 +3,7 @@
 // DO NOT EDIT!
 
 /*
-Package bnet_protocol_connection is a generated protocol buffer package.
+Package connection is a generated protocol buffer package.
 
 It is generated from these files:
 	bnet/protocol/connection/connection.proto
@@ -21,12 +21,12 @@ It has these top-level messages:
 	EchoResponse
 	EncryptRequest
 */
-package bnet_protocol_connection
+package connection
 
-import proto "github.com/golang/protobuf/proto"
+import proto "github.com/HearthSim/hs-proto-go/github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import bnet_protocol "bnet/protocol"
+import bnet_protocol "github.com/HearthSim/hs-proto-go/bnet/protocol"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal

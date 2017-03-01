@@ -3,7 +3,7 @@
 // DO NOT EDIT!
 
 /*
-Package bnet_protocol_chat is a generated protocol buffer package.
+Package chat is a generated protocol buffer package.
 
 It is generated from these files:
 	bnet/protocol/chat/chat.proto
@@ -11,9 +11,9 @@ It is generated from these files:
 It has these top-level messages:
 	ChannelState
 */
-package bnet_protocol_chat
+package chat
 
-import proto "github.com/golang/protobuf/proto"
+import proto "github.com/HearthSim/hs-proto-go/github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 

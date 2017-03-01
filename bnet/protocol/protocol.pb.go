@@ -3,7 +3,7 @@
 // DO NOT EDIT!
 
 /*
-Package bnet_protocol is a generated protocol buffer package.
+Package protocol is a generated protocol buffer package.
 
 It is generated from these files:
 	bnet/protocol/protocol.proto
@@ -28,9 +28,9 @@ It has these top-level messages:
 	RoleSetConfig
 	Variant
 */
-package bnet_protocol
+package protocol
 
-import proto "github.com/golang/protobuf/proto"
+import proto "github.com/HearthSim/hs-proto-go/github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 

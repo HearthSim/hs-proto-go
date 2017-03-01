@@ -3,7 +3,7 @@
 // DO NOT EDIT!
 
 /*
-Package pegasus_pegasusclient is a generated protocol buffer package.
+Package pegasusclient is a generated protocol buffer package.
 
 It is generated from these files:
 	Pegasus/PegasusClient/PegasusClient.proto
@@ -11,9 +11,9 @@ It is generated from these files:
 It has these top-level messages:
 	SessionRecord
 */
-package pegasus_pegasusclient
+package pegasusclient
 
-import proto "github.com/golang/protobuf/proto"
+import proto "github.com/HearthSim/hs-proto-go/github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 

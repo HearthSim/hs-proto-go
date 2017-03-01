@@ -3,7 +3,7 @@
 // DO NOT EDIT!
 
 /*
-Package bnet_protocol_invitation is a generated protocol buffer package.
+Package invitation is a generated protocol buffer package.
 
 It is generated from these files:
 	bnet/protocol/invitation/invitation.proto
@@ -14,13 +14,13 @@ It has these top-level messages:
 	SendInvitationResponse
 	Suggestion
 */
-package bnet_protocol_invitation
+package invitation
 
-import proto "github.com/golang/protobuf/proto"
+import proto "github.com/HearthSim/hs-proto-go/github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import bnet_protocol_channel_extracted "bnet/protocol/channel/extracted"
-import bnet_protocol "bnet/protocol"
+import bnet_protocol_channel_extracted "github.com/HearthSim/hs-proto-go/bnet/protocol/channel/extracted"
+import bnet_protocol "github.com/HearthSim/hs-proto-go/bnet/protocol"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal

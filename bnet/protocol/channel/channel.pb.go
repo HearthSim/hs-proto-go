@@ -3,7 +3,7 @@
 // DO NOT EDIT!
 
 /*
-Package bnet_protocol_channel is a generated protocol buffer package.
+Package channel is a generated protocol buffer package.
 
 It is generated from these files:
 	bnet/protocol/channel/channel.proto
@@ -42,14 +42,14 @@ It has these top-level messages:
 	UpdateMemberStateNotification
 	UpdateMemberStateRequest
 */
-package bnet_protocol_channel
+package channel
 
-import proto "github.com/golang/protobuf/proto"
+import proto "github.com/HearthSim/hs-proto-go/github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import bnet_protocol_attribute "bnet/protocol/attribute"
-import bnet_protocol_channel_extracted "bnet/protocol/channel/extracted"
-import bnet_protocol "bnet/protocol"
+import bnet_protocol_attribute "github.com/HearthSim/hs-proto-go/bnet/protocol/attribute"
+import bnet_protocol_channel_extracted "github.com/HearthSim/hs-proto-go/bnet/protocol/channel/extracted"
+import bnet_protocol "github.com/HearthSim/hs-proto-go/bnet/protocol"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal

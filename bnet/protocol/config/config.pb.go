@@ -3,7 +3,7 @@
 // DO NOT EDIT!
 
 /*
-Package bnet_protocol_config is a generated protocol buffer package.
+Package config is a generated protocol buffer package.
 
 It is generated from these files:
 	bnet/protocol/config/config.proto
@@ -12,9 +12,9 @@ It has these top-level messages:
 	RPCMeterConfig
 	RPCMethodConfig
 */
-package bnet_protocol_config
+package config
 
-import proto "github.com/golang/protobuf/proto"
+import proto "github.com/HearthSim/hs-proto-go/github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 
