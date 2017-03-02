@@ -1,4 +1,10 @@
-# PowerShell.exe -ExecutionPolicy Unrestricted .\build.ps1 "D:\Git\proto-extractor\bin\Debug\proto-out"
+# Usage: PowerShell.exe -ExecutionPolicy Unrestricted .\build.ps1 "D:\Git\proto-extractor\bin\Debug\proto-out"
+# Requirements:
+#   The protobuffer compiler tool (https://github.com/google/protobuf/releases)
+#   and add it to your path, '$GOPATH/bin' could be used!
+#   PROTO and PROTOC-GEN-GO GO packages:
+#       go get -u github.com/golang/protobuf/{proto,protoc-gen-go}
+
 param(
     # First positional parameter - The root directory of all .proto files.
     # Point this path to the output directory of the Proto-Extrator project!
@@ -28,6 +34,9 @@ if(!$GO_PATH) {
         $GO_PATH = $Go_Path_Env.Value
     }
 }
+
+# Update environment variable PATH to include the protocompiler extensions
+$env:Path = "$env:Path;$GO_PATH\bin"
 
 # Generate complete output path for the compiled proto files.
 #  === $GOPATH/github.com/HearthSim/hs-proto-go/ === 
@@ -74,3 +83,5 @@ ForEach-Object {
     $Contents.Replace('"github.com/HearthSim/hs-proto-go/github.com/golang/protobuf/proto"', '"github.com/golang/protobuf/proto"') |
     Set-Content $File_Path
 }
+
+Write-Host "Process finished!"
