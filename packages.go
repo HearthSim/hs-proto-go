@@ -1,4 +1,4 @@
-package packages
+package main
 
 import (
 	_ "github.com/HearthSim/hs-proto-go/BobNetProto"
@@ -26,3 +26,7 @@ import (
 	_ "github.com/HearthSim/hs-proto-go/bnet/protocol/resources"
 	_ "github.com/HearthSim/hs-proto-go/bnet/protocol/server_pool"
 )
+
+func main() {
+	// Empty
+}
