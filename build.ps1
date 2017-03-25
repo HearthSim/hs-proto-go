@@ -19,7 +19,7 @@ Set-Variable -Name Import_Prefix -Value "github.com/HearthSim/hs-proto-go/"
 
 # Check provided proto path.
 if( (!$PROTO_IN) -or !(Test-Path $PROTO_IN) ) {
-    Write-Host "First parameter must be a path to the protobuffer files!"
+    Write-Host "ERROR   First parameter must be a path to the protobuffer files!"
     exit 1
 }
 
@@ -28,7 +28,7 @@ if(!$GO_PATH) {
     $Go_Path_Env = Get-ChildItem Env:GOPATH
 
     if(!$Go_Path_Env) {
-        Write-Host "The environment variable GOPATH must be set or passed as second argument!"
+        Write-Host "ERROR   The environment variable GOPATH must be set or passed as second argument!"
         exit 1
     } else {
         $GO_PATH = $Go_Path_Env.Value
@@ -42,7 +42,7 @@ $env:Path = "$env:Path;$GO_PATH\bin"
 #  === $GOPATH/github.com/HearthSim/hs-proto-go/ === 
 $Compiled_Proto_Path = Join-Path $GO_PATH -ChildPath "src" | Join-Path -ChildPath $Import_Prefix
 
-Write-Host "Compiled protobuffer files are written to: "$Compiled_Proto_Path
+Write-Host "INFO    Compiled protobuffer files are written to: "$Compiled_Proto_Path
 Write-Host
 
 # Create directory if it did not exist.
@@ -65,14 +65,15 @@ $Packages | ForEach-Object {
             $File_List += "`"" + $_.FullName + "`"" 
         }
 
-        Write-Host "Building package: "$_.FullName
+        Write-Host "INFO    Building package: "$_.FullName
         protoc --proto_path="$PROTO_IN" --go_out="import_prefix=${Import_Prefix}:." $File_List
         Write-Host
     }    
 }
 
-Write-Host "Initiating fixes.."
+Write-Host "INFO    Initiating fixes.."
 
+Write-Host " - Fixing greedy imports.."
 # Fix for greedy prefixing of import statements by the GO compiler
 Get-ChildItem -Path $Compiled_Proto_Path -Recurse -Filter *.go -File |
 ForEach-Object {
@@ -84,4 +85,4 @@ ForEach-Object {
     Set-Content $File_Path
 }
 
-Write-Host "Process finished!"
+Write-Host "INFO    Process finished!"
