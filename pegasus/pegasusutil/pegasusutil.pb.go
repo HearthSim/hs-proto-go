@@ -31,6 +31,8 @@ It has these top-level messages:
 	BoosterCard
 	BoosterContent
 	BoosterList
+	BoosterModifications
+	Boosters
 	BoughtSoldCard
 	Bundle
 	BundleItem
@@ -65,7 +67,7 @@ It has these top-level messages:
 	DeckSetTemplateSource
 	DeleteDeck
 	DevBnetIdentify
-	Disconnected
+	DisconnectedGame
 	DoPurchase
 	DraftAckRewards
 	DraftBegin
@@ -75,6 +77,8 @@ It has these top-level messages:
 	DraftError
 	DraftGetPicksAndContents
 	DraftMakePick
+	DraftRemoveGoldensResponse
+	DraftRequestRemoveGoldens
 	DraftRetire
 	DraftRetired
 	DraftRewardsAcked
@@ -135,6 +139,7 @@ It has these top-level messages:
 	RequestTavernBrawlPlayerRecord
 	ReturningPlayerInfo
 	ReturningPlayerOptOutRequest
+	ReturningPlayerOptOutResponse
 	RewardProgress
 	RpcHeader
 	RpcMessage
@@ -175,7 +180,7 @@ package pegasus_pegasusutil
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import pegasus_pegasusshared "pegasus/pegasusshared"
+import pegasus_pegasusshared "github.com/HearthSim/hs-proto-go/pegasus/pegasusshared"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -204,6 +209,7 @@ const (
 	ProductType_PRODUCT_TYPE_RANDOM_CARD         ProductType = 9
 	ProductType_PRODUCT_TYPE_HIDDEN_LICENSE      ProductType = 10
 	ProductType_PRODUCT_TYPE_TAVERN_BRAWL_TICKET ProductType = 11
+	ProductType_PRODUCT_TYPE_CURRENCY            ProductType = 12
 )
 
 var ProductType_name = map[int32]string{
@@ -219,6 +225,7 @@ var ProductType_name = map[int32]string{
 	9:  "PRODUCT_TYPE_RANDOM_CARD",
 	10: "PRODUCT_TYPE_HIDDEN_LICENSE",
 	11: "PRODUCT_TYPE_TAVERN_BRAWL_TICKET",
+	12: "PRODUCT_TYPE_CURRENCY",
 }
 var ProductType_value = map[string]int32{
 	"PRODUCT_TYPE_UNKNOWN":             0,
@@ -233,10 +240,24 @@ var ProductType_value = map[string]int32{
 	"PRODUCT_TYPE_RANDOM_CARD":         9,
 	"PRODUCT_TYPE_HIDDEN_LICENSE":      10,
 	"PRODUCT_TYPE_TAVERN_BRAWL_TICKET": 11,
+	"PRODUCT_TYPE_CURRENCY":            12,
 }
 
+func (x ProductType) Enum() *ProductType {
+	p := new(ProductType)
+	*p = x
+	return p
+}
 func (x ProductType) String() string {
 	return proto.EnumName(ProductType_name, int32(x))
+}
+func (x *ProductType) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ProductType_value, data, "ProductType")
+	if err != nil {
+		return err
+	}
+	*x = ProductType(value)
+	return nil
 }
 func (ProductType) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
@@ -244,24 +265,34 @@ func (ProductType) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []
 type RAFServiceStatus int32
 
 const (
-	RAFServiceStatus_RAFSERVICESTATUS_AUTO_INVALID    RAFServiceStatus = 0
 	RAFServiceStatus_rafservice_status__ok            RAFServiceStatus = 1
 	RAFServiceStatus_rafservice_status__not_available RAFServiceStatus = 2
 )
 
 var RAFServiceStatus_name = map[int32]string{
-	0: "RAFSERVICESTATUS_AUTO_INVALID",
 	1: "rafservice_status__ok",
 	2: "rafservice_status__not_available",
 }
 var RAFServiceStatus_value = map[string]int32{
-	"RAFSERVICESTATUS_AUTO_INVALID":    0,
 	"rafservice_status__ok":            1,
 	"rafservice_status__not_available": 2,
 }
 
+func (x RAFServiceStatus) Enum() *RAFServiceStatus {
+	p := new(RAFServiceStatus)
+	*p = x
+	return p
+}
 func (x RAFServiceStatus) String() string {
 	return proto.EnumName(RAFServiceStatus_name, int32(x))
+}
+func (x *RAFServiceStatus) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(RAFServiceStatus_value, data, "RAFServiceStatus")
+	if err != nil {
+		return err
+	}
+	*x = RAFServiceStatus(value)
+	return nil
 }
 func (RAFServiceStatus) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
@@ -269,21 +300,31 @@ func (RAFServiceStatus) EnumDescriptor() ([]byte, []int) { return fileDescriptor
 type AccountLicenseAchieveResponse_PacketID int32
 
 const (
-	AccountLicenseAchieveResponse_PACKETID_AUTO_INVALID AccountLicenseAchieveResponse_PacketID = 0
-	AccountLicenseAchieveResponse_ID                    AccountLicenseAchieveResponse_PacketID = 311
+	AccountLicenseAchieveResponse_ID AccountLicenseAchieveResponse_PacketID = 311
 )
 
 var AccountLicenseAchieveResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	311: "ID",
 }
 var AccountLicenseAchieveResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 311,
 }
 
+func (x AccountLicenseAchieveResponse_PacketID) Enum() *AccountLicenseAchieveResponse_PacketID {
+	p := new(AccountLicenseAchieveResponse_PacketID)
+	*p = x
+	return p
+}
 func (x AccountLicenseAchieveResponse_PacketID) String() string {
 	return proto.EnumName(AccountLicenseAchieveResponse_PacketID_name, int32(x))
+}
+func (x *AccountLicenseAchieveResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(AccountLicenseAchieveResponse_PacketID_value, data, "AccountLicenseAchieveResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = AccountLicenseAchieveResponse_PacketID(value)
+	return nil
 }
 func (AccountLicenseAchieveResponse_PacketID) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{0, 0}
@@ -293,16 +334,14 @@ func (AccountLicenseAchieveResponse_PacketID) EnumDescriptor() ([]byte, []int) {
 type AccountLicenseAchieveResponse_Result int32
 
 const (
-	AccountLicenseAchieveResponse_RESULT_AUTO_INVALID AccountLicenseAchieveResponse_Result = 0
-	AccountLicenseAchieveResponse_INVALID_ACHIEVE     AccountLicenseAchieveResponse_Result = 1
-	AccountLicenseAchieveResponse_NOT_ACTIVE          AccountLicenseAchieveResponse_Result = 2
-	AccountLicenseAchieveResponse_IN_PROGRESS         AccountLicenseAchieveResponse_Result = 3
-	AccountLicenseAchieveResponse_COMPLETE            AccountLicenseAchieveResponse_Result = 4
-	AccountLicenseAchieveResponse_STATUS_UNKNOWN      AccountLicenseAchieveResponse_Result = 5
+	AccountLicenseAchieveResponse_INVALID_ACHIEVE AccountLicenseAchieveResponse_Result = 1
+	AccountLicenseAchieveResponse_NOT_ACTIVE      AccountLicenseAchieveResponse_Result = 2
+	AccountLicenseAchieveResponse_IN_PROGRESS     AccountLicenseAchieveResponse_Result = 3
+	AccountLicenseAchieveResponse_COMPLETE        AccountLicenseAchieveResponse_Result = 4
+	AccountLicenseAchieveResponse_STATUS_UNKNOWN  AccountLicenseAchieveResponse_Result = 5
 )
 
 var AccountLicenseAchieveResponse_Result_name = map[int32]string{
-	0: "RESULT_AUTO_INVALID",
 	1: "INVALID_ACHIEVE",
 	2: "NOT_ACTIVE",
 	3: "IN_PROGRESS",
@@ -310,16 +349,28 @@ var AccountLicenseAchieveResponse_Result_name = map[int32]string{
 	5: "STATUS_UNKNOWN",
 }
 var AccountLicenseAchieveResponse_Result_value = map[string]int32{
-	"RESULT_AUTO_INVALID": 0,
-	"INVALID_ACHIEVE":     1,
-	"NOT_ACTIVE":          2,
-	"IN_PROGRESS":         3,
-	"COMPLETE":            4,
-	"STATUS_UNKNOWN":      5,
+	"INVALID_ACHIEVE": 1,
+	"NOT_ACTIVE":      2,
+	"IN_PROGRESS":     3,
+	"COMPLETE":        4,
+	"STATUS_UNKNOWN":  5,
 }
 
+func (x AccountLicenseAchieveResponse_Result) Enum() *AccountLicenseAchieveResponse_Result {
+	p := new(AccountLicenseAchieveResponse_Result)
+	*p = x
+	return p
+}
 func (x AccountLicenseAchieveResponse_Result) String() string {
 	return proto.EnumName(AccountLicenseAchieveResponse_Result_name, int32(x))
+}
+func (x *AccountLicenseAchieveResponse_Result) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(AccountLicenseAchieveResponse_Result_value, data, "AccountLicenseAchieveResponse_Result")
+	if err != nil {
+		return err
+	}
+	*x = AccountLicenseAchieveResponse_Result(value)
+	return nil
 }
 func (AccountLicenseAchieveResponse_Result) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{0, 1}
@@ -329,21 +380,31 @@ func (AccountLicenseAchieveResponse_Result) EnumDescriptor() ([]byte, []int) {
 type AccountLicensesInfoResponse_PacketID int32
 
 const (
-	AccountLicensesInfoResponse_PACKETID_AUTO_INVALID AccountLicensesInfoResponse_PacketID = 0
-	AccountLicensesInfoResponse_ID                    AccountLicensesInfoResponse_PacketID = 325
+	AccountLicensesInfoResponse_ID AccountLicensesInfoResponse_PacketID = 325
 )
 
 var AccountLicensesInfoResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	325: "ID",
 }
 var AccountLicensesInfoResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 325,
 }
 
+func (x AccountLicensesInfoResponse_PacketID) Enum() *AccountLicensesInfoResponse_PacketID {
+	p := new(AccountLicensesInfoResponse_PacketID)
+	*p = x
+	return p
+}
 func (x AccountLicensesInfoResponse_PacketID) String() string {
 	return proto.EnumName(AccountLicensesInfoResponse_PacketID_name, int32(x))
+}
+func (x *AccountLicensesInfoResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(AccountLicensesInfoResponse_PacketID_value, data, "AccountLicensesInfoResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = AccountLicensesInfoResponse_PacketID(value)
+	return nil
 }
 func (AccountLicensesInfoResponse_PacketID) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{1, 0}
@@ -366,8 +427,21 @@ var AckAchieveProgress_PacketID_value = map[string]int32{
 	"ID":     243,
 }
 
+func (x AckAchieveProgress_PacketID) Enum() *AckAchieveProgress_PacketID {
+	p := new(AckAchieveProgress_PacketID)
+	*p = x
+	return p
+}
 func (x AckAchieveProgress_PacketID) String() string {
 	return proto.EnumName(AckAchieveProgress_PacketID_name, int32(x))
+}
+func (x *AckAchieveProgress_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(AckAchieveProgress_PacketID_value, data, "AckAchieveProgress_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = AckAchieveProgress_PacketID(value)
+	return nil
 }
 func (AckAchieveProgress_PacketID) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{6, 0}
@@ -390,8 +464,21 @@ var AckCardSeen_PacketID_value = map[string]int32{
 	"ID":     223,
 }
 
+func (x AckCardSeen_PacketID) Enum() *AckCardSeen_PacketID {
+	p := new(AckCardSeen_PacketID)
+	*p = x
+	return p
+}
 func (x AckCardSeen_PacketID) String() string {
 	return proto.EnumName(AckCardSeen_PacketID_name, int32(x))
+}
+func (x *AckCardSeen_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(AckCardSeen_PacketID_value, data, "AckCardSeen_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = AckCardSeen_PacketID(value)
+	return nil
 }
 func (AckCardSeen_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{7, 0} }
 
@@ -412,8 +499,21 @@ var AckNotice_PacketID_value = map[string]int32{
 	"ID":     213,
 }
 
+func (x AckNotice_PacketID) Enum() *AckNotice_PacketID {
+	p := new(AckNotice_PacketID)
+	*p = x
+	return p
+}
 func (x AckNotice_PacketID) String() string {
 	return proto.EnumName(AckNotice_PacketID_name, int32(x))
+}
+func (x *AckNotice_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(AckNotice_PacketID_value, data, "AckNotice_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = AckNotice_PacketID(value)
+	return nil
 }
 func (AckNotice_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{8, 0} }
 
@@ -434,8 +534,21 @@ var AcknowledgeBanner_PacketID_value = map[string]int32{
 	"ID":     309,
 }
 
+func (x AcknowledgeBanner_PacketID) Enum() *AcknowledgeBanner_PacketID {
+	p := new(AcknowledgeBanner_PacketID)
+	*p = x
+	return p
+}
 func (x AcknowledgeBanner_PacketID) String() string {
 	return proto.EnumName(AcknowledgeBanner_PacketID_name, int32(x))
+}
+func (x *AcknowledgeBanner_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(AcknowledgeBanner_PacketID_value, data, "AcknowledgeBanner_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = AcknowledgeBanner_PacketID(value)
+	return nil
 }
 func (AcknowledgeBanner_PacketID) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{9, 0}
@@ -458,8 +571,21 @@ var AckWingProgress_PacketID_value = map[string]int32{
 	"ID":     308,
 }
 
+func (x AckWingProgress_PacketID) Enum() *AckWingProgress_PacketID {
+	p := new(AckWingProgress_PacketID)
+	*p = x
+	return p
+}
 func (x AckWingProgress_PacketID) String() string {
 	return proto.EnumName(AckWingProgress_PacketID_name, int32(x))
+}
+func (x *AckWingProgress_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(AckWingProgress_PacketID_value, data, "AckWingProgress_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = AckWingProgress_PacketID(value)
+	return nil
 }
 func (AckWingProgress_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{10, 0} }
 
@@ -467,21 +593,31 @@ func (AckWingProgress_PacketID) EnumDescriptor() ([]byte, []int) { return fileDe
 type AdventureProgressResponse_PacketID int32
 
 const (
-	AdventureProgressResponse_PACKETID_AUTO_INVALID AdventureProgressResponse_PacketID = 0
-	AdventureProgressResponse_ID                    AdventureProgressResponse_PacketID = 306
+	AdventureProgressResponse_ID AdventureProgressResponse_PacketID = 306
 )
 
 var AdventureProgressResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	306: "ID",
 }
 var AdventureProgressResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 306,
 }
 
+func (x AdventureProgressResponse_PacketID) Enum() *AdventureProgressResponse_PacketID {
+	p := new(AdventureProgressResponse_PacketID)
+	*p = x
+	return p
+}
 func (x AdventureProgressResponse_PacketID) String() string {
 	return proto.EnumName(AdventureProgressResponse_PacketID_name, int32(x))
+}
+func (x *AdventureProgressResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(AdventureProgressResponse_PacketID_value, data, "AdventureProgressResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = AdventureProgressResponse_PacketID(value)
+	return nil
 }
 func (AdventureProgressResponse_PacketID) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{11, 0}
@@ -504,8 +640,21 @@ var ArenaSessionRequest_PacketID_value = map[string]int32{
 	"ID":     346,
 }
 
+func (x ArenaSessionRequest_PacketID) Enum() *ArenaSessionRequest_PacketID {
+	p := new(ArenaSessionRequest_PacketID)
+	*p = x
+	return p
+}
 func (x ArenaSessionRequest_PacketID) String() string {
 	return proto.EnumName(ArenaSessionRequest_PacketID_name, int32(x))
+}
+func (x *ArenaSessionRequest_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ArenaSessionRequest_PacketID_value, data, "ArenaSessionRequest_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = ArenaSessionRequest_PacketID(value)
+	return nil
 }
 func (ArenaSessionRequest_PacketID) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{13, 0}
@@ -515,21 +664,31 @@ func (ArenaSessionRequest_PacketID) EnumDescriptor() ([]byte, []int) {
 type ArenaSessionResponse_PacketID int32
 
 const (
-	ArenaSessionResponse_PACKETID_AUTO_INVALID ArenaSessionResponse_PacketID = 0
-	ArenaSessionResponse_ID                    ArenaSessionResponse_PacketID = 351
+	ArenaSessionResponse_ID ArenaSessionResponse_PacketID = 351
 )
 
 var ArenaSessionResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	351: "ID",
 }
 var ArenaSessionResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 351,
 }
 
+func (x ArenaSessionResponse_PacketID) Enum() *ArenaSessionResponse_PacketID {
+	p := new(ArenaSessionResponse_PacketID)
+	*p = x
+	return p
+}
 func (x ArenaSessionResponse_PacketID) String() string {
 	return proto.EnumName(ArenaSessionResponse_PacketID_name, int32(x))
+}
+func (x *ArenaSessionResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ArenaSessionResponse_PacketID_value, data, "ArenaSessionResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = ArenaSessionResponse_PacketID(value)
+	return nil
 }
 func (ArenaSessionResponse_PacketID) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{14, 0}
@@ -539,21 +698,31 @@ func (ArenaSessionResponse_PacketID) EnumDescriptor() ([]byte, []int) {
 type AssetsVersionResponse_PacketID int32
 
 const (
-	AssetsVersionResponse_PACKETID_AUTO_INVALID AssetsVersionResponse_PacketID = 0
-	AssetsVersionResponse_ID                    AssetsVersionResponse_PacketID = 304
+	AssetsVersionResponse_ID AssetsVersionResponse_PacketID = 304
 )
 
 var AssetsVersionResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	304: "ID",
 }
 var AssetsVersionResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 304,
 }
 
+func (x AssetsVersionResponse_PacketID) Enum() *AssetsVersionResponse_PacketID {
+	p := new(AssetsVersionResponse_PacketID)
+	*p = x
+	return p
+}
 func (x AssetsVersionResponse_PacketID) String() string {
 	return proto.EnumName(AssetsVersionResponse_PacketID_name, int32(x))
+}
+func (x *AssetsVersionResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(AssetsVersionResponse_PacketID_value, data, "AssetsVersionResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = AssetsVersionResponse_PacketID(value)
+	return nil
 }
 func (AssetsVersionResponse_PacketID) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{16, 0}
@@ -563,21 +732,31 @@ func (AssetsVersionResponse_PacketID) EnumDescriptor() ([]byte, []int) {
 type BattlePayConfigResponse_PacketID int32
 
 const (
-	BattlePayConfigResponse_PACKETID_AUTO_INVALID BattlePayConfigResponse_PacketID = 0
-	BattlePayConfigResponse_ID                    BattlePayConfigResponse_PacketID = 238
+	BattlePayConfigResponse_ID BattlePayConfigResponse_PacketID = 238
 )
 
 var BattlePayConfigResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	238: "ID",
 }
 var BattlePayConfigResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 238,
 }
 
+func (x BattlePayConfigResponse_PacketID) Enum() *BattlePayConfigResponse_PacketID {
+	p := new(BattlePayConfigResponse_PacketID)
+	*p = x
+	return p
+}
 func (x BattlePayConfigResponse_PacketID) String() string {
 	return proto.EnumName(BattlePayConfigResponse_PacketID_name, int32(x))
+}
+func (x *BattlePayConfigResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(BattlePayConfigResponse_PacketID_value, data, "BattlePayConfigResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = BattlePayConfigResponse_PacketID(value)
+	return nil
 }
 func (BattlePayConfigResponse_PacketID) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{17, 0}
@@ -587,21 +766,31 @@ func (BattlePayConfigResponse_PacketID) EnumDescriptor() ([]byte, []int) {
 type BattlePayStatusResponse_PacketID int32
 
 const (
-	BattlePayStatusResponse_PACKETID_AUTO_INVALID BattlePayStatusResponse_PacketID = 0
-	BattlePayStatusResponse_ID                    BattlePayStatusResponse_PacketID = 265
+	BattlePayStatusResponse_ID BattlePayStatusResponse_PacketID = 265
 )
 
 var BattlePayStatusResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	265: "ID",
 }
 var BattlePayStatusResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 265,
 }
 
+func (x BattlePayStatusResponse_PacketID) Enum() *BattlePayStatusResponse_PacketID {
+	p := new(BattlePayStatusResponse_PacketID)
+	*p = x
+	return p
+}
 func (x BattlePayStatusResponse_PacketID) String() string {
 	return proto.EnumName(BattlePayStatusResponse_PacketID_name, int32(x))
+}
+func (x *BattlePayStatusResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(BattlePayStatusResponse_PacketID_value, data, "BattlePayStatusResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = BattlePayStatusResponse_PacketID(value)
+	return nil
 }
 func (BattlePayStatusResponse_PacketID) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{18, 0}
@@ -627,8 +816,21 @@ var BattlePayStatusResponse_PurchaseState_value = map[string]int32{
 	"PS_ERROR":         2,
 }
 
+func (x BattlePayStatusResponse_PurchaseState) Enum() *BattlePayStatusResponse_PurchaseState {
+	p := new(BattlePayStatusResponse_PurchaseState)
+	*p = x
+	return p
+}
 func (x BattlePayStatusResponse_PurchaseState) String() string {
 	return proto.EnumName(BattlePayStatusResponse_PurchaseState_name, int32(x))
+}
+func (x *BattlePayStatusResponse_PurchaseState) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(BattlePayStatusResponse_PurchaseState_value, data, "BattlePayStatusResponse_PurchaseState")
+	if err != nil {
+		return err
+	}
+	*x = BattlePayStatusResponse_PurchaseState(value)
+	return nil
 }
 func (BattlePayStatusResponse_PurchaseState) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{18, 1}
@@ -638,86 +840,82 @@ func (BattlePayStatusResponse_PurchaseState) EnumDescriptor() ([]byte, []int) {
 type BoosterContent_PacketID int32
 
 const (
-	BoosterContent_PACKETID_AUTO_INVALID BoosterContent_PacketID = 0
-	BoosterContent_ID                    BoosterContent_PacketID = 226
+	BoosterContent_ID BoosterContent_PacketID = 226
 )
 
 var BoosterContent_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	226: "ID",
 }
 var BoosterContent_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 226,
 }
 
+func (x BoosterContent_PacketID) Enum() *BoosterContent_PacketID {
+	p := new(BoosterContent_PacketID)
+	*p = x
+	return p
+}
 func (x BoosterContent_PacketID) String() string {
 	return proto.EnumName(BoosterContent_PacketID_name, int32(x))
 }
+func (x *BoosterContent_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(BoosterContent_PacketID_value, data, "BoosterContent_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = BoosterContent_PacketID(value)
+	return nil
+}
 func (BoosterContent_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{20, 0} }
-
-// ref: PegasusUtil.BoosterList/PacketID
-type BoosterList_PacketID int32
-
-const (
-	BoosterList_PACKETID_AUTO_INVALID BoosterList_PacketID = 0
-	BoosterList_ID                    BoosterList_PacketID = 224
-)
-
-var BoosterList_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
-	224: "ID",
-}
-var BoosterList_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
-	"ID": 224,
-}
-
-func (x BoosterList_PacketID) String() string {
-	return proto.EnumName(BoosterList_PacketID_name, int32(x))
-}
-func (BoosterList_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{21, 0} }
 
 // ref: PegasusUtil.BoughtSoldCard/PacketID
 type BoughtSoldCard_PacketID int32
 
 const (
-	BoughtSoldCard_PACKETID_AUTO_INVALID BoughtSoldCard_PacketID = 0
-	BoughtSoldCard_ID                    BoughtSoldCard_PacketID = 258
+	BoughtSoldCard_ID BoughtSoldCard_PacketID = 258
 )
 
 var BoughtSoldCard_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	258: "ID",
 }
 var BoughtSoldCard_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 258,
 }
 
+func (x BoughtSoldCard_PacketID) Enum() *BoughtSoldCard_PacketID {
+	p := new(BoughtSoldCard_PacketID)
+	*p = x
+	return p
+}
 func (x BoughtSoldCard_PacketID) String() string {
 	return proto.EnumName(BoughtSoldCard_PacketID_name, int32(x))
 }
-func (BoughtSoldCard_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{22, 0} }
+func (x *BoughtSoldCard_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(BoughtSoldCard_PacketID_value, data, "BoughtSoldCard_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = BoughtSoldCard_PacketID(value)
+	return nil
+}
+func (BoughtSoldCard_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{24, 0} }
 
 // ref: PegasusUtil.BoughtSoldCard/Result
 type BoughtSoldCard_Result int32
 
 const (
-	BoughtSoldCard_RESULT_AUTO_INVALID BoughtSoldCard_Result = 0
-	BoughtSoldCard_GENERIC_FAILURE     BoughtSoldCard_Result = 1
-	BoughtSoldCard_SOLD                BoughtSoldCard_Result = 2
-	BoughtSoldCard_BOUGHT              BoughtSoldCard_Result = 3
-	BoughtSoldCard_SOULBOUND           BoughtSoldCard_Result = 4
-	BoughtSoldCard_WRONG_SELL_PRICE    BoughtSoldCard_Result = 5
-	BoughtSoldCard_WRONG_BUY_PRICE     BoughtSoldCard_Result = 6
-	BoughtSoldCard_NO_PERMISSION       BoughtSoldCard_Result = 7
-	BoughtSoldCard_EVENT_NOT_ACTIVE    BoughtSoldCard_Result = 8
-	BoughtSoldCard_COUNT_MISMATCH      BoughtSoldCard_Result = 9
+	BoughtSoldCard_GENERIC_FAILURE  BoughtSoldCard_Result = 1
+	BoughtSoldCard_SOLD             BoughtSoldCard_Result = 2
+	BoughtSoldCard_BOUGHT           BoughtSoldCard_Result = 3
+	BoughtSoldCard_SOULBOUND        BoughtSoldCard_Result = 4
+	BoughtSoldCard_WRONG_SELL_PRICE BoughtSoldCard_Result = 5
+	BoughtSoldCard_WRONG_BUY_PRICE  BoughtSoldCard_Result = 6
+	BoughtSoldCard_NO_PERMISSION    BoughtSoldCard_Result = 7
+	BoughtSoldCard_EVENT_NOT_ACTIVE BoughtSoldCard_Result = 8
+	BoughtSoldCard_COUNT_MISMATCH   BoughtSoldCard_Result = 9
 )
 
 var BoughtSoldCard_Result_name = map[int32]string{
-	0: "RESULT_AUTO_INVALID",
 	1: "GENERIC_FAILURE",
 	2: "SOLD",
 	3: "BOUGHT",
@@ -729,22 +927,34 @@ var BoughtSoldCard_Result_name = map[int32]string{
 	9: "COUNT_MISMATCH",
 }
 var BoughtSoldCard_Result_value = map[string]int32{
-	"RESULT_AUTO_INVALID": 0,
-	"GENERIC_FAILURE":     1,
-	"SOLD":                2,
-	"BOUGHT":              3,
-	"SOULBOUND":           4,
-	"WRONG_SELL_PRICE":    5,
-	"WRONG_BUY_PRICE":     6,
-	"NO_PERMISSION":       7,
-	"EVENT_NOT_ACTIVE":    8,
-	"COUNT_MISMATCH":      9,
+	"GENERIC_FAILURE":  1,
+	"SOLD":             2,
+	"BOUGHT":           3,
+	"SOULBOUND":        4,
+	"WRONG_SELL_PRICE": 5,
+	"WRONG_BUY_PRICE":  6,
+	"NO_PERMISSION":    7,
+	"EVENT_NOT_ACTIVE": 8,
+	"COUNT_MISMATCH":   9,
 }
 
+func (x BoughtSoldCard_Result) Enum() *BoughtSoldCard_Result {
+	p := new(BoughtSoldCard_Result)
+	*p = x
+	return p
+}
 func (x BoughtSoldCard_Result) String() string {
 	return proto.EnumName(BoughtSoldCard_Result_name, int32(x))
 }
-func (BoughtSoldCard_Result) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{22, 1} }
+func (x *BoughtSoldCard_Result) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(BoughtSoldCard_Result_value, data, "BoughtSoldCard_Result")
+	if err != nil {
+		return err
+	}
+	*x = BoughtSoldCard_Result(value)
+	return nil
+}
+func (BoughtSoldCard_Result) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{24, 1} }
 
 // ref: PegasusUtil.BuySellCard/PacketID
 type BuySellCard_PacketID int32
@@ -763,16 +973,28 @@ var BuySellCard_PacketID_value = map[string]int32{
 	"ID":     257,
 }
 
+func (x BuySellCard_PacketID) Enum() *BuySellCard_PacketID {
+	p := new(BuySellCard_PacketID)
+	*p = x
+	return p
+}
 func (x BuySellCard_PacketID) String() string {
 	return proto.EnumName(BuySellCard_PacketID_name, int32(x))
 }
-func (BuySellCard_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{25, 0} }
+func (x *BuySellCard_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(BuySellCard_PacketID_value, data, "BuySellCard_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = BuySellCard_PacketID(value)
+	return nil
+}
+func (BuySellCard_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{27, 0} }
 
 // ref: PegasusUtil.CancelPurchase/CancelReason
 type CancelPurchase_CancelReason int32
 
 const (
-	CancelPurchase_CANCELREASON_AUTO_INVALID    CancelPurchase_CancelReason = 0
 	CancelPurchase_PROVIDER_REPORTED_FAILURE    CancelPurchase_CancelReason = 1
 	CancelPurchase_NOT_RECOGNIZED_BY_PROVIDER   CancelPurchase_CancelReason = 2
 	CancelPurchase_USER_CANCELED_BEFORE_PAYMENT CancelPurchase_CancelReason = 3
@@ -783,7 +1005,6 @@ const (
 )
 
 var CancelPurchase_CancelReason_name = map[int32]string{
-	0: "CANCELREASON_AUTO_INVALID",
 	1: "PROVIDER_REPORTED_FAILURE",
 	2: "NOT_RECOGNIZED_BY_PROVIDER",
 	3: "USER_CANCELED_BEFORE_PAYMENT",
@@ -793,7 +1014,6 @@ var CancelPurchase_CancelReason_name = map[int32]string{
 	7: "CHALLENGE_OTHER_ERROR",
 }
 var CancelPurchase_CancelReason_value = map[string]int32{
-	"CANCELREASON_AUTO_INVALID":    0,
 	"PROVIDER_REPORTED_FAILURE":    1,
 	"NOT_RECOGNIZED_BY_PROVIDER":   2,
 	"USER_CANCELED_BEFORE_PAYMENT": 3,
@@ -803,90 +1023,133 @@ var CancelPurchase_CancelReason_value = map[string]int32{
 	"CHALLENGE_OTHER_ERROR":        7,
 }
 
+func (x CancelPurchase_CancelReason) Enum() *CancelPurchase_CancelReason {
+	p := new(CancelPurchase_CancelReason)
+	*p = x
+	return p
+}
 func (x CancelPurchase_CancelReason) String() string {
 	return proto.EnumName(CancelPurchase_CancelReason_name, int32(x))
 }
+func (x *CancelPurchase_CancelReason) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(CancelPurchase_CancelReason_value, data, "CancelPurchase_CancelReason")
+	if err != nil {
+		return err
+	}
+	*x = CancelPurchase_CancelReason(value)
+	return nil
+}
 func (CancelPurchase_CancelReason) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{26, 0}
+	return fileDescriptor0, []int{28, 0}
 }
 
 // ref: PegasusUtil.CancelPurchase/PacketID
 type CancelPurchase_PacketID int32
 
 const (
-	CancelPurchase_PACKETID_AUTO_INVALID CancelPurchase_PacketID = 0
-	CancelPurchase_system                CancelPurchase_PacketID = 1
-	CancelPurchase_ID                    CancelPurchase_PacketID = 274
+	CancelPurchase_system CancelPurchase_PacketID = 1
+	CancelPurchase_ID     CancelPurchase_PacketID = 274
 )
 
 var CancelPurchase_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	1:   "system",
 	274: "ID",
 }
 var CancelPurchase_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
-	"system":                1,
-	"ID":                    274,
+	"system": 1,
+	"ID":     274,
 }
 
+func (x CancelPurchase_PacketID) Enum() *CancelPurchase_PacketID {
+	p := new(CancelPurchase_PacketID)
+	*p = x
+	return p
+}
 func (x CancelPurchase_PacketID) String() string {
 	return proto.EnumName(CancelPurchase_PacketID_name, int32(x))
 }
-func (CancelPurchase_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{26, 1} }
+func (x *CancelPurchase_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(CancelPurchase_PacketID_value, data, "CancelPurchase_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = CancelPurchase_PacketID(value)
+	return nil
+}
+func (CancelPurchase_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{28, 1} }
 
 // ref: PegasusUtil.CancelPurchaseResponse/CancelResult
 type CancelPurchaseResponse_CancelResult int32
 
 const (
-	CancelPurchaseResponse_CANCELRESULT_AUTO_INVALID CancelPurchaseResponse_CancelResult = 0
-	CancelPurchaseResponse_CR_SUCCESS                CancelPurchaseResponse_CancelResult = 1
-	CancelPurchaseResponse_CR_NOT_ALLOWED            CancelPurchaseResponse_CancelResult = 2
-	CancelPurchaseResponse_CR_NOTHING_TO_CANCEL      CancelPurchaseResponse_CancelResult = 3
+	CancelPurchaseResponse_CR_SUCCESS           CancelPurchaseResponse_CancelResult = 1
+	CancelPurchaseResponse_CR_NOT_ALLOWED       CancelPurchaseResponse_CancelResult = 2
+	CancelPurchaseResponse_CR_NOTHING_TO_CANCEL CancelPurchaseResponse_CancelResult = 3
 )
 
 var CancelPurchaseResponse_CancelResult_name = map[int32]string{
-	0: "CANCELRESULT_AUTO_INVALID",
 	1: "CR_SUCCESS",
 	2: "CR_NOT_ALLOWED",
 	3: "CR_NOTHING_TO_CANCEL",
 }
 var CancelPurchaseResponse_CancelResult_value = map[string]int32{
-	"CANCELRESULT_AUTO_INVALID": 0,
-	"CR_SUCCESS":                1,
-	"CR_NOT_ALLOWED":            2,
-	"CR_NOTHING_TO_CANCEL":      3,
+	"CR_SUCCESS":           1,
+	"CR_NOT_ALLOWED":       2,
+	"CR_NOTHING_TO_CANCEL": 3,
 }
 
+func (x CancelPurchaseResponse_CancelResult) Enum() *CancelPurchaseResponse_CancelResult {
+	p := new(CancelPurchaseResponse_CancelResult)
+	*p = x
+	return p
+}
 func (x CancelPurchaseResponse_CancelResult) String() string {
 	return proto.EnumName(CancelPurchaseResponse_CancelResult_name, int32(x))
 }
+func (x *CancelPurchaseResponse_CancelResult) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(CancelPurchaseResponse_CancelResult_value, data, "CancelPurchaseResponse_CancelResult")
+	if err != nil {
+		return err
+	}
+	*x = CancelPurchaseResponse_CancelResult(value)
+	return nil
+}
 func (CancelPurchaseResponse_CancelResult) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{27, 0}
+	return fileDescriptor0, []int{29, 0}
 }
 
 // ref: PegasusUtil.CancelPurchaseResponse/PacketID
 type CancelPurchaseResponse_PacketID int32
 
 const (
-	CancelPurchaseResponse_PACKETID_AUTO_INVALID CancelPurchaseResponse_PacketID = 0
-	CancelPurchaseResponse_ID                    CancelPurchaseResponse_PacketID = 275
+	CancelPurchaseResponse_ID CancelPurchaseResponse_PacketID = 275
 )
 
 var CancelPurchaseResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	275: "ID",
 }
 var CancelPurchaseResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 275,
 }
 
+func (x CancelPurchaseResponse_PacketID) Enum() *CancelPurchaseResponse_PacketID {
+	p := new(CancelPurchaseResponse_PacketID)
+	*p = x
+	return p
+}
 func (x CancelPurchaseResponse_PacketID) String() string {
 	return proto.EnumName(CancelPurchaseResponse_PacketID_name, int32(x))
 }
+func (x *CancelPurchaseResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(CancelPurchaseResponse_PacketID_value, data, "CancelPurchaseResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = CancelPurchaseResponse_PacketID(value)
+	return nil
+}
 func (CancelPurchaseResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{27, 1}
+	return fileDescriptor0, []int{29, 1}
 }
 
 // ref: PegasusUtil.CancelQuest/PacketID
@@ -906,33 +1169,56 @@ var CancelQuest_PacketID_value = map[string]int32{
 	"ID":     281,
 }
 
+func (x CancelQuest_PacketID) Enum() *CancelQuest_PacketID {
+	p := new(CancelQuest_PacketID)
+	*p = x
+	return p
+}
 func (x CancelQuest_PacketID) String() string {
 	return proto.EnumName(CancelQuest_PacketID_name, int32(x))
 }
-func (CancelQuest_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{28, 0} }
+func (x *CancelQuest_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(CancelQuest_PacketID_value, data, "CancelQuest_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = CancelQuest_PacketID(value)
+	return nil
+}
+func (CancelQuest_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{30, 0} }
 
 // ref: PegasusUtil.CancelQuestResponse/PacketID
 type CancelQuestResponse_PacketID int32
 
 const (
-	CancelQuestResponse_PACKETID_AUTO_INVALID CancelQuestResponse_PacketID = 0
-	CancelQuestResponse_ID                    CancelQuestResponse_PacketID = 282
+	CancelQuestResponse_ID CancelQuestResponse_PacketID = 282
 )
 
 var CancelQuestResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	282: "ID",
 }
 var CancelQuestResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 282,
 }
 
+func (x CancelQuestResponse_PacketID) Enum() *CancelQuestResponse_PacketID {
+	p := new(CancelQuestResponse_PacketID)
+	*p = x
+	return p
+}
 func (x CancelQuestResponse_PacketID) String() string {
 	return proto.EnumName(CancelQuestResponse_PacketID_name, int32(x))
 }
+func (x *CancelQuestResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(CancelQuestResponse_PacketID_value, data, "CancelQuestResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = CancelQuestResponse_PacketID(value)
+	return nil
+}
 func (CancelQuestResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{29, 0}
+	return fileDescriptor0, []int{31, 0}
 }
 
 // ref: PegasusUtil.CardBacks/PacketID
@@ -952,58 +1238,91 @@ var CardBacks_PacketID_value = map[string]int32{
 	"ID":     236,
 }
 
+func (x CardBacks_PacketID) Enum() *CardBacks_PacketID {
+	p := new(CardBacks_PacketID)
+	*p = x
+	return p
+}
 func (x CardBacks_PacketID) String() string {
 	return proto.EnumName(CardBacks_PacketID_name, int32(x))
 }
-func (CardBacks_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{30, 0} }
+func (x *CardBacks_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(CardBacks_PacketID_value, data, "CardBacks_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = CardBacks_PacketID(value)
+	return nil
+}
+func (CardBacks_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{32, 0} }
 
 // ref: PegasusUtil.CardValues/PacketID
 type CardValues_PacketID int32
 
 const (
-	CardValues_PACKETID_AUTO_INVALID CardValues_PacketID = 0
-	CardValues_ID                    CardValues_PacketID = 260
+	CardValues_ID CardValues_PacketID = 260
 )
 
 var CardValues_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	260: "ID",
 }
 var CardValues_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 260,
 }
 
+func (x CardValues_PacketID) Enum() *CardValues_PacketID {
+	p := new(CardValues_PacketID)
+	*p = x
+	return p
+}
 func (x CardValues_PacketID) String() string {
 	return proto.EnumName(CardValues_PacketID_name, int32(x))
 }
-func (CardValues_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{34, 0} }
+func (x *CardValues_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(CardValues_PacketID_value, data, "CardValues_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = CardValues_PacketID(value)
+	return nil
+}
+func (CardValues_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{36, 0} }
 
 // ref: PegasusUtil.CheckAccountLicenseAchieve/PacketID
 type CheckAccountLicenseAchieve_PacketID int32
 
 const (
-	CheckAccountLicenseAchieve_PACKETID_AUTO_INVALID CheckAccountLicenseAchieve_PacketID = 0
-	CheckAccountLicenseAchieve_system                CheckAccountLicenseAchieve_PacketID = 1
-	CheckAccountLicenseAchieve_ID                    CheckAccountLicenseAchieve_PacketID = 297
+	CheckAccountLicenseAchieve_system CheckAccountLicenseAchieve_PacketID = 1
+	CheckAccountLicenseAchieve_ID     CheckAccountLicenseAchieve_PacketID = 297
 )
 
 var CheckAccountLicenseAchieve_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	1:   "system",
 	297: "ID",
 }
 var CheckAccountLicenseAchieve_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
-	"system":                1,
-	"ID":                    297,
+	"system": 1,
+	"ID":     297,
 }
 
+func (x CheckAccountLicenseAchieve_PacketID) Enum() *CheckAccountLicenseAchieve_PacketID {
+	p := new(CheckAccountLicenseAchieve_PacketID)
+	*p = x
+	return p
+}
 func (x CheckAccountLicenseAchieve_PacketID) String() string {
 	return proto.EnumName(CheckAccountLicenseAchieve_PacketID_name, int32(x))
 }
+func (x *CheckAccountLicenseAchieve_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(CheckAccountLicenseAchieve_PacketID_value, data, "CheckAccountLicenseAchieve_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = CheckAccountLicenseAchieve_PacketID(value)
+	return nil
+}
 func (CheckAccountLicenseAchieve_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{35, 0}
+	return fileDescriptor0, []int{37, 0}
 }
 
 // ref: PegasusUtil.ClientRequestResponse/ClientRequestResponseFlags
@@ -1026,35 +1345,58 @@ var ClientRequestResponse_ClientRequestResponseFlags_value = map[string]int32{
 	"CRRF_SERVICE_UNKNOWN_ERROR": 2,
 }
 
+func (x ClientRequestResponse_ClientRequestResponseFlags) Enum() *ClientRequestResponse_ClientRequestResponseFlags {
+	p := new(ClientRequestResponse_ClientRequestResponseFlags)
+	*p = x
+	return p
+}
 func (x ClientRequestResponse_ClientRequestResponseFlags) String() string {
 	return proto.EnumName(ClientRequestResponse_ClientRequestResponseFlags_name, int32(x))
 }
+func (x *ClientRequestResponse_ClientRequestResponseFlags) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ClientRequestResponse_ClientRequestResponseFlags_value, data, "ClientRequestResponse_ClientRequestResponseFlags")
+	if err != nil {
+		return err
+	}
+	*x = ClientRequestResponse_ClientRequestResponseFlags(value)
+	return nil
+}
 func (ClientRequestResponse_ClientRequestResponseFlags) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{38, 0}
+	return fileDescriptor0, []int{40, 0}
 }
 
 // ref: PegasusUtil.ClientRequestResponse/PacketID
 type ClientRequestResponse_PacketID int32
 
 const (
-	ClientRequestResponse_PACKETID_AUTO_INVALID ClientRequestResponse_PacketID = 0
-	ClientRequestResponse_ID                    ClientRequestResponse_PacketID = 328
+	ClientRequestResponse_ID ClientRequestResponse_PacketID = 328
 )
 
 var ClientRequestResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	328: "ID",
 }
 var ClientRequestResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 328,
 }
 
+func (x ClientRequestResponse_PacketID) Enum() *ClientRequestResponse_PacketID {
+	p := new(ClientRequestResponse_PacketID)
+	*p = x
+	return p
+}
 func (x ClientRequestResponse_PacketID) String() string {
 	return proto.EnumName(ClientRequestResponse_PacketID_name, int32(x))
 }
+func (x *ClientRequestResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ClientRequestResponse_PacketID_value, data, "ClientRequestResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = ClientRequestResponse_PacketID(value)
+	return nil
+}
 func (ClientRequestResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{38, 1}
+	return fileDescriptor0, []int{40, 1}
 }
 
 // ref: PegasusUtil.ClientStateNotification/PacketID
@@ -1074,35 +1416,58 @@ var ClientStateNotification_PacketID_value = map[string]int32{
 	"ID":     333,
 }
 
+func (x ClientStateNotification_PacketID) Enum() *ClientStateNotification_PacketID {
+	p := new(ClientStateNotification_PacketID)
+	*p = x
+	return p
+}
 func (x ClientStateNotification_PacketID) String() string {
 	return proto.EnumName(ClientStateNotification_PacketID_name, int32(x))
 }
+func (x *ClientStateNotification_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ClientStateNotification_PacketID_value, data, "ClientStateNotification_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = ClientStateNotification_PacketID(value)
+	return nil
+}
 func (ClientStateNotification_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{39, 0}
+	return fileDescriptor0, []int{41, 0}
 }
 
 // ref: PegasusUtil.ClientStaticAssetsResponse/PacketID
 type ClientStaticAssetsResponse_PacketID int32
 
 const (
-	ClientStaticAssetsResponse_PACKETID_AUTO_INVALID ClientStaticAssetsResponse_PacketID = 0
-	ClientStaticAssetsResponse_ID                    ClientStaticAssetsResponse_PacketID = 341
+	ClientStaticAssetsResponse_ID ClientStaticAssetsResponse_PacketID = 341
 )
 
 var ClientStaticAssetsResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	341: "ID",
 }
 var ClientStaticAssetsResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 341,
 }
 
+func (x ClientStaticAssetsResponse_PacketID) Enum() *ClientStaticAssetsResponse_PacketID {
+	p := new(ClientStaticAssetsResponse_PacketID)
+	*p = x
+	return p
+}
 func (x ClientStaticAssetsResponse_PacketID) String() string {
 	return proto.EnumName(ClientStaticAssetsResponse_PacketID_name, int32(x))
 }
+func (x *ClientStaticAssetsResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ClientStaticAssetsResponse_PacketID_value, data, "ClientStaticAssetsResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = ClientStaticAssetsResponse_PacketID(value)
+	return nil
+}
 func (ClientStaticAssetsResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{40, 0}
+	return fileDescriptor0, []int{42, 0}
 }
 
 // ref: PegasusUtil.CreateDeck/PacketID
@@ -1122,32 +1487,55 @@ var CreateDeck_PacketID_value = map[string]int32{
 	"ID":     209,
 }
 
+func (x CreateDeck_PacketID) Enum() *CreateDeck_PacketID {
+	p := new(CreateDeck_PacketID)
+	*p = x
+	return p
+}
 func (x CreateDeck_PacketID) String() string {
 	return proto.EnumName(CreateDeck_PacketID_name, int32(x))
 }
-func (CreateDeck_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{43, 0} }
+func (x *CreateDeck_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(CreateDeck_PacketID_value, data, "CreateDeck_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = CreateDeck_PacketID(value)
+	return nil
+}
+func (CreateDeck_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{45, 0} }
 
 // ref: PegasusUtil.DBAction/PacketID
 type DBAction_PacketID int32
 
 const (
-	DBAction_PACKETID_AUTO_INVALID DBAction_PacketID = 0
-	DBAction_ID                    DBAction_PacketID = 216
+	DBAction_ID DBAction_PacketID = 216
 )
 
 var DBAction_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	216: "ID",
 }
 var DBAction_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 216,
 }
 
+func (x DBAction_PacketID) Enum() *DBAction_PacketID {
+	p := new(DBAction_PacketID)
+	*p = x
+	return p
+}
 func (x DBAction_PacketID) String() string {
 	return proto.EnumName(DBAction_PacketID_name, int32(x))
 }
-func (DBAction_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{44, 0} }
+func (x *DBAction_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DBAction_PacketID_value, data, "DBAction_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DBAction_PacketID(value)
+	return nil
+}
+func (DBAction_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{46, 0} }
 
 // ref: PegasusUtil.DebugCommandRequest/PacketID
 type DebugCommandRequest_PacketID int32
@@ -1166,124 +1554,187 @@ var DebugCommandRequest_PacketID_value = map[string]int32{
 	"ID":     323,
 }
 
+func (x DebugCommandRequest_PacketID) Enum() *DebugCommandRequest_PacketID {
+	p := new(DebugCommandRequest_PacketID)
+	*p = x
+	return p
+}
 func (x DebugCommandRequest_PacketID) String() string {
 	return proto.EnumName(DebugCommandRequest_PacketID_name, int32(x))
 }
+func (x *DebugCommandRequest_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DebugCommandRequest_PacketID_value, data, "DebugCommandRequest_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DebugCommandRequest_PacketID(value)
+	return nil
+}
 func (DebugCommandRequest_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{45, 0}
+	return fileDescriptor0, []int{47, 0}
 }
 
 // ref: PegasusUtil.DebugCommandResponse/PacketID
 type DebugCommandResponse_PacketID int32
 
 const (
-	DebugCommandResponse_PACKETID_AUTO_INVALID DebugCommandResponse_PacketID = 0
-	DebugCommandResponse_ID                    DebugCommandResponse_PacketID = 324
+	DebugCommandResponse_ID DebugCommandResponse_PacketID = 324
 )
 
 var DebugCommandResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	324: "ID",
 }
 var DebugCommandResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 324,
 }
 
+func (x DebugCommandResponse_PacketID) Enum() *DebugCommandResponse_PacketID {
+	p := new(DebugCommandResponse_PacketID)
+	*p = x
+	return p
+}
 func (x DebugCommandResponse_PacketID) String() string {
 	return proto.EnumName(DebugCommandResponse_PacketID_name, int32(x))
 }
+func (x *DebugCommandResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DebugCommandResponse_PacketID_value, data, "DebugCommandResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DebugCommandResponse_PacketID(value)
+	return nil
+}
 func (DebugCommandResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{46, 0}
+	return fileDescriptor0, []int{48, 0}
 }
 
 // ref: PegasusUtil.DeckCreated/PacketID
 type DeckCreated_PacketID int32
 
 const (
-	DeckCreated_PACKETID_AUTO_INVALID DeckCreated_PacketID = 0
-	DeckCreated_ID                    DeckCreated_PacketID = 217
+	DeckCreated_ID DeckCreated_PacketID = 217
 )
 
 var DeckCreated_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	217: "ID",
 }
 var DeckCreated_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 217,
 }
 
+func (x DeckCreated_PacketID) Enum() *DeckCreated_PacketID {
+	p := new(DeckCreated_PacketID)
+	*p = x
+	return p
+}
 func (x DeckCreated_PacketID) String() string {
 	return proto.EnumName(DeckCreated_PacketID_name, int32(x))
 }
-func (DeckCreated_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{48, 0} }
+func (x *DeckCreated_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DeckCreated_PacketID_value, data, "DeckCreated_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DeckCreated_PacketID(value)
+	return nil
+}
+func (DeckCreated_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{50, 0} }
 
 // ref: PegasusUtil.DeckDeleted/PacketID
 type DeckDeleted_PacketID int32
 
 const (
-	DeckDeleted_PACKETID_AUTO_INVALID DeckDeleted_PacketID = 0
-	DeckDeleted_ID                    DeckDeleted_PacketID = 218
+	DeckDeleted_ID DeckDeleted_PacketID = 218
 )
 
 var DeckDeleted_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	218: "ID",
 }
 var DeckDeleted_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 218,
 }
 
+func (x DeckDeleted_PacketID) Enum() *DeckDeleted_PacketID {
+	p := new(DeckDeleted_PacketID)
+	*p = x
+	return p
+}
 func (x DeckDeleted_PacketID) String() string {
 	return proto.EnumName(DeckDeleted_PacketID_name, int32(x))
 }
-func (DeckDeleted_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{49, 0} }
+func (x *DeckDeleted_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DeckDeleted_PacketID_value, data, "DeckDeleted_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DeckDeleted_PacketID(value)
+	return nil
+}
+func (DeckDeleted_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{51, 0} }
 
 // ref: PegasusUtil.DeckList/PacketID
 type DeckList_PacketID int32
 
 const (
-	DeckList_PACKETID_AUTO_INVALID DeckList_PacketID = 0
-	DeckList_ID                    DeckList_PacketID = 202
+	DeckList_ID DeckList_PacketID = 202
 )
 
 var DeckList_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	202: "ID",
 }
 var DeckList_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 202,
 }
 
+func (x DeckList_PacketID) Enum() *DeckList_PacketID {
+	p := new(DeckList_PacketID)
+	*p = x
+	return p
+}
 func (x DeckList_PacketID) String() string {
 	return proto.EnumName(DeckList_PacketID_name, int32(x))
 }
-func (DeckList_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{50, 0} }
+func (x *DeckList_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DeckList_PacketID_value, data, "DeckList_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DeckList_PacketID(value)
+	return nil
+}
+func (DeckList_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{52, 0} }
 
 // ref: PegasusUtil.DeckRenamed/PacketID
 type DeckRenamed_PacketID int32
 
 const (
-	DeckRenamed_PACKETID_AUTO_INVALID DeckRenamed_PacketID = 0
-	DeckRenamed_ID                    DeckRenamed_PacketID = 219
+	DeckRenamed_ID DeckRenamed_PacketID = 219
 )
 
 var DeckRenamed_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	219: "ID",
 }
 var DeckRenamed_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 219,
 }
 
+func (x DeckRenamed_PacketID) Enum() *DeckRenamed_PacketID {
+	p := new(DeckRenamed_PacketID)
+	*p = x
+	return p
+}
 func (x DeckRenamed_PacketID) String() string {
 	return proto.EnumName(DeckRenamed_PacketID_name, int32(x))
 }
-func (DeckRenamed_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{51, 0} }
+func (x *DeckRenamed_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DeckRenamed_PacketID_value, data, "DeckRenamed_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DeckRenamed_PacketID(value)
+	return nil
+}
+func (DeckRenamed_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{53, 0} }
 
 // ref: PegasusUtil.DeckSetData/PacketID
 type DeckSetData_PacketID int32
@@ -1302,10 +1753,23 @@ var DeckSetData_PacketID_value = map[string]int32{
 	"ID":     222,
 }
 
+func (x DeckSetData_PacketID) Enum() *DeckSetData_PacketID {
+	p := new(DeckSetData_PacketID)
+	*p = x
+	return p
+}
 func (x DeckSetData_PacketID) String() string {
 	return proto.EnumName(DeckSetData_PacketID_name, int32(x))
 }
-func (DeckSetData_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{52, 0} }
+func (x *DeckSetData_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DeckSetData_PacketID_value, data, "DeckSetData_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DeckSetData_PacketID(value)
+	return nil
+}
+func (DeckSetData_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{54, 0} }
 
 // ref: PegasusUtil.DeckSetTemplateSource/PacketID
 type DeckSetTemplateSource_PacketID int32
@@ -1324,11 +1788,24 @@ var DeckSetTemplateSource_PacketID_value = map[string]int32{
 	"ID":     332,
 }
 
+func (x DeckSetTemplateSource_PacketID) Enum() *DeckSetTemplateSource_PacketID {
+	p := new(DeckSetTemplateSource_PacketID)
+	*p = x
+	return p
+}
 func (x DeckSetTemplateSource_PacketID) String() string {
 	return proto.EnumName(DeckSetTemplateSource_PacketID_name, int32(x))
 }
+func (x *DeckSetTemplateSource_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DeckSetTemplateSource_PacketID_value, data, "DeckSetTemplateSource_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DeckSetTemplateSource_PacketID(value)
+	return nil
+}
 func (DeckSetTemplateSource_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{53, 0}
+	return fileDescriptor0, []int{55, 0}
 }
 
 // ref: PegasusUtil.DeleteDeck/PacketID
@@ -1348,10 +1825,23 @@ var DeleteDeck_PacketID_value = map[string]int32{
 	"ID":     210,
 }
 
+func (x DeleteDeck_PacketID) Enum() *DeleteDeck_PacketID {
+	p := new(DeleteDeck_PacketID)
+	*p = x
+	return p
+}
 func (x DeleteDeck_PacketID) String() string {
 	return proto.EnumName(DeleteDeck_PacketID_name, int32(x))
 }
-func (DeleteDeck_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{54, 0} }
+func (x *DeleteDeck_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DeleteDeck_PacketID_value, data, "DeleteDeck_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DeleteDeck_PacketID(value)
+	return nil
+}
+func (DeleteDeck_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{56, 0} }
 
 // ref: PegasusUtil.DevBnetIdentify/PacketID
 type DevBnetIdentify_PacketID int32
@@ -1370,57 +1860,58 @@ var DevBnetIdentify_PacketID_value = map[string]int32{
 	"ID":     259,
 }
 
+func (x DevBnetIdentify_PacketID) Enum() *DevBnetIdentify_PacketID {
+	p := new(DevBnetIdentify_PacketID)
+	*p = x
+	return p
+}
 func (x DevBnetIdentify_PacketID) String() string {
 	return proto.EnumName(DevBnetIdentify_PacketID_name, int32(x))
 }
-func (DevBnetIdentify_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{55, 0} }
-
-// ref: PegasusUtil.Disconnected/PacketID
-type Disconnected_PacketID int32
-
-const (
-	Disconnected_PACKETID_AUTO_INVALID Disconnected_PacketID = 0
-	Disconnected_ID                    Disconnected_PacketID = 289
-)
-
-var Disconnected_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
-	289: "ID",
+func (x *DevBnetIdentify_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DevBnetIdentify_PacketID_value, data, "DevBnetIdentify_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DevBnetIdentify_PacketID(value)
+	return nil
 }
-var Disconnected_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
-	"ID": 289,
-}
-
-func (x Disconnected_PacketID) String() string {
-	return proto.EnumName(Disconnected_PacketID_name, int32(x))
-}
-func (Disconnected_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{56, 0} }
+func (DevBnetIdentify_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{57, 0} }
 
 // ref: PegasusUtil.DoPurchase/PacketID
 type DoPurchase_PacketID int32
 
 const (
-	DoPurchase_PACKETID_AUTO_INVALID DoPurchase_PacketID = 0
-	DoPurchase_system                DoPurchase_PacketID = 1
-	DoPurchase_ID                    DoPurchase_PacketID = 273
+	DoPurchase_system DoPurchase_PacketID = 1
+	DoPurchase_ID     DoPurchase_PacketID = 273
 )
 
 var DoPurchase_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	1:   "system",
 	273: "ID",
 }
 var DoPurchase_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
-	"system":                1,
-	"ID":                    273,
+	"system": 1,
+	"ID":     273,
 }
 
+func (x DoPurchase_PacketID) Enum() *DoPurchase_PacketID {
+	p := new(DoPurchase_PacketID)
+	*p = x
+	return p
+}
 func (x DoPurchase_PacketID) String() string {
 	return proto.EnumName(DoPurchase_PacketID_name, int32(x))
 }
-func (DoPurchase_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{57, 0} }
+func (x *DoPurchase_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DoPurchase_PacketID_value, data, "DoPurchase_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DoPurchase_PacketID(value)
+	return nil
+}
+func (DoPurchase_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{59, 0} }
 
 // ref: PegasusUtil.DraftAckRewards/PacketID
 type DraftAckRewards_PacketID int32
@@ -1439,10 +1930,23 @@ var DraftAckRewards_PacketID_value = map[string]int32{
 	"ID":     287,
 }
 
+func (x DraftAckRewards_PacketID) Enum() *DraftAckRewards_PacketID {
+	p := new(DraftAckRewards_PacketID)
+	*p = x
+	return p
+}
 func (x DraftAckRewards_PacketID) String() string {
 	return proto.EnumName(DraftAckRewards_PacketID_name, int32(x))
 }
-func (DraftAckRewards_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{58, 0} }
+func (x *DraftAckRewards_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DraftAckRewards_PacketID_value, data, "DraftAckRewards_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DraftAckRewards_PacketID(value)
+	return nil
+}
+func (DraftAckRewards_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{60, 0} }
 
 // ref: PegasusUtil.DraftBegin/PacketID
 type DraftBegin_PacketID int32
@@ -1461,78 +1965,121 @@ var DraftBegin_PacketID_value = map[string]int32{
 	"ID":     235,
 }
 
+func (x DraftBegin_PacketID) Enum() *DraftBegin_PacketID {
+	p := new(DraftBegin_PacketID)
+	*p = x
+	return p
+}
 func (x DraftBegin_PacketID) String() string {
 	return proto.EnumName(DraftBegin_PacketID_name, int32(x))
 }
-func (DraftBegin_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{59, 0} }
+func (x *DraftBegin_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DraftBegin_PacketID_value, data, "DraftBegin_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DraftBegin_PacketID(value)
+	return nil
+}
+func (DraftBegin_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{61, 0} }
 
 // ref: PegasusUtil.DraftBeginning/PacketID
 type DraftBeginning_PacketID int32
 
 const (
-	DraftBeginning_PACKETID_AUTO_INVALID DraftBeginning_PacketID = 0
-	DraftBeginning_ID                    DraftBeginning_PacketID = 246
+	DraftBeginning_ID DraftBeginning_PacketID = 246
 )
 
 var DraftBeginning_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	246: "ID",
 }
 var DraftBeginning_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 246,
 }
 
+func (x DraftBeginning_PacketID) Enum() *DraftBeginning_PacketID {
+	p := new(DraftBeginning_PacketID)
+	*p = x
+	return p
+}
 func (x DraftBeginning_PacketID) String() string {
 	return proto.EnumName(DraftBeginning_PacketID_name, int32(x))
 }
-func (DraftBeginning_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{60, 0} }
+func (x *DraftBeginning_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DraftBeginning_PacketID_value, data, "DraftBeginning_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DraftBeginning_PacketID(value)
+	return nil
+}
+func (DraftBeginning_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{62, 0} }
 
 // ref: PegasusUtil.DraftChoicesAndContents/PacketID
 type DraftChoicesAndContents_PacketID int32
 
 const (
-	DraftChoicesAndContents_PACKETID_AUTO_INVALID DraftChoicesAndContents_PacketID = 0
-	DraftChoicesAndContents_ID                    DraftChoicesAndContents_PacketID = 248
+	DraftChoicesAndContents_ID DraftChoicesAndContents_PacketID = 248
 )
 
 var DraftChoicesAndContents_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	248: "ID",
 }
 var DraftChoicesAndContents_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 248,
 }
 
+func (x DraftChoicesAndContents_PacketID) Enum() *DraftChoicesAndContents_PacketID {
+	p := new(DraftChoicesAndContents_PacketID)
+	*p = x
+	return p
+}
 func (x DraftChoicesAndContents_PacketID) String() string {
 	return proto.EnumName(DraftChoicesAndContents_PacketID_name, int32(x))
 }
+func (x *DraftChoicesAndContents_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DraftChoicesAndContents_PacketID_value, data, "DraftChoicesAndContents_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DraftChoicesAndContents_PacketID(value)
+	return nil
+}
 func (DraftChoicesAndContents_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{61, 0}
+	return fileDescriptor0, []int{63, 0}
 }
 
 // ref: PegasusUtil.DraftChosen/PacketID
 type DraftChosen_PacketID int32
 
 const (
-	DraftChosen_PACKETID_AUTO_INVALID DraftChosen_PacketID = 0
-	DraftChosen_ID                    DraftChosen_PacketID = 249
+	DraftChosen_ID DraftChosen_PacketID = 249
 )
 
 var DraftChosen_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	249: "ID",
 }
 var DraftChosen_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 249,
 }
 
+func (x DraftChosen_PacketID) Enum() *DraftChosen_PacketID {
+	p := new(DraftChosen_PacketID)
+	*p = x
+	return p
+}
 func (x DraftChosen_PacketID) String() string {
 	return proto.EnumName(DraftChosen_PacketID_name, int32(x))
 }
-func (DraftChosen_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{62, 0} }
+func (x *DraftChosen_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DraftChosen_PacketID_value, data, "DraftChosen_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DraftChosen_PacketID(value)
+	return nil
+}
+func (DraftChosen_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{64, 0} }
 
 // ref: PegasusUtil.DraftError/ErrorCode
 type DraftError_ErrorCode int32
@@ -1572,32 +2119,55 @@ var DraftError_ErrorCode_value = map[string]int32{
 	"DE_FEATURE_DISABLED":          8,
 }
 
+func (x DraftError_ErrorCode) Enum() *DraftError_ErrorCode {
+	p := new(DraftError_ErrorCode)
+	*p = x
+	return p
+}
 func (x DraftError_ErrorCode) String() string {
 	return proto.EnumName(DraftError_ErrorCode_name, int32(x))
 }
-func (DraftError_ErrorCode) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{63, 0} }
+func (x *DraftError_ErrorCode) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DraftError_ErrorCode_value, data, "DraftError_ErrorCode")
+	if err != nil {
+		return err
+	}
+	*x = DraftError_ErrorCode(value)
+	return nil
+}
+func (DraftError_ErrorCode) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{65, 0} }
 
 // ref: PegasusUtil.DraftError/PacketID
 type DraftError_PacketID int32
 
 const (
-	DraftError_PACKETID_AUTO_INVALID DraftError_PacketID = 0
-	DraftError_ID                    DraftError_PacketID = 251
+	DraftError_ID DraftError_PacketID = 251
 )
 
 var DraftError_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	251: "ID",
 }
 var DraftError_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 251,
 }
 
+func (x DraftError_PacketID) Enum() *DraftError_PacketID {
+	p := new(DraftError_PacketID)
+	*p = x
+	return p
+}
 func (x DraftError_PacketID) String() string {
 	return proto.EnumName(DraftError_PacketID_name, int32(x))
 }
-func (DraftError_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{63, 1} }
+func (x *DraftError_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DraftError_PacketID_value, data, "DraftError_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DraftError_PacketID(value)
+	return nil
+}
+func (DraftError_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{65, 1} }
 
 // ref: PegasusUtil.DraftGetPicksAndContents/PacketID
 type DraftGetPicksAndContents_PacketID int32
@@ -1616,11 +2186,24 @@ var DraftGetPicksAndContents_PacketID_value = map[string]int32{
 	"ID":     244,
 }
 
+func (x DraftGetPicksAndContents_PacketID) Enum() *DraftGetPicksAndContents_PacketID {
+	p := new(DraftGetPicksAndContents_PacketID)
+	*p = x
+	return p
+}
 func (x DraftGetPicksAndContents_PacketID) String() string {
 	return proto.EnumName(DraftGetPicksAndContents_PacketID_name, int32(x))
 }
+func (x *DraftGetPicksAndContents_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DraftGetPicksAndContents_PacketID_value, data, "DraftGetPicksAndContents_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DraftGetPicksAndContents_PacketID(value)
+	return nil
+}
 func (DraftGetPicksAndContents_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{64, 0}
+	return fileDescriptor0, []int{66, 0}
 }
 
 // ref: PegasusUtil.DraftMakePick/PacketID
@@ -1640,10 +2223,94 @@ var DraftMakePick_PacketID_value = map[string]int32{
 	"ID":     245,
 }
 
+func (x DraftMakePick_PacketID) Enum() *DraftMakePick_PacketID {
+	p := new(DraftMakePick_PacketID)
+	*p = x
+	return p
+}
 func (x DraftMakePick_PacketID) String() string {
 	return proto.EnumName(DraftMakePick_PacketID_name, int32(x))
 }
-func (DraftMakePick_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{65, 0} }
+func (x *DraftMakePick_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DraftMakePick_PacketID_value, data, "DraftMakePick_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DraftMakePick_PacketID(value)
+	return nil
+}
+func (DraftMakePick_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{67, 0} }
+
+// ref: PegasusUtil.DraftRemoveGoldensResponse/PacketID
+type DraftRemoveGoldensResponse_PacketID int32
+
+const (
+	DraftRemoveGoldensResponse_ID DraftRemoveGoldensResponse_PacketID = 355
+)
+
+var DraftRemoveGoldensResponse_PacketID_name = map[int32]string{
+	355: "ID",
+}
+var DraftRemoveGoldensResponse_PacketID_value = map[string]int32{
+	"ID": 355,
+}
+
+func (x DraftRemoveGoldensResponse_PacketID) Enum() *DraftRemoveGoldensResponse_PacketID {
+	p := new(DraftRemoveGoldensResponse_PacketID)
+	*p = x
+	return p
+}
+func (x DraftRemoveGoldensResponse_PacketID) String() string {
+	return proto.EnumName(DraftRemoveGoldensResponse_PacketID_name, int32(x))
+}
+func (x *DraftRemoveGoldensResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DraftRemoveGoldensResponse_PacketID_value, data, "DraftRemoveGoldensResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DraftRemoveGoldensResponse_PacketID(value)
+	return nil
+}
+func (DraftRemoveGoldensResponse_PacketID) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor0, []int{68, 0}
+}
+
+// ref: PegasusUtil.DraftRequestRemoveGoldens/PacketID
+type DraftRequestRemoveGoldens_PacketID int32
+
+const (
+	DraftRequestRemoveGoldens_system DraftRequestRemoveGoldens_PacketID = 0
+	DraftRequestRemoveGoldens_ID     DraftRequestRemoveGoldens_PacketID = 354
+)
+
+var DraftRequestRemoveGoldens_PacketID_name = map[int32]string{
+	0:   "system",
+	354: "ID",
+}
+var DraftRequestRemoveGoldens_PacketID_value = map[string]int32{
+	"system": 0,
+	"ID":     354,
+}
+
+func (x DraftRequestRemoveGoldens_PacketID) Enum() *DraftRequestRemoveGoldens_PacketID {
+	p := new(DraftRequestRemoveGoldens_PacketID)
+	*p = x
+	return p
+}
+func (x DraftRequestRemoveGoldens_PacketID) String() string {
+	return proto.EnumName(DraftRequestRemoveGoldens_PacketID_name, int32(x))
+}
+func (x *DraftRequestRemoveGoldens_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DraftRequestRemoveGoldens_PacketID_value, data, "DraftRequestRemoveGoldens_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DraftRequestRemoveGoldens_PacketID(value)
+	return nil
+}
+func (DraftRequestRemoveGoldens_PacketID) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor0, []int{69, 0}
+}
 
 // ref: PegasusUtil.DraftRetire/PacketID
 type DraftRetire_PacketID int32
@@ -1662,102 +2329,155 @@ var DraftRetire_PacketID_value = map[string]int32{
 	"ID":     242,
 }
 
+func (x DraftRetire_PacketID) Enum() *DraftRetire_PacketID {
+	p := new(DraftRetire_PacketID)
+	*p = x
+	return p
+}
 func (x DraftRetire_PacketID) String() string {
 	return proto.EnumName(DraftRetire_PacketID_name, int32(x))
 }
-func (DraftRetire_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{66, 0} }
+func (x *DraftRetire_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DraftRetire_PacketID_value, data, "DraftRetire_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DraftRetire_PacketID(value)
+	return nil
+}
+func (DraftRetire_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{70, 0} }
 
 // ref: PegasusUtil.DraftRetired/PacketID
 type DraftRetired_PacketID int32
 
 const (
-	DraftRetired_PACKETID_AUTO_INVALID DraftRetired_PacketID = 0
-	DraftRetired_ID                    DraftRetired_PacketID = 247
+	DraftRetired_ID DraftRetired_PacketID = 247
 )
 
 var DraftRetired_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	247: "ID",
 }
 var DraftRetired_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 247,
 }
 
+func (x DraftRetired_PacketID) Enum() *DraftRetired_PacketID {
+	p := new(DraftRetired_PacketID)
+	*p = x
+	return p
+}
 func (x DraftRetired_PacketID) String() string {
 	return proto.EnumName(DraftRetired_PacketID_name, int32(x))
 }
-func (DraftRetired_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{67, 0} }
+func (x *DraftRetired_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DraftRetired_PacketID_value, data, "DraftRetired_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DraftRetired_PacketID(value)
+	return nil
+}
+func (DraftRetired_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{71, 0} }
 
 // ref: PegasusUtil.DraftRewardsAcked/PacketID
 type DraftRewardsAcked_PacketID int32
 
 const (
-	DraftRewardsAcked_PACKETID_AUTO_INVALID DraftRewardsAcked_PacketID = 0
-	DraftRewardsAcked_ID                    DraftRewardsAcked_PacketID = 288
+	DraftRewardsAcked_ID DraftRewardsAcked_PacketID = 288
 )
 
 var DraftRewardsAcked_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	288: "ID",
 }
 var DraftRewardsAcked_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 288,
 }
 
+func (x DraftRewardsAcked_PacketID) Enum() *DraftRewardsAcked_PacketID {
+	p := new(DraftRewardsAcked_PacketID)
+	*p = x
+	return p
+}
 func (x DraftRewardsAcked_PacketID) String() string {
 	return proto.EnumName(DraftRewardsAcked_PacketID_name, int32(x))
 }
+func (x *DraftRewardsAcked_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DraftRewardsAcked_PacketID_value, data, "DraftRewardsAcked_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = DraftRewardsAcked_PacketID(value)
+	return nil
+}
 func (DraftRewardsAcked_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{68, 0}
+	return fileDescriptor0, []int{72, 0}
 }
 
 // ref: PegasusUtil.FavoriteHeroesResponse/PacketID
 type FavoriteHeroesResponse_PacketID int32
 
 const (
-	FavoriteHeroesResponse_PACKETID_AUTO_INVALID FavoriteHeroesResponse_PacketID = 0
-	FavoriteHeroesResponse_ID                    FavoriteHeroesResponse_PacketID = 318
+	FavoriteHeroesResponse_ID FavoriteHeroesResponse_PacketID = 318
 )
 
 var FavoriteHeroesResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	318: "ID",
 }
 var FavoriteHeroesResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 318,
 }
 
+func (x FavoriteHeroesResponse_PacketID) Enum() *FavoriteHeroesResponse_PacketID {
+	p := new(FavoriteHeroesResponse_PacketID)
+	*p = x
+	return p
+}
 func (x FavoriteHeroesResponse_PacketID) String() string {
 	return proto.EnumName(FavoriteHeroesResponse_PacketID_name, int32(x))
 }
+func (x *FavoriteHeroesResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(FavoriteHeroesResponse_PacketID_value, data, "FavoriteHeroesResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = FavoriteHeroesResponse_PacketID(value)
+	return nil
+}
 func (FavoriteHeroesResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{69, 0}
+	return fileDescriptor0, []int{73, 0}
 }
 
 // ref: PegasusUtil.GamesInfo/PacketID
 type GamesInfo_PacketID int32
 
 const (
-	GamesInfo_PACKETID_AUTO_INVALID GamesInfo_PacketID = 0
-	GamesInfo_ID                    GamesInfo_PacketID = 208
+	GamesInfo_ID GamesInfo_PacketID = 208
 )
 
 var GamesInfo_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	208: "ID",
 }
 var GamesInfo_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 208,
 }
 
+func (x GamesInfo_PacketID) Enum() *GamesInfo_PacketID {
+	p := new(GamesInfo_PacketID)
+	*p = x
+	return p
+}
 func (x GamesInfo_PacketID) String() string {
 	return proto.EnumName(GamesInfo_PacketID_name, int32(x))
 }
-func (GamesInfo_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{71, 0} }
+func (x *GamesInfo_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GamesInfo_PacketID_value, data, "GamesInfo_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = GamesInfo_PacketID(value)
+	return nil
+}
+func (GamesInfo_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{75, 0} }
 
 // ref: PegasusUtil.GenericRequestList/PacketID
 type GenericRequestList_PacketID int32
@@ -1776,34 +2496,57 @@ var GenericRequestList_PacketID_value = map[string]int32{
 	"ID":     327,
 }
 
+func (x GenericRequestList_PacketID) Enum() *GenericRequestList_PacketID {
+	p := new(GenericRequestList_PacketID)
+	*p = x
+	return p
+}
 func (x GenericRequestList_PacketID) String() string {
 	return proto.EnumName(GenericRequestList_PacketID_name, int32(x))
 }
+func (x *GenericRequestList_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GenericRequestList_PacketID_value, data, "GenericRequestList_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = GenericRequestList_PacketID(value)
+	return nil
+}
 func (GenericRequestList_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{74, 0}
+	return fileDescriptor0, []int{78, 0}
 }
 
 // ref: PegasusUtil.GenericResponse/PacketID
 type GenericResponse_PacketID int32
 
 const (
-	GenericResponse_PACKETID_AUTO_INVALID GenericResponse_PacketID = 0
-	GenericResponse_ID                    GenericResponse_PacketID = 326
+	GenericResponse_ID GenericResponse_PacketID = 326
 )
 
 var GenericResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	326: "ID",
 }
 var GenericResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 326,
 }
 
+func (x GenericResponse_PacketID) Enum() *GenericResponse_PacketID {
+	p := new(GenericResponse_PacketID)
+	*p = x
+	return p
+}
 func (x GenericResponse_PacketID) String() string {
 	return proto.EnumName(GenericResponse_PacketID_name, int32(x))
 }
-func (GenericResponse_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{75, 0} }
+func (x *GenericResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GenericResponse_PacketID_value, data, "GenericResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = GenericResponse_PacketID(value)
+	return nil
+}
+func (GenericResponse_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{79, 0} }
 
 // ref: PegasusUtil.GenericResponse/Result
 type GenericResponse_Result int32
@@ -1843,10 +2586,23 @@ var GenericResponse_Result_value = map[string]int32{
 	"RESULT_DATA_MIGRATION_OR_PLAYER_ID_ERROR": 105,
 }
 
+func (x GenericResponse_Result) Enum() *GenericResponse_Result {
+	p := new(GenericResponse_Result)
+	*p = x
+	return p
+}
 func (x GenericResponse_Result) String() string {
 	return proto.EnumName(GenericResponse_Result_name, int32(x))
 }
-func (GenericResponse_Result) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{75, 1} }
+func (x *GenericResponse_Result) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GenericResponse_Result_value, data, "GenericResponse_Result")
+	if err != nil {
+		return err
+	}
+	*x = GenericResponse_Result(value)
+	return nil
+}
+func (GenericResponse_Result) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{79, 1} }
 
 // ref: PegasusUtil.GetAccountInfo/PacketID
 type GetAccountInfo_PacketID int32
@@ -1865,16 +2621,28 @@ var GetAccountInfo_PacketID_value = map[string]int32{
 	"ID":     201,
 }
 
+func (x GetAccountInfo_PacketID) Enum() *GetAccountInfo_PacketID {
+	p := new(GetAccountInfo_PacketID)
+	*p = x
+	return p
+}
 func (x GetAccountInfo_PacketID) String() string {
 	return proto.EnumName(GetAccountInfo_PacketID_name, int32(x))
 }
-func (GetAccountInfo_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{76, 0} }
+func (x *GetAccountInfo_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GetAccountInfo_PacketID_value, data, "GetAccountInfo_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = GetAccountInfo_PacketID(value)
+	return nil
+}
+func (GetAccountInfo_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{80, 0} }
 
 // ref: PegasusUtil.GetAccountInfo/Request
 type GetAccountInfo_Request int32
 
 const (
-	GetAccountInfo_REQUEST_AUTO_INVALID GetAccountInfo_Request = 0
 	GetAccountInfo_LAST_LOGIN           GetAccountInfo_Request = 1
 	GetAccountInfo_DECK_LIST            GetAccountInfo_Request = 2
 	GetAccountInfo_COLLECTION           GetAccountInfo_Request = 3
@@ -1906,7 +2674,6 @@ const (
 )
 
 var GetAccountInfo_Request_name = map[int32]string{
-	0:  "REQUEST_AUTO_INVALID",
 	1:  "LAST_LOGIN",
 	2:  "DECK_LIST",
 	3:  "COLLECTION",
@@ -1937,7 +2704,6 @@ var GetAccountInfo_Request_name = map[int32]string{
 	28: "ACCOUNT_LICENSES",
 }
 var GetAccountInfo_Request_value = map[string]int32{
-	"REQUEST_AUTO_INVALID": 0,
 	"LAST_LOGIN":           1,
 	"DECK_LIST":            2,
 	"COLLECTION":           3,
@@ -1968,10 +2734,23 @@ var GetAccountInfo_Request_value = map[string]int32{
 	"ACCOUNT_LICENSES":     28,
 }
 
+func (x GetAccountInfo_Request) Enum() *GetAccountInfo_Request {
+	p := new(GetAccountInfo_Request)
+	*p = x
+	return p
+}
 func (x GetAccountInfo_Request) String() string {
 	return proto.EnumName(GetAccountInfo_Request_name, int32(x))
 }
-func (GetAccountInfo_Request) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{76, 1} }
+func (x *GetAccountInfo_Request) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GetAccountInfo_Request_value, data, "GetAccountInfo_Request")
+	if err != nil {
+		return err
+	}
+	*x = GetAccountInfo_Request(value)
+	return nil
+}
+func (GetAccountInfo_Request) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{80, 1} }
 
 // ref: PegasusUtil.GetAdventureProgress/PacketID
 type GetAdventureProgress_PacketID int32
@@ -1990,11 +2769,24 @@ var GetAdventureProgress_PacketID_value = map[string]int32{
 	"ID":     305,
 }
 
+func (x GetAdventureProgress_PacketID) Enum() *GetAdventureProgress_PacketID {
+	p := new(GetAdventureProgress_PacketID)
+	*p = x
+	return p
+}
 func (x GetAdventureProgress_PacketID) String() string {
 	return proto.EnumName(GetAdventureProgress_PacketID_name, int32(x))
 }
+func (x *GetAdventureProgress_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GetAdventureProgress_PacketID_value, data, "GetAdventureProgress_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = GetAdventureProgress_PacketID(value)
+	return nil
+}
 func (GetAdventureProgress_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{77, 0}
+	return fileDescriptor0, []int{81, 0}
 }
 
 // ref: PegasusUtil.GetAssetRequest/PacketID
@@ -2014,33 +2806,56 @@ var GetAssetRequest_PacketID_value = map[string]int32{
 	"ID":     321,
 }
 
+func (x GetAssetRequest_PacketID) Enum() *GetAssetRequest_PacketID {
+	p := new(GetAssetRequest_PacketID)
+	*p = x
+	return p
+}
 func (x GetAssetRequest_PacketID) String() string {
 	return proto.EnumName(GetAssetRequest_PacketID_name, int32(x))
 }
-func (GetAssetRequest_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{78, 0} }
+func (x *GetAssetRequest_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GetAssetRequest_PacketID_value, data, "GetAssetRequest_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = GetAssetRequest_PacketID(value)
+	return nil
+}
+func (GetAssetRequest_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{82, 0} }
 
 // ref: PegasusUtil.GetAssetResponse/PacketID
 type GetAssetResponse_PacketID int32
 
 const (
-	GetAssetResponse_PACKETID_AUTO_INVALID GetAssetResponse_PacketID = 0
-	GetAssetResponse_ID                    GetAssetResponse_PacketID = 322
+	GetAssetResponse_ID GetAssetResponse_PacketID = 322
 )
 
 var GetAssetResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	322: "ID",
 }
 var GetAssetResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 322,
 }
 
+func (x GetAssetResponse_PacketID) Enum() *GetAssetResponse_PacketID {
+	p := new(GetAssetResponse_PacketID)
+	*p = x
+	return p
+}
 func (x GetAssetResponse_PacketID) String() string {
 	return proto.EnumName(GetAssetResponse_PacketID_name, int32(x))
 }
+func (x *GetAssetResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GetAssetResponse_PacketID_value, data, "GetAssetResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = GetAssetResponse_PacketID(value)
+	return nil
+}
 func (GetAssetResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{79, 0}
+	return fileDescriptor0, []int{83, 0}
 }
 
 // ref: PegasusUtil.GetAssetsVersion/PacketID
@@ -2060,35 +2875,58 @@ var GetAssetsVersion_PacketID_value = map[string]int32{
 	"ID":     303,
 }
 
+func (x GetAssetsVersion_PacketID) Enum() *GetAssetsVersion_PacketID {
+	p := new(GetAssetsVersion_PacketID)
+	*p = x
+	return p
+}
 func (x GetAssetsVersion_PacketID) String() string {
 	return proto.EnumName(GetAssetsVersion_PacketID_name, int32(x))
 }
+func (x *GetAssetsVersion_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GetAssetsVersion_PacketID_value, data, "GetAssetsVersion_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = GetAssetsVersion_PacketID(value)
+	return nil
+}
 func (GetAssetsVersion_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{80, 0}
+	return fileDescriptor0, []int{84, 0}
 }
 
 // ref: PegasusUtil.GetClientStaticAssets/PacketID
 type GetClientStaticAssets_PacketID int32
 
 const (
-	GetClientStaticAssets_PACKETID_AUTO_INVALID GetClientStaticAssets_PacketID = 0
-	GetClientStaticAssets_ID                    GetClientStaticAssets_PacketID = 340
+	GetClientStaticAssets_ID GetClientStaticAssets_PacketID = 340
 )
 
 var GetClientStaticAssets_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	340: "ID",
 }
 var GetClientStaticAssets_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 340,
 }
 
+func (x GetClientStaticAssets_PacketID) Enum() *GetClientStaticAssets_PacketID {
+	p := new(GetClientStaticAssets_PacketID)
+	*p = x
+	return p
+}
 func (x GetClientStaticAssets_PacketID) String() string {
 	return proto.EnumName(GetClientStaticAssets_PacketID_name, int32(x))
 }
+func (x *GetClientStaticAssets_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GetClientStaticAssets_PacketID_value, data, "GetClientStaticAssets_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = GetClientStaticAssets_PacketID(value)
+	return nil
+}
 func (GetClientStaticAssets_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{81, 0}
+	return fileDescriptor0, []int{85, 0}
 }
 
 // ref: PegasusUtil.GetDeckContents/PacketID
@@ -2108,33 +2946,56 @@ var GetDeckContents_PacketID_value = map[string]int32{
 	"ID":     214,
 }
 
+func (x GetDeckContents_PacketID) Enum() *GetDeckContents_PacketID {
+	p := new(GetDeckContents_PacketID)
+	*p = x
+	return p
+}
 func (x GetDeckContents_PacketID) String() string {
 	return proto.EnumName(GetDeckContents_PacketID_name, int32(x))
 }
-func (GetDeckContents_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{82, 0} }
+func (x *GetDeckContents_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GetDeckContents_PacketID_value, data, "GetDeckContents_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = GetDeckContents_PacketID(value)
+	return nil
+}
+func (GetDeckContents_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{86, 0} }
 
 // ref: PegasusUtil.GetDeckContentsResponse/PacketID
 type GetDeckContentsResponse_PacketID int32
 
 const (
-	GetDeckContentsResponse_PACKETID_AUTO_INVALID GetDeckContentsResponse_PacketID = 0
-	GetDeckContentsResponse_ID                    GetDeckContentsResponse_PacketID = 215
+	GetDeckContentsResponse_ID GetDeckContentsResponse_PacketID = 215
 )
 
 var GetDeckContentsResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	215: "ID",
 }
 var GetDeckContentsResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 215,
 }
 
+func (x GetDeckContentsResponse_PacketID) Enum() *GetDeckContentsResponse_PacketID {
+	p := new(GetDeckContentsResponse_PacketID)
+	*p = x
+	return p
+}
 func (x GetDeckContentsResponse_PacketID) String() string {
 	return proto.EnumName(GetDeckContentsResponse_PacketID_name, int32(x))
 }
+func (x *GetDeckContentsResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GetDeckContentsResponse_PacketID_value, data, "GetDeckContentsResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = GetDeckContentsResponse_PacketID(value)
+	return nil
+}
 func (GetDeckContentsResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{83, 0}
+	return fileDescriptor0, []int{87, 0}
 }
 
 // ref: PegasusUtil.GetOptions/PacketID
@@ -2154,162 +3015,235 @@ var GetOptions_PacketID_value = map[string]int32{
 	"ID":     240,
 }
 
+func (x GetOptions_PacketID) Enum() *GetOptions_PacketID {
+	p := new(GetOptions_PacketID)
+	*p = x
+	return p
+}
 func (x GetOptions_PacketID) String() string {
 	return proto.EnumName(GetOptions_PacketID_name, int32(x))
 }
-func (GetOptions_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{84, 0} }
+func (x *GetOptions_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GetOptions_PacketID_value, data, "GetOptions_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = GetOptions_PacketID(value)
+	return nil
+}
+func (GetOptions_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{88, 0} }
 
 // ref: PegasusUtil.GetPurchaseMethod/PacketID
 type GetPurchaseMethod_PacketID int32
 
 const (
-	GetPurchaseMethod_PACKETID_AUTO_INVALID GetPurchaseMethod_PacketID = 0
-	GetPurchaseMethod_system                GetPurchaseMethod_PacketID = 1
-	GetPurchaseMethod_ID                    GetPurchaseMethod_PacketID = 250
+	GetPurchaseMethod_system GetPurchaseMethod_PacketID = 1
+	GetPurchaseMethod_ID     GetPurchaseMethod_PacketID = 250
 )
 
 var GetPurchaseMethod_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	1:   "system",
 	250: "ID",
 }
 var GetPurchaseMethod_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
-	"system":                1,
-	"ID":                    250,
+	"system": 1,
+	"ID":     250,
 }
 
+func (x GetPurchaseMethod_PacketID) Enum() *GetPurchaseMethod_PacketID {
+	p := new(GetPurchaseMethod_PacketID)
+	*p = x
+	return p
+}
 func (x GetPurchaseMethod_PacketID) String() string {
 	return proto.EnumName(GetPurchaseMethod_PacketID_name, int32(x))
 }
+func (x *GetPurchaseMethod_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GetPurchaseMethod_PacketID_value, data, "GetPurchaseMethod_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = GetPurchaseMethod_PacketID(value)
+	return nil
+}
 func (GetPurchaseMethod_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{85, 0}
+	return fileDescriptor0, []int{89, 0}
 }
 
 // ref: PegasusUtil.GetRecruitAFriendData/PacketID
 type GetRecruitAFriendData_PacketID int32
 
 const (
-	GetRecruitAFriendData_PACKETID_AUTO_INVALID GetRecruitAFriendData_PacketID = 0
-	GetRecruitAFriendData_system                GetRecruitAFriendData_PacketID = 2
-	GetRecruitAFriendData_ID                    GetRecruitAFriendData_PacketID = 337
+	GetRecruitAFriendData_system GetRecruitAFriendData_PacketID = 2
+	GetRecruitAFriendData_ID     GetRecruitAFriendData_PacketID = 337
 )
 
 var GetRecruitAFriendData_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	2:   "system",
 	337: "ID",
 }
 var GetRecruitAFriendData_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
-	"system":                2,
-	"ID":                    337,
+	"system": 2,
+	"ID":     337,
 }
 
+func (x GetRecruitAFriendData_PacketID) Enum() *GetRecruitAFriendData_PacketID {
+	p := new(GetRecruitAFriendData_PacketID)
+	*p = x
+	return p
+}
 func (x GetRecruitAFriendData_PacketID) String() string {
 	return proto.EnumName(GetRecruitAFriendData_PacketID_name, int32(x))
 }
+func (x *GetRecruitAFriendData_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GetRecruitAFriendData_PacketID_value, data, "GetRecruitAFriendData_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = GetRecruitAFriendData_PacketID(value)
+	return nil
+}
 func (GetRecruitAFriendData_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{86, 0}
+	return fileDescriptor0, []int{90, 0}
 }
 
 // ref: PegasusUtil.GetRecruitAFriendURL/PacketID
 type GetRecruitAFriendURL_PacketID int32
 
 const (
-	GetRecruitAFriendURL_PACKETID_AUTO_INVALID GetRecruitAFriendURL_PacketID = 0
-	GetRecruitAFriendURL_system                GetRecruitAFriendURL_PacketID = 2
-	GetRecruitAFriendURL_ID                    GetRecruitAFriendURL_PacketID = 335
+	GetRecruitAFriendURL_system GetRecruitAFriendURL_PacketID = 2
+	GetRecruitAFriendURL_ID     GetRecruitAFriendURL_PacketID = 335
 )
 
 var GetRecruitAFriendURL_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	2:   "system",
 	335: "ID",
 }
 var GetRecruitAFriendURL_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
-	"system":                2,
-	"ID":                    335,
+	"system": 2,
+	"ID":     335,
 }
 
+func (x GetRecruitAFriendURL_PacketID) Enum() *GetRecruitAFriendURL_PacketID {
+	p := new(GetRecruitAFriendURL_PacketID)
+	*p = x
+	return p
+}
 func (x GetRecruitAFriendURL_PacketID) String() string {
 	return proto.EnumName(GetRecruitAFriendURL_PacketID_name, int32(x))
 }
+func (x *GetRecruitAFriendURL_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GetRecruitAFriendURL_PacketID_value, data, "GetRecruitAFriendURL_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = GetRecruitAFriendURL_PacketID(value)
+	return nil
+}
 func (GetRecruitAFriendURL_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{87, 0}
+	return fileDescriptor0, []int{91, 0}
 }
 
 // ref: PegasusUtil.GetThirdPartyPurchaseStatus/PacketID
 type GetThirdPartyPurchaseStatus_PacketID int32
 
 const (
-	GetThirdPartyPurchaseStatus_PACKETID_AUTO_INVALID GetThirdPartyPurchaseStatus_PacketID = 0
-	GetThirdPartyPurchaseStatus_system                GetThirdPartyPurchaseStatus_PacketID = 1
-	GetThirdPartyPurchaseStatus_ID                    GetThirdPartyPurchaseStatus_PacketID = 294
+	GetThirdPartyPurchaseStatus_system GetThirdPartyPurchaseStatus_PacketID = 1
+	GetThirdPartyPurchaseStatus_ID     GetThirdPartyPurchaseStatus_PacketID = 294
 )
 
 var GetThirdPartyPurchaseStatus_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	1:   "system",
 	294: "ID",
 }
 var GetThirdPartyPurchaseStatus_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
-	"system":                1,
-	"ID":                    294,
+	"system": 1,
+	"ID":     294,
 }
 
+func (x GetThirdPartyPurchaseStatus_PacketID) Enum() *GetThirdPartyPurchaseStatus_PacketID {
+	p := new(GetThirdPartyPurchaseStatus_PacketID)
+	*p = x
+	return p
+}
 func (x GetThirdPartyPurchaseStatus_PacketID) String() string {
 	return proto.EnumName(GetThirdPartyPurchaseStatus_PacketID_name, int32(x))
 }
+func (x *GetThirdPartyPurchaseStatus_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GetThirdPartyPurchaseStatus_PacketID_value, data, "GetThirdPartyPurchaseStatus_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = GetThirdPartyPurchaseStatus_PacketID(value)
+	return nil
+}
 func (GetThirdPartyPurchaseStatus_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{88, 0}
+	return fileDescriptor0, []int{92, 0}
 }
 
 // ref: PegasusUtil.GuardianVars/PacketID
 type GuardianVars_PacketID int32
 
 const (
-	GuardianVars_PACKETID_AUTO_INVALID GuardianVars_PacketID = 0
-	GuardianVars_ID                    GuardianVars_PacketID = 264
+	GuardianVars_ID GuardianVars_PacketID = 264
 )
 
 var GuardianVars_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	264: "ID",
 }
 var GuardianVars_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 264,
 }
 
+func (x GuardianVars_PacketID) Enum() *GuardianVars_PacketID {
+	p := new(GuardianVars_PacketID)
+	*p = x
+	return p
+}
 func (x GuardianVars_PacketID) String() string {
 	return proto.EnumName(GuardianVars_PacketID_name, int32(x))
 }
-func (GuardianVars_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{90, 0} }
+func (x *GuardianVars_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(GuardianVars_PacketID_value, data, "GuardianVars_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = GuardianVars_PacketID(value)
+	return nil
+}
+func (GuardianVars_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{94, 0} }
 
 // ref: PegasusUtil.HeroXP/PacketID
 type HeroXP_PacketID int32
 
 const (
-	HeroXP_PACKETID_AUTO_INVALID HeroXP_PacketID = 0
-	HeroXP_ID                    HeroXP_PacketID = 283
+	HeroXP_ID HeroXP_PacketID = 283
 )
 
 var HeroXP_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	283: "ID",
 }
 var HeroXP_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 283,
 }
 
+func (x HeroXP_PacketID) Enum() *HeroXP_PacketID {
+	p := new(HeroXP_PacketID)
+	*p = x
+	return p
+}
 func (x HeroXP_PacketID) String() string {
 	return proto.EnumName(HeroXP_PacketID_name, int32(x))
 }
-func (HeroXP_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{91, 0} }
+func (x *HeroXP_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(HeroXP_PacketID_value, data, "HeroXP_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = HeroXP_PacketID(value)
+	return nil
+}
+func (HeroXP_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{95, 0} }
 
 // ref: PegasusUtil.InitialClientState/PacketID
 type InitialClientState_PacketID int32
@@ -2328,11 +3262,24 @@ var InitialClientState_PacketID_value = map[string]int32{
 	"ID":     207,
 }
 
+func (x InitialClientState_PacketID) Enum() *InitialClientState_PacketID {
+	p := new(InitialClientState_PacketID)
+	*p = x
+	return p
+}
 func (x InitialClientState_PacketID) String() string {
 	return proto.EnumName(InitialClientState_PacketID_name, int32(x))
 }
+func (x *InitialClientState_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(InitialClientState_PacketID_value, data, "InitialClientState_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = InitialClientState_PacketID(value)
+	return nil
+}
 func (InitialClientState_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{93, 0}
+	return fileDescriptor0, []int{97, 0}
 }
 
 // ref: PegasusUtil.MassDisenchantRequest/PacketID
@@ -2352,80 +3299,123 @@ var MassDisenchantRequest_PacketID_value = map[string]int32{
 	"ID":     268,
 }
 
+func (x MassDisenchantRequest_PacketID) Enum() *MassDisenchantRequest_PacketID {
+	p := new(MassDisenchantRequest_PacketID)
+	*p = x
+	return p
+}
 func (x MassDisenchantRequest_PacketID) String() string {
 	return proto.EnumName(MassDisenchantRequest_PacketID_name, int32(x))
 }
+func (x *MassDisenchantRequest_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(MassDisenchantRequest_PacketID_value, data, "MassDisenchantRequest_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = MassDisenchantRequest_PacketID(value)
+	return nil
+}
 func (MassDisenchantRequest_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{94, 0}
+	return fileDescriptor0, []int{98, 0}
 }
 
 // ref: PegasusUtil.MassDisenchantResponse/PacketID
 type MassDisenchantResponse_PacketID int32
 
 const (
-	MassDisenchantResponse_PACKETID_AUTO_INVALID MassDisenchantResponse_PacketID = 0
-	MassDisenchantResponse_ID                    MassDisenchantResponse_PacketID = 269
+	MassDisenchantResponse_ID MassDisenchantResponse_PacketID = 269
 )
 
 var MassDisenchantResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	269: "ID",
 }
 var MassDisenchantResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 269,
 }
 
+func (x MassDisenchantResponse_PacketID) Enum() *MassDisenchantResponse_PacketID {
+	p := new(MassDisenchantResponse_PacketID)
+	*p = x
+	return p
+}
 func (x MassDisenchantResponse_PacketID) String() string {
 	return proto.EnumName(MassDisenchantResponse_PacketID_name, int32(x))
 }
+func (x *MassDisenchantResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(MassDisenchantResponse_PacketID_value, data, "MassDisenchantResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = MassDisenchantResponse_PacketID(value)
+	return nil
+}
 func (MassDisenchantResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{95, 0}
+	return fileDescriptor0, []int{99, 0}
 }
 
 // ref: PegasusUtil.MedalInfo/PacketID
 type MedalInfo_PacketID int32
 
 const (
-	MedalInfo_PACKETID_AUTO_INVALID MedalInfo_PacketID = 0
-	MedalInfo_ID                    MedalInfo_PacketID = 232
+	MedalInfo_ID MedalInfo_PacketID = 232
 )
 
 var MedalInfo_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	232: "ID",
 }
 var MedalInfo_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 232,
 }
 
+func (x MedalInfo_PacketID) Enum() *MedalInfo_PacketID {
+	p := new(MedalInfo_PacketID)
+	*p = x
+	return p
+}
 func (x MedalInfo_PacketID) String() string {
 	return proto.EnumName(MedalInfo_PacketID_name, int32(x))
 }
-func (MedalInfo_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{96, 0} }
+func (x *MedalInfo_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(MedalInfo_PacketID_value, data, "MedalInfo_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = MedalInfo_PacketID(value)
+	return nil
+}
+func (MedalInfo_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{100, 0} }
 
 // ref: PegasusUtil.NOP/PacketID
 type NOP_PacketID int32
 
 const (
-	NOP_PACKETID_AUTO_INVALID NOP_PacketID = 0
-	NOP_ID                    NOP_PacketID = 254
+	NOP_ID NOP_PacketID = 254
 )
 
 var NOP_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	254: "ID",
 }
 var NOP_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 254,
 }
 
+func (x NOP_PacketID) Enum() *NOP_PacketID {
+	p := new(NOP_PacketID)
+	*p = x
+	return p
+}
 func (x NOP_PacketID) String() string {
 	return proto.EnumName(NOP_PacketID_name, int32(x))
 }
-func (NOP_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{100, 0} }
+func (x *NOP_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(NOP_PacketID_value, data, "NOP_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = NOP_PacketID(value)
+	return nil
+}
+func (NOP_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{104, 0} }
 
 // ref: PegasusUtil.OpenBooster/PacketID
 type OpenBooster_PacketID int32
@@ -2444,160 +3434,233 @@ var OpenBooster_PacketID_value = map[string]int32{
 	"ID":     225,
 }
 
+func (x OpenBooster_PacketID) Enum() *OpenBooster_PacketID {
+	p := new(OpenBooster_PacketID)
+	*p = x
+	return p
+}
 func (x OpenBooster_PacketID) String() string {
 	return proto.EnumName(OpenBooster_PacketID_name, int32(x))
 }
-func (OpenBooster_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{103, 0} }
+func (x *OpenBooster_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(OpenBooster_PacketID_value, data, "OpenBooster_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = OpenBooster_PacketID(value)
+	return nil
+}
+func (OpenBooster_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{107, 0} }
 
 // ref: PegasusUtil.PlayerRecords/PacketID
 type PlayerRecords_PacketID int32
 
 const (
-	PlayerRecords_PACKETID_AUTO_INVALID PlayerRecords_PacketID = 0
-	PlayerRecords_ID                    PlayerRecords_PacketID = 270
+	PlayerRecords_ID PlayerRecords_PacketID = 270
 )
 
 var PlayerRecords_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	270: "ID",
 }
 var PlayerRecords_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 270,
 }
 
+func (x PlayerRecords_PacketID) Enum() *PlayerRecords_PacketID {
+	p := new(PlayerRecords_PacketID)
+	*p = x
+	return p
+}
 func (x PlayerRecords_PacketID) String() string {
 	return proto.EnumName(PlayerRecords_PacketID_name, int32(x))
 }
-func (PlayerRecords_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{105, 0} }
+func (x *PlayerRecords_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(PlayerRecords_PacketID_value, data, "PlayerRecords_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = PlayerRecords_PacketID(value)
+	return nil
+}
+func (PlayerRecords_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{109, 0} }
 
 // ref: PegasusUtil.PlayQueue/PacketID
 type PlayQueue_PacketID int32
 
 const (
-	PlayQueue_PACKETID_AUTO_INVALID PlayQueue_PacketID = 0
-	PlayQueue_ID                    PlayQueue_PacketID = 286
+	PlayQueue_ID PlayQueue_PacketID = 286
 )
 
 var PlayQueue_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	286: "ID",
 }
 var PlayQueue_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 286,
 }
 
+func (x PlayQueue_PacketID) Enum() *PlayQueue_PacketID {
+	p := new(PlayQueue_PacketID)
+	*p = x
+	return p
+}
 func (x PlayQueue_PacketID) String() string {
 	return proto.EnumName(PlayQueue_PacketID_name, int32(x))
 }
-func (PlayQueue_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{106, 0} }
+func (x *PlayQueue_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(PlayQueue_PacketID_value, data, "PlayQueue_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = PlayQueue_PacketID(value)
+	return nil
+}
+func (PlayQueue_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{110, 0} }
 
 // ref: PegasusUtil.ProcessRecruitAFriend/PacketID
 type ProcessRecruitAFriend_PacketID int32
 
 const (
-	ProcessRecruitAFriend_PACKETID_AUTO_INVALID ProcessRecruitAFriend_PacketID = 0
-	ProcessRecruitAFriend_system                ProcessRecruitAFriend_PacketID = 2
-	ProcessRecruitAFriend_ID                    ProcessRecruitAFriend_PacketID = 339
+	ProcessRecruitAFriend_system ProcessRecruitAFriend_PacketID = 2
+	ProcessRecruitAFriend_ID     ProcessRecruitAFriend_PacketID = 339
 )
 
 var ProcessRecruitAFriend_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	2:   "system",
 	339: "ID",
 }
 var ProcessRecruitAFriend_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
-	"system":                2,
-	"ID":                    339,
+	"system": 2,
+	"ID":     339,
 }
 
+func (x ProcessRecruitAFriend_PacketID) Enum() *ProcessRecruitAFriend_PacketID {
+	p := new(ProcessRecruitAFriend_PacketID)
+	*p = x
+	return p
+}
 func (x ProcessRecruitAFriend_PacketID) String() string {
 	return proto.EnumName(ProcessRecruitAFriend_PacketID_name, int32(x))
 }
+func (x *ProcessRecruitAFriend_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ProcessRecruitAFriend_PacketID_value, data, "ProcessRecruitAFriend_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = ProcessRecruitAFriend_PacketID(value)
+	return nil
+}
 func (ProcessRecruitAFriend_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{107, 0}
+	return fileDescriptor0, []int{111, 0}
 }
 
 // ref: PegasusUtil.ProcessRecruitAFriendResponse/PacketID
 type ProcessRecruitAFriendResponse_PacketID int32
 
 const (
-	ProcessRecruitAFriendResponse_PACKETID_AUTO_INVALID ProcessRecruitAFriendResponse_PacketID = 0
-	ProcessRecruitAFriendResponse_ID                    ProcessRecruitAFriendResponse_PacketID = 342
+	ProcessRecruitAFriendResponse_ID ProcessRecruitAFriendResponse_PacketID = 342
 )
 
 var ProcessRecruitAFriendResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	342: "ID",
 }
 var ProcessRecruitAFriendResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 342,
 }
 
+func (x ProcessRecruitAFriendResponse_PacketID) Enum() *ProcessRecruitAFriendResponse_PacketID {
+	p := new(ProcessRecruitAFriendResponse_PacketID)
+	*p = x
+	return p
+}
 func (x ProcessRecruitAFriendResponse_PacketID) String() string {
 	return proto.EnumName(ProcessRecruitAFriendResponse_PacketID_name, int32(x))
 }
+func (x *ProcessRecruitAFriendResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ProcessRecruitAFriendResponse_PacketID_value, data, "ProcessRecruitAFriendResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = ProcessRecruitAFriendResponse_PacketID(value)
+	return nil
+}
 func (ProcessRecruitAFriendResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{108, 0}
+	return fileDescriptor0, []int{112, 0}
 }
 
 // ref: PegasusUtil.ProfileDeckLimit/PacketID
 type ProfileDeckLimit_PacketID int32
 
 const (
-	ProfileDeckLimit_PACKETID_AUTO_INVALID ProfileDeckLimit_PacketID = 0
-	ProfileDeckLimit_ID                    ProfileDeckLimit_PacketID = 231
+	ProfileDeckLimit_ID ProfileDeckLimit_PacketID = 231
 )
 
 var ProfileDeckLimit_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	231: "ID",
 }
 var ProfileDeckLimit_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 231,
 }
 
+func (x ProfileDeckLimit_PacketID) Enum() *ProfileDeckLimit_PacketID {
+	p := new(ProfileDeckLimit_PacketID)
+	*p = x
+	return p
+}
 func (x ProfileDeckLimit_PacketID) String() string {
 	return proto.EnumName(ProfileDeckLimit_PacketID_name, int32(x))
 }
+func (x *ProfileDeckLimit_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ProfileDeckLimit_PacketID_value, data, "ProfileDeckLimit_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = ProfileDeckLimit_PacketID(value)
+	return nil
+}
 func (ProfileDeckLimit_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{109, 0}
+	return fileDescriptor0, []int{113, 0}
 }
 
 // ref: PegasusUtil.ProfileProgress/PacketID
 type ProfileProgress_PacketID int32
 
 const (
-	ProfileProgress_PACKETID_AUTO_INVALID ProfileProgress_PacketID = 0
-	ProfileProgress_ID                    ProfileProgress_PacketID = 233
+	ProfileProgress_ID ProfileProgress_PacketID = 233
 )
 
 var ProfileProgress_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	233: "ID",
 }
 var ProfileProgress_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 233,
 }
 
+func (x ProfileProgress_PacketID) Enum() *ProfileProgress_PacketID {
+	p := new(ProfileProgress_PacketID)
+	*p = x
+	return p
+}
 func (x ProfileProgress_PacketID) String() string {
 	return proto.EnumName(ProfileProgress_PacketID_name, int32(x))
 }
+func (x *ProfileProgress_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ProfileProgress_PacketID_value, data, "ProfileProgress_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = ProfileProgress_PacketID(value)
+	return nil
+}
 func (ProfileProgress_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{112, 0}
+	return fileDescriptor0, []int{116, 0}
 }
 
 // ref: PegasusUtil.PurchaseError/Error
 type PurchaseError_Error int32
 
 const (
-	PurchaseError_E_SUCCESS                                      PurchaseError_Error = 0
 	PurchaseError_E_UNKNOWN                                      PurchaseError_Error = -1
+	PurchaseError_E_SUCCESS                                      PurchaseError_Error = 0
 	PurchaseError_E_STILL_IN_PROGRESS                            PurchaseError_Error = 1
 	PurchaseError_E_INVALID_BNET                                 PurchaseError_Error = 2
 	PurchaseError_E_SERVICE_NA                                   PurchaseError_Error = 3
@@ -2636,8 +3699,8 @@ const (
 )
 
 var PurchaseError_Error_name = map[int32]string{
-	0:   "E_SUCCESS",
 	-1:  "E_UNKNOWN",
+	0:   "E_SUCCESS",
 	1:   "E_STILL_IN_PROGRESS",
 	2:   "E_INVALID_BNET",
 	3:   "E_SERVICE_NA",
@@ -2675,8 +3738,8 @@ var PurchaseError_Error_name = map[int32]string{
 	116: "E_BP_CHALLENGE_ID_FAILED_VERIFICATION",
 }
 var PurchaseError_Error_value = map[string]int32{
-	"E_SUCCESS":                                      0,
 	"E_UNKNOWN":                                      -1,
+	"E_SUCCESS":                                      0,
 	"E_STILL_IN_PROGRESS":                            1,
 	"E_INVALID_BNET":                                 2,
 	"E_SERVICE_NA":                                   3,
@@ -2714,55 +3777,88 @@ var PurchaseError_Error_value = map[string]int32{
 	"E_BP_CHALLENGE_ID_FAILED_VERIFICATION":          116,
 }
 
+func (x PurchaseError_Error) Enum() *PurchaseError_Error {
+	p := new(PurchaseError_Error)
+	*p = x
+	return p
+}
 func (x PurchaseError_Error) String() string {
 	return proto.EnumName(PurchaseError_Error_name, int32(x))
 }
-func (PurchaseError_Error) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{113, 0} }
+func (x *PurchaseError_Error) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(PurchaseError_Error_value, data, "PurchaseError_Error")
+	if err != nil {
+		return err
+	}
+	*x = PurchaseError_Error(value)
+	return nil
+}
+func (PurchaseError_Error) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{117, 0} }
 
 // ref: PegasusUtil.PurchaseMethod/PacketID
 type PurchaseMethod_PacketID int32
 
 const (
-	PurchaseMethod_PACKETID_AUTO_INVALID PurchaseMethod_PacketID = 0
-	PurchaseMethod_ID                    PurchaseMethod_PacketID = 272
+	PurchaseMethod_ID PurchaseMethod_PacketID = 272
 )
 
 var PurchaseMethod_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	272: "ID",
 }
 var PurchaseMethod_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 272,
 }
 
+func (x PurchaseMethod_PacketID) Enum() *PurchaseMethod_PacketID {
+	p := new(PurchaseMethod_PacketID)
+	*p = x
+	return p
+}
 func (x PurchaseMethod_PacketID) String() string {
 	return proto.EnumName(PurchaseMethod_PacketID_name, int32(x))
 }
-func (PurchaseMethod_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{114, 0} }
+func (x *PurchaseMethod_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(PurchaseMethod_PacketID_value, data, "PurchaseMethod_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = PurchaseMethod_PacketID(value)
+	return nil
+}
+func (PurchaseMethod_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{118, 0} }
 
 // ref: PegasusUtil.PurchaseResponse/PacketID
 type PurchaseResponse_PacketID int32
 
 const (
-	PurchaseResponse_PACKETID_AUTO_INVALID PurchaseResponse_PacketID = 0
-	PurchaseResponse_ID                    PurchaseResponse_PacketID = 256
+	PurchaseResponse_ID PurchaseResponse_PacketID = 256
 )
 
 var PurchaseResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	256: "ID",
 }
 var PurchaseResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 256,
 }
 
+func (x PurchaseResponse_PacketID) Enum() *PurchaseResponse_PacketID {
+	p := new(PurchaseResponse_PacketID)
+	*p = x
+	return p
+}
 func (x PurchaseResponse_PacketID) String() string {
 	return proto.EnumName(PurchaseResponse_PacketID_name, int32(x))
 }
+func (x *PurchaseResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(PurchaseResponse_PacketID_value, data, "PurchaseResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = PurchaseResponse_PacketID(value)
+	return nil
+}
 func (PurchaseResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{115, 0}
+	return fileDescriptor0, []int{119, 0}
 }
 
 // ref: PegasusUtil.PurchaseWithGold/PacketID
@@ -2782,51 +3878,72 @@ var PurchaseWithGold_PacketID_value = map[string]int32{
 	"ID":     279,
 }
 
+func (x PurchaseWithGold_PacketID) Enum() *PurchaseWithGold_PacketID {
+	p := new(PurchaseWithGold_PacketID)
+	*p = x
+	return p
+}
 func (x PurchaseWithGold_PacketID) String() string {
 	return proto.EnumName(PurchaseWithGold_PacketID_name, int32(x))
 }
+func (x *PurchaseWithGold_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(PurchaseWithGold_PacketID_value, data, "PurchaseWithGold_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = PurchaseWithGold_PacketID(value)
+	return nil
+}
 func (PurchaseWithGold_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{116, 0}
+	return fileDescriptor0, []int{120, 0}
 }
 
 // ref: PegasusUtil.PurchaseWithGoldResponse/PacketID
 type PurchaseWithGoldResponse_PacketID int32
 
 const (
-	PurchaseWithGoldResponse_PACKETID_AUTO_INVALID PurchaseWithGoldResponse_PacketID = 0
-	PurchaseWithGoldResponse_ID                    PurchaseWithGoldResponse_PacketID = 280
+	PurchaseWithGoldResponse_ID PurchaseWithGoldResponse_PacketID = 280
 )
 
 var PurchaseWithGoldResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	280: "ID",
 }
 var PurchaseWithGoldResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 280,
 }
 
+func (x PurchaseWithGoldResponse_PacketID) Enum() *PurchaseWithGoldResponse_PacketID {
+	p := new(PurchaseWithGoldResponse_PacketID)
+	*p = x
+	return p
+}
 func (x PurchaseWithGoldResponse_PacketID) String() string {
 	return proto.EnumName(PurchaseWithGoldResponse_PacketID_name, int32(x))
 }
+func (x *PurchaseWithGoldResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(PurchaseWithGoldResponse_PacketID_value, data, "PurchaseWithGoldResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = PurchaseWithGoldResponse_PacketID(value)
+	return nil
+}
 func (PurchaseWithGoldResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{117, 0}
+	return fileDescriptor0, []int{121, 0}
 }
 
 // ref: PegasusUtil.PurchaseWithGoldResponse/PurchaseResult
 type PurchaseWithGoldResponse_PurchaseResult int32
 
 const (
-	PurchaseWithGoldResponse_PURCHASERESULT_AUTO_INVALID PurchaseWithGoldResponse_PurchaseResult = 0
-	PurchaseWithGoldResponse_PR_SUCCESS                  PurchaseWithGoldResponse_PurchaseResult = 1
-	PurchaseWithGoldResponse_PR_INSUFFICIENT_FUNDS       PurchaseWithGoldResponse_PurchaseResult = 2
-	PurchaseWithGoldResponse_PR_PRODUCT_NA               PurchaseWithGoldResponse_PurchaseResult = 3
-	PurchaseWithGoldResponse_PR_FEATURE_NA               PurchaseWithGoldResponse_PurchaseResult = 4
-	PurchaseWithGoldResponse_PR_INVALID_QUANTITY         PurchaseWithGoldResponse_PurchaseResult = 5
+	PurchaseWithGoldResponse_PR_SUCCESS            PurchaseWithGoldResponse_PurchaseResult = 1
+	PurchaseWithGoldResponse_PR_INSUFFICIENT_FUNDS PurchaseWithGoldResponse_PurchaseResult = 2
+	PurchaseWithGoldResponse_PR_PRODUCT_NA         PurchaseWithGoldResponse_PurchaseResult = 3
+	PurchaseWithGoldResponse_PR_FEATURE_NA         PurchaseWithGoldResponse_PurchaseResult = 4
+	PurchaseWithGoldResponse_PR_INVALID_QUANTITY   PurchaseWithGoldResponse_PurchaseResult = 5
 )
 
 var PurchaseWithGoldResponse_PurchaseResult_name = map[int32]string{
-	0: "PURCHASERESULT_AUTO_INVALID",
 	1: "PR_SUCCESS",
 	2: "PR_INSUFFICIENT_FUNDS",
 	3: "PR_PRODUCT_NA",
@@ -2834,67 +3951,99 @@ var PurchaseWithGoldResponse_PurchaseResult_name = map[int32]string{
 	5: "PR_INVALID_QUANTITY",
 }
 var PurchaseWithGoldResponse_PurchaseResult_value = map[string]int32{
-	"PURCHASERESULT_AUTO_INVALID": 0,
-	"PR_SUCCESS":                  1,
-	"PR_INSUFFICIENT_FUNDS":       2,
-	"PR_PRODUCT_NA":               3,
-	"PR_FEATURE_NA":               4,
-	"PR_INVALID_QUANTITY":         5,
+	"PR_SUCCESS":            1,
+	"PR_INSUFFICIENT_FUNDS": 2,
+	"PR_PRODUCT_NA":         3,
+	"PR_FEATURE_NA":         4,
+	"PR_INVALID_QUANTITY":   5,
 }
 
+func (x PurchaseWithGoldResponse_PurchaseResult) Enum() *PurchaseWithGoldResponse_PurchaseResult {
+	p := new(PurchaseWithGoldResponse_PurchaseResult)
+	*p = x
+	return p
+}
 func (x PurchaseWithGoldResponse_PurchaseResult) String() string {
 	return proto.EnumName(PurchaseWithGoldResponse_PurchaseResult_name, int32(x))
 }
+func (x *PurchaseWithGoldResponse_PurchaseResult) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(PurchaseWithGoldResponse_PurchaseResult_value, data, "PurchaseWithGoldResponse_PurchaseResult")
+	if err != nil {
+		return err
+	}
+	*x = PurchaseWithGoldResponse_PurchaseResult(value)
+	return nil
+}
 func (PurchaseWithGoldResponse_PurchaseResult) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{117, 1}
+	return fileDescriptor0, []int{121, 1}
 }
 
 // ref: PegasusUtil.RecruitAFriendDataResponse/PacketID
 type RecruitAFriendDataResponse_PacketID int32
 
 const (
-	RecruitAFriendDataResponse_PACKETID_AUTO_INVALID RecruitAFriendDataResponse_PacketID = 0
-	RecruitAFriendDataResponse_ID                    RecruitAFriendDataResponse_PacketID = 338
+	RecruitAFriendDataResponse_ID RecruitAFriendDataResponse_PacketID = 338
 )
 
 var RecruitAFriendDataResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	338: "ID",
 }
 var RecruitAFriendDataResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 338,
 }
 
+func (x RecruitAFriendDataResponse_PacketID) Enum() *RecruitAFriendDataResponse_PacketID {
+	p := new(RecruitAFriendDataResponse_PacketID)
+	*p = x
+	return p
+}
 func (x RecruitAFriendDataResponse_PacketID) String() string {
 	return proto.EnumName(RecruitAFriendDataResponse_PacketID_name, int32(x))
 }
+func (x *RecruitAFriendDataResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(RecruitAFriendDataResponse_PacketID_value, data, "RecruitAFriendDataResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = RecruitAFriendDataResponse_PacketID(value)
+	return nil
+}
 func (RecruitAFriendDataResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{118, 0}
+	return fileDescriptor0, []int{122, 0}
 }
 
 // ref: PegasusUtil.RecruitAFriendURLResponse/PacketID
 type RecruitAFriendURLResponse_PacketID int32
 
 const (
-	RecruitAFriendURLResponse_PACKETID_AUTO_INVALID RecruitAFriendURLResponse_PacketID = 0
-	RecruitAFriendURLResponse_ID                    RecruitAFriendURLResponse_PacketID = 336
+	RecruitAFriendURLResponse_ID RecruitAFriendURLResponse_PacketID = 336
 )
 
 var RecruitAFriendURLResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	336: "ID",
 }
 var RecruitAFriendURLResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 336,
 }
 
+func (x RecruitAFriendURLResponse_PacketID) Enum() *RecruitAFriendURLResponse_PacketID {
+	p := new(RecruitAFriendURLResponse_PacketID)
+	*p = x
+	return p
+}
 func (x RecruitAFriendURLResponse_PacketID) String() string {
 	return proto.EnumName(RecruitAFriendURLResponse_PacketID_name, int32(x))
 }
+func (x *RecruitAFriendURLResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(RecruitAFriendURLResponse_PacketID_value, data, "RecruitAFriendURLResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = RecruitAFriendURLResponse_PacketID(value)
+	return nil
+}
 func (RecruitAFriendURLResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{119, 0}
+	return fileDescriptor0, []int{123, 0}
 }
 
 // ref: PegasusUtil.RenameDeck/PacketID
@@ -2914,10 +4063,23 @@ var RenameDeck_PacketID_value = map[string]int32{
 	"ID":     211,
 }
 
+func (x RenameDeck_PacketID) Enum() *RenameDeck_PacketID {
+	p := new(RenameDeck_PacketID)
+	*p = x
+	return p
+}
 func (x RenameDeck_PacketID) String() string {
 	return proto.EnumName(RenameDeck_PacketID_name, int32(x))
 }
-func (RenameDeck_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{121, 0} }
+func (x *RenameDeck_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(RenameDeck_PacketID_value, data, "RenameDeck_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = RenameDeck_PacketID(value)
+	return nil
+}
+func (RenameDeck_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{125, 0} }
 
 // ref: PegasusUtil.RequestTavernBrawlInfo/PacketID
 type RequestTavernBrawlInfo_PacketID int32
@@ -2936,11 +4098,24 @@ var RequestTavernBrawlInfo_PacketID_value = map[string]int32{
 	"ID":     352,
 }
 
+func (x RequestTavernBrawlInfo_PacketID) Enum() *RequestTavernBrawlInfo_PacketID {
+	p := new(RequestTavernBrawlInfo_PacketID)
+	*p = x
+	return p
+}
 func (x RequestTavernBrawlInfo_PacketID) String() string {
 	return proto.EnumName(RequestTavernBrawlInfo_PacketID_name, int32(x))
 }
+func (x *RequestTavernBrawlInfo_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(RequestTavernBrawlInfo_PacketID_value, data, "RequestTavernBrawlInfo_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = RequestTavernBrawlInfo_PacketID(value)
+	return nil
+}
 func (RequestTavernBrawlInfo_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{122, 0}
+	return fileDescriptor0, []int{126, 0}
 }
 
 // ref: PegasusUtil.RequestTavernBrawlPlayerRecord/PacketID
@@ -2960,58 +4135,128 @@ var RequestTavernBrawlPlayerRecord_PacketID_value = map[string]int32{
 	"ID":     353,
 }
 
+func (x RequestTavernBrawlPlayerRecord_PacketID) Enum() *RequestTavernBrawlPlayerRecord_PacketID {
+	p := new(RequestTavernBrawlPlayerRecord_PacketID)
+	*p = x
+	return p
+}
 func (x RequestTavernBrawlPlayerRecord_PacketID) String() string {
 	return proto.EnumName(RequestTavernBrawlPlayerRecord_PacketID_name, int32(x))
 }
+func (x *RequestTavernBrawlPlayerRecord_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(RequestTavernBrawlPlayerRecord_PacketID_value, data, "RequestTavernBrawlPlayerRecord_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = RequestTavernBrawlPlayerRecord_PacketID(value)
+	return nil
+}
 func (RequestTavernBrawlPlayerRecord_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{123, 0}
+	return fileDescriptor0, []int{127, 0}
 }
 
 // ref: PegasusUtil.ReturningPlayerOptOutRequest/PacketID
 type ReturningPlayerOptOutRequest_PacketID int32
 
 const (
-	ReturningPlayerOptOutRequest_PACKETID_AUTO_INVALID ReturningPlayerOptOutRequest_PacketID = 0
-	ReturningPlayerOptOutRequest_ID                    ReturningPlayerOptOutRequest_PacketID = 350
+	ReturningPlayerOptOutRequest_system ReturningPlayerOptOutRequest_PacketID = 0
+	ReturningPlayerOptOutRequest_ID     ReturningPlayerOptOutRequest_PacketID = 350
 )
 
 var ReturningPlayerOptOutRequest_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
+	0:   "system",
 	350: "ID",
 }
 var ReturningPlayerOptOutRequest_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
-	"ID": 350,
+	"system": 0,
+	"ID":     350,
 }
 
+func (x ReturningPlayerOptOutRequest_PacketID) Enum() *ReturningPlayerOptOutRequest_PacketID {
+	p := new(ReturningPlayerOptOutRequest_PacketID)
+	*p = x
+	return p
+}
 func (x ReturningPlayerOptOutRequest_PacketID) String() string {
 	return proto.EnumName(ReturningPlayerOptOutRequest_PacketID_name, int32(x))
 }
+func (x *ReturningPlayerOptOutRequest_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ReturningPlayerOptOutRequest_PacketID_value, data, "ReturningPlayerOptOutRequest_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = ReturningPlayerOptOutRequest_PacketID(value)
+	return nil
+}
 func (ReturningPlayerOptOutRequest_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{125, 0}
+	return fileDescriptor0, []int{129, 0}
+}
+
+// ref: PegasusUtil.ReturningPlayerOptOutResponse/PacketID
+type ReturningPlayerOptOutResponse_PacketID int32
+
+const (
+	ReturningPlayerOptOutResponse_ID ReturningPlayerOptOutResponse_PacketID = 356
+)
+
+var ReturningPlayerOptOutResponse_PacketID_name = map[int32]string{
+	356: "ID",
+}
+var ReturningPlayerOptOutResponse_PacketID_value = map[string]int32{
+	"ID": 356,
+}
+
+func (x ReturningPlayerOptOutResponse_PacketID) Enum() *ReturningPlayerOptOutResponse_PacketID {
+	p := new(ReturningPlayerOptOutResponse_PacketID)
+	*p = x
+	return p
+}
+func (x ReturningPlayerOptOutResponse_PacketID) String() string {
+	return proto.EnumName(ReturningPlayerOptOutResponse_PacketID_name, int32(x))
+}
+func (x *ReturningPlayerOptOutResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ReturningPlayerOptOutResponse_PacketID_value, data, "ReturningPlayerOptOutResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = ReturningPlayerOptOutResponse_PacketID(value)
+	return nil
+}
+func (ReturningPlayerOptOutResponse_PacketID) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor0, []int{130, 0}
 }
 
 // ref: PegasusUtil.RewardProgress/PacketID
 type RewardProgress_PacketID int32
 
 const (
-	RewardProgress_PACKETID_AUTO_INVALID RewardProgress_PacketID = 0
-	RewardProgress_ID                    RewardProgress_PacketID = 271
+	RewardProgress_ID RewardProgress_PacketID = 271
 )
 
 var RewardProgress_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	271: "ID",
 }
 var RewardProgress_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 271,
 }
 
+func (x RewardProgress_PacketID) Enum() *RewardProgress_PacketID {
+	p := new(RewardProgress_PacketID)
+	*p = x
+	return p
+}
 func (x RewardProgress_PacketID) String() string {
 	return proto.EnumName(RewardProgress_PacketID_name, int32(x))
 }
-func (RewardProgress_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{126, 0} }
+func (x *RewardProgress_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(RewardProgress_PacketID_value, data, "RewardProgress_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = RewardProgress_PacketID(value)
+	return nil
+}
+func (RewardProgress_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{131, 0} }
 
 // ref: PegasusUtil.SetCardBack/PacketID
 type SetCardBack_PacketID int32
@@ -3030,33 +4275,56 @@ var SetCardBack_PacketID_value = map[string]int32{
 	"ID":     291,
 }
 
+func (x SetCardBack_PacketID) Enum() *SetCardBack_PacketID {
+	p := new(SetCardBack_PacketID)
+	*p = x
+	return p
+}
 func (x SetCardBack_PacketID) String() string {
 	return proto.EnumName(SetCardBack_PacketID_name, int32(x))
 }
-func (SetCardBack_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{129, 0} }
+func (x *SetCardBack_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(SetCardBack_PacketID_value, data, "SetCardBack_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = SetCardBack_PacketID(value)
+	return nil
+}
+func (SetCardBack_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{134, 0} }
 
 // ref: PegasusUtil.SetCardBackResponse/PacketID
 type SetCardBackResponse_PacketID int32
 
 const (
-	SetCardBackResponse_PACKETID_AUTO_INVALID SetCardBackResponse_PacketID = 0
-	SetCardBackResponse_ID                    SetCardBackResponse_PacketID = 292
+	SetCardBackResponse_ID SetCardBackResponse_PacketID = 292
 )
 
 var SetCardBackResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	292: "ID",
 }
 var SetCardBackResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 292,
 }
 
+func (x SetCardBackResponse_PacketID) Enum() *SetCardBackResponse_PacketID {
+	p := new(SetCardBackResponse_PacketID)
+	*p = x
+	return p
+}
 func (x SetCardBackResponse_PacketID) String() string {
 	return proto.EnumName(SetCardBackResponse_PacketID_name, int32(x))
 }
+func (x *SetCardBackResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(SetCardBackResponse_PacketID_value, data, "SetCardBackResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = SetCardBackResponse_PacketID(value)
+	return nil
+}
 func (SetCardBackResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{130, 0}
+	return fileDescriptor0, []int{135, 0}
 }
 
 // ref: PegasusUtil.SetFavoriteHero/PacketID
@@ -3076,59 +4344,92 @@ var SetFavoriteHero_PacketID_value = map[string]int32{
 	"ID":     319,
 }
 
+func (x SetFavoriteHero_PacketID) Enum() *SetFavoriteHero_PacketID {
+	p := new(SetFavoriteHero_PacketID)
+	*p = x
+	return p
+}
 func (x SetFavoriteHero_PacketID) String() string {
 	return proto.EnumName(SetFavoriteHero_PacketID_name, int32(x))
 }
+func (x *SetFavoriteHero_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(SetFavoriteHero_PacketID_value, data, "SetFavoriteHero_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = SetFavoriteHero_PacketID(value)
+	return nil
+}
 func (SetFavoriteHero_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{131, 0}
+	return fileDescriptor0, []int{136, 0}
 }
 
 // ref: PegasusUtil.SetFavoriteHeroResponse/PacketID
 type SetFavoriteHeroResponse_PacketID int32
 
 const (
-	SetFavoriteHeroResponse_PACKETID_AUTO_INVALID SetFavoriteHeroResponse_PacketID = 0
-	SetFavoriteHeroResponse_ID                    SetFavoriteHeroResponse_PacketID = 320
+	SetFavoriteHeroResponse_ID SetFavoriteHeroResponse_PacketID = 320
 )
 
 var SetFavoriteHeroResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	320: "ID",
 }
 var SetFavoriteHeroResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 320,
 }
 
+func (x SetFavoriteHeroResponse_PacketID) Enum() *SetFavoriteHeroResponse_PacketID {
+	p := new(SetFavoriteHeroResponse_PacketID)
+	*p = x
+	return p
+}
 func (x SetFavoriteHeroResponse_PacketID) String() string {
 	return proto.EnumName(SetFavoriteHeroResponse_PacketID_name, int32(x))
 }
+func (x *SetFavoriteHeroResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(SetFavoriteHeroResponse_PacketID_value, data, "SetFavoriteHeroResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = SetFavoriteHeroResponse_PacketID(value)
+	return nil
+}
 func (SetFavoriteHeroResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{132, 0}
+	return fileDescriptor0, []int{137, 0}
 }
 
 // ref: PegasusUtil.SetOptions/MaxOptionCount
 type SetOptions_MaxOptionCount int32
 
 const (
-	SetOptions_MAXOPTIONCOUNT_AUTO_INVALID SetOptions_MaxOptionCount = 0
-	SetOptions_LIMIT                       SetOptions_MaxOptionCount = 51
+	SetOptions_LIMIT SetOptions_MaxOptionCount = 51
 )
 
 var SetOptions_MaxOptionCount_name = map[int32]string{
-	0:  "MAXOPTIONCOUNT_AUTO_INVALID",
 	51: "LIMIT",
 }
 var SetOptions_MaxOptionCount_value = map[string]int32{
-	"MAXOPTIONCOUNT_AUTO_INVALID": 0,
 	"LIMIT": 51,
 }
 
+func (x SetOptions_MaxOptionCount) Enum() *SetOptions_MaxOptionCount {
+	p := new(SetOptions_MaxOptionCount)
+	*p = x
+	return p
+}
 func (x SetOptions_MaxOptionCount) String() string {
 	return proto.EnumName(SetOptions_MaxOptionCount_name, int32(x))
 }
+func (x *SetOptions_MaxOptionCount) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(SetOptions_MaxOptionCount_value, data, "SetOptions_MaxOptionCount")
+	if err != nil {
+		return err
+	}
+	*x = SetOptions_MaxOptionCount(value)
+	return nil
+}
 func (SetOptions_MaxOptionCount) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{133, 0}
+	return fileDescriptor0, []int{138, 0}
 }
 
 // ref: PegasusUtil.SetOptions/PacketID
@@ -3148,10 +4449,23 @@ var SetOptions_PacketID_value = map[string]int32{
 	"ID":     239,
 }
 
+func (x SetOptions_PacketID) Enum() *SetOptions_PacketID {
+	p := new(SetOptions_PacketID)
+	*p = x
+	return p
+}
 func (x SetOptions_PacketID) String() string {
 	return proto.EnumName(SetOptions_PacketID_name, int32(x))
 }
-func (SetOptions_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{133, 1} }
+func (x *SetOptions_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(SetOptions_PacketID_value, data, "SetOptions_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = SetOptions_PacketID(value)
+	return nil
+}
+func (SetOptions_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{138, 1} }
 
 // ref: PegasusUtil.SetProgress/PacketID
 type SetProgress_PacketID int32
@@ -3170,190 +4484,273 @@ var SetProgress_PacketID_value = map[string]int32{
 	"ID":     230,
 }
 
+func (x SetProgress_PacketID) Enum() *SetProgress_PacketID {
+	p := new(SetProgress_PacketID)
+	*p = x
+	return p
+}
 func (x SetProgress_PacketID) String() string {
 	return proto.EnumName(SetProgress_PacketID_name, int32(x))
 }
-func (SetProgress_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{134, 0} }
+func (x *SetProgress_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(SetProgress_PacketID_value, data, "SetProgress_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = SetProgress_PacketID(value)
+	return nil
+}
+func (SetProgress_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{139, 0} }
 
 // ref: PegasusUtil.SetProgressResponse/PacketID
 type SetProgressResponse_PacketID int32
 
 const (
-	SetProgressResponse_PACKETID_AUTO_INVALID SetProgressResponse_PacketID = 0
-	SetProgressResponse_ID                    SetProgressResponse_PacketID = 296
+	SetProgressResponse_ID SetProgressResponse_PacketID = 296
 )
 
 var SetProgressResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	296: "ID",
 }
 var SetProgressResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 296,
 }
 
+func (x SetProgressResponse_PacketID) Enum() *SetProgressResponse_PacketID {
+	p := new(SetProgressResponse_PacketID)
+	*p = x
+	return p
+}
 func (x SetProgressResponse_PacketID) String() string {
 	return proto.EnumName(SetProgressResponse_PacketID_name, int32(x))
 }
+func (x *SetProgressResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(SetProgressResponse_PacketID_value, data, "SetProgressResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = SetProgressResponse_PacketID(value)
+	return nil
+}
 func (SetProgressResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{135, 0}
+	return fileDescriptor0, []int{140, 0}
 }
 
 // ref: PegasusUtil.SetProgressResponse/Result
 type SetProgressResponse_Result int32
 
 const (
-	SetProgressResponse_RESULT_AUTO_INVALID SetProgressResponse_Result = 0
-	SetProgressResponse_SUCCESS             SetProgressResponse_Result = 1
-	SetProgressResponse_FAILED              SetProgressResponse_Result = 2
-	SetProgressResponse_ALREADY_DONE        SetProgressResponse_Result = 3
+	SetProgressResponse_SUCCESS      SetProgressResponse_Result = 1
+	SetProgressResponse_FAILED       SetProgressResponse_Result = 2
+	SetProgressResponse_ALREADY_DONE SetProgressResponse_Result = 3
 )
 
 var SetProgressResponse_Result_name = map[int32]string{
-	0: "RESULT_AUTO_INVALID",
 	1: "SUCCESS",
 	2: "FAILED",
 	3: "ALREADY_DONE",
 }
 var SetProgressResponse_Result_value = map[string]int32{
-	"RESULT_AUTO_INVALID": 0,
-	"SUCCESS":             1,
-	"FAILED":              2,
-	"ALREADY_DONE":        3,
+	"SUCCESS":      1,
+	"FAILED":       2,
+	"ALREADY_DONE": 3,
 }
 
+func (x SetProgressResponse_Result) Enum() *SetProgressResponse_Result {
+	p := new(SetProgressResponse_Result)
+	*p = x
+	return p
+}
 func (x SetProgressResponse_Result) String() string {
 	return proto.EnumName(SetProgressResponse_Result_name, int32(x))
 }
+func (x *SetProgressResponse_Result) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(SetProgressResponse_Result_value, data, "SetProgressResponse_Result")
+	if err != nil {
+		return err
+	}
+	*x = SetProgressResponse_Result(value)
+	return nil
+}
 func (SetProgressResponse_Result) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{135, 1}
+	return fileDescriptor0, []int{140, 1}
 }
 
 // ref: PegasusUtil.StartThirdPartyPurchase/PacketID
 type StartThirdPartyPurchase_PacketID int32
 
 const (
-	StartThirdPartyPurchase_PACKETID_AUTO_INVALID StartThirdPartyPurchase_PacketID = 0
-	StartThirdPartyPurchase_system                StartThirdPartyPurchase_PacketID = 1
-	StartThirdPartyPurchase_ID                    StartThirdPartyPurchase_PacketID = 312
+	StartThirdPartyPurchase_system StartThirdPartyPurchase_PacketID = 1
+	StartThirdPartyPurchase_ID     StartThirdPartyPurchase_PacketID = 312
 )
 
 var StartThirdPartyPurchase_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	1:   "system",
 	312: "ID",
 }
 var StartThirdPartyPurchase_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
-	"system":                1,
-	"ID":                    312,
+	"system": 1,
+	"ID":     312,
 }
 
+func (x StartThirdPartyPurchase_PacketID) Enum() *StartThirdPartyPurchase_PacketID {
+	p := new(StartThirdPartyPurchase_PacketID)
+	*p = x
+	return p
+}
 func (x StartThirdPartyPurchase_PacketID) String() string {
 	return proto.EnumName(StartThirdPartyPurchase_PacketID_name, int32(x))
 }
+func (x *StartThirdPartyPurchase_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(StartThirdPartyPurchase_PacketID_value, data, "StartThirdPartyPurchase_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = StartThirdPartyPurchase_PacketID(value)
+	return nil
+}
 func (StartThirdPartyPurchase_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{137, 0}
+	return fileDescriptor0, []int{142, 0}
 }
 
 // ref: PegasusUtil.SubmitThirdPartyReceipt/PacketID
 type SubmitThirdPartyReceipt_PacketID int32
 
 const (
-	SubmitThirdPartyReceipt_PACKETID_AUTO_INVALID SubmitThirdPartyReceipt_PacketID = 0
-	SubmitThirdPartyReceipt_system                SubmitThirdPartyReceipt_PacketID = 1
-	SubmitThirdPartyReceipt_ID                    SubmitThirdPartyReceipt_PacketID = 293
+	SubmitThirdPartyReceipt_system SubmitThirdPartyReceipt_PacketID = 1
+	SubmitThirdPartyReceipt_ID     SubmitThirdPartyReceipt_PacketID = 293
 )
 
 var SubmitThirdPartyReceipt_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	1:   "system",
 	293: "ID",
 }
 var SubmitThirdPartyReceipt_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
-	"system":                1,
-	"ID":                    293,
+	"system": 1,
+	"ID":     293,
 }
 
+func (x SubmitThirdPartyReceipt_PacketID) Enum() *SubmitThirdPartyReceipt_PacketID {
+	p := new(SubmitThirdPartyReceipt_PacketID)
+	*p = x
+	return p
+}
 func (x SubmitThirdPartyReceipt_PacketID) String() string {
 	return proto.EnumName(SubmitThirdPartyReceipt_PacketID_name, int32(x))
 }
+func (x *SubmitThirdPartyReceipt_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(SubmitThirdPartyReceipt_PacketID_value, data, "SubmitThirdPartyReceipt_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = SubmitThirdPartyReceipt_PacketID(value)
+	return nil
+}
 func (SubmitThirdPartyReceipt_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{138, 0}
+	return fileDescriptor0, []int{143, 0}
 }
 
 // ref: PegasusUtil.Subscribe/PacketID
 type Subscribe_PacketID int32
 
 const (
-	Subscribe_PACKETID_AUTO_INVALID Subscribe_PacketID = 0
-	Subscribe_ID                    Subscribe_PacketID = 314
+	Subscribe_ID Subscribe_PacketID = 314
 )
 
 var Subscribe_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	314: "ID",
 }
 var Subscribe_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 314,
 }
 
+func (x Subscribe_PacketID) Enum() *Subscribe_PacketID {
+	p := new(Subscribe_PacketID)
+	*p = x
+	return p
+}
 func (x Subscribe_PacketID) String() string {
 	return proto.EnumName(Subscribe_PacketID_name, int32(x))
 }
-func (Subscribe_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{139, 0} }
+func (x *Subscribe_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(Subscribe_PacketID_value, data, "Subscribe_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = Subscribe_PacketID(value)
+	return nil
+}
+func (Subscribe_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{144, 0} }
 
 // ref: PegasusUtil.SubscribeResponse/PacketID
 type SubscribeResponse_PacketID int32
 
 const (
-	SubscribeResponse_PACKETID_AUTO_INVALID SubscribeResponse_PacketID = 0
-	SubscribeResponse_ID                    SubscribeResponse_PacketID = 315
+	SubscribeResponse_ID SubscribeResponse_PacketID = 315
 )
 
 var SubscribeResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	315: "ID",
 }
 var SubscribeResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 315,
 }
 
+func (x SubscribeResponse_PacketID) Enum() *SubscribeResponse_PacketID {
+	p := new(SubscribeResponse_PacketID)
+	*p = x
+	return p
+}
 func (x SubscribeResponse_PacketID) String() string {
 	return proto.EnumName(SubscribeResponse_PacketID_name, int32(x))
 }
+func (x *SubscribeResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(SubscribeResponse_PacketID_value, data, "SubscribeResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = SubscribeResponse_PacketID(value)
+	return nil
+}
 func (SubscribeResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{140, 0}
+	return fileDescriptor0, []int{145, 0}
 }
 
 // ref: PegasusUtil.SubscribeResponse/ResponseResult
 type SubscribeResponse_ResponseResult int32
 
 const (
-	SubscribeResponse_RESPONSERESULT_AUTO_INVALID SubscribeResponse_ResponseResult = 0
-	SubscribeResponse_SUCCESS                     SubscribeResponse_ResponseResult = 1
-	SubscribeResponse_FAILED_UNAVAILABLE          SubscribeResponse_ResponseResult = 2
+	SubscribeResponse_SUCCESS            SubscribeResponse_ResponseResult = 1
+	SubscribeResponse_FAILED_UNAVAILABLE SubscribeResponse_ResponseResult = 2
 )
 
 var SubscribeResponse_ResponseResult_name = map[int32]string{
-	0: "RESPONSERESULT_AUTO_INVALID",
 	1: "SUCCESS",
 	2: "FAILED_UNAVAILABLE",
 }
 var SubscribeResponse_ResponseResult_value = map[string]int32{
-	"RESPONSERESULT_AUTO_INVALID": 0,
-	"SUCCESS":                     1,
-	"FAILED_UNAVAILABLE":          2,
+	"SUCCESS":            1,
+	"FAILED_UNAVAILABLE": 2,
 }
 
+func (x SubscribeResponse_ResponseResult) Enum() *SubscribeResponse_ResponseResult {
+	p := new(SubscribeResponse_ResponseResult)
+	*p = x
+	return p
+}
 func (x SubscribeResponse_ResponseResult) String() string {
 	return proto.EnumName(SubscribeResponse_ResponseResult_name, int32(x))
 }
+func (x *SubscribeResponse_ResponseResult) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(SubscribeResponse_ResponseResult_value, data, "SubscribeResponse_ResponseResult")
+	if err != nil {
+		return err
+	}
+	*x = SubscribeResponse_ResponseResult(value)
+	return nil
+}
 func (SubscribeResponse_ResponseResult) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{140, 1}
+	return fileDescriptor0, []int{145, 1}
 }
 
 // ref: PegasusUtil.TavernBrawlAckSessionRewards/PacketID
@@ -3373,59 +4770,92 @@ var TavernBrawlAckSessionRewards_PacketID_value = map[string]int32{
 	"ID":     345,
 }
 
+func (x TavernBrawlAckSessionRewards_PacketID) Enum() *TavernBrawlAckSessionRewards_PacketID {
+	p := new(TavernBrawlAckSessionRewards_PacketID)
+	*p = x
+	return p
+}
 func (x TavernBrawlAckSessionRewards_PacketID) String() string {
 	return proto.EnumName(TavernBrawlAckSessionRewards_PacketID_name, int32(x))
 }
+func (x *TavernBrawlAckSessionRewards_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(TavernBrawlAckSessionRewards_PacketID_value, data, "TavernBrawlAckSessionRewards_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = TavernBrawlAckSessionRewards_PacketID(value)
+	return nil
+}
 func (TavernBrawlAckSessionRewards_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{141, 0}
+	return fileDescriptor0, []int{146, 0}
 }
 
 // ref: PegasusUtil.TavernBrawlInfo/PacketID
 type TavernBrawlInfo_PacketID int32
 
 const (
-	TavernBrawlInfo_PACKETID_AUTO_INVALID TavernBrawlInfo_PacketID = 0
-	TavernBrawlInfo_ID                    TavernBrawlInfo_PacketID = 316
+	TavernBrawlInfo_ID TavernBrawlInfo_PacketID = 316
 )
 
 var TavernBrawlInfo_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	316: "ID",
 }
 var TavernBrawlInfo_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 316,
 }
 
+func (x TavernBrawlInfo_PacketID) Enum() *TavernBrawlInfo_PacketID {
+	p := new(TavernBrawlInfo_PacketID)
+	*p = x
+	return p
+}
 func (x TavernBrawlInfo_PacketID) String() string {
 	return proto.EnumName(TavernBrawlInfo_PacketID_name, int32(x))
 }
+func (x *TavernBrawlInfo_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(TavernBrawlInfo_PacketID_value, data, "TavernBrawlInfo_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = TavernBrawlInfo_PacketID(value)
+	return nil
+}
 func (TavernBrawlInfo_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{142, 0}
+	return fileDescriptor0, []int{147, 0}
 }
 
 // ref: PegasusUtil.TavernBrawlPlayerRecordResponse/PacketID
 type TavernBrawlPlayerRecordResponse_PacketID int32
 
 const (
-	TavernBrawlPlayerRecordResponse_PACKETID_AUTO_INVALID TavernBrawlPlayerRecordResponse_PacketID = 0
-	TavernBrawlPlayerRecordResponse_ID                    TavernBrawlPlayerRecordResponse_PacketID = 317
+	TavernBrawlPlayerRecordResponse_ID TavernBrawlPlayerRecordResponse_PacketID = 317
 )
 
 var TavernBrawlPlayerRecordResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	317: "ID",
 }
 var TavernBrawlPlayerRecordResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 317,
 }
 
+func (x TavernBrawlPlayerRecordResponse_PacketID) Enum() *TavernBrawlPlayerRecordResponse_PacketID {
+	p := new(TavernBrawlPlayerRecordResponse_PacketID)
+	*p = x
+	return p
+}
 func (x TavernBrawlPlayerRecordResponse_PacketID) String() string {
 	return proto.EnumName(TavernBrawlPlayerRecordResponse_PacketID_name, int32(x))
 }
+func (x *TavernBrawlPlayerRecordResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(TavernBrawlPlayerRecordResponse_PacketID_value, data, "TavernBrawlPlayerRecordResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = TavernBrawlPlayerRecordResponse_PacketID(value)
+	return nil
+}
 func (TavernBrawlPlayerRecordResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{143, 0}
+	return fileDescriptor0, []int{148, 0}
 }
 
 // ref: PegasusUtil.TavernBrawlRequestSessionBegin/PacketID
@@ -3445,35 +4875,58 @@ var TavernBrawlRequestSessionBegin_PacketID_value = map[string]int32{
 	"ID":     343,
 }
 
+func (x TavernBrawlRequestSessionBegin_PacketID) Enum() *TavernBrawlRequestSessionBegin_PacketID {
+	p := new(TavernBrawlRequestSessionBegin_PacketID)
+	*p = x
+	return p
+}
 func (x TavernBrawlRequestSessionBegin_PacketID) String() string {
 	return proto.EnumName(TavernBrawlRequestSessionBegin_PacketID_name, int32(x))
 }
+func (x *TavernBrawlRequestSessionBegin_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(TavernBrawlRequestSessionBegin_PacketID_value, data, "TavernBrawlRequestSessionBegin_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = TavernBrawlRequestSessionBegin_PacketID(value)
+	return nil
+}
 func (TavernBrawlRequestSessionBegin_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{144, 0}
+	return fileDescriptor0, []int{149, 0}
 }
 
 // ref: PegasusUtil.TavernBrawlRequestSessionBeginResponse/PacketID
 type TavernBrawlRequestSessionBeginResponse_PacketID int32
 
 const (
-	TavernBrawlRequestSessionBeginResponse_PACKETID_AUTO_INVALID TavernBrawlRequestSessionBeginResponse_PacketID = 0
-	TavernBrawlRequestSessionBeginResponse_ID                    TavernBrawlRequestSessionBeginResponse_PacketID = 347
+	TavernBrawlRequestSessionBeginResponse_ID TavernBrawlRequestSessionBeginResponse_PacketID = 347
 )
 
 var TavernBrawlRequestSessionBeginResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	347: "ID",
 }
 var TavernBrawlRequestSessionBeginResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 347,
 }
 
+func (x TavernBrawlRequestSessionBeginResponse_PacketID) Enum() *TavernBrawlRequestSessionBeginResponse_PacketID {
+	p := new(TavernBrawlRequestSessionBeginResponse_PacketID)
+	*p = x
+	return p
+}
 func (x TavernBrawlRequestSessionBeginResponse_PacketID) String() string {
 	return proto.EnumName(TavernBrawlRequestSessionBeginResponse_PacketID_name, int32(x))
 }
+func (x *TavernBrawlRequestSessionBeginResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(TavernBrawlRequestSessionBeginResponse_PacketID_value, data, "TavernBrawlRequestSessionBeginResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = TavernBrawlRequestSessionBeginResponse_PacketID(value)
+	return nil
+}
 func (TavernBrawlRequestSessionBeginResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{145, 0}
+	return fileDescriptor0, []int{150, 0}
 }
 
 // ref: PegasusUtil.TavernBrawlRequestSessionRetire/PacketID
@@ -3493,140 +4946,203 @@ var TavernBrawlRequestSessionRetire_PacketID_value = map[string]int32{
 	"ID":     344,
 }
 
+func (x TavernBrawlRequestSessionRetire_PacketID) Enum() *TavernBrawlRequestSessionRetire_PacketID {
+	p := new(TavernBrawlRequestSessionRetire_PacketID)
+	*p = x
+	return p
+}
 func (x TavernBrawlRequestSessionRetire_PacketID) String() string {
 	return proto.EnumName(TavernBrawlRequestSessionRetire_PacketID_name, int32(x))
 }
+func (x *TavernBrawlRequestSessionRetire_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(TavernBrawlRequestSessionRetire_PacketID_value, data, "TavernBrawlRequestSessionRetire_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = TavernBrawlRequestSessionRetire_PacketID(value)
+	return nil
+}
 func (TavernBrawlRequestSessionRetire_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{146, 0}
+	return fileDescriptor0, []int{151, 0}
 }
 
 // ref: PegasusUtil.TavernBrawlRequestSessionRetireResponse/PacketID
 type TavernBrawlRequestSessionRetireResponse_PacketID int32
 
 const (
-	TavernBrawlRequestSessionRetireResponse_PACKETID_AUTO_INVALID TavernBrawlRequestSessionRetireResponse_PacketID = 0
-	TavernBrawlRequestSessionRetireResponse_ID                    TavernBrawlRequestSessionRetireResponse_PacketID = 348
+	TavernBrawlRequestSessionRetireResponse_ID TavernBrawlRequestSessionRetireResponse_PacketID = 348
 )
 
 var TavernBrawlRequestSessionRetireResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	348: "ID",
 }
 var TavernBrawlRequestSessionRetireResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 348,
 }
 
+func (x TavernBrawlRequestSessionRetireResponse_PacketID) Enum() *TavernBrawlRequestSessionRetireResponse_PacketID {
+	p := new(TavernBrawlRequestSessionRetireResponse_PacketID)
+	*p = x
+	return p
+}
 func (x TavernBrawlRequestSessionRetireResponse_PacketID) String() string {
 	return proto.EnumName(TavernBrawlRequestSessionRetireResponse_PacketID_name, int32(x))
 }
+func (x *TavernBrawlRequestSessionRetireResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(TavernBrawlRequestSessionRetireResponse_PacketID_value, data, "TavernBrawlRequestSessionRetireResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = TavernBrawlRequestSessionRetireResponse_PacketID(value)
+	return nil
+}
 func (TavernBrawlRequestSessionRetireResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{147, 0}
+	return fileDescriptor0, []int{152, 0}
 }
 
 // ref: PegasusUtil.TavernBrawlSessionAckRewardsResponse/PacketID
 type TavernBrawlSessionAckRewardsResponse_PacketID int32
 
 const (
-	TavernBrawlSessionAckRewardsResponse_PACKETID_AUTO_INVALID TavernBrawlSessionAckRewardsResponse_PacketID = 0
-	TavernBrawlSessionAckRewardsResponse_ID                    TavernBrawlSessionAckRewardsResponse_PacketID = 349
+	TavernBrawlSessionAckRewardsResponse_ID TavernBrawlSessionAckRewardsResponse_PacketID = 349
 )
 
 var TavernBrawlSessionAckRewardsResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	349: "ID",
 }
 var TavernBrawlSessionAckRewardsResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 349,
 }
 
+func (x TavernBrawlSessionAckRewardsResponse_PacketID) Enum() *TavernBrawlSessionAckRewardsResponse_PacketID {
+	p := new(TavernBrawlSessionAckRewardsResponse_PacketID)
+	*p = x
+	return p
+}
 func (x TavernBrawlSessionAckRewardsResponse_PacketID) String() string {
 	return proto.EnumName(TavernBrawlSessionAckRewardsResponse_PacketID_name, int32(x))
 }
+func (x *TavernBrawlSessionAckRewardsResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(TavernBrawlSessionAckRewardsResponse_PacketID_value, data, "TavernBrawlSessionAckRewardsResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = TavernBrawlSessionAckRewardsResponse_PacketID(value)
+	return nil
+}
 func (TavernBrawlSessionAckRewardsResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{148, 0}
+	return fileDescriptor0, []int{153, 0}
 }
 
 // ref: PegasusUtil.ThirdPartyPurchaseStatusResponse/PacketID
 type ThirdPartyPurchaseStatusResponse_PacketID int32
 
 const (
-	ThirdPartyPurchaseStatusResponse_PACKETID_AUTO_INVALID ThirdPartyPurchaseStatusResponse_PacketID = 0
-	ThirdPartyPurchaseStatusResponse_ID                    ThirdPartyPurchaseStatusResponse_PacketID = 295
+	ThirdPartyPurchaseStatusResponse_ID ThirdPartyPurchaseStatusResponse_PacketID = 295
 )
 
 var ThirdPartyPurchaseStatusResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	295: "ID",
 }
 var ThirdPartyPurchaseStatusResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 295,
 }
 
+func (x ThirdPartyPurchaseStatusResponse_PacketID) Enum() *ThirdPartyPurchaseStatusResponse_PacketID {
+	p := new(ThirdPartyPurchaseStatusResponse_PacketID)
+	*p = x
+	return p
+}
 func (x ThirdPartyPurchaseStatusResponse_PacketID) String() string {
 	return proto.EnumName(ThirdPartyPurchaseStatusResponse_PacketID_name, int32(x))
 }
+func (x *ThirdPartyPurchaseStatusResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ThirdPartyPurchaseStatusResponse_PacketID_value, data, "ThirdPartyPurchaseStatusResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = ThirdPartyPurchaseStatusResponse_PacketID(value)
+	return nil
+}
 func (ThirdPartyPurchaseStatusResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{149, 0}
+	return fileDescriptor0, []int{154, 0}
 }
 
 // ref: PegasusUtil.ThirdPartyPurchaseStatusResponse/Status
 type ThirdPartyPurchaseStatusResponse_Status int32
 
 const (
-	ThirdPartyPurchaseStatusResponse_STATUS_AUTO_INVALID ThirdPartyPurchaseStatusResponse_Status = 0
-	ThirdPartyPurchaseStatusResponse_NOT_FOUND           ThirdPartyPurchaseStatusResponse_Status = 1
-	ThirdPartyPurchaseStatusResponse_SUCCEEDED           ThirdPartyPurchaseStatusResponse_Status = 2
-	ThirdPartyPurchaseStatusResponse_FAILED              ThirdPartyPurchaseStatusResponse_Status = 3
-	ThirdPartyPurchaseStatusResponse_IN_PROGRESS         ThirdPartyPurchaseStatusResponse_Status = 4
+	ThirdPartyPurchaseStatusResponse_NOT_FOUND   ThirdPartyPurchaseStatusResponse_Status = 1
+	ThirdPartyPurchaseStatusResponse_SUCCEEDED   ThirdPartyPurchaseStatusResponse_Status = 2
+	ThirdPartyPurchaseStatusResponse_FAILED      ThirdPartyPurchaseStatusResponse_Status = 3
+	ThirdPartyPurchaseStatusResponse_IN_PROGRESS ThirdPartyPurchaseStatusResponse_Status = 4
 )
 
 var ThirdPartyPurchaseStatusResponse_Status_name = map[int32]string{
-	0: "STATUS_AUTO_INVALID",
 	1: "NOT_FOUND",
 	2: "SUCCEEDED",
 	3: "FAILED",
 	4: "IN_PROGRESS",
 }
 var ThirdPartyPurchaseStatusResponse_Status_value = map[string]int32{
-	"STATUS_AUTO_INVALID": 0,
-	"NOT_FOUND":           1,
-	"SUCCEEDED":           2,
-	"FAILED":              3,
-	"IN_PROGRESS":         4,
+	"NOT_FOUND":   1,
+	"SUCCEEDED":   2,
+	"FAILED":      3,
+	"IN_PROGRESS": 4,
 }
 
+func (x ThirdPartyPurchaseStatusResponse_Status) Enum() *ThirdPartyPurchaseStatusResponse_Status {
+	p := new(ThirdPartyPurchaseStatusResponse_Status)
+	*p = x
+	return p
+}
 func (x ThirdPartyPurchaseStatusResponse_Status) String() string {
 	return proto.EnumName(ThirdPartyPurchaseStatusResponse_Status_name, int32(x))
 }
+func (x *ThirdPartyPurchaseStatusResponse_Status) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ThirdPartyPurchaseStatusResponse_Status_value, data, "ThirdPartyPurchaseStatusResponse_Status")
+	if err != nil {
+		return err
+	}
+	*x = ThirdPartyPurchaseStatusResponse_Status(value)
+	return nil
+}
 func (ThirdPartyPurchaseStatusResponse_Status) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{149, 1}
+	return fileDescriptor0, []int{154, 1}
 }
 
 // ref: PegasusUtil.TriggerEventResponse/PacketID
 type TriggerEventResponse_PacketID int32
 
 const (
-	TriggerEventResponse_PACKETID_AUTO_INVALID TriggerEventResponse_PacketID = 0
-	TriggerEventResponse_ID                    TriggerEventResponse_PacketID = 299
+	TriggerEventResponse_ID TriggerEventResponse_PacketID = 299
 )
 
 var TriggerEventResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	299: "ID",
 }
 var TriggerEventResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 299,
 }
 
+func (x TriggerEventResponse_PacketID) Enum() *TriggerEventResponse_PacketID {
+	p := new(TriggerEventResponse_PacketID)
+	*p = x
+	return p
+}
 func (x TriggerEventResponse_PacketID) String() string {
 	return proto.EnumName(TriggerEventResponse_PacketID_name, int32(x))
 }
+func (x *TriggerEventResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(TriggerEventResponse_PacketID_value, data, "TriggerEventResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = TriggerEventResponse_PacketID(value)
+	return nil
+}
 func (TriggerEventResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{151, 0}
+	return fileDescriptor0, []int{156, 0}
 }
 
 // ref: PegasusUtil.TriggerPlayedNearbyPlayerOnSubnet/PacketID
@@ -3646,84 +5162,127 @@ var TriggerPlayedNearbyPlayerOnSubnet_PacketID_value = map[string]int32{
 	"ID":     298,
 }
 
+func (x TriggerPlayedNearbyPlayerOnSubnet_PacketID) Enum() *TriggerPlayedNearbyPlayerOnSubnet_PacketID {
+	p := new(TriggerPlayedNearbyPlayerOnSubnet_PacketID)
+	*p = x
+	return p
+}
 func (x TriggerPlayedNearbyPlayerOnSubnet_PacketID) String() string {
 	return proto.EnumName(TriggerPlayedNearbyPlayerOnSubnet_PacketID_name, int32(x))
 }
+func (x *TriggerPlayedNearbyPlayerOnSubnet_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(TriggerPlayedNearbyPlayerOnSubnet_PacketID_value, data, "TriggerPlayedNearbyPlayerOnSubnet_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = TriggerPlayedNearbyPlayerOnSubnet_PacketID(value)
+	return nil
+}
 func (TriggerPlayedNearbyPlayerOnSubnet_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{152, 0}
+	return fileDescriptor0, []int{157, 0}
 }
 
 // ref: PegasusUtil.Unsubscribe/PacketID
 type Unsubscribe_PacketID int32
 
 const (
-	Unsubscribe_PACKETID_AUTO_INVALID Unsubscribe_PacketID = 0
-	Unsubscribe_ID                    Unsubscribe_PacketID = 329
+	Unsubscribe_ID Unsubscribe_PacketID = 329
 )
 
 var Unsubscribe_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	329: "ID",
 }
 var Unsubscribe_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 329,
 }
 
+func (x Unsubscribe_PacketID) Enum() *Unsubscribe_PacketID {
+	p := new(Unsubscribe_PacketID)
+	*p = x
+	return p
+}
 func (x Unsubscribe_PacketID) String() string {
 	return proto.EnumName(Unsubscribe_PacketID_name, int32(x))
 }
-func (Unsubscribe_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{153, 0} }
+func (x *Unsubscribe_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(Unsubscribe_PacketID_value, data, "Unsubscribe_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = Unsubscribe_PacketID(value)
+	return nil
+}
+func (Unsubscribe_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{158, 0} }
 
 // ref: PegasusUtil.UpdateAccountLicenses/PacketID
 type UpdateAccountLicenses_PacketID int32
 
 const (
-	UpdateAccountLicenses_PACKETID_AUTO_INVALID UpdateAccountLicenses_PacketID = 0
-	UpdateAccountLicenses_system                UpdateAccountLicenses_PacketID = 1
-	UpdateAccountLicenses_ID                    UpdateAccountLicenses_PacketID = 276
+	UpdateAccountLicenses_system UpdateAccountLicenses_PacketID = 1
+	UpdateAccountLicenses_ID     UpdateAccountLicenses_PacketID = 276
 )
 
 var UpdateAccountLicenses_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	1:   "system",
 	276: "ID",
 }
 var UpdateAccountLicenses_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
-	"system":                1,
-	"ID":                    276,
+	"system": 1,
+	"ID":     276,
 }
 
+func (x UpdateAccountLicenses_PacketID) Enum() *UpdateAccountLicenses_PacketID {
+	p := new(UpdateAccountLicenses_PacketID)
+	*p = x
+	return p
+}
 func (x UpdateAccountLicenses_PacketID) String() string {
 	return proto.EnumName(UpdateAccountLicenses_PacketID_name, int32(x))
 }
+func (x *UpdateAccountLicenses_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(UpdateAccountLicenses_PacketID_value, data, "UpdateAccountLicenses_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = UpdateAccountLicenses_PacketID(value)
+	return nil
+}
 func (UpdateAccountLicenses_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{154, 0}
+	return fileDescriptor0, []int{159, 0}
 }
 
 // ref: PegasusUtil.UpdateAccountLicensesResponse/PacketID
 type UpdateAccountLicensesResponse_PacketID int32
 
 const (
-	UpdateAccountLicensesResponse_PACKETID_AUTO_INVALID UpdateAccountLicensesResponse_PacketID = 0
-	UpdateAccountLicensesResponse_ID                    UpdateAccountLicensesResponse_PacketID = 331
+	UpdateAccountLicensesResponse_ID UpdateAccountLicensesResponse_PacketID = 331
 )
 
 var UpdateAccountLicensesResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	331: "ID",
 }
 var UpdateAccountLicensesResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 331,
 }
 
+func (x UpdateAccountLicensesResponse_PacketID) Enum() *UpdateAccountLicensesResponse_PacketID {
+	p := new(UpdateAccountLicensesResponse_PacketID)
+	*p = x
+	return p
+}
 func (x UpdateAccountLicensesResponse_PacketID) String() string {
 	return proto.EnumName(UpdateAccountLicensesResponse_PacketID_name, int32(x))
 }
+func (x *UpdateAccountLicensesResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(UpdateAccountLicensesResponse_PacketID_value, data, "UpdateAccountLicensesResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = UpdateAccountLicensesResponse_PacketID(value)
+	return nil
+}
 func (UpdateAccountLicensesResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{155, 0}
+	return fileDescriptor0, []int{160, 0}
 }
 
 // ref: PegasusUtil.UpdateLogin/PacketID
@@ -3743,33 +5302,56 @@ var UpdateLogin_PacketID_value = map[string]int32{
 	"ID":     205,
 }
 
+func (x UpdateLogin_PacketID) Enum() *UpdateLogin_PacketID {
+	p := new(UpdateLogin_PacketID)
+	*p = x
+	return p
+}
 func (x UpdateLogin_PacketID) String() string {
 	return proto.EnumName(UpdateLogin_PacketID_name, int32(x))
 }
-func (UpdateLogin_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{156, 0} }
+func (x *UpdateLogin_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(UpdateLogin_PacketID_value, data, "UpdateLogin_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = UpdateLogin_PacketID(value)
+	return nil
+}
+func (UpdateLogin_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{161, 0} }
 
 // ref: PegasusUtil.UpdateLoginComplete/PacketID
 type UpdateLoginComplete_PacketID int32
 
 const (
-	UpdateLoginComplete_PACKETID_AUTO_INVALID UpdateLoginComplete_PacketID = 0
-	UpdateLoginComplete_ID                    UpdateLoginComplete_PacketID = 307
+	UpdateLoginComplete_ID UpdateLoginComplete_PacketID = 307
 )
 
 var UpdateLoginComplete_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	307: "ID",
 }
 var UpdateLoginComplete_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 307,
 }
 
+func (x UpdateLoginComplete_PacketID) Enum() *UpdateLoginComplete_PacketID {
+	p := new(UpdateLoginComplete_PacketID)
+	*p = x
+	return p
+}
 func (x UpdateLoginComplete_PacketID) String() string {
 	return proto.EnumName(UpdateLoginComplete_PacketID_name, int32(x))
 }
+func (x *UpdateLoginComplete_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(UpdateLoginComplete_PacketID_value, data, "UpdateLoginComplete_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = UpdateLoginComplete_PacketID(value)
+	return nil
+}
 func (UpdateLoginComplete_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{157, 0}
+	return fileDescriptor0, []int{162, 0}
 }
 
 // ref: PegasusUtil.ValidateAchieve/PacketID
@@ -3789,41 +5371,65 @@ var ValidateAchieve_PacketID_value = map[string]int32{
 	"ID":     284,
 }
 
+func (x ValidateAchieve_PacketID) Enum() *ValidateAchieve_PacketID {
+	p := new(ValidateAchieve_PacketID)
+	*p = x
+	return p
+}
 func (x ValidateAchieve_PacketID) String() string {
 	return proto.EnumName(ValidateAchieve_PacketID_name, int32(x))
 }
+func (x *ValidateAchieve_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ValidateAchieve_PacketID_value, data, "ValidateAchieve_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = ValidateAchieve_PacketID(value)
+	return nil
+}
 func (ValidateAchieve_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{158, 0}
+	return fileDescriptor0, []int{163, 0}
 }
 
 // ref: PegasusUtil.ValidateAchieveResponse/PacketID
 type ValidateAchieveResponse_PacketID int32
 
 const (
-	ValidateAchieveResponse_PACKETID_AUTO_INVALID ValidateAchieveResponse_PacketID = 0
-	ValidateAchieveResponse_ID                    ValidateAchieveResponse_PacketID = 285
+	ValidateAchieveResponse_ID ValidateAchieveResponse_PacketID = 285
 )
 
 var ValidateAchieveResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	285: "ID",
 }
 var ValidateAchieveResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 285,
 }
 
+func (x ValidateAchieveResponse_PacketID) Enum() *ValidateAchieveResponse_PacketID {
+	p := new(ValidateAchieveResponse_PacketID)
+	*p = x
+	return p
+}
 func (x ValidateAchieveResponse_PacketID) String() string {
 	return proto.EnumName(ValidateAchieveResponse_PacketID_name, int32(x))
 }
+func (x *ValidateAchieveResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ValidateAchieveResponse_PacketID_value, data, "ValidateAchieveResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = ValidateAchieveResponse_PacketID(value)
+	return nil
+}
 func (ValidateAchieveResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{159, 0}
+	return fileDescriptor0, []int{164, 0}
 }
 
 // ref: PegasusUtil.AccountLicenseAchieveResponse
 type AccountLicenseAchieveResponse struct {
-	Achieve int32                                `protobuf:"varint,1,opt,name=achieve" json:"achieve,omitempty"`
-	Result  AccountLicenseAchieveResponse_Result `protobuf:"varint,2,opt,name=result,enum=pegasus.pegasusutil.AccountLicenseAchieveResponse_Result" json:"result,omitempty"`
+	Achieve          *int32                                `protobuf:"varint,1,req,name=achieve" json:"achieve,omitempty"`
+	Result           *AccountLicenseAchieveResponse_Result `protobuf:"varint,2,req,name=result,enum=pegasus.pegasusutil.AccountLicenseAchieveResponse_Result" json:"result,omitempty"`
+	XXX_unrecognized []byte                                `json:"-"`
 }
 
 func (m *AccountLicenseAchieveResponse) Reset()                    { *m = AccountLicenseAchieveResponse{} }
@@ -3832,22 +5438,23 @@ func (*AccountLicenseAchieveResponse) ProtoMessage()               {}
 func (*AccountLicenseAchieveResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
 func (m *AccountLicenseAchieveResponse) GetAchieve() int32 {
-	if m != nil {
-		return m.Achieve
+	if m != nil && m.Achieve != nil {
+		return *m.Achieve
 	}
 	return 0
 }
 
 func (m *AccountLicenseAchieveResponse) GetResult() AccountLicenseAchieveResponse_Result {
-	if m != nil {
-		return m.Result
+	if m != nil && m.Result != nil {
+		return *m.Result
 	}
-	return AccountLicenseAchieveResponse_RESULT_AUTO_INVALID
+	return AccountLicenseAchieveResponse_INVALID_ACHIEVE
 }
 
 // ref: PegasusUtil.AccountLicensesInfoResponse
 type AccountLicensesInfoResponse struct {
-	List []*pegasus_pegasusshared.AccountLicenseInfo `protobuf:"bytes,1,rep,name=list" json:"list,omitempty"`
+	List             []*pegasus_pegasusshared.AccountLicenseInfo `protobuf:"bytes,1,rep,name=list" json:"list,omitempty"`
+	XXX_unrecognized []byte                                      `json:"-"`
 }
 
 func (m *AccountLicensesInfoResponse) Reset()                    { *m = AccountLicensesInfoResponse{} }
@@ -3864,17 +5471,18 @@ func (m *AccountLicensesInfoResponse) GetList() []*pegasus_pegasusshared.Account
 
 // ref: PegasusUtil.Achieve
 type Achieve struct {
-	Id                  int32                       `protobuf:"varint,1,opt,name=id" json:"id,omitempty"`
-	Progress            int32                       `protobuf:"varint,2,opt,name=progress" json:"progress,omitempty"`
-	AckProgress         int32                       `protobuf:"varint,3,opt,name=ack_progress,json=ackProgress" json:"ack_progress,omitempty"`
-	CompletionCount     int32                       `protobuf:"varint,4,opt,name=completion_count,json=completionCount" json:"completion_count,omitempty"`
-	Active              bool                        `protobuf:"varint,5,opt,name=active" json:"active,omitempty"`
-	StartedCount        int32                       `protobuf:"varint,6,opt,name=started_count,json=startedCount" json:"started_count,omitempty"`
+	Id                  *int32                      `protobuf:"varint,1,req,name=id" json:"id,omitempty"`
+	Progress            *int32                      `protobuf:"varint,2,req,name=progress" json:"progress,omitempty"`
+	AckProgress         *int32                      `protobuf:"varint,3,req,name=ack_progress,json=ackProgress" json:"ack_progress,omitempty"`
+	CompletionCount     *int32                      `protobuf:"varint,4,opt,name=completion_count,json=completionCount" json:"completion_count,omitempty"`
+	Active              *bool                       `protobuf:"varint,5,opt,name=active" json:"active,omitempty"`
+	StartedCount        *int32                      `protobuf:"varint,6,opt,name=started_count,json=startedCount" json:"started_count,omitempty"`
 	DateGiven           *pegasus_pegasusshared.Date `protobuf:"bytes,7,opt,name=date_given,json=dateGiven" json:"date_given,omitempty"`
 	DateCompleted       *pegasus_pegasusshared.Date `protobuf:"bytes,8,opt,name=date_completed,json=dateCompleted" json:"date_completed,omitempty"`
-	DoNotAck            bool                        `protobuf:"varint,9,opt,name=do_not_ack,json=doNotAck" json:"do_not_ack,omitempty"`
-	IntervalRewardCount int32                       `protobuf:"varint,10,opt,name=interval_reward_count,json=intervalRewardCount" json:"interval_reward_count,omitempty"`
+	DoNotAck            *bool                       `protobuf:"varint,9,opt,name=do_not_ack,json=doNotAck" json:"do_not_ack,omitempty"`
+	IntervalRewardCount *int32                      `protobuf:"varint,10,opt,name=interval_reward_count,json=intervalRewardCount" json:"interval_reward_count,omitempty"`
 	IntervalRewardStart *pegasus_pegasusshared.Date `protobuf:"bytes,11,opt,name=interval_reward_start,json=intervalRewardStart" json:"interval_reward_start,omitempty"`
+	XXX_unrecognized    []byte                      `json:"-"`
 }
 
 func (m *Achieve) Reset()                    { *m = Achieve{} }
@@ -3883,43 +5491,43 @@ func (*Achieve) ProtoMessage()               {}
 func (*Achieve) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
 
 func (m *Achieve) GetId() int32 {
-	if m != nil {
-		return m.Id
+	if m != nil && m.Id != nil {
+		return *m.Id
 	}
 	return 0
 }
 
 func (m *Achieve) GetProgress() int32 {
-	if m != nil {
-		return m.Progress
+	if m != nil && m.Progress != nil {
+		return *m.Progress
 	}
 	return 0
 }
 
 func (m *Achieve) GetAckProgress() int32 {
-	if m != nil {
-		return m.AckProgress
+	if m != nil && m.AckProgress != nil {
+		return *m.AckProgress
 	}
 	return 0
 }
 
 func (m *Achieve) GetCompletionCount() int32 {
-	if m != nil {
-		return m.CompletionCount
+	if m != nil && m.CompletionCount != nil {
+		return *m.CompletionCount
 	}
 	return 0
 }
 
 func (m *Achieve) GetActive() bool {
-	if m != nil {
-		return m.Active
+	if m != nil && m.Active != nil {
+		return *m.Active
 	}
 	return false
 }
 
 func (m *Achieve) GetStartedCount() int32 {
-	if m != nil {
-		return m.StartedCount
+	if m != nil && m.StartedCount != nil {
+		return *m.StartedCount
 	}
 	return 0
 }
@@ -3939,15 +5547,15 @@ func (m *Achieve) GetDateCompleted() *pegasus_pegasusshared.Date {
 }
 
 func (m *Achieve) GetDoNotAck() bool {
-	if m != nil {
-		return m.DoNotAck
+	if m != nil && m.DoNotAck != nil {
+		return *m.DoNotAck
 	}
 	return false
 }
 
 func (m *Achieve) GetIntervalRewardCount() int32 {
-	if m != nil {
-		return m.IntervalRewardCount
+	if m != nil && m.IntervalRewardCount != nil {
+		return *m.IntervalRewardCount
 	}
 	return 0
 }
@@ -3961,15 +5569,16 @@ func (m *Achieve) GetIntervalRewardStart() *pegasus_pegasusshared.Date {
 
 // ref: PegasusUtil.AchievementNotification
 type AchievementNotification struct {
-	PlayerId          int64                       `protobuf:"varint,1,opt,name=player_id,json=playerId" json:"player_id,omitempty"`
-	AchievementId     int64                       `protobuf:"varint,2,opt,name=achievement_id,json=achievementId" json:"achievement_id,omitempty"`
-	Amount            int32                       `protobuf:"varint,3,opt,name=amount" json:"amount,omitempty"`
-	Quota             int32                       `protobuf:"varint,4,opt,name=quota" json:"quota,omitempty"`
+	PlayerId          *int64                      `protobuf:"varint,1,req,name=player_id,json=playerId" json:"player_id,omitempty"`
+	AchievementId     *int64                      `protobuf:"varint,2,req,name=achievement_id,json=achievementId" json:"achievement_id,omitempty"`
+	Amount            *int32                      `protobuf:"varint,3,req,name=amount" json:"amount,omitempty"`
+	Quota             *int32                      `protobuf:"varint,4,req,name=quota" json:"quota,omitempty"`
 	StartDateLocal    *pegasus_pegasusshared.Date `protobuf:"bytes,5,opt,name=start_date_local,json=startDateLocal" json:"start_date_local,omitempty"`
 	EndDateLocal      *pegasus_pegasusshared.Date `protobuf:"bytes,6,opt,name=end_date_local,json=endDateLocal" json:"end_date_local,omitempty"`
-	Complete          bool                        `protobuf:"varint,7,opt,name=complete" json:"complete,omitempty"`
-	NewAchievement    bool                        `protobuf:"varint,8,opt,name=new_achievement,json=newAchievement" json:"new_achievement,omitempty"`
-	RemoveAchievement bool                        `protobuf:"varint,9,opt,name=remove_achievement,json=removeAchievement" json:"remove_achievement,omitempty"`
+	Complete          *bool                       `protobuf:"varint,7,req,name=complete" json:"complete,omitempty"`
+	NewAchievement    *bool                       `protobuf:"varint,8,req,name=new_achievement,json=newAchievement" json:"new_achievement,omitempty"`
+	RemoveAchievement *bool                       `protobuf:"varint,9,req,name=remove_achievement,json=removeAchievement" json:"remove_achievement,omitempty"`
+	XXX_unrecognized  []byte                      `json:"-"`
 }
 
 func (m *AchievementNotification) Reset()                    { *m = AchievementNotification{} }
@@ -3978,29 +5587,29 @@ func (*AchievementNotification) ProtoMessage()               {}
 func (*AchievementNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
 
 func (m *AchievementNotification) GetPlayerId() int64 {
-	if m != nil {
-		return m.PlayerId
+	if m != nil && m.PlayerId != nil {
+		return *m.PlayerId
 	}
 	return 0
 }
 
 func (m *AchievementNotification) GetAchievementId() int64 {
-	if m != nil {
-		return m.AchievementId
+	if m != nil && m.AchievementId != nil {
+		return *m.AchievementId
 	}
 	return 0
 }
 
 func (m *AchievementNotification) GetAmount() int32 {
-	if m != nil {
-		return m.Amount
+	if m != nil && m.Amount != nil {
+		return *m.Amount
 	}
 	return 0
 }
 
 func (m *AchievementNotification) GetQuota() int32 {
-	if m != nil {
-		return m.Quota
+	if m != nil && m.Quota != nil {
+		return *m.Quota
 	}
 	return 0
 }
@@ -4020,22 +5629,22 @@ func (m *AchievementNotification) GetEndDateLocal() *pegasus_pegasusshared.Date 
 }
 
 func (m *AchievementNotification) GetComplete() bool {
-	if m != nil {
-		return m.Complete
+	if m != nil && m.Complete != nil {
+		return *m.Complete
 	}
 	return false
 }
 
 func (m *AchievementNotification) GetNewAchievement() bool {
-	if m != nil {
-		return m.NewAchievement
+	if m != nil && m.NewAchievement != nil {
+		return *m.NewAchievement
 	}
 	return false
 }
 
 func (m *AchievementNotification) GetRemoveAchievement() bool {
-	if m != nil {
-		return m.RemoveAchievement
+	if m != nil && m.RemoveAchievement != nil {
+		return *m.RemoveAchievement
 	}
 	return false
 }
@@ -4043,6 +5652,7 @@ func (m *AchievementNotification) GetRemoveAchievement() bool {
 // ref: PegasusUtil.AchievementNotifications
 type AchievementNotifications struct {
 	AchievementNotifications []*AchievementNotification `protobuf:"bytes,1,rep,name=achievement_notifications,json=achievementNotifications" json:"achievement_notifications,omitempty"`
+	XXX_unrecognized         []byte                     `json:"-"`
 }
 
 func (m *AchievementNotifications) Reset()                    { *m = AchievementNotifications{} }
@@ -4059,7 +5669,8 @@ func (m *AchievementNotifications) GetAchievementNotifications() []*AchievementN
 
 // ref: PegasusUtil.Achieves
 type Achieves struct {
-	List []*Achieve `protobuf:"bytes,1,rep,name=list" json:"list,omitempty"`
+	List             []*Achieve `protobuf:"bytes,1,rep,name=list" json:"list,omitempty"`
+	XXX_unrecognized []byte     `json:"-"`
 }
 
 func (m *Achieves) Reset()                    { *m = Achieves{} }
@@ -4076,8 +5687,9 @@ func (m *Achieves) GetList() []*Achieve {
 
 // ref: PegasusUtil.AckAchieveProgress
 type AckAchieveProgress struct {
-	Id          int32 `protobuf:"varint,1,opt,name=id" json:"id,omitempty"`
-	AckProgress int32 `protobuf:"varint,2,opt,name=ack_progress,json=ackProgress" json:"ack_progress,omitempty"`
+	Id               *int32 `protobuf:"varint,1,req,name=id" json:"id,omitempty"`
+	AckProgress      *int32 `protobuf:"varint,2,req,name=ack_progress,json=ackProgress" json:"ack_progress,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *AckAchieveProgress) Reset()                    { *m = AckAchieveProgress{} }
@@ -4086,22 +5698,23 @@ func (*AckAchieveProgress) ProtoMessage()               {}
 func (*AckAchieveProgress) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
 
 func (m *AckAchieveProgress) GetId() int32 {
-	if m != nil {
-		return m.Id
+	if m != nil && m.Id != nil {
+		return *m.Id
 	}
 	return 0
 }
 
 func (m *AckAchieveProgress) GetAckProgress() int32 {
-	if m != nil {
-		return m.AckProgress
+	if m != nil && m.AckProgress != nil {
+		return *m.AckProgress
 	}
 	return 0
 }
 
 // ref: PegasusUtil.AckCardSeen
 type AckCardSeen struct {
-	CardDefs []*pegasus_pegasusshared.CardDef `protobuf:"bytes,1,rep,name=card_defs,json=cardDefs" json:"card_defs,omitempty"`
+	CardDefs         []*pegasus_pegasusshared.CardDef `protobuf:"bytes,1,rep,name=card_defs,json=cardDefs" json:"card_defs,omitempty"`
+	XXX_unrecognized []byte                           `json:"-"`
 }
 
 func (m *AckCardSeen) Reset()                    { *m = AckCardSeen{} }
@@ -4118,7 +5731,8 @@ func (m *AckCardSeen) GetCardDefs() []*pegasus_pegasusshared.CardDef {
 
 // ref: PegasusUtil.AckNotice
 type AckNotice struct {
-	Entry int64 `protobuf:"varint,1,opt,name=entry" json:"entry,omitempty"`
+	Entry            *int64 `protobuf:"varint,1,req,name=entry" json:"entry,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *AckNotice) Reset()                    { *m = AckNotice{} }
@@ -4127,15 +5741,16 @@ func (*AckNotice) ProtoMessage()               {}
 func (*AckNotice) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{8} }
 
 func (m *AckNotice) GetEntry() int64 {
-	if m != nil {
-		return m.Entry
+	if m != nil && m.Entry != nil {
+		return *m.Entry
 	}
 	return 0
 }
 
 // ref: PegasusUtil.AcknowledgeBanner
 type AcknowledgeBanner struct {
-	Banner int32 `protobuf:"varint,1,opt,name=banner" json:"banner,omitempty"`
+	Banner           *int32 `protobuf:"varint,1,req,name=banner" json:"banner,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *AcknowledgeBanner) Reset()                    { *m = AcknowledgeBanner{} }
@@ -4144,16 +5759,17 @@ func (*AcknowledgeBanner) ProtoMessage()               {}
 func (*AcknowledgeBanner) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9} }
 
 func (m *AcknowledgeBanner) GetBanner() int32 {
-	if m != nil {
-		return m.Banner
+	if m != nil && m.Banner != nil {
+		return *m.Banner
 	}
 	return 0
 }
 
 // ref: PegasusUtil.AckWingProgress
 type AckWingProgress struct {
-	Wing int32 `protobuf:"varint,1,opt,name=wing" json:"wing,omitempty"`
-	Ack  int32 `protobuf:"varint,2,opt,name=ack" json:"ack,omitempty"`
+	Wing             *int32 `protobuf:"varint,1,req,name=wing" json:"wing,omitempty"`
+	Ack              *int32 `protobuf:"varint,2,req,name=ack" json:"ack,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *AckWingProgress) Reset()                    { *m = AckWingProgress{} }
@@ -4162,22 +5778,23 @@ func (*AckWingProgress) ProtoMessage()               {}
 func (*AckWingProgress) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{10} }
 
 func (m *AckWingProgress) GetWing() int32 {
-	if m != nil {
-		return m.Wing
+	if m != nil && m.Wing != nil {
+		return *m.Wing
 	}
 	return 0
 }
 
 func (m *AckWingProgress) GetAck() int32 {
-	if m != nil {
-		return m.Ack
+	if m != nil && m.Ack != nil {
+		return *m.Ack
 	}
 	return 0
 }
 
 // ref: PegasusUtil.AdventureProgressResponse
 type AdventureProgressResponse struct {
-	List []*pegasus_pegasusshared.AdventureProgress `protobuf:"bytes,1,rep,name=list" json:"list,omitempty"`
+	List             []*pegasus_pegasusshared.AdventureProgress `protobuf:"bytes,1,rep,name=list" json:"list,omitempty"`
+	XXX_unrecognized []byte                                     `json:"-"`
 }
 
 func (m *AdventureProgressResponse) Reset()                    { *m = AdventureProgressResponse{} }
@@ -4194,8 +5811,9 @@ func (m *AdventureProgressResponse) GetList() []*pegasus_pegasusshared.Adventure
 
 // ref: PegasusUtil.ArenaSession
 type ArenaSession struct {
-	Wins   int32 `protobuf:"varint,1,opt,name=wins" json:"wins,omitempty"`
-	Losses int32 `protobuf:"varint,2,opt,name=losses" json:"losses,omitempty"`
+	Wins             *int32 `protobuf:"varint,1,req,name=wins" json:"wins,omitempty"`
+	Losses           *int32 `protobuf:"varint,2,req,name=losses" json:"losses,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *ArenaSession) Reset()                    { *m = ArenaSession{} }
@@ -4204,21 +5822,22 @@ func (*ArenaSession) ProtoMessage()               {}
 func (*ArenaSession) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{12} }
 
 func (m *ArenaSession) GetWins() int32 {
-	if m != nil {
-		return m.Wins
+	if m != nil && m.Wins != nil {
+		return *m.Wins
 	}
 	return 0
 }
 
 func (m *ArenaSession) GetLosses() int32 {
-	if m != nil {
-		return m.Losses
+	if m != nil && m.Losses != nil {
+		return *m.Losses
 	}
 	return 0
 }
 
 // ref: PegasusUtil.ArenaSessionRequest
 type ArenaSessionRequest struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *ArenaSessionRequest) Reset()                    { *m = ArenaSessionRequest{} }
@@ -4228,8 +5847,9 @@ func (*ArenaSessionRequest) Descriptor() ([]byte, []int) { return fileDescriptor
 
 // ref: PegasusUtil.ArenaSessionResponse
 type ArenaSessionResponse struct {
-	ErrorCode pegasus_pegasusshared.ErrorCode `protobuf:"varint,1,opt,name=error_code,json=errorCode,enum=pegasus.pegasusshared.ErrorCode" json:"error_code,omitempty"`
-	Session   *ArenaSession                   `protobuf:"bytes,2,opt,name=session" json:"session,omitempty"`
+	ErrorCode        *pegasus_pegasusshared.ErrorCode `protobuf:"varint,1,req,name=error_code,json=errorCode,enum=pegasus.pegasusshared.ErrorCode" json:"error_code,omitempty"`
+	Session          *ArenaSession                    `protobuf:"bytes,2,opt,name=session" json:"session,omitempty"`
+	XXX_unrecognized []byte                           `json:"-"`
 }
 
 func (m *ArenaSessionResponse) Reset()                    { *m = ArenaSessionResponse{} }
@@ -4238,8 +5858,8 @@ func (*ArenaSessionResponse) ProtoMessage()               {}
 func (*ArenaSessionResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{14} }
 
 func (m *ArenaSessionResponse) GetErrorCode() pegasus_pegasusshared.ErrorCode {
-	if m != nil {
-		return m.ErrorCode
+	if m != nil && m.ErrorCode != nil {
+		return *m.ErrorCode
 	}
 	return pegasus_pegasusshared.ErrorCode_ERROR_OK
 }
@@ -4253,18 +5873,22 @@ func (m *ArenaSessionResponse) GetSession() *ArenaSession {
 
 // ref: PegasusUtil.AssetResponse
 type AssetResponse struct {
-	RequestedKey             *pegasus_pegasusshared.AssetKey               `protobuf:"bytes,1,opt,name=requested_key,json=requestedKey" json:"requested_key,omitempty"`
-	DeprecatedDatabaseResult pegasus_pegasusshared.DatabaseResult          `protobuf:"varint,2,opt,name=deprecated_database_result,json=deprecatedDatabaseResult,enum=pegasus.pegasusshared.DatabaseResult" json:"deprecated_database_result,omitempty"`
-	ErrorCode                pegasus_pegasusshared.ErrorCode               `protobuf:"varint,3,opt,name=error_code,json=errorCode,enum=pegasus.pegasusshared.ErrorCode" json:"error_code,omitempty"`
+	RequestedKey             *pegasus_pegasusshared.AssetKey               `protobuf:"bytes,1,req,name=requested_key,json=requestedKey" json:"requested_key,omitempty"`
+	DeprecatedDatabaseResult *pegasus_pegasusshared.DatabaseResult         `protobuf:"varint,2,opt,name=deprecated_database_result,json=deprecatedDatabaseResult,enum=pegasus.pegasusshared.DatabaseResult,def=-1" json:"deprecated_database_result,omitempty"`
+	ErrorCode                *pegasus_pegasusshared.ErrorCode              `protobuf:"varint,3,req,name=error_code,json=errorCode,enum=pegasus.pegasusshared.ErrorCode" json:"error_code,omitempty"`
 	ScenarioAsset            *pegasus_pegasusshared.ScenarioDbRecord       `protobuf:"bytes,100,opt,name=scenario_asset,json=scenarioAsset" json:"scenario_asset,omitempty"`
 	SubsetCardListAsset      *pegasus_pegasusshared.SubsetCardListDbRecord `protobuf:"bytes,101,opt,name=subset_card_list_asset,json=subsetCardListAsset" json:"subset_card_list_asset,omitempty"`
 	DeckRulesetAsset         *pegasus_pegasusshared.DeckRulesetDbRecord    `protobuf:"bytes,102,opt,name=deck_ruleset_asset,json=deckRulesetAsset" json:"deck_ruleset_asset,omitempty"`
+	RewardChestAsset         *pegasus_pegasusshared.RewardChestDbRecord    `protobuf:"bytes,103,opt,name=reward_chest_asset,json=rewardChestAsset" json:"reward_chest_asset,omitempty"`
+	XXX_unrecognized         []byte                                        `json:"-"`
 }
 
 func (m *AssetResponse) Reset()                    { *m = AssetResponse{} }
 func (m *AssetResponse) String() string            { return proto.CompactTextString(m) }
 func (*AssetResponse) ProtoMessage()               {}
 func (*AssetResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{15} }
+
+const Default_AssetResponse_DeprecatedDatabaseResult pegasus_pegasusshared.DatabaseResult = pegasus_pegasusshared.DatabaseResult_DB_E_SQL_EX
 
 func (m *AssetResponse) GetRequestedKey() *pegasus_pegasusshared.AssetKey {
 	if m != nil {
@@ -4274,15 +5898,15 @@ func (m *AssetResponse) GetRequestedKey() *pegasus_pegasusshared.AssetKey {
 }
 
 func (m *AssetResponse) GetDeprecatedDatabaseResult() pegasus_pegasusshared.DatabaseResult {
-	if m != nil {
-		return m.DeprecatedDatabaseResult
+	if m != nil && m.DeprecatedDatabaseResult != nil {
+		return *m.DeprecatedDatabaseResult
 	}
-	return pegasus_pegasusshared.DatabaseResult_DB_E_UNKNOWN
+	return Default_AssetResponse_DeprecatedDatabaseResult
 }
 
 func (m *AssetResponse) GetErrorCode() pegasus_pegasusshared.ErrorCode {
-	if m != nil {
-		return m.ErrorCode
+	if m != nil && m.ErrorCode != nil {
+		return *m.ErrorCode
 	}
 	return pegasus_pegasusshared.ErrorCode_ERROR_OK
 }
@@ -4308,10 +5932,18 @@ func (m *AssetResponse) GetDeckRulesetAsset() *pegasus_pegasusshared.DeckRuleset
 	return nil
 }
 
+func (m *AssetResponse) GetRewardChestAsset() *pegasus_pegasusshared.RewardChestDbRecord {
+	if m != nil {
+		return m.RewardChestAsset
+	}
+	return nil
+}
+
 // ref: PegasusUtil.AssetsVersionResponse
 type AssetsVersionResponse struct {
-	Version             int32                `protobuf:"varint,1,opt,name=version" json:"version,omitempty"`
+	Version             *int32               `protobuf:"varint,1,req,name=version" json:"version,omitempty"`
 	ReturningPlayerInfo *ReturningPlayerInfo `protobuf:"bytes,2,opt,name=returning_player_info,json=returningPlayerInfo" json:"returning_player_info,omitempty"`
+	XXX_unrecognized    []byte               `json:"-"`
 }
 
 func (m *AssetsVersionResponse) Reset()                    { *m = AssetsVersionResponse{} }
@@ -4320,8 +5952,8 @@ func (*AssetsVersionResponse) ProtoMessage()               {}
 func (*AssetsVersionResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{16} }
 
 func (m *AssetsVersionResponse) GetVersion() int32 {
-	if m != nil {
-		return m.Version
+	if m != nil && m.Version != nil {
+		return *m.Version
 	}
 	return 0
 }
@@ -4336,11 +5968,12 @@ func (m *AssetsVersionResponse) GetReturningPlayerInfo() *ReturningPlayerInfo {
 // ref: PegasusUtil.BattlePayConfigResponse
 type BattlePayConfigResponse struct {
 	Bundles              []*Bundle          `protobuf:"bytes,1,rep,name=bundles" json:"bundles,omitempty"`
-	Currency             int32              `protobuf:"varint,2,opt,name=currency" json:"currency,omitempty"`
-	Unavailable          bool               `protobuf:"varint,4,opt,name=unavailable" json:"unavailable,omitempty"`
-	SecsBeforeAutoCancel int32              `protobuf:"varint,5,opt,name=secs_before_auto_cancel,json=secsBeforeAutoCancel" json:"secs_before_auto_cancel,omitempty"`
+	Currency             *int32             `protobuf:"varint,2,opt,name=currency" json:"currency,omitempty"`
+	Unavailable          *bool              `protobuf:"varint,4,opt,name=unavailable" json:"unavailable,omitempty"`
+	SecsBeforeAutoCancel *int32             `protobuf:"varint,5,opt,name=secs_before_auto_cancel,json=secsBeforeAutoCancel" json:"secs_before_auto_cancel,omitempty"`
 	GoldCostBoosters     []*GoldCostBooster `protobuf:"bytes,6,rep,name=gold_cost_boosters,json=goldCostBoosters" json:"gold_cost_boosters,omitempty"`
-	GoldCostArena        int64              `protobuf:"varint,7,opt,name=gold_cost_arena,json=goldCostArena" json:"gold_cost_arena,omitempty"`
+	GoldCostArena        *int64             `protobuf:"varint,7,opt,name=gold_cost_arena,json=goldCostArena" json:"gold_cost_arena,omitempty"`
+	XXX_unrecognized     []byte             `json:"-"`
 }
 
 func (m *BattlePayConfigResponse) Reset()                    { *m = BattlePayConfigResponse{} }
@@ -4356,22 +5989,22 @@ func (m *BattlePayConfigResponse) GetBundles() []*Bundle {
 }
 
 func (m *BattlePayConfigResponse) GetCurrency() int32 {
-	if m != nil {
-		return m.Currency
+	if m != nil && m.Currency != nil {
+		return *m.Currency
 	}
 	return 0
 }
 
 func (m *BattlePayConfigResponse) GetUnavailable() bool {
-	if m != nil {
-		return m.Unavailable
+	if m != nil && m.Unavailable != nil {
+		return *m.Unavailable
 	}
 	return false
 }
 
 func (m *BattlePayConfigResponse) GetSecsBeforeAutoCancel() int32 {
-	if m != nil {
-		return m.SecsBeforeAutoCancel
+	if m != nil && m.SecsBeforeAutoCancel != nil {
+		return *m.SecsBeforeAutoCancel
 	}
 	return 0
 }
@@ -4384,22 +6017,23 @@ func (m *BattlePayConfigResponse) GetGoldCostBoosters() []*GoldCostBooster {
 }
 
 func (m *BattlePayConfigResponse) GetGoldCostArena() int64 {
-	if m != nil {
-		return m.GoldCostArena
+	if m != nil && m.GoldCostArena != nil {
+		return *m.GoldCostArena
 	}
 	return 0
 }
 
 // ref: PegasusUtil.BattlePayStatusResponse
 type BattlePayStatusResponse struct {
-	Status             BattlePayStatusResponse_PurchaseState   `protobuf:"varint,1,opt,name=status,enum=pegasus.pegasusutil.BattlePayStatusResponse_PurchaseState" json:"status,omitempty"`
-	ProductId          string                                  `protobuf:"bytes,2,opt,name=product_id,json=productId" json:"product_id,omitempty"`
-	PurchaseError      *PurchaseError                          `protobuf:"bytes,3,opt,name=purchase_error,json=purchaseError" json:"purchase_error,omitempty"`
-	BattlePayAvailable bool                                    `protobuf:"varint,4,opt,name=battle_pay_available,json=battlePayAvailable" json:"battle_pay_available,omitempty"`
-	TransactionId      int64                                   `protobuf:"varint,5,opt,name=transaction_id,json=transactionId" json:"transaction_id,omitempty"`
-	ThirdPartyId       string                                  `protobuf:"bytes,6,opt,name=third_party_id,json=thirdPartyId" json:"third_party_id,omitempty"`
-	Currency           int32                                   `protobuf:"varint,7,opt,name=currency" json:"currency,omitempty"`
-	Provider           pegasus_pegasusshared.BattlePayProvider `protobuf:"varint,8,opt,name=provider,enum=pegasus.pegasusshared.BattlePayProvider" json:"provider,omitempty"`
+	Status             *BattlePayStatusResponse_PurchaseState   `protobuf:"varint,1,req,name=status,enum=pegasus.pegasusutil.BattlePayStatusResponse_PurchaseState" json:"status,omitempty"`
+	ProductId          *string                                  `protobuf:"bytes,2,opt,name=product_id,json=productId" json:"product_id,omitempty"`
+	PurchaseError      *PurchaseError                           `protobuf:"bytes,3,opt,name=purchase_error,json=purchaseError" json:"purchase_error,omitempty"`
+	BattlePayAvailable *bool                                    `protobuf:"varint,4,req,name=battle_pay_available,json=battlePayAvailable" json:"battle_pay_available,omitempty"`
+	TransactionId      *int64                                   `protobuf:"varint,5,opt,name=transaction_id,json=transactionId" json:"transaction_id,omitempty"`
+	ThirdPartyId       *string                                  `protobuf:"bytes,6,opt,name=third_party_id,json=thirdPartyId" json:"third_party_id,omitempty"`
+	Currency           *int32                                   `protobuf:"varint,7,opt,name=currency" json:"currency,omitempty"`
+	Provider           *pegasus_pegasusshared.BattlePayProvider `protobuf:"varint,8,opt,name=provider,enum=pegasus.pegasusshared.BattlePayProvider,def=1" json:"provider,omitempty"`
+	XXX_unrecognized   []byte                                   `json:"-"`
 }
 
 func (m *BattlePayStatusResponse) Reset()                    { *m = BattlePayStatusResponse{} }
@@ -4407,16 +6041,18 @@ func (m *BattlePayStatusResponse) String() string            { return proto.Comp
 func (*BattlePayStatusResponse) ProtoMessage()               {}
 func (*BattlePayStatusResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{18} }
 
+const Default_BattlePayStatusResponse_Provider pegasus_pegasusshared.BattlePayProvider = pegasus_pegasusshared.BattlePayProvider_BP_PROVIDER_BLIZZARD
+
 func (m *BattlePayStatusResponse) GetStatus() BattlePayStatusResponse_PurchaseState {
-	if m != nil {
-		return m.Status
+	if m != nil && m.Status != nil {
+		return *m.Status
 	}
 	return BattlePayStatusResponse_PS_READY
 }
 
 func (m *BattlePayStatusResponse) GetProductId() string {
-	if m != nil {
-		return m.ProductId
+	if m != nil && m.ProductId != nil {
+		return *m.ProductId
 	}
 	return ""
 }
@@ -4429,44 +6065,45 @@ func (m *BattlePayStatusResponse) GetPurchaseError() *PurchaseError {
 }
 
 func (m *BattlePayStatusResponse) GetBattlePayAvailable() bool {
-	if m != nil {
-		return m.BattlePayAvailable
+	if m != nil && m.BattlePayAvailable != nil {
+		return *m.BattlePayAvailable
 	}
 	return false
 }
 
 func (m *BattlePayStatusResponse) GetTransactionId() int64 {
-	if m != nil {
-		return m.TransactionId
+	if m != nil && m.TransactionId != nil {
+		return *m.TransactionId
 	}
 	return 0
 }
 
 func (m *BattlePayStatusResponse) GetThirdPartyId() string {
-	if m != nil {
-		return m.ThirdPartyId
+	if m != nil && m.ThirdPartyId != nil {
+		return *m.ThirdPartyId
 	}
 	return ""
 }
 
 func (m *BattlePayStatusResponse) GetCurrency() int32 {
-	if m != nil {
-		return m.Currency
+	if m != nil && m.Currency != nil {
+		return *m.Currency
 	}
 	return 0
 }
 
 func (m *BattlePayStatusResponse) GetProvider() pegasus_pegasusshared.BattlePayProvider {
-	if m != nil {
-		return m.Provider
+	if m != nil && m.Provider != nil {
+		return *m.Provider
 	}
-	return pegasus_pegasusshared.BattlePayProvider_BATTLEPAYPROVIDER_AUTO_INVALID
+	return Default_BattlePayStatusResponse_Provider
 }
 
 // ref: PegasusUtil.BoosterCard
 type BoosterCard struct {
-	CardDef    *pegasus_pegasusshared.CardDef `protobuf:"bytes,1,opt,name=card_def,json=cardDef" json:"card_def,omitempty"`
-	InsertDate *pegasus_pegasusshared.Date    `protobuf:"bytes,2,opt,name=insert_date,json=insertDate" json:"insert_date,omitempty"`
+	CardDef          *pegasus_pegasusshared.CardDef `protobuf:"bytes,1,req,name=card_def,json=cardDef" json:"card_def,omitempty"`
+	InsertDate       *pegasus_pegasusshared.Date    `protobuf:"bytes,2,req,name=insert_date,json=insertDate" json:"insert_date,omitempty"`
+	XXX_unrecognized []byte                         `json:"-"`
 }
 
 func (m *BoosterCard) Reset()                    { *m = BoosterCard{} }
@@ -4491,7 +6128,8 @@ func (m *BoosterCard) GetInsertDate() *pegasus_pegasusshared.Date {
 // ref: PegasusUtil.BoosterContent
 type BoosterContent struct {
 	List              []*BoosterCard `protobuf:"bytes,1,rep,name=list" json:"list,omitempty"`
-	CollectionVersion int64          `protobuf:"varint,2,opt,name=collection_version,json=collectionVersion" json:"collection_version,omitempty"`
+	CollectionVersion *int64         `protobuf:"varint,2,opt,name=collection_version,json=collectionVersion" json:"collection_version,omitempty"`
+	XXX_unrecognized  []byte         `json:"-"`
 }
 
 func (m *BoosterContent) Reset()                    { *m = BoosterContent{} }
@@ -4507,15 +6145,16 @@ func (m *BoosterContent) GetList() []*BoosterCard {
 }
 
 func (m *BoosterContent) GetCollectionVersion() int64 {
-	if m != nil {
-		return m.CollectionVersion
+	if m != nil && m.CollectionVersion != nil {
+		return *m.CollectionVersion
 	}
 	return 0
 }
 
 // ref: PegasusUtil.BoosterList
 type BoosterList struct {
-	List []*pegasus_pegasusshared.BoosterInfo `protobuf:"bytes,1,rep,name=list" json:"list,omitempty"`
+	List             []*pegasus_pegasusshared.BoosterInfo `protobuf:"bytes,1,rep,name=list" json:"list,omitempty"`
+	XXX_unrecognized []byte                               `json:"-"`
 }
 
 func (m *BoosterList) Reset()                    { *m = BoosterList{} }
@@ -4530,23 +6169,60 @@ func (m *BoosterList) GetList() []*pegasus_pegasusshared.BoosterInfo {
 	return nil
 }
 
+// ref: PegasusUtil.BoosterModifications
+type BoosterModifications struct {
+	Modifications    []*pegasus_pegasusshared.BoosterInfo `protobuf:"bytes,1,rep,name=modifications" json:"modifications,omitempty"`
+	XXX_unrecognized []byte                               `json:"-"`
+}
+
+func (m *BoosterModifications) Reset()                    { *m = BoosterModifications{} }
+func (m *BoosterModifications) String() string            { return proto.CompactTextString(m) }
+func (*BoosterModifications) ProtoMessage()               {}
+func (*BoosterModifications) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{22} }
+
+func (m *BoosterModifications) GetModifications() []*pegasus_pegasusshared.BoosterInfo {
+	if m != nil {
+		return m.Modifications
+	}
+	return nil
+}
+
+// ref: PegasusUtil.Boosters
+type Boosters struct {
+	List             []*pegasus_pegasusshared.BoosterInfo `protobuf:"bytes,1,rep,name=list" json:"list,omitempty"`
+	XXX_unrecognized []byte                               `json:"-"`
+}
+
+func (m *Boosters) Reset()                    { *m = Boosters{} }
+func (m *Boosters) String() string            { return proto.CompactTextString(m) }
+func (*Boosters) ProtoMessage()               {}
+func (*Boosters) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{23} }
+
+func (m *Boosters) GetList() []*pegasus_pegasusshared.BoosterInfo {
+	if m != nil {
+		return m.List
+	}
+	return nil
+}
+
 // ref: PegasusUtil.BoughtSoldCard
 type BoughtSoldCard struct {
-	Def                    *pegasus_pegasusshared.CardDef `protobuf:"bytes,1,opt,name=def" json:"def,omitempty"`
-	Amount                 int32                          `protobuf:"varint,2,opt,name=amount" json:"amount,omitempty"`
-	Result                 BoughtSoldCard_Result          `protobuf:"varint,3,opt,name=result,enum=pegasus.pegasusutil.BoughtSoldCard_Result" json:"result,omitempty"`
-	Count                  int32                          `protobuf:"varint,4,opt,name=count" json:"count,omitempty"`
-	Nerfed                 bool                           `protobuf:"varint,5,opt,name=nerfed" json:"nerfed,omitempty"`
-	UnitSellPrice          int32                          `protobuf:"varint,6,opt,name=unit_sell_price,json=unitSellPrice" json:"unit_sell_price,omitempty"`
-	UnitBuyPrice           int32                          `protobuf:"varint,7,opt,name=unit_buy_price,json=unitBuyPrice" json:"unit_buy_price,omitempty"`
-	CurrentCollectionCount int32                          `protobuf:"varint,8,opt,name=current_collection_count,json=currentCollectionCount" json:"current_collection_count,omitempty"`
-	CollectionVersion      int64                          `protobuf:"varint,9,opt,name=collection_version,json=collectionVersion" json:"collection_version,omitempty"`
+	Def                    *pegasus_pegasusshared.CardDef `protobuf:"bytes,1,req,name=def" json:"def,omitempty"`
+	Amount                 *int32                         `protobuf:"varint,2,req,name=amount" json:"amount,omitempty"`
+	Result                 *BoughtSoldCard_Result         `protobuf:"varint,3,req,name=result,enum=pegasus.pegasusutil.BoughtSoldCard_Result" json:"result,omitempty"`
+	Count                  *int32                         `protobuf:"varint,4,opt,name=count" json:"count,omitempty"`
+	Nerfed                 *bool                          `protobuf:"varint,5,opt,name=nerfed" json:"nerfed,omitempty"`
+	UnitSellPrice          *int32                         `protobuf:"varint,6,opt,name=unit_sell_price,json=unitSellPrice" json:"unit_sell_price,omitempty"`
+	UnitBuyPrice           *int32                         `protobuf:"varint,7,opt,name=unit_buy_price,json=unitBuyPrice" json:"unit_buy_price,omitempty"`
+	CurrentCollectionCount *int32                         `protobuf:"varint,8,opt,name=current_collection_count,json=currentCollectionCount" json:"current_collection_count,omitempty"`
+	CollectionVersion      *int64                         `protobuf:"varint,9,opt,name=collection_version,json=collectionVersion" json:"collection_version,omitempty"`
+	XXX_unrecognized       []byte                         `json:"-"`
 }
 
 func (m *BoughtSoldCard) Reset()                    { *m = BoughtSoldCard{} }
 func (m *BoughtSoldCard) String() string            { return proto.CompactTextString(m) }
 func (*BoughtSoldCard) ProtoMessage()               {}
-func (*BoughtSoldCard) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{22} }
+func (*BoughtSoldCard) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{24} }
 
 func (m *BoughtSoldCard) GetDef() *pegasus_pegasusshared.CardDef {
 	if m != nil {
@@ -4556,104 +6232,105 @@ func (m *BoughtSoldCard) GetDef() *pegasus_pegasusshared.CardDef {
 }
 
 func (m *BoughtSoldCard) GetAmount() int32 {
-	if m != nil {
-		return m.Amount
+	if m != nil && m.Amount != nil {
+		return *m.Amount
 	}
 	return 0
 }
 
 func (m *BoughtSoldCard) GetResult() BoughtSoldCard_Result {
-	if m != nil {
-		return m.Result
+	if m != nil && m.Result != nil {
+		return *m.Result
 	}
-	return BoughtSoldCard_RESULT_AUTO_INVALID
+	return BoughtSoldCard_GENERIC_FAILURE
 }
 
 func (m *BoughtSoldCard) GetCount() int32 {
-	if m != nil {
-		return m.Count
+	if m != nil && m.Count != nil {
+		return *m.Count
 	}
 	return 0
 }
 
 func (m *BoughtSoldCard) GetNerfed() bool {
-	if m != nil {
-		return m.Nerfed
+	if m != nil && m.Nerfed != nil {
+		return *m.Nerfed
 	}
 	return false
 }
 
 func (m *BoughtSoldCard) GetUnitSellPrice() int32 {
-	if m != nil {
-		return m.UnitSellPrice
+	if m != nil && m.UnitSellPrice != nil {
+		return *m.UnitSellPrice
 	}
 	return 0
 }
 
 func (m *BoughtSoldCard) GetUnitBuyPrice() int32 {
-	if m != nil {
-		return m.UnitBuyPrice
+	if m != nil && m.UnitBuyPrice != nil {
+		return *m.UnitBuyPrice
 	}
 	return 0
 }
 
 func (m *BoughtSoldCard) GetCurrentCollectionCount() int32 {
-	if m != nil {
-		return m.CurrentCollectionCount
+	if m != nil && m.CurrentCollectionCount != nil {
+		return *m.CurrentCollectionCount
 	}
 	return 0
 }
 
 func (m *BoughtSoldCard) GetCollectionVersion() int64 {
-	if m != nil {
-		return m.CollectionVersion
+	if m != nil && m.CollectionVersion != nil {
+		return *m.CollectionVersion
 	}
 	return 0
 }
 
 // ref: PegasusUtil.Bundle
 type Bundle struct {
-	Id                        string                                    `protobuf:"bytes,1,opt,name=id" json:"id,omitempty"`
-	Cost                      float64                                   `protobuf:"fixed64,2,opt,name=cost" json:"cost,omitempty"`
-	AppleId                   string                                    `protobuf:"bytes,3,opt,name=apple_id,json=appleId" json:"apple_id,omitempty"`
-	GooglePlayId              string                                    `protobuf:"bytes,4,opt,name=google_play_id,json=googlePlayId" json:"google_play_id,omitempty"`
+	Id                        *string                                   `protobuf:"bytes,1,req,name=id" json:"id,omitempty"`
+	Cost                      *float64                                  `protobuf:"fixed64,2,opt,name=cost" json:"cost,omitempty"`
+	AppleId                   *string                                   `protobuf:"bytes,3,opt,name=apple_id,json=appleId" json:"apple_id,omitempty"`
+	GooglePlayId              *string                                   `protobuf:"bytes,4,opt,name=google_play_id,json=googlePlayId" json:"google_play_id,omitempty"`
 	Items                     []*BundleItem                             `protobuf:"bytes,5,rep,name=items" json:"items,omitempty"`
-	GoldCost                  int64                                     `protobuf:"varint,6,opt,name=gold_cost,json=goldCost" json:"gold_cost,omitempty"`
-	AmazonId                  string                                    `protobuf:"bytes,7,opt,name=amazon_id,json=amazonId" json:"amazon_id,omitempty"`
-	ProductEventName          string                                    `protobuf:"bytes,9,opt,name=product_event_name,json=productEventName" json:"product_event_name,omitempty"`
+	GoldCost                  *int64                                    `protobuf:"varint,6,opt,name=gold_cost,json=goldCost" json:"gold_cost,omitempty"`
+	AmazonId                  *string                                   `protobuf:"bytes,7,opt,name=amazon_id,json=amazonId" json:"amazon_id,omitempty"`
+	ProductEventName          *string                                   `protobuf:"bytes,9,opt,name=product_event_name,json=productEventName" json:"product_event_name,omitempty"`
 	ExclusiveProviders        []pegasus_pegasusshared.BattlePayProvider `protobuf:"varint,10,rep,name=exclusive_providers,json=exclusiveProviders,enum=pegasus.pegasusshared.BattlePayProvider" json:"exclusive_providers,omitempty"`
-	RealMoneyProductEventName string                                    `protobuf:"bytes,11,opt,name=real_money_product_event_name,json=realMoneyProductEventName" json:"real_money_product_event_name,omitempty"`
+	RealMoneyProductEventName *string                                   `protobuf:"bytes,11,opt,name=real_money_product_event_name,json=realMoneyProductEventName" json:"real_money_product_event_name,omitempty"`
+	XXX_unrecognized          []byte                                    `json:"-"`
 }
 
 func (m *Bundle) Reset()                    { *m = Bundle{} }
 func (m *Bundle) String() string            { return proto.CompactTextString(m) }
 func (*Bundle) ProtoMessage()               {}
-func (*Bundle) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{23} }
+func (*Bundle) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{25} }
 
 func (m *Bundle) GetId() string {
-	if m != nil {
-		return m.Id
+	if m != nil && m.Id != nil {
+		return *m.Id
 	}
 	return ""
 }
 
 func (m *Bundle) GetCost() float64 {
-	if m != nil {
-		return m.Cost
+	if m != nil && m.Cost != nil {
+		return *m.Cost
 	}
 	return 0
 }
 
 func (m *Bundle) GetAppleId() string {
-	if m != nil {
-		return m.AppleId
+	if m != nil && m.AppleId != nil {
+		return *m.AppleId
 	}
 	return ""
 }
 
 func (m *Bundle) GetGooglePlayId() string {
-	if m != nil {
-		return m.GooglePlayId
+	if m != nil && m.GooglePlayId != nil {
+		return *m.GooglePlayId
 	}
 	return ""
 }
@@ -4666,22 +6343,22 @@ func (m *Bundle) GetItems() []*BundleItem {
 }
 
 func (m *Bundle) GetGoldCost() int64 {
-	if m != nil {
-		return m.GoldCost
+	if m != nil && m.GoldCost != nil {
+		return *m.GoldCost
 	}
 	return 0
 }
 
 func (m *Bundle) GetAmazonId() string {
-	if m != nil {
-		return m.AmazonId
+	if m != nil && m.AmazonId != nil {
+		return *m.AmazonId
 	}
 	return ""
 }
 
 func (m *Bundle) GetProductEventName() string {
-	if m != nil {
-		return m.ProductEventName
+	if m != nil && m.ProductEventName != nil {
+		return *m.ProductEventName
 	}
 	return ""
 }
@@ -4694,59 +6371,61 @@ func (m *Bundle) GetExclusiveProviders() []pegasus_pegasusshared.BattlePayProvid
 }
 
 func (m *Bundle) GetRealMoneyProductEventName() string {
-	if m != nil {
-		return m.RealMoneyProductEventName
+	if m != nil && m.RealMoneyProductEventName != nil {
+		return *m.RealMoneyProductEventName
 	}
 	return ""
 }
 
 // ref: PegasusUtil.BundleItem
 type BundleItem struct {
-	ProductType ProductType `protobuf:"varint,1,opt,name=product_type,json=productType,enum=pegasus.pegasusutil.ProductType" json:"product_type,omitempty"`
-	Data        int32       `protobuf:"varint,2,opt,name=data" json:"data,omitempty"`
-	Quantity    int32       `protobuf:"varint,3,opt,name=quantity" json:"quantity,omitempty"`
+	ProductType      *ProductType `protobuf:"varint,1,req,name=product_type,json=productType,enum=pegasus.pegasusutil.ProductType" json:"product_type,omitempty"`
+	Data             *int32       `protobuf:"varint,2,req,name=data" json:"data,omitempty"`
+	Quantity         *int32       `protobuf:"varint,3,req,name=quantity" json:"quantity,omitempty"`
+	XXX_unrecognized []byte       `json:"-"`
 }
 
 func (m *BundleItem) Reset()                    { *m = BundleItem{} }
 func (m *BundleItem) String() string            { return proto.CompactTextString(m) }
 func (*BundleItem) ProtoMessage()               {}
-func (*BundleItem) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{24} }
+func (*BundleItem) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{26} }
 
 func (m *BundleItem) GetProductType() ProductType {
-	if m != nil {
-		return m.ProductType
+	if m != nil && m.ProductType != nil {
+		return *m.ProductType
 	}
 	return ProductType_PRODUCT_TYPE_UNKNOWN
 }
 
 func (m *BundleItem) GetData() int32 {
-	if m != nil {
-		return m.Data
+	if m != nil && m.Data != nil {
+		return *m.Data
 	}
 	return 0
 }
 
 func (m *BundleItem) GetQuantity() int32 {
-	if m != nil {
-		return m.Quantity
+	if m != nil && m.Quantity != nil {
+		return *m.Quantity
 	}
 	return 0
 }
 
 // ref: PegasusUtil.BuySellCard
 type BuySellCard struct {
-	Def                    *pegasus_pegasusshared.CardDef `protobuf:"bytes,1,opt,name=def" json:"def,omitempty"`
-	Count                  int32                          `protobuf:"varint,2,opt,name=count" json:"count,omitempty"`
-	Buying                 bool                           `protobuf:"varint,3,opt,name=buying" json:"buying,omitempty"`
-	UnitSellPrice          int32                          `protobuf:"varint,4,opt,name=unit_sell_price,json=unitSellPrice" json:"unit_sell_price,omitempty"`
-	UnitBuyPrice           int32                          `protobuf:"varint,5,opt,name=unit_buy_price,json=unitBuyPrice" json:"unit_buy_price,omitempty"`
-	CurrentCollectionCount int32                          `protobuf:"varint,6,opt,name=current_collection_count,json=currentCollectionCount" json:"current_collection_count,omitempty"`
+	Def                    *pegasus_pegasusshared.CardDef `protobuf:"bytes,1,req,name=def" json:"def,omitempty"`
+	Count                  *int32                         `protobuf:"varint,2,opt,name=count" json:"count,omitempty"`
+	Buying                 *bool                          `protobuf:"varint,3,req,name=buying" json:"buying,omitempty"`
+	UnitSellPrice          *int32                         `protobuf:"varint,4,opt,name=unit_sell_price,json=unitSellPrice" json:"unit_sell_price,omitempty"`
+	UnitBuyPrice           *int32                         `protobuf:"varint,5,opt,name=unit_buy_price,json=unitBuyPrice" json:"unit_buy_price,omitempty"`
+	CurrentCollectionCount *int32                         `protobuf:"varint,6,opt,name=current_collection_count,json=currentCollectionCount" json:"current_collection_count,omitempty"`
+	XXX_unrecognized       []byte                         `json:"-"`
 }
 
 func (m *BuySellCard) Reset()                    { *m = BuySellCard{} }
 func (m *BuySellCard) String() string            { return proto.CompactTextString(m) }
 func (*BuySellCard) ProtoMessage()               {}
-func (*BuySellCard) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{25} }
+func (*BuySellCard) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{27} }
 
 func (m *BuySellCard) GetDef() *pegasus_pegasusshared.CardDef {
 	if m != nil {
@@ -4756,161 +6435,167 @@ func (m *BuySellCard) GetDef() *pegasus_pegasusshared.CardDef {
 }
 
 func (m *BuySellCard) GetCount() int32 {
-	if m != nil {
-		return m.Count
+	if m != nil && m.Count != nil {
+		return *m.Count
 	}
 	return 0
 }
 
 func (m *BuySellCard) GetBuying() bool {
-	if m != nil {
-		return m.Buying
+	if m != nil && m.Buying != nil {
+		return *m.Buying
 	}
 	return false
 }
 
 func (m *BuySellCard) GetUnitSellPrice() int32 {
-	if m != nil {
-		return m.UnitSellPrice
+	if m != nil && m.UnitSellPrice != nil {
+		return *m.UnitSellPrice
 	}
 	return 0
 }
 
 func (m *BuySellCard) GetUnitBuyPrice() int32 {
-	if m != nil {
-		return m.UnitBuyPrice
+	if m != nil && m.UnitBuyPrice != nil {
+		return *m.UnitBuyPrice
 	}
 	return 0
 }
 
 func (m *BuySellCard) GetCurrentCollectionCount() int32 {
-	if m != nil {
-		return m.CurrentCollectionCount
+	if m != nil && m.CurrentCollectionCount != nil {
+		return *m.CurrentCollectionCount
 	}
 	return 0
 }
 
 // ref: PegasusUtil.CancelPurchase
 type CancelPurchase struct {
-	IsAutoCancel bool                        `protobuf:"varint,1,opt,name=is_auto_cancel,json=isAutoCancel" json:"is_auto_cancel,omitempty"`
-	Reason       CancelPurchase_CancelReason `protobuf:"varint,2,opt,name=reason,enum=pegasus.pegasusutil.CancelPurchase_CancelReason" json:"reason,omitempty"`
-	DeviceId     string                      `protobuf:"bytes,3,opt,name=device_id,json=deviceId" json:"device_id,omitempty"`
-	ErrorMessage string                      `protobuf:"bytes,4,opt,name=error_message,json=errorMessage" json:"error_message,omitempty"`
+	IsAutoCancel     *bool                        `protobuf:"varint,1,req,name=is_auto_cancel,json=isAutoCancel" json:"is_auto_cancel,omitempty"`
+	Reason           *CancelPurchase_CancelReason `protobuf:"varint,2,opt,name=reason,enum=pegasus.pegasusutil.CancelPurchase_CancelReason,def=1" json:"reason,omitempty"`
+	DeviceId         *string                      `protobuf:"bytes,3,req,name=device_id,json=deviceId" json:"device_id,omitempty"`
+	ErrorMessage     *string                      `protobuf:"bytes,4,opt,name=error_message,json=errorMessage" json:"error_message,omitempty"`
+	XXX_unrecognized []byte                       `json:"-"`
 }
 
 func (m *CancelPurchase) Reset()                    { *m = CancelPurchase{} }
 func (m *CancelPurchase) String() string            { return proto.CompactTextString(m) }
 func (*CancelPurchase) ProtoMessage()               {}
-func (*CancelPurchase) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{26} }
+func (*CancelPurchase) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{28} }
+
+const Default_CancelPurchase_Reason CancelPurchase_CancelReason = CancelPurchase_PROVIDER_REPORTED_FAILURE
 
 func (m *CancelPurchase) GetIsAutoCancel() bool {
-	if m != nil {
-		return m.IsAutoCancel
+	if m != nil && m.IsAutoCancel != nil {
+		return *m.IsAutoCancel
 	}
 	return false
 }
 
 func (m *CancelPurchase) GetReason() CancelPurchase_CancelReason {
-	if m != nil {
-		return m.Reason
+	if m != nil && m.Reason != nil {
+		return *m.Reason
 	}
-	return CancelPurchase_CANCELREASON_AUTO_INVALID
+	return Default_CancelPurchase_Reason
 }
 
 func (m *CancelPurchase) GetDeviceId() string {
-	if m != nil {
-		return m.DeviceId
+	if m != nil && m.DeviceId != nil {
+		return *m.DeviceId
 	}
 	return ""
 }
 
 func (m *CancelPurchase) GetErrorMessage() string {
-	if m != nil {
-		return m.ErrorMessage
+	if m != nil && m.ErrorMessage != nil {
+		return *m.ErrorMessage
 	}
 	return ""
 }
 
 // ref: PegasusUtil.CancelPurchaseResponse
 type CancelPurchaseResponse struct {
-	Result        CancelPurchaseResponse_CancelResult `protobuf:"varint,1,opt,name=result,enum=pegasus.pegasusutil.CancelPurchaseResponse_CancelResult" json:"result,omitempty"`
-	TransactionId int64                               `protobuf:"varint,2,opt,name=transaction_id,json=transactionId" json:"transaction_id,omitempty"`
-	ProductId     string                              `protobuf:"bytes,3,opt,name=product_id,json=productId" json:"product_id,omitempty"`
-	Currency      int32                               `protobuf:"varint,4,opt,name=currency" json:"currency,omitempty"`
+	Result           *CancelPurchaseResponse_CancelResult `protobuf:"varint,1,req,name=result,enum=pegasus.pegasusutil.CancelPurchaseResponse_CancelResult" json:"result,omitempty"`
+	TransactionId    *int64                               `protobuf:"varint,2,opt,name=transaction_id,json=transactionId" json:"transaction_id,omitempty"`
+	ProductId        *string                              `protobuf:"bytes,3,opt,name=product_id,json=productId" json:"product_id,omitempty"`
+	Currency         *int32                               `protobuf:"varint,4,opt,name=currency" json:"currency,omitempty"`
+	XXX_unrecognized []byte                               `json:"-"`
 }
 
 func (m *CancelPurchaseResponse) Reset()                    { *m = CancelPurchaseResponse{} }
 func (m *CancelPurchaseResponse) String() string            { return proto.CompactTextString(m) }
 func (*CancelPurchaseResponse) ProtoMessage()               {}
-func (*CancelPurchaseResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{27} }
+func (*CancelPurchaseResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{29} }
 
 func (m *CancelPurchaseResponse) GetResult() CancelPurchaseResponse_CancelResult {
-	if m != nil {
-		return m.Result
+	if m != nil && m.Result != nil {
+		return *m.Result
 	}
-	return CancelPurchaseResponse_CANCELRESULT_AUTO_INVALID
+	return CancelPurchaseResponse_CR_SUCCESS
 }
 
 func (m *CancelPurchaseResponse) GetTransactionId() int64 {
-	if m != nil {
-		return m.TransactionId
+	if m != nil && m.TransactionId != nil {
+		return *m.TransactionId
 	}
 	return 0
 }
 
 func (m *CancelPurchaseResponse) GetProductId() string {
-	if m != nil {
-		return m.ProductId
+	if m != nil && m.ProductId != nil {
+		return *m.ProductId
 	}
 	return ""
 }
 
 func (m *CancelPurchaseResponse) GetCurrency() int32 {
-	if m != nil {
-		return m.Currency
+	if m != nil && m.Currency != nil {
+		return *m.Currency
 	}
 	return 0
 }
 
 // ref: PegasusUtil.CancelQuest
 type CancelQuest struct {
-	QuestId int32 `protobuf:"varint,1,opt,name=quest_id,json=questId" json:"quest_id,omitempty"`
+	QuestId          *int32 `protobuf:"varint,1,req,name=quest_id,json=questId" json:"quest_id,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *CancelQuest) Reset()                    { *m = CancelQuest{} }
 func (m *CancelQuest) String() string            { return proto.CompactTextString(m) }
 func (*CancelQuest) ProtoMessage()               {}
-func (*CancelQuest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{28} }
+func (*CancelQuest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{30} }
 
 func (m *CancelQuest) GetQuestId() int32 {
-	if m != nil {
-		return m.QuestId
+	if m != nil && m.QuestId != nil {
+		return *m.QuestId
 	}
 	return 0
 }
 
 // ref: PegasusUtil.CancelQuestResponse
 type CancelQuestResponse struct {
-	QuestId         int32                       `protobuf:"varint,1,opt,name=quest_id,json=questId" json:"quest_id,omitempty"`
-	Success         bool                        `protobuf:"varint,2,opt,name=success" json:"success,omitempty"`
-	NextQuestCancel *pegasus_pegasusshared.Date `protobuf:"bytes,3,opt,name=next_quest_cancel,json=nextQuestCancel" json:"next_quest_cancel,omitempty"`
+	QuestId          *int32                      `protobuf:"varint,1,req,name=quest_id,json=questId" json:"quest_id,omitempty"`
+	Success          *bool                       `protobuf:"varint,2,req,name=success" json:"success,omitempty"`
+	NextQuestCancel  *pegasus_pegasusshared.Date `protobuf:"bytes,3,opt,name=next_quest_cancel,json=nextQuestCancel" json:"next_quest_cancel,omitempty"`
+	XXX_unrecognized []byte                      `json:"-"`
 }
 
 func (m *CancelQuestResponse) Reset()                    { *m = CancelQuestResponse{} }
 func (m *CancelQuestResponse) String() string            { return proto.CompactTextString(m) }
 func (*CancelQuestResponse) ProtoMessage()               {}
-func (*CancelQuestResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{29} }
+func (*CancelQuestResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{31} }
 
 func (m *CancelQuestResponse) GetQuestId() int32 {
-	if m != nil {
-		return m.QuestId
+	if m != nil && m.QuestId != nil {
+		return *m.QuestId
 	}
 	return 0
 }
 
 func (m *CancelQuestResponse) GetSuccess() bool {
-	if m != nil {
-		return m.Success
+	if m != nil && m.Success != nil {
+		return *m.Success
 	}
 	return false
 }
@@ -4924,18 +6609,19 @@ func (m *CancelQuestResponse) GetNextQuestCancel() *pegasus_pegasusshared.Date {
 
 // ref: PegasusUtil.CardBacks
 type CardBacks struct {
-	DefaultCardBack int32   `protobuf:"varint,1,opt,name=default_card_back,json=defaultCardBack" json:"default_card_back,omitempty"`
-	CardBacks       []int32 `protobuf:"varint,2,rep,name=card_backs,json=cardBacks" json:"card_backs,omitempty"`
+	DefaultCardBack  *int32  `protobuf:"varint,1,req,name=default_card_back,json=defaultCardBack" json:"default_card_back,omitempty"`
+	CardBacks        []int32 `protobuf:"varint,2,rep,name=card_backs,json=cardBacks" json:"card_backs,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *CardBacks) Reset()                    { *m = CardBacks{} }
 func (m *CardBacks) String() string            { return proto.CompactTextString(m) }
 func (*CardBacks) ProtoMessage()               {}
-func (*CardBacks) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{30} }
+func (*CardBacks) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{32} }
 
 func (m *CardBacks) GetDefaultCardBack() int32 {
-	if m != nil {
-		return m.DefaultCardBack
+	if m != nil && m.DefaultCardBack != nil {
+		return *m.DefaultCardBack
 	}
 	return 0
 }
@@ -4949,82 +6635,85 @@ func (m *CardBacks) GetCardBacks() []int32 {
 
 // ref: PegasusUtil.CardModification
 type CardModification struct {
-	AssetCardId int32 `protobuf:"varint,1,opt,name=asset_card_id,json=assetCardId" json:"asset_card_id,omitempty"`
-	Premium     int32 `protobuf:"varint,2,opt,name=premium" json:"premium,omitempty"`
-	Quantity    int32 `protobuf:"varint,3,opt,name=quantity" json:"quantity,omitempty"`
-	AmountSeen  int32 `protobuf:"varint,4,opt,name=amount_seen,json=amountSeen" json:"amount_seen,omitempty"`
+	AssetCardId      *int32 `protobuf:"varint,1,req,name=asset_card_id,json=assetCardId" json:"asset_card_id,omitempty"`
+	Premium          *int32 `protobuf:"varint,2,req,name=premium" json:"premium,omitempty"`
+	Quantity         *int32 `protobuf:"varint,3,req,name=quantity" json:"quantity,omitempty"`
+	AmountSeen       *int32 `protobuf:"varint,4,req,name=amount_seen,json=amountSeen" json:"amount_seen,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *CardModification) Reset()                    { *m = CardModification{} }
 func (m *CardModification) String() string            { return proto.CompactTextString(m) }
 func (*CardModification) ProtoMessage()               {}
-func (*CardModification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{31} }
+func (*CardModification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{33} }
 
 func (m *CardModification) GetAssetCardId() int32 {
-	if m != nil {
-		return m.AssetCardId
+	if m != nil && m.AssetCardId != nil {
+		return *m.AssetCardId
 	}
 	return 0
 }
 
 func (m *CardModification) GetPremium() int32 {
-	if m != nil {
-		return m.Premium
+	if m != nil && m.Premium != nil {
+		return *m.Premium
 	}
 	return 0
 }
 
 func (m *CardModification) GetQuantity() int32 {
-	if m != nil {
-		return m.Quantity
+	if m != nil && m.Quantity != nil {
+		return *m.Quantity
 	}
 	return 0
 }
 
 func (m *CardModification) GetAmountSeen() int32 {
-	if m != nil {
-		return m.AmountSeen
+	if m != nil && m.AmountSeen != nil {
+		return *m.AmountSeen
 	}
 	return 0
 }
 
 // ref: PegasusUtil.CardUseCount
 type CardUseCount struct {
-	Asset int32 `protobuf:"varint,1,opt,name=asset" json:"asset,omitempty"`
-	Count int32 `protobuf:"varint,2,opt,name=count" json:"count,omitempty"`
+	Asset            *int32 `protobuf:"varint,1,req,name=asset" json:"asset,omitempty"`
+	Count            *int32 `protobuf:"varint,2,req,name=count" json:"count,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *CardUseCount) Reset()                    { *m = CardUseCount{} }
 func (m *CardUseCount) String() string            { return proto.CompactTextString(m) }
 func (*CardUseCount) ProtoMessage()               {}
-func (*CardUseCount) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{32} }
+func (*CardUseCount) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{34} }
 
 func (m *CardUseCount) GetAsset() int32 {
-	if m != nil {
-		return m.Asset
+	if m != nil && m.Asset != nil {
+		return *m.Asset
 	}
 	return 0
 }
 
 func (m *CardUseCount) GetCount() int32 {
-	if m != nil {
-		return m.Count
+	if m != nil && m.Count != nil {
+		return *m.Count
 	}
 	return 0
 }
 
 // ref: PegasusUtil.CardValue
 type CardValue struct {
-	Card   *pegasus_pegasusshared.CardDef `protobuf:"bytes,1,opt,name=card" json:"card,omitempty"`
-	Buy    int32                          `protobuf:"varint,2,opt,name=buy" json:"buy,omitempty"`
-	Sell   int32                          `protobuf:"varint,3,opt,name=sell" json:"sell,omitempty"`
-	Nerfed bool                           `protobuf:"varint,4,opt,name=nerfed" json:"nerfed,omitempty"`
+	Card             *pegasus_pegasusshared.CardDef `protobuf:"bytes,1,req,name=card" json:"card,omitempty"`
+	Buy              *int32                         `protobuf:"varint,2,req,name=buy" json:"buy,omitempty"`
+	Sell             *int32                         `protobuf:"varint,3,req,name=sell" json:"sell,omitempty"`
+	Nerfed           *bool                          `protobuf:"varint,4,req,name=nerfed" json:"nerfed,omitempty"`
+	XXX_unrecognized []byte                         `json:"-"`
 }
 
 func (m *CardValue) Reset()                    { *m = CardValue{} }
 func (m *CardValue) String() string            { return proto.CompactTextString(m) }
 func (*CardValue) ProtoMessage()               {}
-func (*CardValue) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{33} }
+func (*CardValue) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{35} }
 
 func (m *CardValue) GetCard() *pegasus_pegasusshared.CardDef {
 	if m != nil {
@@ -5034,36 +6723,37 @@ func (m *CardValue) GetCard() *pegasus_pegasusshared.CardDef {
 }
 
 func (m *CardValue) GetBuy() int32 {
-	if m != nil {
-		return m.Buy
+	if m != nil && m.Buy != nil {
+		return *m.Buy
 	}
 	return 0
 }
 
 func (m *CardValue) GetSell() int32 {
-	if m != nil {
-		return m.Sell
+	if m != nil && m.Sell != nil {
+		return *m.Sell
 	}
 	return 0
 }
 
 func (m *CardValue) GetNerfed() bool {
-	if m != nil {
-		return m.Nerfed
+	if m != nil && m.Nerfed != nil {
+		return *m.Nerfed
 	}
 	return false
 }
 
 // ref: PegasusUtil.CardValues
 type CardValues struct {
-	Cards         []*CardValue `protobuf:"bytes,1,rep,name=cards" json:"cards,omitempty"`
-	CardNerfIndex int32        `protobuf:"varint,2,opt,name=card_nerf_index,json=cardNerfIndex" json:"card_nerf_index,omitempty"`
+	Cards            []*CardValue `protobuf:"bytes,1,rep,name=cards" json:"cards,omitempty"`
+	CardNerfIndex    *int32       `protobuf:"varint,2,req,name=card_nerf_index,json=cardNerfIndex" json:"card_nerf_index,omitempty"`
+	XXX_unrecognized []byte       `json:"-"`
 }
 
 func (m *CardValues) Reset()                    { *m = CardValues{} }
 func (m *CardValues) String() string            { return proto.CompactTextString(m) }
 func (*CardValues) ProtoMessage()               {}
-func (*CardValues) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{34} }
+func (*CardValues) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{36} }
 
 func (m *CardValues) GetCards() []*CardValue {
 	if m != nil {
@@ -5073,96 +6763,99 @@ func (m *CardValues) GetCards() []*CardValue {
 }
 
 func (m *CardValues) GetCardNerfIndex() int32 {
-	if m != nil {
-		return m.CardNerfIndex
+	if m != nil && m.CardNerfIndex != nil {
+		return *m.CardNerfIndex
 	}
 	return 0
 }
 
 // ref: PegasusUtil.CheckAccountLicenseAchieve
 type CheckAccountLicenseAchieve struct {
-	Achieve int32 `protobuf:"varint,1,opt,name=achieve" json:"achieve,omitempty"`
+	Achieve          *int32 `protobuf:"varint,1,req,name=achieve" json:"achieve,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *CheckAccountLicenseAchieve) Reset()                    { *m = CheckAccountLicenseAchieve{} }
 func (m *CheckAccountLicenseAchieve) String() string            { return proto.CompactTextString(m) }
 func (*CheckAccountLicenseAchieve) ProtoMessage()               {}
-func (*CheckAccountLicenseAchieve) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{35} }
+func (*CheckAccountLicenseAchieve) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{37} }
 
 func (m *CheckAccountLicenseAchieve) GetAchieve() int32 {
-	if m != nil {
-		return m.Achieve
+	if m != nil && m.Achieve != nil {
+		return *m.Achieve
 	}
 	return 0
 }
 
 // ref: PegasusUtil.ClientOption
 type ClientOption struct {
-	Index    int32   `protobuf:"varint,1,opt,name=index" json:"index,omitempty"`
-	AsBool   bool    `protobuf:"varint,2,opt,name=as_bool,json=asBool" json:"as_bool,omitempty"`
-	AsInt32  int32   `protobuf:"varint,3,opt,name=as_int32,json=asInt32" json:"as_int32,omitempty"`
-	AsInt64  int64   `protobuf:"varint,4,opt,name=as_int64,json=asInt64" json:"as_int64,omitempty"`
-	AsFloat  float32 `protobuf:"fixed32,5,opt,name=as_float,json=asFloat" json:"as_float,omitempty"`
-	AsUint64 uint64  `protobuf:"varint,6,opt,name=as_uint64,json=asUint64" json:"as_uint64,omitempty"`
+	Index            *int32   `protobuf:"varint,1,req,name=index" json:"index,omitempty"`
+	AsBool           *bool    `protobuf:"varint,2,opt,name=as_bool,json=asBool" json:"as_bool,omitempty"`
+	AsInt32          *int32   `protobuf:"varint,3,opt,name=as_int32,json=asInt32" json:"as_int32,omitempty"`
+	AsInt64          *int64   `protobuf:"varint,4,opt,name=as_int64,json=asInt64" json:"as_int64,omitempty"`
+	AsFloat          *float32 `protobuf:"fixed32,5,opt,name=as_float,json=asFloat" json:"as_float,omitempty"`
+	AsUint64         *uint64  `protobuf:"varint,6,opt,name=as_uint64,json=asUint64" json:"as_uint64,omitempty"`
+	XXX_unrecognized []byte   `json:"-"`
 }
 
 func (m *ClientOption) Reset()                    { *m = ClientOption{} }
 func (m *ClientOption) String() string            { return proto.CompactTextString(m) }
 func (*ClientOption) ProtoMessage()               {}
-func (*ClientOption) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{36} }
+func (*ClientOption) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{38} }
 
 func (m *ClientOption) GetIndex() int32 {
-	if m != nil {
-		return m.Index
+	if m != nil && m.Index != nil {
+		return *m.Index
 	}
 	return 0
 }
 
 func (m *ClientOption) GetAsBool() bool {
-	if m != nil {
-		return m.AsBool
+	if m != nil && m.AsBool != nil {
+		return *m.AsBool
 	}
 	return false
 }
 
 func (m *ClientOption) GetAsInt32() int32 {
-	if m != nil {
-		return m.AsInt32
+	if m != nil && m.AsInt32 != nil {
+		return *m.AsInt32
 	}
 	return 0
 }
 
 func (m *ClientOption) GetAsInt64() int64 {
-	if m != nil {
-		return m.AsInt64
+	if m != nil && m.AsInt64 != nil {
+		return *m.AsInt64
 	}
 	return 0
 }
 
 func (m *ClientOption) GetAsFloat() float32 {
-	if m != nil {
-		return m.AsFloat
+	if m != nil && m.AsFloat != nil {
+		return *m.AsFloat
 	}
 	return 0
 }
 
 func (m *ClientOption) GetAsUint64() uint64 {
-	if m != nil {
-		return m.AsUint64
+	if m != nil && m.AsUint64 != nil {
+		return *m.AsUint64
 	}
 	return 0
 }
 
 // ref: PegasusUtil.ClientOptions
 type ClientOptions struct {
-	Options []*ClientOption `protobuf:"bytes,1,rep,name=options" json:"options,omitempty"`
-	Failed  bool            `protobuf:"varint,2,opt,name=failed" json:"failed,omitempty"`
+	Options          []*ClientOption `protobuf:"bytes,1,rep,name=options" json:"options,omitempty"`
+	Failed           *bool           `protobuf:"varint,2,opt,name=failed" json:"failed,omitempty"`
+	XXX_unrecognized []byte          `json:"-"`
 }
 
 func (m *ClientOptions) Reset()                    { *m = ClientOptions{} }
 func (m *ClientOptions) String() string            { return proto.CompactTextString(m) }
 func (*ClientOptions) ProtoMessage()               {}
-func (*ClientOptions) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{37} }
+func (*ClientOptions) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{39} }
 
 func (m *ClientOptions) GetOptions() []*ClientOption {
 	if m != nil {
@@ -5172,27 +6865,30 @@ func (m *ClientOptions) GetOptions() []*ClientOption {
 }
 
 func (m *ClientOptions) GetFailed() bool {
-	if m != nil {
-		return m.Failed
+	if m != nil && m.Failed != nil {
+		return *m.Failed
 	}
 	return false
 }
 
 // ref: PegasusUtil.ClientRequestResponse
 type ClientRequestResponse struct {
-	ResponseFlags ClientRequestResponse_ClientRequestResponseFlags `protobuf:"varint,1,opt,name=response_flags,json=responseFlags,enum=pegasus.pegasusutil.ClientRequestResponse_ClientRequestResponseFlags" json:"response_flags,omitempty"`
+	ResponseFlags    *ClientRequestResponse_ClientRequestResponseFlags `protobuf:"varint,1,opt,name=response_flags,json=responseFlags,enum=pegasus.pegasusutil.ClientRequestResponse_ClientRequestResponseFlags,def=0" json:"response_flags,omitempty"`
+	XXX_unrecognized []byte                                            `json:"-"`
 }
 
 func (m *ClientRequestResponse) Reset()                    { *m = ClientRequestResponse{} }
 func (m *ClientRequestResponse) String() string            { return proto.CompactTextString(m) }
 func (*ClientRequestResponse) ProtoMessage()               {}
-func (*ClientRequestResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{38} }
+func (*ClientRequestResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{40} }
+
+const Default_ClientRequestResponse_ResponseFlags ClientRequestResponse_ClientRequestResponseFlags = ClientRequestResponse_CRRF_SERVICE_NONE
 
 func (m *ClientRequestResponse) GetResponseFlags() ClientRequestResponse_ClientRequestResponseFlags {
-	if m != nil {
-		return m.ResponseFlags
+	if m != nil && m.ResponseFlags != nil {
+		return *m.ResponseFlags
 	}
-	return ClientRequestResponse_CRRF_SERVICE_NONE
+	return Default_ClientRequestResponse_ResponseFlags
 }
 
 // ref: PegasusUtil.ClientStateNotification
@@ -5201,12 +6897,14 @@ type ClientStateNotification struct {
 	NoticeNotifications      *NoticeNotifications      `protobuf:"bytes,2,opt,name=notice_notifications,json=noticeNotifications" json:"notice_notifications,omitempty"`
 	CollectionModifications  *CollectionModifications  `protobuf:"bytes,3,opt,name=collection_modifications,json=collectionModifications" json:"collection_modifications,omitempty"`
 	CurrencyState            *GameCurrencyStates       `protobuf:"bytes,4,opt,name=currency_state,json=currencyState" json:"currency_state,omitempty"`
+	BoosterModifications     *BoosterModifications     `protobuf:"bytes,5,opt,name=booster_modifications,json=boosterModifications" json:"booster_modifications,omitempty"`
+	XXX_unrecognized         []byte                    `json:"-"`
 }
 
 func (m *ClientStateNotification) Reset()                    { *m = ClientStateNotification{} }
 func (m *ClientStateNotification) String() string            { return proto.CompactTextString(m) }
 func (*ClientStateNotification) ProtoMessage()               {}
-func (*ClientStateNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{39} }
+func (*ClientStateNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{41} }
 
 func (m *ClientStateNotification) GetAchievementNotifications() *AchievementNotifications {
 	if m != nil {
@@ -5236,15 +6934,23 @@ func (m *ClientStateNotification) GetCurrencyState() *GameCurrencyStates {
 	return nil
 }
 
+func (m *ClientStateNotification) GetBoosterModifications() *BoosterModifications {
+	if m != nil {
+		return m.BoosterModifications
+	}
+	return nil
+}
+
 // ref: PegasusUtil.ClientStaticAssetsResponse
 type ClientStaticAssetsResponse struct {
-	AssetsToGet []*pegasus_pegasusshared.AssetRecordInfo `protobuf:"bytes,1,rep,name=assets_to_get,json=assetsToGet" json:"assets_to_get,omitempty"`
+	AssetsToGet      []*pegasus_pegasusshared.AssetRecordInfo `protobuf:"bytes,1,rep,name=assets_to_get,json=assetsToGet" json:"assets_to_get,omitempty"`
+	XXX_unrecognized []byte                                   `json:"-"`
 }
 
 func (m *ClientStaticAssetsResponse) Reset()                    { *m = ClientStaticAssetsResponse{} }
 func (m *ClientStaticAssetsResponse) String() string            { return proto.CompactTextString(m) }
 func (*ClientStaticAssetsResponse) ProtoMessage()               {}
-func (*ClientStaticAssetsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{40} }
+func (*ClientStaticAssetsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{42} }
 
 func (m *ClientStaticAssetsResponse) GetAssetsToGet() []*pegasus_pegasusshared.AssetRecordInfo {
 	if m != nil {
@@ -5256,13 +6962,16 @@ func (m *ClientStaticAssetsResponse) GetAssetsToGet() []*pegasus_pegasusshared.A
 // ref: PegasusUtil.Collection
 type Collection struct {
 	Stacks            []*pegasus_pegasusshared.CardStack `protobuf:"bytes,1,rep,name=stacks" json:"stacks,omitempty"`
-	CollectionVersion int64                              `protobuf:"varint,2,opt,name=collection_version,json=collectionVersion" json:"collection_version,omitempty"`
+	CollectionVersion *int64                             `protobuf:"varint,2,opt,name=collection_version,json=collectionVersion,def=0" json:"collection_version,omitempty"`
+	XXX_unrecognized  []byte                             `json:"-"`
 }
 
 func (m *Collection) Reset()                    { *m = Collection{} }
 func (m *Collection) String() string            { return proto.CompactTextString(m) }
 func (*Collection) ProtoMessage()               {}
-func (*Collection) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{41} }
+func (*Collection) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{43} }
+
+const Default_Collection_CollectionVersion int64 = 0
 
 func (m *Collection) GetStacks() []*pegasus_pegasusshared.CardStack {
 	if m != nil {
@@ -5272,22 +6981,25 @@ func (m *Collection) GetStacks() []*pegasus_pegasusshared.CardStack {
 }
 
 func (m *Collection) GetCollectionVersion() int64 {
-	if m != nil {
-		return m.CollectionVersion
+	if m != nil && m.CollectionVersion != nil {
+		return *m.CollectionVersion
 	}
-	return 0
+	return Default_Collection_CollectionVersion
 }
 
 // ref: PegasusUtil.CollectionModifications
 type CollectionModifications struct {
 	CardModifications []*CardModification `protobuf:"bytes,1,rep,name=card_modifications,json=cardModifications" json:"card_modifications,omitempty"`
-	CollectionVersion int64               `protobuf:"varint,2,opt,name=collection_version,json=collectionVersion" json:"collection_version,omitempty"`
+	CollectionVersion *int64              `protobuf:"varint,2,opt,name=collection_version,json=collectionVersion,def=0" json:"collection_version,omitempty"`
+	XXX_unrecognized  []byte              `json:"-"`
 }
 
 func (m *CollectionModifications) Reset()                    { *m = CollectionModifications{} }
 func (m *CollectionModifications) String() string            { return proto.CompactTextString(m) }
 func (*CollectionModifications) ProtoMessage()               {}
-func (*CollectionModifications) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{42} }
+func (*CollectionModifications) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{44} }
+
+const Default_CollectionModifications_CollectionVersion int64 = 0
 
 func (m *CollectionModifications) GetCardModifications() []*CardModification {
 	if m != nil {
@@ -5297,124 +7009,153 @@ func (m *CollectionModifications) GetCardModifications() []*CardModification {
 }
 
 func (m *CollectionModifications) GetCollectionVersion() int64 {
-	if m != nil {
-		return m.CollectionVersion
+	if m != nil && m.CollectionVersion != nil {
+		return *m.CollectionVersion
 	}
-	return 0
+	return Default_CollectionModifications_CollectionVersion
 }
 
 // ref: PegasusUtil.CreateDeck
 type CreateDeck struct {
-	Name           string                               `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
-	Hero           int32                                `protobuf:"varint,2,opt,name=hero" json:"hero,omitempty"`
-	HeroPremium    int32                                `protobuf:"varint,3,opt,name=hero_premium,json=heroPremium" json:"hero_premium,omitempty"`
-	DeckType       pegasus_pegasusshared.DeckType       `protobuf:"varint,4,opt,name=deck_type,json=deckType,enum=pegasus.pegasusshared.DeckType" json:"deck_type,omitempty"`
-	TaggedStandard bool                                 `protobuf:"varint,5,opt,name=tagged_standard,json=taggedStandard" json:"tagged_standard,omitempty"`
-	SortOrder      int64                                `protobuf:"varint,6,opt,name=sort_order,json=sortOrder" json:"sort_order,omitempty"`
-	SourceType     pegasus_pegasusshared.DeckSourceType `protobuf:"varint,7,opt,name=source_type,json=sourceType,enum=pegasus.pegasusshared.DeckSourceType" json:"source_type,omitempty"`
+	Name               *string                               `protobuf:"bytes,1,req,name=name" json:"name,omitempty"`
+	Hero               *int32                                `protobuf:"varint,2,req,name=hero" json:"hero,omitempty"`
+	HeroPremium        *int32                                `protobuf:"varint,3,req,name=hero_premium,json=heroPremium" json:"hero_premium,omitempty"`
+	DeckType           *pegasus_pegasusshared.DeckType       `protobuf:"varint,4,req,name=deck_type,json=deckType,enum=pegasus.pegasusshared.DeckType" json:"deck_type,omitempty"`
+	TaggedStandard     *bool                                 `protobuf:"varint,5,opt,name=tagged_standard,json=taggedStandard" json:"tagged_standard,omitempty"`
+	SortOrder          *int64                                `protobuf:"varint,6,req,name=sort_order,json=sortOrder" json:"sort_order,omitempty"`
+	SourceType         *pegasus_pegasusshared.DeckSourceType `protobuf:"varint,7,opt,name=source_type,json=sourceType,enum=pegasus.pegasusshared.DeckSourceType,def=0" json:"source_type,omitempty"`
+	PastedDeckHash     *string                               `protobuf:"bytes,8,opt,name=pasted_deck_hash,json=pastedDeckHash" json:"pasted_deck_hash,omitempty"`
+	FsgId              *int64                                `protobuf:"varint,100,opt,name=fsg_id,json=fsgId" json:"fsg_id,omitempty"`
+	FsgSharedSecretKey []byte                                `protobuf:"bytes,101,opt,name=fsg_shared_secret_key,json=fsgSharedSecretKey" json:"fsg_shared_secret_key,omitempty"`
+	XXX_unrecognized   []byte                                `json:"-"`
 }
 
 func (m *CreateDeck) Reset()                    { *m = CreateDeck{} }
 func (m *CreateDeck) String() string            { return proto.CompactTextString(m) }
 func (*CreateDeck) ProtoMessage()               {}
-func (*CreateDeck) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{43} }
+func (*CreateDeck) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{45} }
+
+const Default_CreateDeck_SourceType pegasus_pegasusshared.DeckSourceType = pegasus_pegasusshared.DeckSourceType_DECK_SOURCE_TYPE_UNKNOWN
 
 func (m *CreateDeck) GetName() string {
-	if m != nil {
-		return m.Name
+	if m != nil && m.Name != nil {
+		return *m.Name
 	}
 	return ""
 }
 
 func (m *CreateDeck) GetHero() int32 {
-	if m != nil {
-		return m.Hero
+	if m != nil && m.Hero != nil {
+		return *m.Hero
 	}
 	return 0
 }
 
 func (m *CreateDeck) GetHeroPremium() int32 {
-	if m != nil {
-		return m.HeroPremium
+	if m != nil && m.HeroPremium != nil {
+		return *m.HeroPremium
 	}
 	return 0
 }
 
 func (m *CreateDeck) GetDeckType() pegasus_pegasusshared.DeckType {
-	if m != nil {
-		return m.DeckType
+	if m != nil && m.DeckType != nil {
+		return *m.DeckType
 	}
 	return pegasus_pegasusshared.DeckType_UNKNOWN_DECK_TYPE
 }
 
 func (m *CreateDeck) GetTaggedStandard() bool {
-	if m != nil {
-		return m.TaggedStandard
+	if m != nil && m.TaggedStandard != nil {
+		return *m.TaggedStandard
 	}
 	return false
 }
 
 func (m *CreateDeck) GetSortOrder() int64 {
-	if m != nil {
-		return m.SortOrder
+	if m != nil && m.SortOrder != nil {
+		return *m.SortOrder
 	}
 	return 0
 }
 
 func (m *CreateDeck) GetSourceType() pegasus_pegasusshared.DeckSourceType {
-	if m != nil {
-		return m.SourceType
+	if m != nil && m.SourceType != nil {
+		return *m.SourceType
 	}
-	return pegasus_pegasusshared.DeckSourceType_DECK_SOURCE_TYPE_UNKNOWN
+	return Default_CreateDeck_SourceType
+}
+
+func (m *CreateDeck) GetPastedDeckHash() string {
+	if m != nil && m.PastedDeckHash != nil {
+		return *m.PastedDeckHash
+	}
+	return ""
+}
+
+func (m *CreateDeck) GetFsgId() int64 {
+	if m != nil && m.FsgId != nil {
+		return *m.FsgId
+	}
+	return 0
+}
+
+func (m *CreateDeck) GetFsgSharedSecretKey() []byte {
+	if m != nil {
+		return m.FsgSharedSecretKey
+	}
+	return nil
 }
 
 // ref: PegasusUtil.DBAction
 type DBAction struct {
-	Action   pegasus_pegasusshared.DatabaseAction `protobuf:"varint,1,opt,name=action,enum=pegasus.pegasusshared.DatabaseAction" json:"action,omitempty"`
-	Result   pegasus_pegasusshared.DatabaseResult `protobuf:"varint,2,opt,name=result,enum=pegasus.pegasusshared.DatabaseResult" json:"result,omitempty"`
-	MetaData int64                                `protobuf:"varint,3,opt,name=meta_data,json=metaData" json:"meta_data,omitempty"`
+	Action           *pegasus_pegasusshared.DatabaseAction `protobuf:"varint,1,req,name=action,enum=pegasus.pegasusshared.DatabaseAction" json:"action,omitempty"`
+	Result           *pegasus_pegasusshared.DatabaseResult `protobuf:"varint,2,req,name=result,enum=pegasus.pegasusshared.DatabaseResult" json:"result,omitempty"`
+	MetaData         *int64                                `protobuf:"varint,3,opt,name=meta_data,json=metaData" json:"meta_data,omitempty"`
+	XXX_unrecognized []byte                                `json:"-"`
 }
 
 func (m *DBAction) Reset()                    { *m = DBAction{} }
 func (m *DBAction) String() string            { return proto.CompactTextString(m) }
 func (*DBAction) ProtoMessage()               {}
-func (*DBAction) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{44} }
+func (*DBAction) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{46} }
 
 func (m *DBAction) GetAction() pegasus_pegasusshared.DatabaseAction {
-	if m != nil {
-		return m.Action
+	if m != nil && m.Action != nil {
+		return *m.Action
 	}
 	return pegasus_pegasusshared.DatabaseAction_DB_A_UNKNOWN
 }
 
 func (m *DBAction) GetResult() pegasus_pegasusshared.DatabaseResult {
-	if m != nil {
-		return m.Result
+	if m != nil && m.Result != nil {
+		return *m.Result
 	}
-	return pegasus_pegasusshared.DatabaseResult_DB_E_UNKNOWN
+	return pegasus_pegasusshared.DatabaseResult_DB_E_SQL_EX
 }
 
 func (m *DBAction) GetMetaData() int64 {
-	if m != nil {
-		return m.MetaData
+	if m != nil && m.MetaData != nil {
+		return *m.MetaData
 	}
 	return 0
 }
 
 // ref: PegasusUtil.DebugCommandRequest
 type DebugCommandRequest struct {
-	Command string   `protobuf:"bytes,1,opt,name=command" json:"command,omitempty"`
-	Args    []string `protobuf:"bytes,2,rep,name=args" json:"args,omitempty"`
+	Command          *string  `protobuf:"bytes,1,req,name=command" json:"command,omitempty"`
+	Args             []string `protobuf:"bytes,2,rep,name=args" json:"args,omitempty"`
+	XXX_unrecognized []byte   `json:"-"`
 }
 
 func (m *DebugCommandRequest) Reset()                    { *m = DebugCommandRequest{} }
 func (m *DebugCommandRequest) String() string            { return proto.CompactTextString(m) }
 func (*DebugCommandRequest) ProtoMessage()               {}
-func (*DebugCommandRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{45} }
+func (*DebugCommandRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{47} }
 
 func (m *DebugCommandRequest) GetCommand() string {
-	if m != nil {
-		return m.Command
+	if m != nil && m.Command != nil {
+		return *m.Command
 	}
 	return ""
 }
@@ -5428,51 +7169,53 @@ func (m *DebugCommandRequest) GetArgs() []string {
 
 // ref: PegasusUtil.DebugCommandResponse
 type DebugCommandResponse struct {
-	Success  bool   `protobuf:"varint,1,opt,name=success" json:"success,omitempty"`
-	Response string `protobuf:"bytes,2,opt,name=response" json:"response,omitempty"`
+	Success          *bool   `protobuf:"varint,1,req,name=success" json:"success,omitempty"`
+	Response         *string `protobuf:"bytes,2,opt,name=response" json:"response,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *DebugCommandResponse) Reset()                    { *m = DebugCommandResponse{} }
 func (m *DebugCommandResponse) String() string            { return proto.CompactTextString(m) }
 func (*DebugCommandResponse) ProtoMessage()               {}
-func (*DebugCommandResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{46} }
+func (*DebugCommandResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{48} }
 
 func (m *DebugCommandResponse) GetSuccess() bool {
-	if m != nil {
-		return m.Success
+	if m != nil && m.Success != nil {
+		return *m.Success
 	}
 	return false
 }
 
 func (m *DebugCommandResponse) GetResponse() string {
-	if m != nil {
-		return m.Response
+	if m != nil && m.Response != nil {
+		return *m.Response
 	}
 	return ""
 }
 
 // ref: PegasusUtil.DeckContents
 type DeckContents struct {
-	Success bool                                  `protobuf:"varint,1,opt,name=success" json:"success,omitempty"`
-	DeckId  int64                                 `protobuf:"varint,2,opt,name=deck_id,json=deckId" json:"deck_id,omitempty"`
-	Cards   []*pegasus_pegasusshared.DeckCardData `protobuf:"bytes,3,rep,name=cards" json:"cards,omitempty"`
+	Success          *bool                                 `protobuf:"varint,1,req,name=success" json:"success,omitempty"`
+	DeckId           *int64                                `protobuf:"varint,2,req,name=deck_id,json=deckId" json:"deck_id,omitempty"`
+	Cards            []*pegasus_pegasusshared.DeckCardData `protobuf:"bytes,3,rep,name=cards" json:"cards,omitempty"`
+	XXX_unrecognized []byte                                `json:"-"`
 }
 
 func (m *DeckContents) Reset()                    { *m = DeckContents{} }
 func (m *DeckContents) String() string            { return proto.CompactTextString(m) }
 func (*DeckContents) ProtoMessage()               {}
-func (*DeckContents) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{47} }
+func (*DeckContents) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{49} }
 
 func (m *DeckContents) GetSuccess() bool {
-	if m != nil {
-		return m.Success
+	if m != nil && m.Success != nil {
+		return *m.Success
 	}
 	return false
 }
 
 func (m *DeckContents) GetDeckId() int64 {
-	if m != nil {
-		return m.DeckId
+	if m != nil && m.DeckId != nil {
+		return *m.DeckId
 	}
 	return 0
 }
@@ -5486,13 +7229,14 @@ func (m *DeckContents) GetCards() []*pegasus_pegasusshared.DeckCardData {
 
 // ref: PegasusUtil.DeckCreated
 type DeckCreated struct {
-	Info *pegasus_pegasusshared.DeckInfo `protobuf:"bytes,1,opt,name=info" json:"info,omitempty"`
+	Info             *pegasus_pegasusshared.DeckInfo `protobuf:"bytes,1,req,name=info" json:"info,omitempty"`
+	XXX_unrecognized []byte                          `json:"-"`
 }
 
 func (m *DeckCreated) Reset()                    { *m = DeckCreated{} }
 func (m *DeckCreated) String() string            { return proto.CompactTextString(m) }
 func (*DeckCreated) ProtoMessage()               {}
-func (*DeckCreated) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{48} }
+func (*DeckCreated) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{50} }
 
 func (m *DeckCreated) GetInfo() *pegasus_pegasusshared.DeckInfo {
 	if m != nil {
@@ -5503,30 +7247,32 @@ func (m *DeckCreated) GetInfo() *pegasus_pegasusshared.DeckInfo {
 
 // ref: PegasusUtil.DeckDeleted
 type DeckDeleted struct {
-	Deck int64 `protobuf:"varint,1,opt,name=deck" json:"deck,omitempty"`
+	Deck             *int64 `protobuf:"varint,1,req,name=deck" json:"deck,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *DeckDeleted) Reset()                    { *m = DeckDeleted{} }
 func (m *DeckDeleted) String() string            { return proto.CompactTextString(m) }
 func (*DeckDeleted) ProtoMessage()               {}
-func (*DeckDeleted) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{49} }
+func (*DeckDeleted) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{51} }
 
 func (m *DeckDeleted) GetDeck() int64 {
-	if m != nil {
-		return m.Deck
+	if m != nil && m.Deck != nil {
+		return *m.Deck
 	}
 	return 0
 }
 
 // ref: PegasusUtil.DeckList
 type DeckList struct {
-	Decks []*pegasus_pegasusshared.DeckInfo `protobuf:"bytes,1,rep,name=decks" json:"decks,omitempty"`
+	Decks            []*pegasus_pegasusshared.DeckInfo `protobuf:"bytes,1,rep,name=decks" json:"decks,omitempty"`
+	XXX_unrecognized []byte                            `json:"-"`
 }
 
 func (m *DeckList) Reset()                    { *m = DeckList{} }
 func (m *DeckList) String() string            { return proto.CompactTextString(m) }
 func (*DeckList) ProtoMessage()               {}
-func (*DeckList) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{50} }
+func (*DeckList) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{52} }
 
 func (m *DeckList) GetDecks() []*pegasus_pegasusshared.DeckInfo {
 	if m != nil {
@@ -5537,47 +7283,52 @@ func (m *DeckList) GetDecks() []*pegasus_pegasusshared.DeckInfo {
 
 // ref: PegasusUtil.DeckRenamed
 type DeckRenamed struct {
-	Deck int64  `protobuf:"varint,1,opt,name=deck" json:"deck,omitempty"`
-	Name string `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
+	Deck             *int64  `protobuf:"varint,1,req,name=deck" json:"deck,omitempty"`
+	Name             *string `protobuf:"bytes,2,req,name=name" json:"name,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *DeckRenamed) Reset()                    { *m = DeckRenamed{} }
 func (m *DeckRenamed) String() string            { return proto.CompactTextString(m) }
 func (*DeckRenamed) ProtoMessage()               {}
-func (*DeckRenamed) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{51} }
+func (*DeckRenamed) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{53} }
 
 func (m *DeckRenamed) GetDeck() int64 {
-	if m != nil {
-		return m.Deck
+	if m != nil && m.Deck != nil {
+		return *m.Deck
 	}
 	return 0
 }
 
 func (m *DeckRenamed) GetName() string {
-	if m != nil {
-		return m.Name
+	if m != nil && m.Name != nil {
+		return *m.Name
 	}
 	return ""
 }
 
 // ref: PegasusUtil.DeckSetData
 type DeckSetData struct {
-	Deck           int64                                 `protobuf:"varint,1,opt,name=deck" json:"deck,omitempty"`
-	Cards          []*pegasus_pegasusshared.DeckCardData `protobuf:"bytes,2,rep,name=cards" json:"cards,omitempty"`
-	Hero           *pegasus_pegasusshared.CardDef        `protobuf:"bytes,3,opt,name=hero" json:"hero,omitempty"`
-	CardBack       int32                                 `protobuf:"varint,4,opt,name=card_back,json=cardBack" json:"card_back,omitempty"`
-	TaggedStandard bool                                  `protobuf:"varint,5,opt,name=tagged_standard,json=taggedStandard" json:"tagged_standard,omitempty"`
-	SortOrder      int64                                 `protobuf:"varint,6,opt,name=sort_order,json=sortOrder" json:"sort_order,omitempty"`
+	Deck               *int64                                `protobuf:"varint,1,req,name=deck" json:"deck,omitempty"`
+	Cards              []*pegasus_pegasusshared.DeckCardData `protobuf:"bytes,2,rep,name=cards" json:"cards,omitempty"`
+	Hero               *pegasus_pegasusshared.CardDef        `protobuf:"bytes,3,opt,name=hero" json:"hero,omitempty"`
+	CardBack           *int32                                `protobuf:"varint,4,opt,name=card_back,json=cardBack" json:"card_back,omitempty"`
+	TaggedStandard     *bool                                 `protobuf:"varint,5,opt,name=tagged_standard,json=taggedStandard" json:"tagged_standard,omitempty"`
+	SortOrder          *int64                                `protobuf:"varint,6,opt,name=sort_order,json=sortOrder" json:"sort_order,omitempty"`
+	PastedDeckHash     *string                               `protobuf:"bytes,7,opt,name=pasted_deck_hash,json=pastedDeckHash" json:"pasted_deck_hash,omitempty"`
+	FsgId              *int64                                `protobuf:"varint,100,opt,name=fsg_id,json=fsgId" json:"fsg_id,omitempty"`
+	FsgSharedSecretKey []byte                                `protobuf:"bytes,101,opt,name=fsg_shared_secret_key,json=fsgSharedSecretKey" json:"fsg_shared_secret_key,omitempty"`
+	XXX_unrecognized   []byte                                `json:"-"`
 }
 
 func (m *DeckSetData) Reset()                    { *m = DeckSetData{} }
 func (m *DeckSetData) String() string            { return proto.CompactTextString(m) }
 func (*DeckSetData) ProtoMessage()               {}
-func (*DeckSetData) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{52} }
+func (*DeckSetData) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{54} }
 
 func (m *DeckSetData) GetDeck() int64 {
-	if m != nil {
-		return m.Deck
+	if m != nil && m.Deck != nil {
+		return *m.Deck
 	}
 	return 0
 }
@@ -5597,207 +7348,256 @@ func (m *DeckSetData) GetHero() *pegasus_pegasusshared.CardDef {
 }
 
 func (m *DeckSetData) GetCardBack() int32 {
-	if m != nil {
-		return m.CardBack
+	if m != nil && m.CardBack != nil {
+		return *m.CardBack
 	}
 	return 0
 }
 
 func (m *DeckSetData) GetTaggedStandard() bool {
-	if m != nil {
-		return m.TaggedStandard
+	if m != nil && m.TaggedStandard != nil {
+		return *m.TaggedStandard
 	}
 	return false
 }
 
 func (m *DeckSetData) GetSortOrder() int64 {
-	if m != nil {
-		return m.SortOrder
+	if m != nil && m.SortOrder != nil {
+		return *m.SortOrder
 	}
 	return 0
 }
 
+func (m *DeckSetData) GetPastedDeckHash() string {
+	if m != nil && m.PastedDeckHash != nil {
+		return *m.PastedDeckHash
+	}
+	return ""
+}
+
+func (m *DeckSetData) GetFsgId() int64 {
+	if m != nil && m.FsgId != nil {
+		return *m.FsgId
+	}
+	return 0
+}
+
+func (m *DeckSetData) GetFsgSharedSecretKey() []byte {
+	if m != nil {
+		return m.FsgSharedSecretKey
+	}
+	return nil
+}
+
 // ref: PegasusUtil.DeckSetTemplateSource
 type DeckSetTemplateSource struct {
-	Deck       int64 `protobuf:"varint,1,opt,name=deck" json:"deck,omitempty"`
-	TemplateId int32 `protobuf:"varint,2,opt,name=template_id,json=templateId" json:"template_id,omitempty"`
+	Deck             *int64 `protobuf:"varint,1,req,name=deck" json:"deck,omitempty"`
+	TemplateId       *int32 `protobuf:"varint,2,req,name=template_id,json=templateId" json:"template_id,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *DeckSetTemplateSource) Reset()                    { *m = DeckSetTemplateSource{} }
 func (m *DeckSetTemplateSource) String() string            { return proto.CompactTextString(m) }
 func (*DeckSetTemplateSource) ProtoMessage()               {}
-func (*DeckSetTemplateSource) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{53} }
+func (*DeckSetTemplateSource) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{55} }
 
 func (m *DeckSetTemplateSource) GetDeck() int64 {
-	if m != nil {
-		return m.Deck
+	if m != nil && m.Deck != nil {
+		return *m.Deck
 	}
 	return 0
 }
 
 func (m *DeckSetTemplateSource) GetTemplateId() int32 {
-	if m != nil {
-		return m.TemplateId
+	if m != nil && m.TemplateId != nil {
+		return *m.TemplateId
 	}
 	return 0
 }
 
 // ref: PegasusUtil.DeleteDeck
 type DeleteDeck struct {
-	Deck int64 `protobuf:"varint,1,opt,name=deck" json:"deck,omitempty"`
+	Deck             *int64 `protobuf:"varint,1,req,name=deck" json:"deck,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *DeleteDeck) Reset()                    { *m = DeleteDeck{} }
 func (m *DeleteDeck) String() string            { return proto.CompactTextString(m) }
 func (*DeleteDeck) ProtoMessage()               {}
-func (*DeleteDeck) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{54} }
+func (*DeleteDeck) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{56} }
 
 func (m *DeleteDeck) GetDeck() int64 {
-	if m != nil {
-		return m.Deck
+	if m != nil && m.Deck != nil {
+		return *m.Deck
 	}
 	return 0
 }
 
 // ref: PegasusUtil.DevBnetIdentify
 type DevBnetIdentify struct {
-	Name string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Name             *string `protobuf:"bytes,1,req,name=name" json:"name,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *DevBnetIdentify) Reset()                    { *m = DevBnetIdentify{} }
 func (m *DevBnetIdentify) String() string            { return proto.CompactTextString(m) }
 func (*DevBnetIdentify) ProtoMessage()               {}
-func (*DevBnetIdentify) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{55} }
+func (*DevBnetIdentify) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{57} }
 
 func (m *DevBnetIdentify) GetName() string {
-	if m != nil {
-		return m.Name
+	if m != nil && m.Name != nil {
+		return *m.Name
 	}
 	return ""
 }
 
-// ref: PegasusUtil.Disconnected
-type Disconnected struct {
-	Address        string `protobuf:"bytes,1,opt,name=address" json:"address,omitempty"`
-	GameHandle     int32  `protobuf:"varint,2,opt,name=game_handle,json=gameHandle" json:"game_handle,omitempty"`
-	ClientHandle   int64  `protobuf:"varint,3,opt,name=client_handle,json=clientHandle" json:"client_handle,omitempty"`
-	Port           int32  `protobuf:"varint,4,opt,name=port" json:"port,omitempty"`
-	Version        string `protobuf:"bytes,5,opt,name=version" json:"version,omitempty"`
-	AuroraPassword string `protobuf:"bytes,6,opt,name=aurora_password,json=auroraPassword" json:"aurora_password,omitempty"`
-	Scenario       int32  `protobuf:"varint,7,opt,name=scenario" json:"scenario,omitempty"`
+// ref: PegasusUtil.DisconnectedGame
+type DisconnectedGame struct {
+	Address          *string                           `protobuf:"bytes,1,opt,name=address" json:"address,omitempty"`
+	GameHandle       *int32                            `protobuf:"varint,2,opt,name=game_handle,json=gameHandle" json:"game_handle,omitempty"`
+	ClientHandle     *int64                            `protobuf:"varint,3,opt,name=client_handle,json=clientHandle" json:"client_handle,omitempty"`
+	Port             *int32                            `protobuf:"varint,4,opt,name=port" json:"port,omitempty"`
+	Version          *string                           `protobuf:"bytes,5,opt,name=version" json:"version,omitempty"`
+	AuroraPassword   *string                           `protobuf:"bytes,6,opt,name=aurora_password,json=auroraPassword" json:"aurora_password,omitempty"`
+	Scenario         *int32                            `protobuf:"varint,7,opt,name=scenario" json:"scenario,omitempty"`
+	GameType         *pegasus_pegasusshared.GameType   `protobuf:"varint,8,opt,name=game_type,json=gameType,enum=pegasus.pegasusshared.GameType,def=0" json:"game_type,omitempty"`
+	FormatType       *pegasus_pegasusshared.FormatType `protobuf:"varint,9,opt,name=format_type,json=formatType,enum=pegasus.pegasusshared.FormatType,def=0" json:"format_type,omitempty"`
+	XXX_unrecognized []byte                            `json:"-"`
 }
 
-func (m *Disconnected) Reset()                    { *m = Disconnected{} }
-func (m *Disconnected) String() string            { return proto.CompactTextString(m) }
-func (*Disconnected) ProtoMessage()               {}
-func (*Disconnected) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{56} }
+func (m *DisconnectedGame) Reset()                    { *m = DisconnectedGame{} }
+func (m *DisconnectedGame) String() string            { return proto.CompactTextString(m) }
+func (*DisconnectedGame) ProtoMessage()               {}
+func (*DisconnectedGame) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{58} }
 
-func (m *Disconnected) GetAddress() string {
-	if m != nil {
-		return m.Address
+const Default_DisconnectedGame_GameType pegasus_pegasusshared.GameType = pegasus_pegasusshared.GameType_GT_UNKNOWN
+const Default_DisconnectedGame_FormatType pegasus_pegasusshared.FormatType = pegasus_pegasusshared.FormatType_FT_UNKNOWN
+
+func (m *DisconnectedGame) GetAddress() string {
+	if m != nil && m.Address != nil {
+		return *m.Address
 	}
 	return ""
 }
 
-func (m *Disconnected) GetGameHandle() int32 {
-	if m != nil {
-		return m.GameHandle
+func (m *DisconnectedGame) GetGameHandle() int32 {
+	if m != nil && m.GameHandle != nil {
+		return *m.GameHandle
 	}
 	return 0
 }
 
-func (m *Disconnected) GetClientHandle() int64 {
-	if m != nil {
-		return m.ClientHandle
+func (m *DisconnectedGame) GetClientHandle() int64 {
+	if m != nil && m.ClientHandle != nil {
+		return *m.ClientHandle
 	}
 	return 0
 }
 
-func (m *Disconnected) GetPort() int32 {
-	if m != nil {
-		return m.Port
+func (m *DisconnectedGame) GetPort() int32 {
+	if m != nil && m.Port != nil {
+		return *m.Port
 	}
 	return 0
 }
 
-func (m *Disconnected) GetVersion() string {
-	if m != nil {
-		return m.Version
+func (m *DisconnectedGame) GetVersion() string {
+	if m != nil && m.Version != nil {
+		return *m.Version
 	}
 	return ""
 }
 
-func (m *Disconnected) GetAuroraPassword() string {
-	if m != nil {
-		return m.AuroraPassword
+func (m *DisconnectedGame) GetAuroraPassword() string {
+	if m != nil && m.AuroraPassword != nil {
+		return *m.AuroraPassword
 	}
 	return ""
 }
 
-func (m *Disconnected) GetScenario() int32 {
-	if m != nil {
-		return m.Scenario
+func (m *DisconnectedGame) GetScenario() int32 {
+	if m != nil && m.Scenario != nil {
+		return *m.Scenario
 	}
 	return 0
+}
+
+func (m *DisconnectedGame) GetGameType() pegasus_pegasusshared.GameType {
+	if m != nil && m.GameType != nil {
+		return *m.GameType
+	}
+	return Default_DisconnectedGame_GameType
+}
+
+func (m *DisconnectedGame) GetFormatType() pegasus_pegasusshared.FormatType {
+	if m != nil && m.FormatType != nil {
+		return *m.FormatType
+	}
+	return Default_DisconnectedGame_FormatType
 }
 
 // ref: PegasusUtil.DoPurchase
 type DoPurchase struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *DoPurchase) Reset()                    { *m = DoPurchase{} }
 func (m *DoPurchase) String() string            { return proto.CompactTextString(m) }
 func (*DoPurchase) ProtoMessage()               {}
-func (*DoPurchase) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{57} }
+func (*DoPurchase) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{59} }
 
 // ref: PegasusUtil.DraftAckRewards
 type DraftAckRewards struct {
-	DeckId int64 `protobuf:"varint,1,opt,name=deck_id,json=deckId" json:"deck_id,omitempty"`
-	Slot   int32 `protobuf:"varint,2,opt,name=slot" json:"slot,omitempty"`
+	DeckId           *int64 `protobuf:"varint,1,req,name=deck_id,json=deckId" json:"deck_id,omitempty"`
+	Slot             *int32 `protobuf:"varint,2,req,name=slot" json:"slot,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *DraftAckRewards) Reset()                    { *m = DraftAckRewards{} }
 func (m *DraftAckRewards) String() string            { return proto.CompactTextString(m) }
 func (*DraftAckRewards) ProtoMessage()               {}
-func (*DraftAckRewards) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{58} }
+func (*DraftAckRewards) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{60} }
 
 func (m *DraftAckRewards) GetDeckId() int64 {
-	if m != nil {
-		return m.DeckId
+	if m != nil && m.DeckId != nil {
+		return *m.DeckId
 	}
 	return 0
 }
 
 func (m *DraftAckRewards) GetSlot() int32 {
-	if m != nil {
-		return m.Slot
+	if m != nil && m.Slot != nil {
+		return *m.Slot
 	}
 	return 0
 }
 
 // ref: PegasusUtil.DraftBegin
 type DraftBegin struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *DraftBegin) Reset()                    { *m = DraftBegin{} }
 func (m *DraftBegin) String() string            { return proto.CompactTextString(m) }
 func (*DraftBegin) ProtoMessage()               {}
-func (*DraftBegin) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{59} }
+func (*DraftBegin) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{61} }
 
 // ref: PegasusUtil.DraftBeginning
 type DraftBeginning struct {
-	DeckId     int64                            `protobuf:"varint,1,opt,name=deck_id,json=deckId" json:"deck_id,omitempty"`
-	ChoiceList []*pegasus_pegasusshared.CardDef `protobuf:"bytes,3,rep,name=choice_list,json=choiceList" json:"choice_list,omitempty"`
+	DeckId           *int64                           `protobuf:"varint,1,req,name=deck_id,json=deckId" json:"deck_id,omitempty"`
+	ChoiceList       []*pegasus_pegasusshared.CardDef `protobuf:"bytes,3,rep,name=choice_list,json=choiceList" json:"choice_list,omitempty"`
+	Wins             *int32                           `protobuf:"varint,4,opt,name=wins" json:"wins,omitempty"`
+	XXX_unrecognized []byte                           `json:"-"`
 }
 
 func (m *DraftBeginning) Reset()                    { *m = DraftBeginning{} }
 func (m *DraftBeginning) String() string            { return proto.CompactTextString(m) }
 func (*DraftBeginning) ProtoMessage()               {}
-func (*DraftBeginning) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{60} }
+func (*DraftBeginning) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{62} }
 
 func (m *DraftBeginning) GetDeckId() int64 {
-	if m != nil {
-		return m.DeckId
+	if m != nil && m.DeckId != nil {
+		return *m.DeckId
 	}
 	return 0
 }
@@ -5809,34 +7609,42 @@ func (m *DraftBeginning) GetChoiceList() []*pegasus_pegasusshared.CardDef {
 	return nil
 }
 
+func (m *DraftBeginning) GetWins() int32 {
+	if m != nil && m.Wins != nil {
+		return *m.Wins
+	}
+	return 0
+}
+
 // ref: PegasusUtil.DraftChoicesAndContents
 type DraftChoicesAndContents struct {
-	DeckId     int64                                 `protobuf:"varint,1,opt,name=deck_id,json=deckId" json:"deck_id,omitempty"`
-	Slot       int32                                 `protobuf:"varint,2,opt,name=slot" json:"slot,omitempty"`
-	Cards      []*pegasus_pegasusshared.DeckCardData `protobuf:"bytes,5,rep,name=cards" json:"cards,omitempty"`
-	Wins       int32                                 `protobuf:"varint,6,opt,name=wins" json:"wins,omitempty"`
-	Losses     int32                                 `protobuf:"varint,7,opt,name=losses" json:"losses,omitempty"`
-	Chest      *pegasus_pegasusshared.RewardChest    `protobuf:"bytes,8,opt,name=chest" json:"chest,omitempty"`
-	ChoiceList []*pegasus_pegasusshared.CardDef      `protobuf:"bytes,9,rep,name=choice_list,json=choiceList" json:"choice_list,omitempty"`
-	HeroDef    *pegasus_pegasusshared.CardDef        `protobuf:"bytes,10,opt,name=hero_def,json=heroDef" json:"hero_def,omitempty"`
-	MaxWins    int32                                 `protobuf:"varint,11,opt,name=max_wins,json=maxWins" json:"max_wins,omitempty"`
+	DeckId           *int64                                `protobuf:"varint,1,req,name=deck_id,json=deckId" json:"deck_id,omitempty"`
+	Slot             *int32                                `protobuf:"varint,2,req,name=slot" json:"slot,omitempty"`
+	Cards            []*pegasus_pegasusshared.DeckCardData `protobuf:"bytes,5,rep,name=cards" json:"cards,omitempty"`
+	Wins             *int32                                `protobuf:"varint,6,req,name=wins" json:"wins,omitempty"`
+	Losses           *int32                                `protobuf:"varint,7,req,name=losses" json:"losses,omitempty"`
+	Chest            *pegasus_pegasusshared.RewardChest    `protobuf:"bytes,8,opt,name=chest" json:"chest,omitempty"`
+	ChoiceList       []*pegasus_pegasusshared.CardDef      `protobuf:"bytes,9,rep,name=choice_list,json=choiceList" json:"choice_list,omitempty"`
+	HeroDef          *pegasus_pegasusshared.CardDef        `protobuf:"bytes,10,req,name=hero_def,json=heroDef" json:"hero_def,omitempty"`
+	MaxWins          *int32                                `protobuf:"varint,11,opt,name=max_wins,json=maxWins" json:"max_wins,omitempty"`
+	XXX_unrecognized []byte                                `json:"-"`
 }
 
 func (m *DraftChoicesAndContents) Reset()                    { *m = DraftChoicesAndContents{} }
 func (m *DraftChoicesAndContents) String() string            { return proto.CompactTextString(m) }
 func (*DraftChoicesAndContents) ProtoMessage()               {}
-func (*DraftChoicesAndContents) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{61} }
+func (*DraftChoicesAndContents) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{63} }
 
 func (m *DraftChoicesAndContents) GetDeckId() int64 {
-	if m != nil {
-		return m.DeckId
+	if m != nil && m.DeckId != nil {
+		return *m.DeckId
 	}
 	return 0
 }
 
 func (m *DraftChoicesAndContents) GetSlot() int32 {
-	if m != nil {
-		return m.Slot
+	if m != nil && m.Slot != nil {
+		return *m.Slot
 	}
 	return 0
 }
@@ -5849,15 +7657,15 @@ func (m *DraftChoicesAndContents) GetCards() []*pegasus_pegasusshared.DeckCardDa
 }
 
 func (m *DraftChoicesAndContents) GetWins() int32 {
-	if m != nil {
-		return m.Wins
+	if m != nil && m.Wins != nil {
+		return *m.Wins
 	}
 	return 0
 }
 
 func (m *DraftChoicesAndContents) GetLosses() int32 {
-	if m != nil {
-		return m.Losses
+	if m != nil && m.Losses != nil {
+		return *m.Losses
 	}
 	return 0
 }
@@ -5884,22 +7692,23 @@ func (m *DraftChoicesAndContents) GetHeroDef() *pegasus_pegasusshared.CardDef {
 }
 
 func (m *DraftChoicesAndContents) GetMaxWins() int32 {
-	if m != nil {
-		return m.MaxWins
+	if m != nil && m.MaxWins != nil {
+		return *m.MaxWins
 	}
 	return 0
 }
 
 // ref: PegasusUtil.DraftChosen
 type DraftChosen struct {
-	Chosen         *pegasus_pegasusshared.CardDef   `protobuf:"bytes,3,opt,name=chosen" json:"chosen,omitempty"`
-	NextChoiceList []*pegasus_pegasusshared.CardDef `protobuf:"bytes,4,rep,name=next_choice_list,json=nextChoiceList" json:"next_choice_list,omitempty"`
+	Chosen           *pegasus_pegasusshared.CardDef   `protobuf:"bytes,3,req,name=chosen" json:"chosen,omitempty"`
+	NextChoiceList   []*pegasus_pegasusshared.CardDef `protobuf:"bytes,4,rep,name=next_choice_list,json=nextChoiceList" json:"next_choice_list,omitempty"`
+	XXX_unrecognized []byte                           `json:"-"`
 }
 
 func (m *DraftChosen) Reset()                    { *m = DraftChosen{} }
 func (m *DraftChosen) String() string            { return proto.CompactTextString(m) }
 func (*DraftChosen) ProtoMessage()               {}
-func (*DraftChosen) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{62} }
+func (*DraftChosen) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{64} }
 
 func (m *DraftChosen) GetChosen() *pegasus_pegasusshared.CardDef {
 	if m != nil {
@@ -5917,110 +7726,159 @@ func (m *DraftChosen) GetNextChoiceList() []*pegasus_pegasusshared.CardDef {
 
 // ref: PegasusUtil.DraftError
 type DraftError struct {
-	ErrorCode DraftError_ErrorCode `protobuf:"varint,1,opt,name=error_code,json=errorCode,enum=pegasus.pegasusutil.DraftError_ErrorCode" json:"error_code,omitempty"`
+	ErrorCode        *DraftError_ErrorCode `protobuf:"varint,1,req,name=error_code,json=errorCode,enum=pegasus.pegasusutil.DraftError_ErrorCode" json:"error_code,omitempty"`
+	NumTicketsOwned  *int32                `protobuf:"varint,2,opt,name=num_tickets_owned,json=numTicketsOwned" json:"num_tickets_owned,omitempty"`
+	XXX_unrecognized []byte                `json:"-"`
 }
 
 func (m *DraftError) Reset()                    { *m = DraftError{} }
 func (m *DraftError) String() string            { return proto.CompactTextString(m) }
 func (*DraftError) ProtoMessage()               {}
-func (*DraftError) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{63} }
+func (*DraftError) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{65} }
 
 func (m *DraftError) GetErrorCode() DraftError_ErrorCode {
-	if m != nil {
-		return m.ErrorCode
+	if m != nil && m.ErrorCode != nil {
+		return *m.ErrorCode
 	}
 	return DraftError_DE_UNKNOWN
 }
 
+func (m *DraftError) GetNumTicketsOwned() int32 {
+	if m != nil && m.NumTicketsOwned != nil {
+		return *m.NumTicketsOwned
+	}
+	return 0
+}
+
 // ref: PegasusUtil.DraftGetPicksAndContents
 type DraftGetPicksAndContents struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *DraftGetPicksAndContents) Reset()                    { *m = DraftGetPicksAndContents{} }
 func (m *DraftGetPicksAndContents) String() string            { return proto.CompactTextString(m) }
 func (*DraftGetPicksAndContents) ProtoMessage()               {}
-func (*DraftGetPicksAndContents) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{64} }
+func (*DraftGetPicksAndContents) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{66} }
 
 // ref: PegasusUtil.DraftMakePick
 type DraftMakePick struct {
-	DeckId  int64 `protobuf:"varint,1,opt,name=deck_id,json=deckId" json:"deck_id,omitempty"`
-	Slot    int32 `protobuf:"varint,2,opt,name=slot" json:"slot,omitempty"`
-	Index   int32 `protobuf:"varint,3,opt,name=index" json:"index,omitempty"`
-	Premium int32 `protobuf:"varint,4,opt,name=premium" json:"premium,omitempty"`
+	DeckId           *int64 `protobuf:"varint,1,req,name=deck_id,json=deckId" json:"deck_id,omitempty"`
+	Slot             *int32 `protobuf:"varint,2,req,name=slot" json:"slot,omitempty"`
+	Index            *int32 `protobuf:"varint,3,req,name=index" json:"index,omitempty"`
+	Premium          *int32 `protobuf:"varint,4,req,name=premium" json:"premium,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *DraftMakePick) Reset()                    { *m = DraftMakePick{} }
 func (m *DraftMakePick) String() string            { return proto.CompactTextString(m) }
 func (*DraftMakePick) ProtoMessage()               {}
-func (*DraftMakePick) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{65} }
+func (*DraftMakePick) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{67} }
 
 func (m *DraftMakePick) GetDeckId() int64 {
-	if m != nil {
-		return m.DeckId
+	if m != nil && m.DeckId != nil {
+		return *m.DeckId
 	}
 	return 0
 }
 
 func (m *DraftMakePick) GetSlot() int32 {
-	if m != nil {
-		return m.Slot
+	if m != nil && m.Slot != nil {
+		return *m.Slot
 	}
 	return 0
 }
 
 func (m *DraftMakePick) GetIndex() int32 {
-	if m != nil {
-		return m.Index
+	if m != nil && m.Index != nil {
+		return *m.Index
 	}
 	return 0
 }
 
 func (m *DraftMakePick) GetPremium() int32 {
-	if m != nil {
-		return m.Premium
+	if m != nil && m.Premium != nil {
+		return *m.Premium
 	}
 	return 0
 }
 
+// ref: PegasusUtil.DraftRemoveGoldensResponse
+type DraftRemoveGoldensResponse struct {
+	Cards            []*pegasus_pegasusshared.DeckCardData `protobuf:"bytes,1,rep,name=cards" json:"cards,omitempty"`
+	ChoiceList       []*pegasus_pegasusshared.CardDef      `protobuf:"bytes,2,rep,name=choice_list,json=choiceList" json:"choice_list,omitempty"`
+	XXX_unrecognized []byte                                `json:"-"`
+}
+
+func (m *DraftRemoveGoldensResponse) Reset()                    { *m = DraftRemoveGoldensResponse{} }
+func (m *DraftRemoveGoldensResponse) String() string            { return proto.CompactTextString(m) }
+func (*DraftRemoveGoldensResponse) ProtoMessage()               {}
+func (*DraftRemoveGoldensResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{68} }
+
+func (m *DraftRemoveGoldensResponse) GetCards() []*pegasus_pegasusshared.DeckCardData {
+	if m != nil {
+		return m.Cards
+	}
+	return nil
+}
+
+func (m *DraftRemoveGoldensResponse) GetChoiceList() []*pegasus_pegasusshared.CardDef {
+	if m != nil {
+		return m.ChoiceList
+	}
+	return nil
+}
+
+// ref: PegasusUtil.DraftRequestRemoveGoldens
+type DraftRequestRemoveGoldens struct {
+	XXX_unrecognized []byte `json:"-"`
+}
+
+func (m *DraftRequestRemoveGoldens) Reset()                    { *m = DraftRequestRemoveGoldens{} }
+func (m *DraftRequestRemoveGoldens) String() string            { return proto.CompactTextString(m) }
+func (*DraftRequestRemoveGoldens) ProtoMessage()               {}
+func (*DraftRequestRemoveGoldens) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{69} }
+
 // ref: PegasusUtil.DraftRetire
 type DraftRetire struct {
-	DeckId int64 `protobuf:"varint,1,opt,name=deck_id,json=deckId" json:"deck_id,omitempty"`
-	Slot   int32 `protobuf:"varint,2,opt,name=slot" json:"slot,omitempty"`
+	DeckId           *int64 `protobuf:"varint,1,req,name=deck_id,json=deckId" json:"deck_id,omitempty"`
+	Slot             *int32 `protobuf:"varint,2,req,name=slot" json:"slot,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *DraftRetire) Reset()                    { *m = DraftRetire{} }
 func (m *DraftRetire) String() string            { return proto.CompactTextString(m) }
 func (*DraftRetire) ProtoMessage()               {}
-func (*DraftRetire) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{66} }
+func (*DraftRetire) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{70} }
 
 func (m *DraftRetire) GetDeckId() int64 {
-	if m != nil {
-		return m.DeckId
+	if m != nil && m.DeckId != nil {
+		return *m.DeckId
 	}
 	return 0
 }
 
 func (m *DraftRetire) GetSlot() int32 {
-	if m != nil {
-		return m.Slot
+	if m != nil && m.Slot != nil {
+		return *m.Slot
 	}
 	return 0
 }
 
 // ref: PegasusUtil.DraftRetired
 type DraftRetired struct {
-	DeckId int64                              `protobuf:"varint,1,opt,name=deck_id,json=deckId" json:"deck_id,omitempty"`
-	Chest  *pegasus_pegasusshared.RewardChest `protobuf:"bytes,2,opt,name=chest" json:"chest,omitempty"`
+	DeckId           *int64                             `protobuf:"varint,1,req,name=deck_id,json=deckId" json:"deck_id,omitempty"`
+	Chest            *pegasus_pegasusshared.RewardChest `protobuf:"bytes,2,req,name=chest" json:"chest,omitempty"`
+	XXX_unrecognized []byte                             `json:"-"`
 }
 
 func (m *DraftRetired) Reset()                    { *m = DraftRetired{} }
 func (m *DraftRetired) String() string            { return proto.CompactTextString(m) }
 func (*DraftRetired) ProtoMessage()               {}
-func (*DraftRetired) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{67} }
+func (*DraftRetired) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{71} }
 
 func (m *DraftRetired) GetDeckId() int64 {
-	if m != nil {
-		return m.DeckId
+	if m != nil && m.DeckId != nil {
+		return *m.DeckId
 	}
 	return 0
 }
@@ -6034,30 +7892,32 @@ func (m *DraftRetired) GetChest() *pegasus_pegasusshared.RewardChest {
 
 // ref: PegasusUtil.DraftRewardsAcked
 type DraftRewardsAcked struct {
-	DeckId int64 `protobuf:"varint,1,opt,name=deck_id,json=deckId" json:"deck_id,omitempty"`
+	DeckId           *int64 `protobuf:"varint,1,req,name=deck_id,json=deckId" json:"deck_id,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *DraftRewardsAcked) Reset()                    { *m = DraftRewardsAcked{} }
 func (m *DraftRewardsAcked) String() string            { return proto.CompactTextString(m) }
 func (*DraftRewardsAcked) ProtoMessage()               {}
-func (*DraftRewardsAcked) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{68} }
+func (*DraftRewardsAcked) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{72} }
 
 func (m *DraftRewardsAcked) GetDeckId() int64 {
-	if m != nil {
-		return m.DeckId
+	if m != nil && m.DeckId != nil {
+		return *m.DeckId
 	}
 	return 0
 }
 
 // ref: PegasusUtil.FavoriteHeroesResponse
 type FavoriteHeroesResponse struct {
-	FavoriteHeroes []*pegasus_pegasusshared.FavoriteHero `protobuf:"bytes,1,rep,name=favorite_heroes,json=favoriteHeroes" json:"favorite_heroes,omitempty"`
+	FavoriteHeroes   []*pegasus_pegasusshared.FavoriteHero `protobuf:"bytes,1,rep,name=favorite_heroes,json=favoriteHeroes" json:"favorite_heroes,omitempty"`
+	XXX_unrecognized []byte                                `json:"-"`
 }
 
 func (m *FavoriteHeroesResponse) Reset()                    { *m = FavoriteHeroesResponse{} }
 func (m *FavoriteHeroesResponse) String() string            { return proto.CompactTextString(m) }
 func (*FavoriteHeroesResponse) ProtoMessage()               {}
-func (*FavoriteHeroesResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{69} }
+func (*FavoriteHeroesResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{73} }
 
 func (m *FavoriteHeroesResponse) GetFavoriteHeroes() []*pegasus_pegasusshared.FavoriteHero {
 	if m != nil {
@@ -6068,116 +7928,119 @@ func (m *FavoriteHeroesResponse) GetFavoriteHeroes() []*pegasus_pegasusshared.Fa
 
 // ref: PegasusUtil.GameCurrencyStates
 type GameCurrencyStates struct {
-	ArcaneDustBalance int64 `protobuf:"varint,1,opt,name=arcane_dust_balance,json=arcaneDustBalance" json:"arcane_dust_balance,omitempty"`
-	CappedGoldBalance int64 `protobuf:"varint,2,opt,name=capped_gold_balance,json=cappedGoldBalance" json:"capped_gold_balance,omitempty"`
-	BonusGoldBalance  int64 `protobuf:"varint,3,opt,name=bonus_gold_balance,json=bonusGoldBalance" json:"bonus_gold_balance,omitempty"`
-	GoldCap           int64 `protobuf:"varint,4,opt,name=gold_cap,json=goldCap" json:"gold_cap,omitempty"`
-	GoldCapWarning    int64 `protobuf:"varint,5,opt,name=gold_cap_warning,json=goldCapWarning" json:"gold_cap_warning,omitempty"`
-	CurrencyVersion   int64 `protobuf:"varint,6,opt,name=currency_version,json=currencyVersion" json:"currency_version,omitempty"`
+	ArcaneDustBalance *int64 `protobuf:"varint,1,opt,name=arcane_dust_balance,json=arcaneDustBalance" json:"arcane_dust_balance,omitempty"`
+	CappedGoldBalance *int64 `protobuf:"varint,2,opt,name=capped_gold_balance,json=cappedGoldBalance" json:"capped_gold_balance,omitempty"`
+	BonusGoldBalance  *int64 `protobuf:"varint,3,opt,name=bonus_gold_balance,json=bonusGoldBalance" json:"bonus_gold_balance,omitempty"`
+	GoldCap           *int64 `protobuf:"varint,4,opt,name=gold_cap,json=goldCap" json:"gold_cap,omitempty"`
+	GoldCapWarning    *int64 `protobuf:"varint,5,opt,name=gold_cap_warning,json=goldCapWarning" json:"gold_cap_warning,omitempty"`
+	CurrencyVersion   *int64 `protobuf:"varint,6,opt,name=currency_version,json=currencyVersion" json:"currency_version,omitempty"`
+	XXX_unrecognized  []byte `json:"-"`
 }
 
 func (m *GameCurrencyStates) Reset()                    { *m = GameCurrencyStates{} }
 func (m *GameCurrencyStates) String() string            { return proto.CompactTextString(m) }
 func (*GameCurrencyStates) ProtoMessage()               {}
-func (*GameCurrencyStates) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{70} }
+func (*GameCurrencyStates) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{74} }
 
 func (m *GameCurrencyStates) GetArcaneDustBalance() int64 {
-	if m != nil {
-		return m.ArcaneDustBalance
+	if m != nil && m.ArcaneDustBalance != nil {
+		return *m.ArcaneDustBalance
 	}
 	return 0
 }
 
 func (m *GameCurrencyStates) GetCappedGoldBalance() int64 {
-	if m != nil {
-		return m.CappedGoldBalance
+	if m != nil && m.CappedGoldBalance != nil {
+		return *m.CappedGoldBalance
 	}
 	return 0
 }
 
 func (m *GameCurrencyStates) GetBonusGoldBalance() int64 {
-	if m != nil {
-		return m.BonusGoldBalance
+	if m != nil && m.BonusGoldBalance != nil {
+		return *m.BonusGoldBalance
 	}
 	return 0
 }
 
 func (m *GameCurrencyStates) GetGoldCap() int64 {
-	if m != nil {
-		return m.GoldCap
+	if m != nil && m.GoldCap != nil {
+		return *m.GoldCap
 	}
 	return 0
 }
 
 func (m *GameCurrencyStates) GetGoldCapWarning() int64 {
-	if m != nil {
-		return m.GoldCapWarning
+	if m != nil && m.GoldCapWarning != nil {
+		return *m.GoldCapWarning
 	}
 	return 0
 }
 
 func (m *GameCurrencyStates) GetCurrencyVersion() int64 {
-	if m != nil {
-		return m.CurrencyVersion
+	if m != nil && m.CurrencyVersion != nil {
+		return *m.CurrencyVersion
 	}
 	return 0
 }
 
 // ref: PegasusUtil.GamesInfo
 type GamesInfo struct {
-	GamesStarted       int32 `protobuf:"varint,1,opt,name=games_started,json=gamesStarted" json:"games_started,omitempty"`
-	GamesWon           int32 `protobuf:"varint,2,opt,name=games_won,json=gamesWon" json:"games_won,omitempty"`
-	GamesLost          int32 `protobuf:"varint,3,opt,name=games_lost,json=gamesLost" json:"games_lost,omitempty"`
-	FreeRewardProgress int32 `protobuf:"varint,4,opt,name=free_reward_progress,json=freeRewardProgress" json:"free_reward_progress,omitempty"`
+	GamesStarted       *int32 `protobuf:"varint,1,req,name=games_started,json=gamesStarted" json:"games_started,omitempty"`
+	GamesWon           *int32 `protobuf:"varint,2,req,name=games_won,json=gamesWon" json:"games_won,omitempty"`
+	GamesLost          *int32 `protobuf:"varint,3,req,name=games_lost,json=gamesLost" json:"games_lost,omitempty"`
+	FreeRewardProgress *int32 `protobuf:"varint,4,req,name=free_reward_progress,json=freeRewardProgress" json:"free_reward_progress,omitempty"`
+	XXX_unrecognized   []byte `json:"-"`
 }
 
 func (m *GamesInfo) Reset()                    { *m = GamesInfo{} }
 func (m *GamesInfo) String() string            { return proto.CompactTextString(m) }
 func (*GamesInfo) ProtoMessage()               {}
-func (*GamesInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{71} }
+func (*GamesInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{75} }
 
 func (m *GamesInfo) GetGamesStarted() int32 {
-	if m != nil {
-		return m.GamesStarted
+	if m != nil && m.GamesStarted != nil {
+		return *m.GamesStarted
 	}
 	return 0
 }
 
 func (m *GamesInfo) GetGamesWon() int32 {
-	if m != nil {
-		return m.GamesWon
+	if m != nil && m.GamesWon != nil {
+		return *m.GamesWon
 	}
 	return 0
 }
 
 func (m *GamesInfo) GetGamesLost() int32 {
-	if m != nil {
-		return m.GamesLost
+	if m != nil && m.GamesLost != nil {
+		return *m.GamesLost
 	}
 	return 0
 }
 
 func (m *GamesInfo) GetFreeRewardProgress() int32 {
-	if m != nil {
-		return m.FreeRewardProgress
+	if m != nil && m.FreeRewardProgress != nil {
+		return *m.FreeRewardProgress
 	}
 	return 0
 }
 
 // ref: PegasusUtil.GenericData
 type GenericData struct {
-	TypeId uint32 `protobuf:"varint,1,opt,name=type_id,json=typeId" json:"type_id,omitempty"`
-	Data   []byte `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
+	TypeId           *uint32 `protobuf:"varint,1,req,name=type_id,json=typeId" json:"type_id,omitempty"`
+	Data             []byte  `protobuf:"bytes,2,req,name=data" json:"data,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *GenericData) Reset()                    { *m = GenericData{} }
 func (m *GenericData) String() string            { return proto.CompactTextString(m) }
 func (*GenericData) ProtoMessage()               {}
-func (*GenericData) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{72} }
+func (*GenericData) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{76} }
 
 func (m *GenericData) GetTypeId() uint32 {
-	if m != nil {
-		return m.TypeId
+	if m != nil && m.TypeId != nil {
+		return *m.TypeId
 	}
 	return 0
 }
@@ -6191,19 +8054,20 @@ func (m *GenericData) GetData() []byte {
 
 // ref: PegasusUtil.GenericRequest
 type GenericRequest struct {
-	RequestId    int32        `protobuf:"varint,1,opt,name=request_id,json=requestId" json:"request_id,omitempty"`
-	GenericData  *GenericData `protobuf:"bytes,2,opt,name=generic_data,json=genericData" json:"generic_data,omitempty"`
-	RequestSubId int32        `protobuf:"varint,3,opt,name=request_sub_id,json=requestSubId" json:"request_sub_id,omitempty"`
+	RequestId        *int32       `protobuf:"varint,1,req,name=request_id,json=requestId" json:"request_id,omitempty"`
+	GenericData      *GenericData `protobuf:"bytes,2,opt,name=generic_data,json=genericData" json:"generic_data,omitempty"`
+	RequestSubId     *int32       `protobuf:"varint,3,opt,name=request_sub_id,json=requestSubId" json:"request_sub_id,omitempty"`
+	XXX_unrecognized []byte       `json:"-"`
 }
 
 func (m *GenericRequest) Reset()                    { *m = GenericRequest{} }
 func (m *GenericRequest) String() string            { return proto.CompactTextString(m) }
 func (*GenericRequest) ProtoMessage()               {}
-func (*GenericRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{73} }
+func (*GenericRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{77} }
 
 func (m *GenericRequest) GetRequestId() int32 {
-	if m != nil {
-		return m.RequestId
+	if m != nil && m.RequestId != nil {
+		return *m.RequestId
 	}
 	return 0
 }
@@ -6216,21 +8080,22 @@ func (m *GenericRequest) GetGenericData() *GenericData {
 }
 
 func (m *GenericRequest) GetRequestSubId() int32 {
-	if m != nil {
-		return m.RequestSubId
+	if m != nil && m.RequestSubId != nil {
+		return *m.RequestSubId
 	}
 	return 0
 }
 
 // ref: PegasusUtil.GenericRequestList
 type GenericRequestList struct {
-	Requests []*GenericRequest `protobuf:"bytes,1,rep,name=requests" json:"requests,omitempty"`
+	Requests         []*GenericRequest `protobuf:"bytes,1,rep,name=requests" json:"requests,omitempty"`
+	XXX_unrecognized []byte            `json:"-"`
 }
 
 func (m *GenericRequestList) Reset()                    { *m = GenericRequestList{} }
 func (m *GenericRequestList) String() string            { return proto.CompactTextString(m) }
 func (*GenericRequestList) ProtoMessage()               {}
-func (*GenericRequestList) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{74} }
+func (*GenericRequestList) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{78} }
 
 func (m *GenericRequestList) GetRequests() []*GenericRequest {
 	if m != nil {
@@ -6241,34 +8106,35 @@ func (m *GenericRequestList) GetRequests() []*GenericRequest {
 
 // ref: PegasusUtil.GenericResponse
 type GenericResponse struct {
-	ResultCode   GenericResponse_Result `protobuf:"varint,1,opt,name=result_code,json=resultCode,enum=pegasus.pegasusutil.GenericResponse_Result" json:"result_code,omitempty"`
-	RequestId    int32                  `protobuf:"varint,2,opt,name=request_id,json=requestId" json:"request_id,omitempty"`
-	RequestSubId int32                  `protobuf:"varint,3,opt,name=request_sub_id,json=requestSubId" json:"request_sub_id,omitempty"`
-	GenericData  *GenericData           `protobuf:"bytes,4,opt,name=generic_data,json=genericData" json:"generic_data,omitempty"`
+	ResultCode       *GenericResponse_Result `protobuf:"varint,1,req,name=result_code,json=resultCode,enum=pegasus.pegasusutil.GenericResponse_Result" json:"result_code,omitempty"`
+	RequestId        *int32                  `protobuf:"varint,2,req,name=request_id,json=requestId" json:"request_id,omitempty"`
+	RequestSubId     *int32                  `protobuf:"varint,3,opt,name=request_sub_id,json=requestSubId" json:"request_sub_id,omitempty"`
+	GenericData      *GenericData            `protobuf:"bytes,4,opt,name=generic_data,json=genericData" json:"generic_data,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *GenericResponse) Reset()                    { *m = GenericResponse{} }
 func (m *GenericResponse) String() string            { return proto.CompactTextString(m) }
 func (*GenericResponse) ProtoMessage()               {}
-func (*GenericResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{75} }
+func (*GenericResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{79} }
 
 func (m *GenericResponse) GetResultCode() GenericResponse_Result {
-	if m != nil {
-		return m.ResultCode
+	if m != nil && m.ResultCode != nil {
+		return *m.ResultCode
 	}
 	return GenericResponse_RESULT_OK
 }
 
 func (m *GenericResponse) GetRequestId() int32 {
-	if m != nil {
-		return m.RequestId
+	if m != nil && m.RequestId != nil {
+		return *m.RequestId
 	}
 	return 0
 }
 
 func (m *GenericResponse) GetRequestSubId() int32 {
-	if m != nil {
-		return m.RequestSubId
+	if m != nil && m.RequestSubId != nil {
+		return *m.RequestSubId
 	}
 	return 0
 }
@@ -6282,40 +8148,45 @@ func (m *GenericResponse) GetGenericData() *GenericData {
 
 // ref: PegasusUtil.GetAccountInfo
 type GetAccountInfo struct {
-	Request GetAccountInfo_Request `protobuf:"varint,1,opt,name=request,enum=pegasus.pegasusutil.GetAccountInfo_Request" json:"request,omitempty"`
+	Request          *GetAccountInfo_Request `protobuf:"varint,1,req,name=request,enum=pegasus.pegasusutil.GetAccountInfo_Request" json:"request,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *GetAccountInfo) Reset()                    { *m = GetAccountInfo{} }
 func (m *GetAccountInfo) String() string            { return proto.CompactTextString(m) }
 func (*GetAccountInfo) ProtoMessage()               {}
-func (*GetAccountInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{76} }
+func (*GetAccountInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{80} }
 
 func (m *GetAccountInfo) GetRequest() GetAccountInfo_Request {
-	if m != nil {
-		return m.Request
+	if m != nil && m.Request != nil {
+		return *m.Request
 	}
-	return GetAccountInfo_REQUEST_AUTO_INVALID
+	return GetAccountInfo_LAST_LOGIN
 }
 
 // ref: PegasusUtil.GetAdventureProgress
 type GetAdventureProgress struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *GetAdventureProgress) Reset()                    { *m = GetAdventureProgress{} }
 func (m *GetAdventureProgress) String() string            { return proto.CompactTextString(m) }
 func (*GetAdventureProgress) ProtoMessage()               {}
-func (*GetAdventureProgress) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{77} }
+func (*GetAdventureProgress) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{81} }
 
 // ref: PegasusUtil.GetAssetRequest
 type GetAssetRequest struct {
-	Requests    []*pegasus_pegasusshared.AssetKey `protobuf:"bytes,1,rep,name=requests" json:"requests,omitempty"`
-	ClientToken int32                             `protobuf:"varint,2,opt,name=client_token,json=clientToken" json:"client_token,omitempty"`
+	Requests           []*pegasus_pegasusshared.AssetKey `protobuf:"bytes,1,rep,name=requests" json:"requests,omitempty"`
+	ClientToken        *int32                            `protobuf:"varint,2,req,name=client_token,json=clientToken" json:"client_token,omitempty"`
+	FsgId              *int64                            `protobuf:"varint,100,opt,name=fsg_id,json=fsgId" json:"fsg_id,omitempty"`
+	FsgSharedSecretKey []byte                            `protobuf:"bytes,101,opt,name=fsg_shared_secret_key,json=fsgSharedSecretKey" json:"fsg_shared_secret_key,omitempty"`
+	XXX_unrecognized   []byte                            `json:"-"`
 }
 
 func (m *GetAssetRequest) Reset()                    { *m = GetAssetRequest{} }
 func (m *GetAssetRequest) String() string            { return proto.CompactTextString(m) }
 func (*GetAssetRequest) ProtoMessage()               {}
-func (*GetAssetRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{78} }
+func (*GetAssetRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{82} }
 
 func (m *GetAssetRequest) GetRequests() []*pegasus_pegasusshared.AssetKey {
 	if m != nil {
@@ -6325,22 +8196,37 @@ func (m *GetAssetRequest) GetRequests() []*pegasus_pegasusshared.AssetKey {
 }
 
 func (m *GetAssetRequest) GetClientToken() int32 {
-	if m != nil {
-		return m.ClientToken
+	if m != nil && m.ClientToken != nil {
+		return *m.ClientToken
 	}
 	return 0
 }
 
+func (m *GetAssetRequest) GetFsgId() int64 {
+	if m != nil && m.FsgId != nil {
+		return *m.FsgId
+	}
+	return 0
+}
+
+func (m *GetAssetRequest) GetFsgSharedSecretKey() []byte {
+	if m != nil {
+		return m.FsgSharedSecretKey
+	}
+	return nil
+}
+
 // ref: PegasusUtil.GetAssetResponse
 type GetAssetResponse struct {
-	Responses   []*AssetResponse `protobuf:"bytes,1,rep,name=responses" json:"responses,omitempty"`
-	ClientToken int32            `protobuf:"varint,3,opt,name=client_token,json=clientToken" json:"client_token,omitempty"`
+	Responses        []*AssetResponse `protobuf:"bytes,1,rep,name=responses" json:"responses,omitempty"`
+	ClientToken      *int32           `protobuf:"varint,3,req,name=client_token,json=clientToken" json:"client_token,omitempty"`
+	XXX_unrecognized []byte           `json:"-"`
 }
 
 func (m *GetAssetResponse) Reset()                    { *m = GetAssetResponse{} }
 func (m *GetAssetResponse) String() string            { return proto.CompactTextString(m) }
 func (*GetAssetResponse) ProtoMessage()               {}
-func (*GetAssetResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{79} }
+func (*GetAssetResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{83} }
 
 func (m *GetAssetResponse) GetResponses() []*AssetResponse {
 	if m != nil {
@@ -6350,21 +8236,22 @@ func (m *GetAssetResponse) GetResponses() []*AssetResponse {
 }
 
 func (m *GetAssetResponse) GetClientToken() int32 {
-	if m != nil {
-		return m.ClientToken
+	if m != nil && m.ClientToken != nil {
+		return *m.ClientToken
 	}
 	return 0
 }
 
 // ref: PegasusUtil.GetAssetsVersion
 type GetAssetsVersion struct {
-	Platform *pegasus_pegasusshared.Platform `protobuf:"bytes,1,opt,name=platform" json:"platform,omitempty"`
+	Platform         *pegasus_pegasusshared.Platform `protobuf:"bytes,1,opt,name=platform" json:"platform,omitempty"`
+	XXX_unrecognized []byte                          `json:"-"`
 }
 
 func (m *GetAssetsVersion) Reset()                    { *m = GetAssetsVersion{} }
 func (m *GetAssetsVersion) String() string            { return proto.CompactTextString(m) }
 func (*GetAssetsVersion) ProtoMessage()               {}
-func (*GetAssetsVersion) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{80} }
+func (*GetAssetsVersion) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{84} }
 
 func (m *GetAssetsVersion) GetPlatform() *pegasus_pegasusshared.Platform {
 	if m != nil {
@@ -6375,22 +8262,24 @@ func (m *GetAssetsVersion) GetPlatform() *pegasus_pegasusshared.Platform {
 
 // ref: PegasusUtil.GetClientStaticAssets
 type GetClientStaticAssets struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *GetClientStaticAssets) Reset()                    { *m = GetClientStaticAssets{} }
 func (m *GetClientStaticAssets) String() string            { return proto.CompactTextString(m) }
 func (*GetClientStaticAssets) ProtoMessage()               {}
-func (*GetClientStaticAssets) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{81} }
+func (*GetClientStaticAssets) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{85} }
 
 // ref: PegasusUtil.GetDeckContents
 type GetDeckContents struct {
-	DeckId []int64 `protobuf:"varint,1,rep,name=deck_id,json=deckId" json:"deck_id,omitempty"`
+	DeckId           []int64 `protobuf:"varint,1,rep,name=deck_id,json=deckId" json:"deck_id,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *GetDeckContents) Reset()                    { *m = GetDeckContents{} }
 func (m *GetDeckContents) String() string            { return proto.CompactTextString(m) }
 func (*GetDeckContents) ProtoMessage()               {}
-func (*GetDeckContents) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{82} }
+func (*GetDeckContents) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{86} }
 
 func (m *GetDeckContents) GetDeckId() []int64 {
 	if m != nil {
@@ -6401,19 +8290,20 @@ func (m *GetDeckContents) GetDeckId() []int64 {
 
 // ref: PegasusUtil.GetDeckContentsResponse
 type GetDeckContentsResponse struct {
-	DeprecatedDeckId int64                                 `protobuf:"varint,1,opt,name=deprecated_deck_id,json=deprecatedDeckId" json:"deprecated_deck_id,omitempty"`
+	DeprecatedDeckId *int64                                `protobuf:"varint,1,opt,name=deprecated_deck_id,json=deprecatedDeckId" json:"deprecated_deck_id,omitempty"`
 	DeprecatedCards  []*pegasus_pegasusshared.DeckCardData `protobuf:"bytes,2,rep,name=deprecated_cards,json=deprecatedCards" json:"deprecated_cards,omitempty"`
 	Decks            []*DeckContents                       `protobuf:"bytes,3,rep,name=decks" json:"decks,omitempty"`
+	XXX_unrecognized []byte                                `json:"-"`
 }
 
 func (m *GetDeckContentsResponse) Reset()                    { *m = GetDeckContentsResponse{} }
 func (m *GetDeckContentsResponse) String() string            { return proto.CompactTextString(m) }
 func (*GetDeckContentsResponse) ProtoMessage()               {}
-func (*GetDeckContentsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{83} }
+func (*GetDeckContentsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{87} }
 
 func (m *GetDeckContentsResponse) GetDeprecatedDeckId() int64 {
-	if m != nil {
-		return m.DeprecatedDeckId
+	if m != nil && m.DeprecatedDeckId != nil {
+		return *m.DeprecatedDeckId
 	}
 	return 0
 }
@@ -6434,51 +8324,53 @@ func (m *GetDeckContentsResponse) GetDecks() []*DeckContents {
 
 // ref: PegasusUtil.GetOptions
 type GetOptions struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *GetOptions) Reset()                    { *m = GetOptions{} }
 func (m *GetOptions) String() string            { return proto.CompactTextString(m) }
 func (*GetOptions) ProtoMessage()               {}
-func (*GetOptions) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{84} }
+func (*GetOptions) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{88} }
 
 // ref: PegasusUtil.GetPurchaseMethod
 type GetPurchaseMethod struct {
-	ProductId string                          `protobuf:"bytes,1,opt,name=product_id,json=productId" json:"product_id,omitempty"`
-	Quantity  int32                           `protobuf:"varint,2,opt,name=quantity" json:"quantity,omitempty"`
-	Currency  int32                           `protobuf:"varint,3,opt,name=currency" json:"currency,omitempty"`
-	DeviceId  string                          `protobuf:"bytes,4,opt,name=device_id,json=deviceId" json:"device_id,omitempty"`
-	Platform  *pegasus_pegasusshared.Platform `protobuf:"bytes,5,opt,name=platform" json:"platform,omitempty"`
+	ProductId        *string                         `protobuf:"bytes,1,req,name=product_id,json=productId" json:"product_id,omitempty"`
+	Quantity         *int32                          `protobuf:"varint,2,req,name=quantity" json:"quantity,omitempty"`
+	Currency         *int32                          `protobuf:"varint,3,req,name=currency" json:"currency,omitempty"`
+	DeviceId         *string                         `protobuf:"bytes,4,req,name=device_id,json=deviceId" json:"device_id,omitempty"`
+	Platform         *pegasus_pegasusshared.Platform `protobuf:"bytes,5,opt,name=platform" json:"platform,omitempty"`
+	XXX_unrecognized []byte                          `json:"-"`
 }
 
 func (m *GetPurchaseMethod) Reset()                    { *m = GetPurchaseMethod{} }
 func (m *GetPurchaseMethod) String() string            { return proto.CompactTextString(m) }
 func (*GetPurchaseMethod) ProtoMessage()               {}
-func (*GetPurchaseMethod) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{85} }
+func (*GetPurchaseMethod) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{89} }
 
 func (m *GetPurchaseMethod) GetProductId() string {
-	if m != nil {
-		return m.ProductId
+	if m != nil && m.ProductId != nil {
+		return *m.ProductId
 	}
 	return ""
 }
 
 func (m *GetPurchaseMethod) GetQuantity() int32 {
-	if m != nil {
-		return m.Quantity
+	if m != nil && m.Quantity != nil {
+		return *m.Quantity
 	}
 	return 0
 }
 
 func (m *GetPurchaseMethod) GetCurrency() int32 {
-	if m != nil {
-		return m.Currency
+	if m != nil && m.Currency != nil {
+		return *m.Currency
 	}
 	return 0
 }
 
 func (m *GetPurchaseMethod) GetDeviceId() string {
-	if m != nil {
-		return m.DeviceId
+	if m != nil && m.DeviceId != nil {
+		return *m.DeviceId
 	}
 	return ""
 }
@@ -6492,22 +8384,24 @@ func (m *GetPurchaseMethod) GetPlatform() *pegasus_pegasusshared.Platform {
 
 // ref: PegasusUtil.GetRecruitAFriendData
 type GetRecruitAFriendData struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *GetRecruitAFriendData) Reset()                    { *m = GetRecruitAFriendData{} }
 func (m *GetRecruitAFriendData) String() string            { return proto.CompactTextString(m) }
 func (*GetRecruitAFriendData) ProtoMessage()               {}
-func (*GetRecruitAFriendData) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{86} }
+func (*GetRecruitAFriendData) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{90} }
 
 // ref: PegasusUtil.GetRecruitAFriendURL
 type GetRecruitAFriendURL struct {
-	Platform *pegasus_pegasusshared.Platform `protobuf:"bytes,1,opt,name=platform" json:"platform,omitempty"`
+	Platform         *pegasus_pegasusshared.Platform `protobuf:"bytes,1,req,name=platform" json:"platform,omitempty"`
+	XXX_unrecognized []byte                          `json:"-"`
 }
 
 func (m *GetRecruitAFriendURL) Reset()                    { *m = GetRecruitAFriendURL{} }
 func (m *GetRecruitAFriendURL) String() string            { return proto.CompactTextString(m) }
 func (*GetRecruitAFriendURL) ProtoMessage()               {}
-func (*GetRecruitAFriendURL) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{87} }
+func (*GetRecruitAFriendURL) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{91} }
 
 func (m *GetRecruitAFriendURL) GetPlatform() *pegasus_pegasusshared.Platform {
 	if m != nil {
@@ -6518,344 +8412,372 @@ func (m *GetRecruitAFriendURL) GetPlatform() *pegasus_pegasusshared.Platform {
 
 // ref: PegasusUtil.GetThirdPartyPurchaseStatus
 type GetThirdPartyPurchaseStatus struct {
-	ThirdPartyId string `protobuf:"bytes,1,opt,name=third_party_id,json=thirdPartyId" json:"third_party_id,omitempty"`
+	ThirdPartyId     *string `protobuf:"bytes,1,req,name=third_party_id,json=thirdPartyId" json:"third_party_id,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *GetThirdPartyPurchaseStatus) Reset()                    { *m = GetThirdPartyPurchaseStatus{} }
 func (m *GetThirdPartyPurchaseStatus) String() string            { return proto.CompactTextString(m) }
 func (*GetThirdPartyPurchaseStatus) ProtoMessage()               {}
-func (*GetThirdPartyPurchaseStatus) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{88} }
+func (*GetThirdPartyPurchaseStatus) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{92} }
 
 func (m *GetThirdPartyPurchaseStatus) GetThirdPartyId() string {
-	if m != nil {
-		return m.ThirdPartyId
+	if m != nil && m.ThirdPartyId != nil {
+		return *m.ThirdPartyId
 	}
 	return ""
 }
 
 // ref: PegasusUtil.GoldCostBooster
 type GoldCostBooster struct {
-	Cost                 int64  `protobuf:"varint,1,opt,name=cost" json:"cost,omitempty"`
-	PackType             int32  `protobuf:"varint,2,opt,name=pack_type,json=packType" json:"pack_type,omitempty"`
-	BuyWithGoldEventName string `protobuf:"bytes,3,opt,name=buy_with_gold_event_name,json=buyWithGoldEventName" json:"buy_with_gold_event_name,omitempty"`
+	Cost                 *int64  `protobuf:"varint,1,req,name=cost" json:"cost,omitempty"`
+	PackType             *int32  `protobuf:"varint,2,req,name=pack_type,json=packType" json:"pack_type,omitempty"`
+	BuyWithGoldEventName *string `protobuf:"bytes,3,opt,name=buy_with_gold_event_name,json=buyWithGoldEventName" json:"buy_with_gold_event_name,omitempty"`
+	XXX_unrecognized     []byte  `json:"-"`
 }
 
 func (m *GoldCostBooster) Reset()                    { *m = GoldCostBooster{} }
 func (m *GoldCostBooster) String() string            { return proto.CompactTextString(m) }
 func (*GoldCostBooster) ProtoMessage()               {}
-func (*GoldCostBooster) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{89} }
+func (*GoldCostBooster) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{93} }
 
 func (m *GoldCostBooster) GetCost() int64 {
-	if m != nil {
-		return m.Cost
+	if m != nil && m.Cost != nil {
+		return *m.Cost
 	}
 	return 0
 }
 
 func (m *GoldCostBooster) GetPackType() int32 {
-	if m != nil {
-		return m.PackType
+	if m != nil && m.PackType != nil {
+		return *m.PackType
 	}
 	return 0
 }
 
 func (m *GoldCostBooster) GetBuyWithGoldEventName() string {
-	if m != nil {
-		return m.BuyWithGoldEventName
+	if m != nil && m.BuyWithGoldEventName != nil {
+		return *m.BuyWithGoldEventName
 	}
 	return ""
 }
 
 // ref: PegasusUtil.GuardianVars
 type GuardianVars struct {
-	Tourney                            bool    `protobuf:"varint,1,opt,name=tourney" json:"tourney,omitempty"`
-	Practice                           bool    `protobuf:"varint,2,opt,name=practice" json:"practice,omitempty"`
-	Casual                             bool    `protobuf:"varint,3,opt,name=casual" json:"casual,omitempty"`
-	Forge                              bool    `protobuf:"varint,4,opt,name=forge" json:"forge,omitempty"`
-	Friendly                           bool    `protobuf:"varint,5,opt,name=friendly" json:"friendly,omitempty"`
-	Manager                            bool    `protobuf:"varint,6,opt,name=manager" json:"manager,omitempty"`
-	Crafting                           bool    `protobuf:"varint,7,opt,name=crafting" json:"crafting,omitempty"`
-	Hunter                             bool    `protobuf:"varint,8,opt,name=hunter" json:"hunter,omitempty"`
-	Mage                               bool    `protobuf:"varint,9,opt,name=mage" json:"mage,omitempty"`
-	Paladin                            bool    `protobuf:"varint,10,opt,name=paladin" json:"paladin,omitempty"`
-	Priest                             bool    `protobuf:"varint,11,opt,name=priest" json:"priest,omitempty"`
-	Rogue                              bool    `protobuf:"varint,12,opt,name=rogue" json:"rogue,omitempty"`
-	Shaman                             bool    `protobuf:"varint,13,opt,name=shaman" json:"shaman,omitempty"`
-	Warlock                            bool    `protobuf:"varint,14,opt,name=warlock" json:"warlock,omitempty"`
-	Warrior                            bool    `protobuf:"varint,15,opt,name=warrior" json:"warrior,omitempty"`
-	ShowUserUi                         int32   `protobuf:"varint,16,opt,name=show_user_ui,json=showUserUi" json:"show_user_ui,omitempty"`
-	Store                              bool    `protobuf:"varint,17,opt,name=store" json:"store,omitempty"`
-	BattlePay                          bool    `protobuf:"varint,18,opt,name=battle_pay,json=battlePay" json:"battle_pay,omitempty"`
-	BuyWithGold                        bool    `protobuf:"varint,19,opt,name=buy_with_gold,json=buyWithGold" json:"buy_with_gold,omitempty"`
-	TavernBrawl                        bool    `protobuf:"varint,20,opt,name=tavern_brawl,json=tavernBrawl" json:"tavern_brawl,omitempty"`
-	ClientOptionsUpdateIntervalSeconds int32   `protobuf:"varint,21,opt,name=client_options_update_interval_seconds,json=clientOptionsUpdateIntervalSeconds" json:"client_options_update_interval_seconds,omitempty"`
-	CaisEnabledNonMobile               bool    `protobuf:"varint,22,opt,name=cais_enabled_non_mobile,json=caisEnabledNonMobile" json:"cais_enabled_non_mobile,omitempty"`
-	CaisEnabledMobileChina             bool    `protobuf:"varint,23,opt,name=cais_enabled_mobile_china,json=caisEnabledMobileChina" json:"cais_enabled_mobile_china,omitempty"`
-	CaisEnabledMobileSouthKorea        bool    `protobuf:"varint,24,opt,name=cais_enabled_mobile_south_korea,json=caisEnabledMobileSouthKorea" json:"cais_enabled_mobile_south_korea,omitempty"`
-	SendTelemetryPresence              bool    `protobuf:"varint,25,opt,name=send_telemetry_presence,json=sendTelemetryPresence" json:"send_telemetry_presence,omitempty"`
-	FriendWeekConcederMaxDefense       int32   `protobuf:"varint,26,opt,name=friend_week_conceder_max_defense,json=friendWeekConcederMaxDefense" json:"friend_week_conceder_max_defense,omitempty"`
-	WinsPerGold                        int32   `protobuf:"varint,27,opt,name=wins_per_gold,json=winsPerGold" json:"wins_per_gold,omitempty"`
-	GoldPerReward                      int32   `protobuf:"varint,28,opt,name=gold_per_reward,json=goldPerReward" json:"gold_per_reward,omitempty"`
-	MaxGoldPerDay                      int32   `protobuf:"varint,29,opt,name=max_gold_per_day,json=maxGoldPerDay" json:"max_gold_per_day,omitempty"`
-	XpSoloLimit                        int32   `protobuf:"varint,30,opt,name=xp_solo_limit,json=xpSoloLimit" json:"xp_solo_limit,omitempty"`
-	MaxHeroLevel                       int32   `protobuf:"varint,31,opt,name=max_hero_level,json=maxHeroLevel" json:"max_hero_level,omitempty"`
-	EventTimingMod                     float32 `protobuf:"fixed32,32,opt,name=event_timing_mod,json=eventTimingMod" json:"event_timing_mod,omitempty"`
-	FsgEnabled                         bool    `protobuf:"varint,33,opt,name=fsg_enabled,json=fsgEnabled" json:"fsg_enabled,omitempty"`
-	FsgAutoCheckinEnabled              bool    `protobuf:"varint,34,opt,name=fsg_auto_checkin_enabled,json=fsgAutoCheckinEnabled" json:"fsg_auto_checkin_enabled,omitempty"`
+	Tourney                                 *bool    `protobuf:"varint,1,opt,name=tourney" json:"tourney,omitempty"`
+	Practice                                *bool    `protobuf:"varint,2,opt,name=practice" json:"practice,omitempty"`
+	Casual                                  *bool    `protobuf:"varint,3,opt,name=casual" json:"casual,omitempty"`
+	Forge                                   *bool    `protobuf:"varint,4,opt,name=forge" json:"forge,omitempty"`
+	Friendly                                *bool    `protobuf:"varint,5,opt,name=friendly" json:"friendly,omitempty"`
+	Manager                                 *bool    `protobuf:"varint,6,opt,name=manager" json:"manager,omitempty"`
+	Crafting                                *bool    `protobuf:"varint,7,opt,name=crafting" json:"crafting,omitempty"`
+	Hunter                                  *bool    `protobuf:"varint,8,opt,name=hunter" json:"hunter,omitempty"`
+	Mage                                    *bool    `protobuf:"varint,9,opt,name=mage" json:"mage,omitempty"`
+	Paladin                                 *bool    `protobuf:"varint,10,opt,name=paladin" json:"paladin,omitempty"`
+	Priest                                  *bool    `protobuf:"varint,11,opt,name=priest" json:"priest,omitempty"`
+	Rogue                                   *bool    `protobuf:"varint,12,opt,name=rogue" json:"rogue,omitempty"`
+	Shaman                                  *bool    `protobuf:"varint,13,opt,name=shaman" json:"shaman,omitempty"`
+	Warlock                                 *bool    `protobuf:"varint,14,opt,name=warlock" json:"warlock,omitempty"`
+	Warrior                                 *bool    `protobuf:"varint,15,opt,name=warrior" json:"warrior,omitempty"`
+	ShowUserUi                              *int32   `protobuf:"varint,16,opt,name=show_user_ui,json=showUserUi" json:"show_user_ui,omitempty"`
+	Store                                   *bool    `protobuf:"varint,17,opt,name=store" json:"store,omitempty"`
+	BattlePay                               *bool    `protobuf:"varint,18,opt,name=battle_pay,json=battlePay" json:"battle_pay,omitempty"`
+	BuyWithGold                             *bool    `protobuf:"varint,19,opt,name=buy_with_gold,json=buyWithGold" json:"buy_with_gold,omitempty"`
+	TavernBrawl                             *bool    `protobuf:"varint,20,opt,name=tavern_brawl,json=tavernBrawl" json:"tavern_brawl,omitempty"`
+	ClientOptionsUpdateIntervalSeconds      *int32   `protobuf:"varint,21,opt,name=client_options_update_interval_seconds,json=clientOptionsUpdateIntervalSeconds" json:"client_options_update_interval_seconds,omitempty"`
+	CaisEnabledNonMobile                    *bool    `protobuf:"varint,22,opt,name=cais_enabled_non_mobile,json=caisEnabledNonMobile" json:"cais_enabled_non_mobile,omitempty"`
+	CaisEnabledMobileChina                  *bool    `protobuf:"varint,23,opt,name=cais_enabled_mobile_china,json=caisEnabledMobileChina" json:"cais_enabled_mobile_china,omitempty"`
+	CaisEnabledMobileSouthKorea             *bool    `protobuf:"varint,24,opt,name=cais_enabled_mobile_south_korea,json=caisEnabledMobileSouthKorea" json:"cais_enabled_mobile_south_korea,omitempty"`
+	SendTelemetryPresence                   *bool    `protobuf:"varint,25,opt,name=send_telemetry_presence,json=sendTelemetryPresence" json:"send_telemetry_presence,omitempty"`
+	FriendWeekConcederMaxDefense            *int32   `protobuf:"varint,26,opt,name=friend_week_conceder_max_defense,json=friendWeekConcederMaxDefense" json:"friend_week_conceder_max_defense,omitempty"`
+	WinsPerGold                             *int32   `protobuf:"varint,27,opt,name=wins_per_gold,json=winsPerGold" json:"wins_per_gold,omitempty"`
+	GoldPerReward                           *int32   `protobuf:"varint,28,opt,name=gold_per_reward,json=goldPerReward" json:"gold_per_reward,omitempty"`
+	MaxGoldPerDay                           *int32   `protobuf:"varint,29,opt,name=max_gold_per_day,json=maxGoldPerDay" json:"max_gold_per_day,omitempty"`
+	XpSoloLimit                             *int32   `protobuf:"varint,30,opt,name=xp_solo_limit,json=xpSoloLimit" json:"xp_solo_limit,omitempty"`
+	MaxHeroLevel                            *int32   `protobuf:"varint,31,opt,name=max_hero_level,json=maxHeroLevel" json:"max_hero_level,omitempty"`
+	EventTimingMod                          *float32 `protobuf:"fixed32,32,opt,name=event_timing_mod,json=eventTimingMod" json:"event_timing_mod,omitempty"`
+	FsgEnabled                              *bool    `protobuf:"varint,33,opt,name=fsg_enabled,json=fsgEnabled" json:"fsg_enabled,omitempty"`
+	FsgAutoCheckinEnabled                   *bool    `protobuf:"varint,34,opt,name=fsg_auto_checkin_enabled,json=fsgAutoCheckinEnabled" json:"fsg_auto_checkin_enabled,omitempty"`
+	FriendWeekConcededGameMinTotalTurns     *int32   `protobuf:"varint,35,opt,name=friend_week_conceded_game_min_total_turns,json=friendWeekConcededGameMinTotalTurns" json:"friend_week_conceded_game_min_total_turns,omitempty"`
+	FriendWeekAllowsTavernBrawlRecordUpdate *bool    `protobuf:"varint,36,opt,name=friend_week_allows_tavern_brawl_record_update,json=friendWeekAllowsTavernBrawlRecordUpdate" json:"friend_week_allows_tavern_brawl_record_update,omitempty"`
+	FsgShowBetaLabel                        *bool    `protobuf:"varint,37,opt,name=fsg_show_beta_label,json=fsgShowBetaLabel" json:"fsg_show_beta_label,omitempty"`
+	XXX_unrecognized                        []byte   `json:"-"`
 }
 
 func (m *GuardianVars) Reset()                    { *m = GuardianVars{} }
 func (m *GuardianVars) String() string            { return proto.CompactTextString(m) }
 func (*GuardianVars) ProtoMessage()               {}
-func (*GuardianVars) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{90} }
+func (*GuardianVars) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{94} }
 
 func (m *GuardianVars) GetTourney() bool {
-	if m != nil {
-		return m.Tourney
+	if m != nil && m.Tourney != nil {
+		return *m.Tourney
 	}
 	return false
 }
 
 func (m *GuardianVars) GetPractice() bool {
-	if m != nil {
-		return m.Practice
+	if m != nil && m.Practice != nil {
+		return *m.Practice
 	}
 	return false
 }
 
 func (m *GuardianVars) GetCasual() bool {
-	if m != nil {
-		return m.Casual
+	if m != nil && m.Casual != nil {
+		return *m.Casual
 	}
 	return false
 }
 
 func (m *GuardianVars) GetForge() bool {
-	if m != nil {
-		return m.Forge
+	if m != nil && m.Forge != nil {
+		return *m.Forge
 	}
 	return false
 }
 
 func (m *GuardianVars) GetFriendly() bool {
-	if m != nil {
-		return m.Friendly
+	if m != nil && m.Friendly != nil {
+		return *m.Friendly
 	}
 	return false
 }
 
 func (m *GuardianVars) GetManager() bool {
-	if m != nil {
-		return m.Manager
+	if m != nil && m.Manager != nil {
+		return *m.Manager
 	}
 	return false
 }
 
 func (m *GuardianVars) GetCrafting() bool {
-	if m != nil {
-		return m.Crafting
+	if m != nil && m.Crafting != nil {
+		return *m.Crafting
 	}
 	return false
 }
 
 func (m *GuardianVars) GetHunter() bool {
-	if m != nil {
-		return m.Hunter
+	if m != nil && m.Hunter != nil {
+		return *m.Hunter
 	}
 	return false
 }
 
 func (m *GuardianVars) GetMage() bool {
-	if m != nil {
-		return m.Mage
+	if m != nil && m.Mage != nil {
+		return *m.Mage
 	}
 	return false
 }
 
 func (m *GuardianVars) GetPaladin() bool {
-	if m != nil {
-		return m.Paladin
+	if m != nil && m.Paladin != nil {
+		return *m.Paladin
 	}
 	return false
 }
 
 func (m *GuardianVars) GetPriest() bool {
-	if m != nil {
-		return m.Priest
+	if m != nil && m.Priest != nil {
+		return *m.Priest
 	}
 	return false
 }
 
 func (m *GuardianVars) GetRogue() bool {
-	if m != nil {
-		return m.Rogue
+	if m != nil && m.Rogue != nil {
+		return *m.Rogue
 	}
 	return false
 }
 
 func (m *GuardianVars) GetShaman() bool {
-	if m != nil {
-		return m.Shaman
+	if m != nil && m.Shaman != nil {
+		return *m.Shaman
 	}
 	return false
 }
 
 func (m *GuardianVars) GetWarlock() bool {
-	if m != nil {
-		return m.Warlock
+	if m != nil && m.Warlock != nil {
+		return *m.Warlock
 	}
 	return false
 }
 
 func (m *GuardianVars) GetWarrior() bool {
-	if m != nil {
-		return m.Warrior
+	if m != nil && m.Warrior != nil {
+		return *m.Warrior
 	}
 	return false
 }
 
 func (m *GuardianVars) GetShowUserUi() int32 {
-	if m != nil {
-		return m.ShowUserUi
+	if m != nil && m.ShowUserUi != nil {
+		return *m.ShowUserUi
 	}
 	return 0
 }
 
 func (m *GuardianVars) GetStore() bool {
-	if m != nil {
-		return m.Store
+	if m != nil && m.Store != nil {
+		return *m.Store
 	}
 	return false
 }
 
 func (m *GuardianVars) GetBattlePay() bool {
-	if m != nil {
-		return m.BattlePay
+	if m != nil && m.BattlePay != nil {
+		return *m.BattlePay
 	}
 	return false
 }
 
 func (m *GuardianVars) GetBuyWithGold() bool {
-	if m != nil {
-		return m.BuyWithGold
+	if m != nil && m.BuyWithGold != nil {
+		return *m.BuyWithGold
 	}
 	return false
 }
 
 func (m *GuardianVars) GetTavernBrawl() bool {
-	if m != nil {
-		return m.TavernBrawl
+	if m != nil && m.TavernBrawl != nil {
+		return *m.TavernBrawl
 	}
 	return false
 }
 
 func (m *GuardianVars) GetClientOptionsUpdateIntervalSeconds() int32 {
-	if m != nil {
-		return m.ClientOptionsUpdateIntervalSeconds
+	if m != nil && m.ClientOptionsUpdateIntervalSeconds != nil {
+		return *m.ClientOptionsUpdateIntervalSeconds
 	}
 	return 0
 }
 
 func (m *GuardianVars) GetCaisEnabledNonMobile() bool {
-	if m != nil {
-		return m.CaisEnabledNonMobile
+	if m != nil && m.CaisEnabledNonMobile != nil {
+		return *m.CaisEnabledNonMobile
 	}
 	return false
 }
 
 func (m *GuardianVars) GetCaisEnabledMobileChina() bool {
-	if m != nil {
-		return m.CaisEnabledMobileChina
+	if m != nil && m.CaisEnabledMobileChina != nil {
+		return *m.CaisEnabledMobileChina
 	}
 	return false
 }
 
 func (m *GuardianVars) GetCaisEnabledMobileSouthKorea() bool {
-	if m != nil {
-		return m.CaisEnabledMobileSouthKorea
+	if m != nil && m.CaisEnabledMobileSouthKorea != nil {
+		return *m.CaisEnabledMobileSouthKorea
 	}
 	return false
 }
 
 func (m *GuardianVars) GetSendTelemetryPresence() bool {
-	if m != nil {
-		return m.SendTelemetryPresence
+	if m != nil && m.SendTelemetryPresence != nil {
+		return *m.SendTelemetryPresence
 	}
 	return false
 }
 
 func (m *GuardianVars) GetFriendWeekConcederMaxDefense() int32 {
-	if m != nil {
-		return m.FriendWeekConcederMaxDefense
+	if m != nil && m.FriendWeekConcederMaxDefense != nil {
+		return *m.FriendWeekConcederMaxDefense
 	}
 	return 0
 }
 
 func (m *GuardianVars) GetWinsPerGold() int32 {
-	if m != nil {
-		return m.WinsPerGold
+	if m != nil && m.WinsPerGold != nil {
+		return *m.WinsPerGold
 	}
 	return 0
 }
 
 func (m *GuardianVars) GetGoldPerReward() int32 {
-	if m != nil {
-		return m.GoldPerReward
+	if m != nil && m.GoldPerReward != nil {
+		return *m.GoldPerReward
 	}
 	return 0
 }
 
 func (m *GuardianVars) GetMaxGoldPerDay() int32 {
-	if m != nil {
-		return m.MaxGoldPerDay
+	if m != nil && m.MaxGoldPerDay != nil {
+		return *m.MaxGoldPerDay
 	}
 	return 0
 }
 
 func (m *GuardianVars) GetXpSoloLimit() int32 {
-	if m != nil {
-		return m.XpSoloLimit
+	if m != nil && m.XpSoloLimit != nil {
+		return *m.XpSoloLimit
 	}
 	return 0
 }
 
 func (m *GuardianVars) GetMaxHeroLevel() int32 {
-	if m != nil {
-		return m.MaxHeroLevel
+	if m != nil && m.MaxHeroLevel != nil {
+		return *m.MaxHeroLevel
 	}
 	return 0
 }
 
 func (m *GuardianVars) GetEventTimingMod() float32 {
-	if m != nil {
-		return m.EventTimingMod
+	if m != nil && m.EventTimingMod != nil {
+		return *m.EventTimingMod
 	}
 	return 0
 }
 
 func (m *GuardianVars) GetFsgEnabled() bool {
-	if m != nil {
-		return m.FsgEnabled
+	if m != nil && m.FsgEnabled != nil {
+		return *m.FsgEnabled
 	}
 	return false
 }
 
 func (m *GuardianVars) GetFsgAutoCheckinEnabled() bool {
-	if m != nil {
-		return m.FsgAutoCheckinEnabled
+	if m != nil && m.FsgAutoCheckinEnabled != nil {
+		return *m.FsgAutoCheckinEnabled
+	}
+	return false
+}
+
+func (m *GuardianVars) GetFriendWeekConcededGameMinTotalTurns() int32 {
+	if m != nil && m.FriendWeekConcededGameMinTotalTurns != nil {
+		return *m.FriendWeekConcededGameMinTotalTurns
+	}
+	return 0
+}
+
+func (m *GuardianVars) GetFriendWeekAllowsTavernBrawlRecordUpdate() bool {
+	if m != nil && m.FriendWeekAllowsTavernBrawlRecordUpdate != nil {
+		return *m.FriendWeekAllowsTavernBrawlRecordUpdate
+	}
+	return false
+}
+
+func (m *GuardianVars) GetFsgShowBetaLabel() bool {
+	if m != nil && m.FsgShowBetaLabel != nil {
+		return *m.FsgShowBetaLabel
 	}
 	return false
 }
 
 // ref: PegasusUtil.HeroXP
 type HeroXP struct {
-	XpInfos []*HeroXPInfo `protobuf:"bytes,1,rep,name=xp_infos,json=xpInfos" json:"xp_infos,omitempty"`
+	XpInfos          []*HeroXPInfo `protobuf:"bytes,1,rep,name=xp_infos,json=xpInfos" json:"xp_infos,omitempty"`
+	XXX_unrecognized []byte        `json:"-"`
 }
 
 func (m *HeroXP) Reset()                    { *m = HeroXP{} }
 func (m *HeroXP) String() string            { return proto.CompactTextString(m) }
 func (*HeroXP) ProtoMessage()               {}
-func (*HeroXP) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{91} }
+func (*HeroXP) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{95} }
 
 func (m *HeroXP) GetXpInfos() []*HeroXPInfo {
 	if m != nil {
@@ -6866,42 +8788,43 @@ func (m *HeroXP) GetXpInfos() []*HeroXPInfo {
 
 // ref: PegasusUtil.HeroXPInfo
 type HeroXPInfo struct {
-	ClassId    int32                `protobuf:"varint,1,opt,name=class_id,json=classId" json:"class_id,omitempty"`
-	Level      int32                `protobuf:"varint,2,opt,name=level" json:"level,omitempty"`
-	CurrXp     int64                `protobuf:"varint,3,opt,name=curr_xp,json=currXp" json:"curr_xp,omitempty"`
-	MaxXp      int64                `protobuf:"varint,4,opt,name=max_xp,json=maxXp" json:"max_xp,omitempty"`
-	NextReward *NextHeroLevelReward `protobuf:"bytes,5,opt,name=next_reward,json=nextReward" json:"next_reward,omitempty"`
+	ClassId          *int32               `protobuf:"varint,1,req,name=class_id,json=classId" json:"class_id,omitempty"`
+	Level            *int32               `protobuf:"varint,2,req,name=level" json:"level,omitempty"`
+	CurrXp           *int64               `protobuf:"varint,3,req,name=curr_xp,json=currXp" json:"curr_xp,omitempty"`
+	MaxXp            *int64               `protobuf:"varint,4,req,name=max_xp,json=maxXp" json:"max_xp,omitempty"`
+	NextReward       *NextHeroLevelReward `protobuf:"bytes,5,opt,name=next_reward,json=nextReward" json:"next_reward,omitempty"`
+	XXX_unrecognized []byte               `json:"-"`
 }
 
 func (m *HeroXPInfo) Reset()                    { *m = HeroXPInfo{} }
 func (m *HeroXPInfo) String() string            { return proto.CompactTextString(m) }
 func (*HeroXPInfo) ProtoMessage()               {}
-func (*HeroXPInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{92} }
+func (*HeroXPInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{96} }
 
 func (m *HeroXPInfo) GetClassId() int32 {
-	if m != nil {
-		return m.ClassId
+	if m != nil && m.ClassId != nil {
+		return *m.ClassId
 	}
 	return 0
 }
 
 func (m *HeroXPInfo) GetLevel() int32 {
-	if m != nil {
-		return m.Level
+	if m != nil && m.Level != nil {
+		return *m.Level
 	}
 	return 0
 }
 
 func (m *HeroXPInfo) GetCurrXp() int64 {
-	if m != nil {
-		return m.CurrXp
+	if m != nil && m.CurrXp != nil {
+		return *m.CurrXp
 	}
 	return 0
 }
 
 func (m *HeroXPInfo) GetMaxXp() int64 {
-	if m != nil {
-		return m.MaxXp
+	if m != nil && m.MaxXp != nil {
+		return *m.MaxXp
 	}
 	return 0
 }
@@ -6923,12 +8846,15 @@ type InitialClientState struct {
 	GuardianVars       *GuardianVars         `protobuf:"bytes,6,opt,name=guardian_vars,json=guardianVars" json:"guardian_vars,omitempty"`
 	SpecialEventTiming []*SpecialEventTiming `protobuf:"bytes,7,rep,name=special_event_timing,json=specialEventTiming" json:"special_event_timing,omitempty"`
 	TavernBrawlsList   []*TavernBrawlInfo    `protobuf:"bytes,8,rep,name=tavern_brawls_list,json=tavernBrawlsList" json:"tavern_brawls_list,omitempty"`
+	Boosters           *Boosters             `protobuf:"bytes,9,opt,name=boosters" json:"boosters,omitempty"`
+	DisconnectedGame   *DisconnectedGame     `protobuf:"bytes,10,opt,name=disconnected_game,json=disconnectedGame" json:"disconnected_game,omitempty"`
+	XXX_unrecognized   []byte                `json:"-"`
 }
 
 func (m *InitialClientState) Reset()                    { *m = InitialClientState{} }
 func (m *InitialClientState) String() string            { return proto.CompactTextString(m) }
 func (*InitialClientState) ProtoMessage()               {}
-func (*InitialClientState) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{93} }
+func (*InitialClientState) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{97} }
 
 func (m *InitialClientState) GetCollection() *Collection {
 	if m != nil {
@@ -6986,50 +8912,67 @@ func (m *InitialClientState) GetTavernBrawlsList() []*TavernBrawlInfo {
 	return nil
 }
 
+func (m *InitialClientState) GetBoosters() *Boosters {
+	if m != nil {
+		return m.Boosters
+	}
+	return nil
+}
+
+func (m *InitialClientState) GetDisconnectedGame() *DisconnectedGame {
+	if m != nil {
+		return m.DisconnectedGame
+	}
+	return nil
+}
+
 // ref: PegasusUtil.MassDisenchantRequest
 type MassDisenchantRequest struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *MassDisenchantRequest) Reset()                    { *m = MassDisenchantRequest{} }
 func (m *MassDisenchantRequest) String() string            { return proto.CompactTextString(m) }
 func (*MassDisenchantRequest) ProtoMessage()               {}
-func (*MassDisenchantRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{94} }
+func (*MassDisenchantRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{98} }
 
 // ref: PegasusUtil.MassDisenchantResponse
 type MassDisenchantResponse struct {
-	Amount            int32 `protobuf:"varint,1,opt,name=amount" json:"amount,omitempty"`
-	CollectionVersion int64 `protobuf:"varint,2,opt,name=collection_version,json=collectionVersion" json:"collection_version,omitempty"`
+	Amount            *int32 `protobuf:"varint,1,req,name=amount" json:"amount,omitempty"`
+	CollectionVersion *int64 `protobuf:"varint,2,opt,name=collection_version,json=collectionVersion" json:"collection_version,omitempty"`
+	XXX_unrecognized  []byte `json:"-"`
 }
 
 func (m *MassDisenchantResponse) Reset()                    { *m = MassDisenchantResponse{} }
 func (m *MassDisenchantResponse) String() string            { return proto.CompactTextString(m) }
 func (*MassDisenchantResponse) ProtoMessage()               {}
-func (*MassDisenchantResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{95} }
+func (*MassDisenchantResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{99} }
 
 func (m *MassDisenchantResponse) GetAmount() int32 {
-	if m != nil {
-		return m.Amount
+	if m != nil && m.Amount != nil {
+		return *m.Amount
 	}
 	return 0
 }
 
 func (m *MassDisenchantResponse) GetCollectionVersion() int64 {
-	if m != nil {
-		return m.CollectionVersion
+	if m != nil && m.CollectionVersion != nil {
+		return *m.CollectionVersion
 	}
 	return 0
 }
 
 // ref: PegasusUtil.MedalInfo
 type MedalInfo struct {
-	Standard *MedalInfoData `protobuf:"bytes,1,opt,name=standard" json:"standard,omitempty"`
-	Wild     *MedalInfoData `protobuf:"bytes,2,opt,name=wild" json:"wild,omitempty"`
+	Standard         *MedalInfoData `protobuf:"bytes,1,req,name=standard" json:"standard,omitempty"`
+	Wild             *MedalInfoData `protobuf:"bytes,2,req,name=wild" json:"wild,omitempty"`
+	XXX_unrecognized []byte         `json:"-"`
 }
 
 func (m *MedalInfo) Reset()                    { *m = MedalInfo{} }
 func (m *MedalInfo) String() string            { return proto.CompactTextString(m) }
 func (*MedalInfo) ProtoMessage()               {}
-func (*MedalInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{96} }
+func (*MedalInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{100} }
 
 func (m *MedalInfo) GetStandard() *MedalInfoData {
 	if m != nil {
@@ -7047,145 +8990,148 @@ func (m *MedalInfo) GetWild() *MedalInfoData {
 
 // ref: PegasusUtil.MedalInfoData
 type MedalInfoData struct {
-	SeasonWins    int32 `protobuf:"varint,3,opt,name=season_wins,json=seasonWins" json:"season_wins,omitempty"`
-	Stars         int32 `protobuf:"varint,6,opt,name=stars" json:"stars,omitempty"`
-	Streak        int32 `protobuf:"varint,7,opt,name=streak" json:"streak,omitempty"`
-	StarLevel     int32 `protobuf:"varint,8,opt,name=star_level,json=starLevel" json:"star_level,omitempty"`
-	LevelStart    int32 `protobuf:"varint,9,opt,name=level_start,json=levelStart" json:"level_start,omitempty"`
-	LevelEnd      int32 `protobuf:"varint,10,opt,name=level_end,json=levelEnd" json:"level_end,omitempty"`
-	CanLoseLevel  bool  `protobuf:"varint,11,opt,name=can_lose_level,json=canLoseLevel" json:"can_lose_level,omitempty"`
-	LegendRank    int32 `protobuf:"varint,13,opt,name=legend_rank,json=legendRank" json:"legend_rank,omitempty"`
-	BestStarLevel int32 `protobuf:"varint,14,opt,name=best_star_level,json=bestStarLevel" json:"best_star_level,omitempty"`
-	CanLoseStars  bool  `protobuf:"varint,15,opt,name=can_lose_stars,json=canLoseStars" json:"can_lose_stars,omitempty"`
+	SeasonWins       *int32 `protobuf:"varint,3,req,name=season_wins,json=seasonWins" json:"season_wins,omitempty"`
+	Stars            *int32 `protobuf:"varint,6,req,name=stars" json:"stars,omitempty"`
+	Streak           *int32 `protobuf:"varint,7,req,name=streak" json:"streak,omitempty"`
+	StarLevel        *int32 `protobuf:"varint,8,req,name=star_level,json=starLevel" json:"star_level,omitempty"`
+	LevelStart       *int32 `protobuf:"varint,9,req,name=level_start,json=levelStart" json:"level_start,omitempty"`
+	LevelEnd         *int32 `protobuf:"varint,10,req,name=level_end,json=levelEnd" json:"level_end,omitempty"`
+	CanLoseLevel     *bool  `protobuf:"varint,11,req,name=can_lose_level,json=canLoseLevel" json:"can_lose_level,omitempty"`
+	LegendRank       *int32 `protobuf:"varint,13,opt,name=legend_rank,json=legendRank" json:"legend_rank,omitempty"`
+	BestStarLevel    *int32 `protobuf:"varint,14,opt,name=best_star_level,json=bestStarLevel" json:"best_star_level,omitempty"`
+	CanLoseStars     *bool  `protobuf:"varint,15,opt,name=can_lose_stars,json=canLoseStars" json:"can_lose_stars,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *MedalInfoData) Reset()                    { *m = MedalInfoData{} }
 func (m *MedalInfoData) String() string            { return proto.CompactTextString(m) }
 func (*MedalInfoData) ProtoMessage()               {}
-func (*MedalInfoData) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{97} }
+func (*MedalInfoData) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{101} }
 
 func (m *MedalInfoData) GetSeasonWins() int32 {
-	if m != nil {
-		return m.SeasonWins
+	if m != nil && m.SeasonWins != nil {
+		return *m.SeasonWins
 	}
 	return 0
 }
 
 func (m *MedalInfoData) GetStars() int32 {
-	if m != nil {
-		return m.Stars
+	if m != nil && m.Stars != nil {
+		return *m.Stars
 	}
 	return 0
 }
 
 func (m *MedalInfoData) GetStreak() int32 {
-	if m != nil {
-		return m.Streak
+	if m != nil && m.Streak != nil {
+		return *m.Streak
 	}
 	return 0
 }
 
 func (m *MedalInfoData) GetStarLevel() int32 {
-	if m != nil {
-		return m.StarLevel
+	if m != nil && m.StarLevel != nil {
+		return *m.StarLevel
 	}
 	return 0
 }
 
 func (m *MedalInfoData) GetLevelStart() int32 {
-	if m != nil {
-		return m.LevelStart
+	if m != nil && m.LevelStart != nil {
+		return *m.LevelStart
 	}
 	return 0
 }
 
 func (m *MedalInfoData) GetLevelEnd() int32 {
-	if m != nil {
-		return m.LevelEnd
+	if m != nil && m.LevelEnd != nil {
+		return *m.LevelEnd
 	}
 	return 0
 }
 
 func (m *MedalInfoData) GetCanLoseLevel() bool {
-	if m != nil {
-		return m.CanLoseLevel
+	if m != nil && m.CanLoseLevel != nil {
+		return *m.CanLoseLevel
 	}
 	return false
 }
 
 func (m *MedalInfoData) GetLegendRank() int32 {
-	if m != nil {
-		return m.LegendRank
+	if m != nil && m.LegendRank != nil {
+		return *m.LegendRank
 	}
 	return 0
 }
 
 func (m *MedalInfoData) GetBestStarLevel() int32 {
-	if m != nil {
-		return m.BestStarLevel
+	if m != nil && m.BestStarLevel != nil {
+		return *m.BestStarLevel
 	}
 	return 0
 }
 
 func (m *MedalInfoData) GetCanLoseStars() bool {
-	if m != nil {
-		return m.CanLoseStars
+	if m != nil && m.CanLoseStars != nil {
+		return *m.CanLoseStars
 	}
 	return false
 }
 
 // ref: PegasusUtil.NearbyPlayer
 type NearbyPlayer struct {
-	BnetIdHi         uint64 `protobuf:"varint,1,opt,name=bnet_id_hi,json=bnetIdHi" json:"bnet_id_hi,omitempty"`
-	BnetIdLo         uint64 `protobuf:"varint,2,opt,name=bnet_id_lo,json=bnetIdLo" json:"bnet_id_lo,omitempty"`
-	SessionStartTime uint64 `protobuf:"varint,3,opt,name=session_start_time,json=sessionStartTime" json:"session_start_time,omitempty"`
+	BnetIdHi         *uint64 `protobuf:"varint,1,req,name=bnet_id_hi,json=bnetIdHi" json:"bnet_id_hi,omitempty"`
+	BnetIdLo         *uint64 `protobuf:"varint,2,req,name=bnet_id_lo,json=bnetIdLo" json:"bnet_id_lo,omitempty"`
+	SessionStartTime *uint64 `protobuf:"varint,3,req,name=session_start_time,json=sessionStartTime" json:"session_start_time,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *NearbyPlayer) Reset()                    { *m = NearbyPlayer{} }
 func (m *NearbyPlayer) String() string            { return proto.CompactTextString(m) }
 func (*NearbyPlayer) ProtoMessage()               {}
-func (*NearbyPlayer) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{98} }
+func (*NearbyPlayer) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{102} }
 
 func (m *NearbyPlayer) GetBnetIdHi() uint64 {
-	if m != nil {
-		return m.BnetIdHi
+	if m != nil && m.BnetIdHi != nil {
+		return *m.BnetIdHi
 	}
 	return 0
 }
 
 func (m *NearbyPlayer) GetBnetIdLo() uint64 {
-	if m != nil {
-		return m.BnetIdLo
+	if m != nil && m.BnetIdLo != nil {
+		return *m.BnetIdLo
 	}
 	return 0
 }
 
 func (m *NearbyPlayer) GetSessionStartTime() uint64 {
-	if m != nil {
-		return m.SessionStartTime
+	if m != nil && m.SessionStartTime != nil {
+		return *m.SessionStartTime
 	}
 	return 0
 }
 
 // ref: PegasusUtil.NextHeroLevelReward
 type NextHeroLevelReward struct {
-	Level         int32                                             `protobuf:"varint,1,opt,name=level" json:"level,omitempty"`
-	RewardBooster *pegasus_pegasusshared.ProfileNoticeRewardBooster `protobuf:"bytes,2,opt,name=reward_booster,json=rewardBooster" json:"reward_booster,omitempty"`
-	RewardCard    *pegasus_pegasusshared.ProfileNoticeRewardCard    `protobuf:"bytes,3,opt,name=reward_card,json=rewardCard" json:"reward_card,omitempty"`
-	RewardDust    *pegasus_pegasusshared.ProfileNoticeRewardDust    `protobuf:"bytes,4,opt,name=reward_dust,json=rewardDust" json:"reward_dust,omitempty"`
-	RewardGold    *pegasus_pegasusshared.ProfileNoticeRewardGold    `protobuf:"bytes,5,opt,name=reward_gold,json=rewardGold" json:"reward_gold,omitempty"`
-	RewardMount   *pegasus_pegasusshared.ProfileNoticeRewardMount   `protobuf:"bytes,6,opt,name=reward_mount,json=rewardMount" json:"reward_mount,omitempty"`
-	RewardForge   *pegasus_pegasusshared.ProfileNoticeRewardForge   `protobuf:"bytes,7,opt,name=reward_forge,json=rewardForge" json:"reward_forge,omitempty"`
+	Level            *int32                                            `protobuf:"varint,1,req,name=level" json:"level,omitempty"`
+	RewardBooster    *pegasus_pegasusshared.ProfileNoticeRewardBooster `protobuf:"bytes,2,opt,name=reward_booster,json=rewardBooster" json:"reward_booster,omitempty"`
+	RewardCard       *pegasus_pegasusshared.ProfileNoticeRewardCard    `protobuf:"bytes,3,opt,name=reward_card,json=rewardCard" json:"reward_card,omitempty"`
+	RewardDust       *pegasus_pegasusshared.ProfileNoticeRewardDust    `protobuf:"bytes,4,opt,name=reward_dust,json=rewardDust" json:"reward_dust,omitempty"`
+	RewardGold       *pegasus_pegasusshared.ProfileNoticeRewardGold    `protobuf:"bytes,5,opt,name=reward_gold,json=rewardGold" json:"reward_gold,omitempty"`
+	RewardMount      *pegasus_pegasusshared.ProfileNoticeRewardMount   `protobuf:"bytes,6,opt,name=reward_mount,json=rewardMount" json:"reward_mount,omitempty"`
+	RewardForge      *pegasus_pegasusshared.ProfileNoticeRewardForge   `protobuf:"bytes,7,opt,name=reward_forge,json=rewardForge" json:"reward_forge,omitempty"`
+	XXX_unrecognized []byte                                            `json:"-"`
 }
 
 func (m *NextHeroLevelReward) Reset()                    { *m = NextHeroLevelReward{} }
 func (m *NextHeroLevelReward) String() string            { return proto.CompactTextString(m) }
 func (*NextHeroLevelReward) ProtoMessage()               {}
-func (*NextHeroLevelReward) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{99} }
+func (*NextHeroLevelReward) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{103} }
 
 func (m *NextHeroLevelReward) GetLevel() int32 {
-	if m != nil {
-		return m.Level
+	if m != nil && m.Level != nil {
+		return *m.Level
 	}
 	return 0
 }
@@ -7234,22 +9180,24 @@ func (m *NextHeroLevelReward) GetRewardForge() *pegasus_pegasusshared.ProfileNot
 
 // ref: PegasusUtil.NOP
 type NOP struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *NOP) Reset()                    { *m = NOP{} }
 func (m *NOP) String() string            { return proto.CompactTextString(m) }
 func (*NOP) ProtoMessage()               {}
-func (*NOP) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{100} }
+func (*NOP) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{104} }
 
 // ref: PegasusUtil.NoticeNotification
 type NoticeNotification struct {
-	Notice *ProfileNotice `protobuf:"bytes,1,opt,name=notice" json:"notice,omitempty"`
+	Notice           *ProfileNotice `protobuf:"bytes,1,req,name=notice" json:"notice,omitempty"`
+	XXX_unrecognized []byte         `json:"-"`
 }
 
 func (m *NoticeNotification) Reset()                    { *m = NoticeNotification{} }
 func (m *NoticeNotification) String() string            { return proto.CompactTextString(m) }
 func (*NoticeNotification) ProtoMessage()               {}
-func (*NoticeNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{101} }
+func (*NoticeNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{105} }
 
 func (m *NoticeNotification) GetNotice() *ProfileNotice {
 	if m != nil {
@@ -7261,12 +9209,13 @@ func (m *NoticeNotification) GetNotice() *ProfileNotice {
 // ref: PegasusUtil.NoticeNotifications
 type NoticeNotifications struct {
 	NoticeNotifications []*NoticeNotification `protobuf:"bytes,1,rep,name=notice_notifications,json=noticeNotifications" json:"notice_notifications,omitempty"`
+	XXX_unrecognized    []byte                `json:"-"`
 }
 
 func (m *NoticeNotifications) Reset()                    { *m = NoticeNotifications{} }
 func (m *NoticeNotifications) String() string            { return proto.CompactTextString(m) }
 func (*NoticeNotifications) ProtoMessage()               {}
-func (*NoticeNotifications) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{102} }
+func (*NoticeNotifications) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{106} }
 
 func (m *NoticeNotifications) GetNoticeNotifications() []*NoticeNotification {
 	if m != nil {
@@ -7277,79 +9226,82 @@ func (m *NoticeNotifications) GetNoticeNotifications() []*NoticeNotification {
 
 // ref: PegasusUtil.OpenBooster
 type OpenBooster struct {
-	BoosterType int32 `protobuf:"varint,2,opt,name=booster_type,json=boosterType" json:"booster_type,omitempty"`
+	BoosterType      *int32 `protobuf:"varint,2,req,name=booster_type,json=boosterType" json:"booster_type,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *OpenBooster) Reset()                    { *m = OpenBooster{} }
 func (m *OpenBooster) String() string            { return proto.CompactTextString(m) }
 func (*OpenBooster) ProtoMessage()               {}
-func (*OpenBooster) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{103} }
+func (*OpenBooster) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{107} }
 
 func (m *OpenBooster) GetBoosterType() int32 {
-	if m != nil {
-		return m.BoosterType
+	if m != nil && m.BoosterType != nil {
+		return *m.BoosterType
 	}
 	return 0
 }
 
 // ref: PegasusUtil.PlayerRecord
 type PlayerRecord struct {
-	Type   pegasus_pegasusshared.GameType `protobuf:"varint,1,opt,name=type,enum=pegasus.pegasusshared.GameType" json:"type,omitempty"`
-	Data   int32                          `protobuf:"varint,2,opt,name=data" json:"data,omitempty"`
-	Wins   int32                          `protobuf:"varint,3,opt,name=wins" json:"wins,omitempty"`
-	Losses int32                          `protobuf:"varint,4,opt,name=losses" json:"losses,omitempty"`
-	Ties   int32                          `protobuf:"varint,5,opt,name=ties" json:"ties,omitempty"`
+	Type             *pegasus_pegasusshared.GameType `protobuf:"varint,1,req,name=type,enum=pegasus.pegasusshared.GameType" json:"type,omitempty"`
+	Data             *int32                          `protobuf:"varint,2,opt,name=data" json:"data,omitempty"`
+	Wins             *int32                          `protobuf:"varint,3,req,name=wins" json:"wins,omitempty"`
+	Losses           *int32                          `protobuf:"varint,4,req,name=losses" json:"losses,omitempty"`
+	Ties             *int32                          `protobuf:"varint,5,opt,name=ties" json:"ties,omitempty"`
+	XXX_unrecognized []byte                          `json:"-"`
 }
 
 func (m *PlayerRecord) Reset()                    { *m = PlayerRecord{} }
 func (m *PlayerRecord) String() string            { return proto.CompactTextString(m) }
 func (*PlayerRecord) ProtoMessage()               {}
-func (*PlayerRecord) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{104} }
+func (*PlayerRecord) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{108} }
 
 func (m *PlayerRecord) GetType() pegasus_pegasusshared.GameType {
-	if m != nil {
-		return m.Type
+	if m != nil && m.Type != nil {
+		return *m.Type
 	}
 	return pegasus_pegasusshared.GameType_GT_UNKNOWN
 }
 
 func (m *PlayerRecord) GetData() int32 {
-	if m != nil {
-		return m.Data
+	if m != nil && m.Data != nil {
+		return *m.Data
 	}
 	return 0
 }
 
 func (m *PlayerRecord) GetWins() int32 {
-	if m != nil {
-		return m.Wins
+	if m != nil && m.Wins != nil {
+		return *m.Wins
 	}
 	return 0
 }
 
 func (m *PlayerRecord) GetLosses() int32 {
-	if m != nil {
-		return m.Losses
+	if m != nil && m.Losses != nil {
+		return *m.Losses
 	}
 	return 0
 }
 
 func (m *PlayerRecord) GetTies() int32 {
-	if m != nil {
-		return m.Ties
+	if m != nil && m.Ties != nil {
+		return *m.Ties
 	}
 	return 0
 }
 
 // ref: PegasusUtil.PlayerRecords
 type PlayerRecords struct {
-	Records []*PlayerRecord `protobuf:"bytes,1,rep,name=records" json:"records,omitempty"`
+	Records          []*PlayerRecord `protobuf:"bytes,1,rep,name=records" json:"records,omitempty"`
+	XXX_unrecognized []byte          `json:"-"`
 }
 
 func (m *PlayerRecords) Reset()                    { *m = PlayerRecords{} }
 func (m *PlayerRecords) String() string            { return proto.CompactTextString(m) }
 func (*PlayerRecords) ProtoMessage()               {}
-func (*PlayerRecords) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{105} }
+func (*PlayerRecords) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{109} }
 
 func (m *PlayerRecords) GetRecords() []*PlayerRecord {
 	if m != nil {
@@ -7360,13 +9312,14 @@ func (m *PlayerRecords) GetRecords() []*PlayerRecord {
 
 // ref: PegasusUtil.PlayQueue
 type PlayQueue struct {
-	Queue *pegasus_pegasusshared.PlayQueueInfo `protobuf:"bytes,1,opt,name=queue" json:"queue,omitempty"`
+	Queue            *pegasus_pegasusshared.PlayQueueInfo `protobuf:"bytes,1,req,name=queue" json:"queue,omitempty"`
+	XXX_unrecognized []byte                               `json:"-"`
 }
 
 func (m *PlayQueue) Reset()                    { *m = PlayQueue{} }
 func (m *PlayQueue) String() string            { return proto.CompactTextString(m) }
 func (*PlayQueue) ProtoMessage()               {}
-func (*PlayQueue) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{106} }
+func (*PlayQueue) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{110} }
 
 func (m *PlayQueue) GetQueue() *pegasus_pegasusshared.PlayQueueInfo {
 	if m != nil {
@@ -7377,50 +9330,53 @@ func (m *PlayQueue) GetQueue() *pegasus_pegasusshared.PlayQueueInfo {
 
 // ref: PegasusUtil.ProcessRecruitAFriend
 type ProcessRecruitAFriend struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *ProcessRecruitAFriend) Reset()                    { *m = ProcessRecruitAFriend{} }
 func (m *ProcessRecruitAFriend) String() string            { return proto.CompactTextString(m) }
 func (*ProcessRecruitAFriend) ProtoMessage()               {}
-func (*ProcessRecruitAFriend) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{107} }
+func (*ProcessRecruitAFriend) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{111} }
 
 // ref: PegasusUtil.ProcessRecruitAFriendResponse
 type ProcessRecruitAFriendResponse struct {
-	RafServiceStatus RAFServiceStatus `protobuf:"varint,1,opt,name=raf_service_status,json=rafServiceStatus,enum=pegasus.pegasusutil.RAFServiceStatus" json:"raf_service_status,omitempty"`
+	RafServiceStatus *RAFServiceStatus `protobuf:"varint,1,req,name=raf_service_status,json=rafServiceStatus,enum=pegasus.pegasusutil.RAFServiceStatus" json:"raf_service_status,omitempty"`
+	XXX_unrecognized []byte            `json:"-"`
 }
 
 func (m *ProcessRecruitAFriendResponse) Reset()                    { *m = ProcessRecruitAFriendResponse{} }
 func (m *ProcessRecruitAFriendResponse) String() string            { return proto.CompactTextString(m) }
 func (*ProcessRecruitAFriendResponse) ProtoMessage()               {}
-func (*ProcessRecruitAFriendResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{108} }
+func (*ProcessRecruitAFriendResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{112} }
 
 func (m *ProcessRecruitAFriendResponse) GetRafServiceStatus() RAFServiceStatus {
-	if m != nil {
-		return m.RafServiceStatus
+	if m != nil && m.RafServiceStatus != nil {
+		return *m.RafServiceStatus
 	}
-	return RAFServiceStatus_RAFSERVICESTATUS_AUTO_INVALID
+	return RAFServiceStatus_rafservice_status__ok
 }
 
 // ref: PegasusUtil.ProfileDeckLimit
 type ProfileDeckLimit struct {
-	DeckLimit int32 `protobuf:"varint,1,opt,name=deck_limit,json=deckLimit" json:"deck_limit,omitempty"`
+	DeckLimit        *int32 `protobuf:"varint,1,req,name=deck_limit,json=deckLimit" json:"deck_limit,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *ProfileDeckLimit) Reset()                    { *m = ProfileDeckLimit{} }
 func (m *ProfileDeckLimit) String() string            { return proto.CompactTextString(m) }
 func (*ProfileDeckLimit) ProtoMessage()               {}
-func (*ProfileDeckLimit) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{109} }
+func (*ProfileDeckLimit) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{113} }
 
 func (m *ProfileDeckLimit) GetDeckLimit() int32 {
-	if m != nil {
-		return m.DeckLimit
+	if m != nil && m.DeckLimit != nil {
+		return *m.DeckLimit
 	}
 	return 0
 }
 
 // ref: PegasusUtil.ProfileNotice
 type ProfileNotice struct {
-	Entry              int64                                                      `protobuf:"varint,1,opt,name=entry" json:"entry,omitempty"`
+	Entry              *int64                                                     `protobuf:"varint,1,req,name=entry" json:"entry,omitempty"`
 	Medal              *pegasus_pegasusshared.ProfileNoticeMedal                  `protobuf:"bytes,2,opt,name=medal" json:"medal,omitempty"`
 	RewardBooster      *pegasus_pegasusshared.ProfileNoticeRewardBooster          `protobuf:"bytes,3,opt,name=reward_booster,json=rewardBooster" json:"reward_booster,omitempty"`
 	RewardCard         *pegasus_pegasusshared.ProfileNoticeRewardCard             `protobuf:"bytes,4,opt,name=reward_card,json=rewardCard" json:"reward_card,omitempty"`
@@ -7429,9 +9385,9 @@ type ProfileNotice struct {
 	RewardGold         *pegasus_pegasusshared.ProfileNoticeRewardGold             `protobuf:"bytes,8,opt,name=reward_gold,json=rewardGold" json:"reward_gold,omitempty"`
 	RewardMount        *pegasus_pegasusshared.ProfileNoticeRewardMount            `protobuf:"bytes,9,opt,name=reward_mount,json=rewardMount" json:"reward_mount,omitempty"`
 	RewardForge        *pegasus_pegasusshared.ProfileNoticeRewardForge            `protobuf:"bytes,10,opt,name=reward_forge,json=rewardForge" json:"reward_forge,omitempty"`
-	Origin             int32                                                      `protobuf:"varint,11,opt,name=origin" json:"origin,omitempty"`
-	OriginData         int64                                                      `protobuf:"varint,12,opt,name=origin_data,json=originData" json:"origin_data,omitempty"`
-	When               *pegasus_pegasusshared.Date                                `protobuf:"bytes,13,opt,name=when" json:"when,omitempty"`
+	Origin             *int32                                                     `protobuf:"varint,11,req,name=origin" json:"origin,omitempty"`
+	OriginData         *int64                                                     `protobuf:"varint,12,opt,name=origin_data,json=originData" json:"origin_data,omitempty"`
+	When               *pegasus_pegasusshared.Date                                `protobuf:"bytes,13,req,name=when" json:"when,omitempty"`
 	Purchase           *pegasus_pegasusshared.ProfileNoticePurchase               `protobuf:"bytes,14,opt,name=purchase" json:"purchase,omitempty"`
 	RewardCardBack     *pegasus_pegasusshared.ProfileNoticeCardBack               `protobuf:"bytes,15,opt,name=reward_card_back,json=rewardCardBack" json:"reward_card_back,omitempty"`
 	DcGameResult       *pegasus_pegasusshared.ProfileNoticeDisconnectedGameResult `protobuf:"bytes,16,opt,name=dc_game_result,json=dcGameResult" json:"dc_game_result,omitempty"`
@@ -7441,16 +9397,18 @@ type ProfileNotice struct {
 	AccountLicense     *pegasus_pegasusshared.ProfileNoticeAccountLicense         `protobuf:"bytes,20,opt,name=account_license,json=accountLicense" json:"account_license,omitempty"`
 	TavernBrawlRewards *pegasus_pegasusshared.ProfileNoticeTavernBrawlRewards     `protobuf:"bytes,21,opt,name=tavern_brawl_rewards,json=tavernBrawlRewards" json:"tavern_brawl_rewards,omitempty"`
 	TavernBrawlTicket  *pegasus_pegasusshared.ProfileNoticeTavernBrawlTicket      `protobuf:"bytes,22,opt,name=tavern_brawl_ticket,json=tavernBrawlTicket" json:"tavern_brawl_ticket,omitempty"`
+	GenericRewardChest *pegasus_pegasusshared.ProfileNoticeGenericRewardChest     `protobuf:"bytes,23,opt,name=generic_reward_chest,json=genericRewardChest" json:"generic_reward_chest,omitempty"`
+	XXX_unrecognized   []byte                                                     `json:"-"`
 }
 
 func (m *ProfileNotice) Reset()                    { *m = ProfileNotice{} }
 func (m *ProfileNotice) String() string            { return proto.CompactTextString(m) }
 func (*ProfileNotice) ProtoMessage()               {}
-func (*ProfileNotice) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{110} }
+func (*ProfileNotice) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{114} }
 
 func (m *ProfileNotice) GetEntry() int64 {
-	if m != nil {
-		return m.Entry
+	if m != nil && m.Entry != nil {
+		return *m.Entry
 	}
 	return 0
 }
@@ -7512,15 +9470,15 @@ func (m *ProfileNotice) GetRewardForge() *pegasus_pegasusshared.ProfileNoticeRew
 }
 
 func (m *ProfileNotice) GetOrigin() int32 {
-	if m != nil {
-		return m.Origin
+	if m != nil && m.Origin != nil {
+		return *m.Origin
 	}
 	return 0
 }
 
 func (m *ProfileNotice) GetOriginData() int64 {
-	if m != nil {
-		return m.OriginData
+	if m != nil && m.OriginData != nil {
+		return *m.OriginData
 	}
 	return 0
 }
@@ -7595,15 +9553,23 @@ func (m *ProfileNotice) GetTavernBrawlTicket() *pegasus_pegasusshared.ProfileNot
 	return nil
 }
 
+func (m *ProfileNotice) GetGenericRewardChest() *pegasus_pegasusshared.ProfileNoticeGenericRewardChest {
+	if m != nil {
+		return m.GenericRewardChest
+	}
+	return nil
+}
+
 // ref: PegasusUtil.ProfileNotices
 type ProfileNotices struct {
-	List []*ProfileNotice `protobuf:"bytes,1,rep,name=list" json:"list,omitempty"`
+	List             []*ProfileNotice `protobuf:"bytes,1,rep,name=list" json:"list,omitempty"`
+	XXX_unrecognized []byte           `json:"-"`
 }
 
 func (m *ProfileNotices) Reset()                    { *m = ProfileNotices{} }
 func (m *ProfileNotices) String() string            { return proto.CompactTextString(m) }
 func (*ProfileNotices) ProtoMessage()               {}
-func (*ProfileNotices) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{111} }
+func (*ProfileNotices) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{115} }
 
 func (m *ProfileNotices) GetList() []*ProfileNotice {
 	if m != nil {
@@ -7614,27 +9580,30 @@ func (m *ProfileNotices) GetList() []*ProfileNotice {
 
 // ref: PegasusUtil.ProfileProgress
 type ProfileProgress struct {
-	Progress      int64                       `protobuf:"varint,1,opt,name=progress" json:"progress,omitempty"`
-	BestForge     int32                       `protobuf:"varint,2,opt,name=best_forge,json=bestForge" json:"best_forge,omitempty"`
-	LastForge     *pegasus_pegasusshared.Date `protobuf:"bytes,3,opt,name=last_forge,json=lastForge" json:"last_forge,omitempty"`
-	DisplayBanner int32                       `protobuf:"varint,4,opt,name=display_banner,json=displayBanner" json:"display_banner,omitempty"`
+	Progress         *int64                      `protobuf:"varint,1,req,name=progress" json:"progress,omitempty"`
+	BestForge        *int32                      `protobuf:"varint,2,req,name=best_forge,json=bestForge" json:"best_forge,omitempty"`
+	LastForge        *pegasus_pegasusshared.Date `protobuf:"bytes,3,opt,name=last_forge,json=lastForge" json:"last_forge,omitempty"`
+	DisplayBanner    *int32                      `protobuf:"varint,4,opt,name=display_banner,json=displayBanner,def=0" json:"display_banner,omitempty"`
+	XXX_unrecognized []byte                      `json:"-"`
 }
 
 func (m *ProfileProgress) Reset()                    { *m = ProfileProgress{} }
 func (m *ProfileProgress) String() string            { return proto.CompactTextString(m) }
 func (*ProfileProgress) ProtoMessage()               {}
-func (*ProfileProgress) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{112} }
+func (*ProfileProgress) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{116} }
+
+const Default_ProfileProgress_DisplayBanner int32 = 0
 
 func (m *ProfileProgress) GetProgress() int64 {
-	if m != nil {
-		return m.Progress
+	if m != nil && m.Progress != nil {
+		return *m.Progress
 	}
 	return 0
 }
 
 func (m *ProfileProgress) GetBestForge() int32 {
-	if m != nil {
-		return m.BestForge
+	if m != nil && m.BestForge != nil {
+		return *m.BestForge
 	}
 	return 0
 }
@@ -7647,95 +9616,97 @@ func (m *ProfileProgress) GetLastForge() *pegasus_pegasusshared.Date {
 }
 
 func (m *ProfileProgress) GetDisplayBanner() int32 {
-	if m != nil {
-		return m.DisplayBanner
+	if m != nil && m.DisplayBanner != nil {
+		return *m.DisplayBanner
 	}
-	return 0
+	return Default_ProfileProgress_DisplayBanner
 }
 
 // ref: PegasusUtil.PurchaseError
 type PurchaseError struct {
-	Error              PurchaseError_Error `protobuf:"varint,1,opt,name=error,enum=pegasus.pegasusutil.PurchaseError_Error" json:"error,omitempty"`
-	PurchaseInProgress string              `protobuf:"bytes,2,opt,name=purchase_in_progress,json=purchaseInProgress" json:"purchase_in_progress,omitempty"`
-	ErrorCode          string              `protobuf:"bytes,3,opt,name=error_code,json=errorCode" json:"error_code,omitempty"`
+	Error              *PurchaseError_Error `protobuf:"varint,1,req,name=error,enum=pegasus.pegasusutil.PurchaseError_Error" json:"error,omitempty"`
+	PurchaseInProgress *string              `protobuf:"bytes,2,opt,name=purchase_in_progress,json=purchaseInProgress" json:"purchase_in_progress,omitempty"`
+	ErrorCode          *string              `protobuf:"bytes,3,opt,name=error_code,json=errorCode" json:"error_code,omitempty"`
+	XXX_unrecognized   []byte               `json:"-"`
 }
 
 func (m *PurchaseError) Reset()                    { *m = PurchaseError{} }
 func (m *PurchaseError) String() string            { return proto.CompactTextString(m) }
 func (*PurchaseError) ProtoMessage()               {}
-func (*PurchaseError) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{113} }
+func (*PurchaseError) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{117} }
 
 func (m *PurchaseError) GetError() PurchaseError_Error {
-	if m != nil {
-		return m.Error
+	if m != nil && m.Error != nil {
+		return *m.Error
 	}
-	return PurchaseError_E_SUCCESS
+	return PurchaseError_E_UNKNOWN
 }
 
 func (m *PurchaseError) GetPurchaseInProgress() string {
-	if m != nil {
-		return m.PurchaseInProgress
+	if m != nil && m.PurchaseInProgress != nil {
+		return *m.PurchaseInProgress
 	}
 	return ""
 }
 
 func (m *PurchaseError) GetErrorCode() string {
-	if m != nil {
-		return m.ErrorCode
+	if m != nil && m.ErrorCode != nil {
+		return *m.ErrorCode
 	}
 	return ""
 }
 
 // ref: PegasusUtil.PurchaseMethod
 type PurchaseMethod struct {
-	ProductId         string         `protobuf:"bytes,1,opt,name=product_id,json=productId" json:"product_id,omitempty"`
-	Quantity          int32          `protobuf:"varint,2,opt,name=quantity" json:"quantity,omitempty"`
-	Currency          int32          `protobuf:"varint,3,opt,name=currency" json:"currency,omitempty"`
-	WalletName        string         `protobuf:"bytes,4,opt,name=wallet_name,json=walletName" json:"wallet_name,omitempty"`
-	UseEbalance       bool           `protobuf:"varint,5,opt,name=use_ebalance,json=useEbalance" json:"use_ebalance,omitempty"`
+	ProductId         *string        `protobuf:"bytes,1,opt,name=product_id,json=productId" json:"product_id,omitempty"`
+	Quantity          *int32         `protobuf:"varint,2,opt,name=quantity" json:"quantity,omitempty"`
+	Currency          *int32         `protobuf:"varint,3,opt,name=currency" json:"currency,omitempty"`
+	WalletName        *string        `protobuf:"bytes,4,opt,name=wallet_name,json=walletName" json:"wallet_name,omitempty"`
+	UseEbalance       *bool          `protobuf:"varint,5,opt,name=use_ebalance,json=useEbalance" json:"use_ebalance,omitempty"`
 	Error             *PurchaseError `protobuf:"bytes,6,opt,name=error" json:"error,omitempty"`
-	TransactionId     int64          `protobuf:"varint,7,opt,name=transaction_id,json=transactionId" json:"transaction_id,omitempty"`
-	IsZeroCostLicense bool           `protobuf:"varint,8,opt,name=is_zero_cost_license,json=isZeroCostLicense" json:"is_zero_cost_license,omitempty"`
-	ChallengeId       string         `protobuf:"bytes,9,opt,name=challenge_id,json=challengeId" json:"challenge_id,omitempty"`
-	ChallengeUrl      string         `protobuf:"bytes,10,opt,name=challenge_url,json=challengeUrl" json:"challenge_url,omitempty"`
+	TransactionId     *int64         `protobuf:"varint,7,opt,name=transaction_id,json=transactionId" json:"transaction_id,omitempty"`
+	IsZeroCostLicense *bool          `protobuf:"varint,8,opt,name=is_zero_cost_license,json=isZeroCostLicense" json:"is_zero_cost_license,omitempty"`
+	ChallengeId       *string        `protobuf:"bytes,9,opt,name=challenge_id,json=challengeId" json:"challenge_id,omitempty"`
+	ChallengeUrl      *string        `protobuf:"bytes,10,opt,name=challenge_url,json=challengeUrl" json:"challenge_url,omitempty"`
+	XXX_unrecognized  []byte         `json:"-"`
 }
 
 func (m *PurchaseMethod) Reset()                    { *m = PurchaseMethod{} }
 func (m *PurchaseMethod) String() string            { return proto.CompactTextString(m) }
 func (*PurchaseMethod) ProtoMessage()               {}
-func (*PurchaseMethod) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{114} }
+func (*PurchaseMethod) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{118} }
 
 func (m *PurchaseMethod) GetProductId() string {
-	if m != nil {
-		return m.ProductId
+	if m != nil && m.ProductId != nil {
+		return *m.ProductId
 	}
 	return ""
 }
 
 func (m *PurchaseMethod) GetQuantity() int32 {
-	if m != nil {
-		return m.Quantity
+	if m != nil && m.Quantity != nil {
+		return *m.Quantity
 	}
 	return 0
 }
 
 func (m *PurchaseMethod) GetCurrency() int32 {
-	if m != nil {
-		return m.Currency
+	if m != nil && m.Currency != nil {
+		return *m.Currency
 	}
 	return 0
 }
 
 func (m *PurchaseMethod) GetWalletName() string {
-	if m != nil {
-		return m.WalletName
+	if m != nil && m.WalletName != nil {
+		return *m.WalletName
 	}
 	return ""
 }
 
 func (m *PurchaseMethod) GetUseEbalance() bool {
-	if m != nil {
-		return m.UseEbalance
+	if m != nil && m.UseEbalance != nil {
+		return *m.UseEbalance
 	}
 	return false
 }
@@ -7748,47 +9719,48 @@ func (m *PurchaseMethod) GetError() *PurchaseError {
 }
 
 func (m *PurchaseMethod) GetTransactionId() int64 {
-	if m != nil {
-		return m.TransactionId
+	if m != nil && m.TransactionId != nil {
+		return *m.TransactionId
 	}
 	return 0
 }
 
 func (m *PurchaseMethod) GetIsZeroCostLicense() bool {
-	if m != nil {
-		return m.IsZeroCostLicense
+	if m != nil && m.IsZeroCostLicense != nil {
+		return *m.IsZeroCostLicense
 	}
 	return false
 }
 
 func (m *PurchaseMethod) GetChallengeId() string {
-	if m != nil {
-		return m.ChallengeId
+	if m != nil && m.ChallengeId != nil {
+		return *m.ChallengeId
 	}
 	return ""
 }
 
 func (m *PurchaseMethod) GetChallengeUrl() string {
-	if m != nil {
-		return m.ChallengeUrl
+	if m != nil && m.ChallengeUrl != nil {
+		return *m.ChallengeUrl
 	}
 	return ""
 }
 
 // ref: PegasusUtil.PurchaseResponse
 type PurchaseResponse struct {
-	Error             *PurchaseError `protobuf:"bytes,1,opt,name=error" json:"error,omitempty"`
-	TransactionId     int64          `protobuf:"varint,2,opt,name=transaction_id,json=transactionId" json:"transaction_id,omitempty"`
-	ProductId         string         `protobuf:"bytes,3,opt,name=product_id,json=productId" json:"product_id,omitempty"`
-	ThirdPartyId      string         `protobuf:"bytes,4,opt,name=third_party_id,json=thirdPartyId" json:"third_party_id,omitempty"`
-	Currency          int32          `protobuf:"varint,5,opt,name=currency" json:"currency,omitempty"`
-	IsZeroCostLicense bool           `protobuf:"varint,6,opt,name=is_zero_cost_license,json=isZeroCostLicense" json:"is_zero_cost_license,omitempty"`
+	Error             *PurchaseError `protobuf:"bytes,1,req,name=error" json:"error,omitempty"`
+	TransactionId     *int64         `protobuf:"varint,2,opt,name=transaction_id,json=transactionId" json:"transaction_id,omitempty"`
+	ProductId         *string        `protobuf:"bytes,3,opt,name=product_id,json=productId" json:"product_id,omitempty"`
+	ThirdPartyId      *string        `protobuf:"bytes,4,opt,name=third_party_id,json=thirdPartyId" json:"third_party_id,omitempty"`
+	Currency          *int32         `protobuf:"varint,5,opt,name=currency" json:"currency,omitempty"`
+	IsZeroCostLicense *bool          `protobuf:"varint,6,opt,name=is_zero_cost_license,json=isZeroCostLicense" json:"is_zero_cost_license,omitempty"`
+	XXX_unrecognized  []byte         `json:"-"`
 }
 
 func (m *PurchaseResponse) Reset()                    { *m = PurchaseResponse{} }
 func (m *PurchaseResponse) String() string            { return proto.CompactTextString(m) }
 func (*PurchaseResponse) ProtoMessage()               {}
-func (*PurchaseResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{115} }
+func (*PurchaseResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{119} }
 
 func (m *PurchaseResponse) GetError() *PurchaseError {
 	if m != nil {
@@ -7798,112 +9770,115 @@ func (m *PurchaseResponse) GetError() *PurchaseError {
 }
 
 func (m *PurchaseResponse) GetTransactionId() int64 {
-	if m != nil {
-		return m.TransactionId
+	if m != nil && m.TransactionId != nil {
+		return *m.TransactionId
 	}
 	return 0
 }
 
 func (m *PurchaseResponse) GetProductId() string {
-	if m != nil {
-		return m.ProductId
+	if m != nil && m.ProductId != nil {
+		return *m.ProductId
 	}
 	return ""
 }
 
 func (m *PurchaseResponse) GetThirdPartyId() string {
-	if m != nil {
-		return m.ThirdPartyId
+	if m != nil && m.ThirdPartyId != nil {
+		return *m.ThirdPartyId
 	}
 	return ""
 }
 
 func (m *PurchaseResponse) GetCurrency() int32 {
-	if m != nil {
-		return m.Currency
+	if m != nil && m.Currency != nil {
+		return *m.Currency
 	}
 	return 0
 }
 
 func (m *PurchaseResponse) GetIsZeroCostLicense() bool {
-	if m != nil {
-		return m.IsZeroCostLicense
+	if m != nil && m.IsZeroCostLicense != nil {
+		return *m.IsZeroCostLicense
 	}
 	return false
 }
 
 // ref: PegasusUtil.PurchaseWithGold
 type PurchaseWithGold struct {
-	Quantity int32       `protobuf:"varint,1,opt,name=quantity" json:"quantity,omitempty"`
-	Product  ProductType `protobuf:"varint,2,opt,name=product,enum=pegasus.pegasusutil.ProductType" json:"product,omitempty"`
-	Data     int32       `protobuf:"varint,3,opt,name=data" json:"data,omitempty"`
+	Quantity         *int32       `protobuf:"varint,1,req,name=quantity" json:"quantity,omitempty"`
+	Product          *ProductType `protobuf:"varint,2,req,name=product,enum=pegasus.pegasusutil.ProductType" json:"product,omitempty"`
+	Data             *int32       `protobuf:"varint,3,opt,name=data" json:"data,omitempty"`
+	XXX_unrecognized []byte       `json:"-"`
 }
 
 func (m *PurchaseWithGold) Reset()                    { *m = PurchaseWithGold{} }
 func (m *PurchaseWithGold) String() string            { return proto.CompactTextString(m) }
 func (*PurchaseWithGold) ProtoMessage()               {}
-func (*PurchaseWithGold) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{116} }
+func (*PurchaseWithGold) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{120} }
 
 func (m *PurchaseWithGold) GetQuantity() int32 {
-	if m != nil {
-		return m.Quantity
+	if m != nil && m.Quantity != nil {
+		return *m.Quantity
 	}
 	return 0
 }
 
 func (m *PurchaseWithGold) GetProduct() ProductType {
-	if m != nil {
-		return m.Product
+	if m != nil && m.Product != nil {
+		return *m.Product
 	}
 	return ProductType_PRODUCT_TYPE_UNKNOWN
 }
 
 func (m *PurchaseWithGold) GetData() int32 {
-	if m != nil {
-		return m.Data
+	if m != nil && m.Data != nil {
+		return *m.Data
 	}
 	return 0
 }
 
 // ref: PegasusUtil.PurchaseWithGoldResponse
 type PurchaseWithGoldResponse struct {
-	Result   PurchaseWithGoldResponse_PurchaseResult `protobuf:"varint,1,opt,name=result,enum=pegasus.pegasusutil.PurchaseWithGoldResponse_PurchaseResult" json:"result,omitempty"`
-	GoldUsed int64                                   `protobuf:"varint,2,opt,name=gold_used,json=goldUsed" json:"gold_used,omitempty"`
+	Result           *PurchaseWithGoldResponse_PurchaseResult `protobuf:"varint,1,req,name=result,enum=pegasus.pegasusutil.PurchaseWithGoldResponse_PurchaseResult" json:"result,omitempty"`
+	GoldUsed         *int64                                   `protobuf:"varint,2,opt,name=gold_used,json=goldUsed" json:"gold_used,omitempty"`
+	XXX_unrecognized []byte                                   `json:"-"`
 }
 
 func (m *PurchaseWithGoldResponse) Reset()                    { *m = PurchaseWithGoldResponse{} }
 func (m *PurchaseWithGoldResponse) String() string            { return proto.CompactTextString(m) }
 func (*PurchaseWithGoldResponse) ProtoMessage()               {}
-func (*PurchaseWithGoldResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{117} }
+func (*PurchaseWithGoldResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{121} }
 
 func (m *PurchaseWithGoldResponse) GetResult() PurchaseWithGoldResponse_PurchaseResult {
-	if m != nil {
-		return m.Result
+	if m != nil && m.Result != nil {
+		return *m.Result
 	}
-	return PurchaseWithGoldResponse_PURCHASERESULT_AUTO_INVALID
+	return PurchaseWithGoldResponse_PR_SUCCESS
 }
 
 func (m *PurchaseWithGoldResponse) GetGoldUsed() int64 {
-	if m != nil {
-		return m.GoldUsed
+	if m != nil && m.GoldUsed != nil {
+		return *m.GoldUsed
 	}
 	return 0
 }
 
 // ref: PegasusUtil.RecruitAFriendDataResponse
 type RecruitAFriendDataResponse struct {
-	TotalRecruitCount uint32         `protobuf:"varint,1,opt,name=total_recruit_count,json=totalRecruitCount" json:"total_recruit_count,omitempty"`
+	TotalRecruitCount *uint32        `protobuf:"varint,1,req,name=total_recruit_count,json=totalRecruitCount" json:"total_recruit_count,omitempty"`
 	TopRecruits       []*RecruitData `protobuf:"bytes,2,rep,name=top_recruits,json=topRecruits" json:"top_recruits,omitempty"`
+	XXX_unrecognized  []byte         `json:"-"`
 }
 
 func (m *RecruitAFriendDataResponse) Reset()                    { *m = RecruitAFriendDataResponse{} }
 func (m *RecruitAFriendDataResponse) String() string            { return proto.CompactTextString(m) }
 func (*RecruitAFriendDataResponse) ProtoMessage()               {}
-func (*RecruitAFriendDataResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{118} }
+func (*RecruitAFriendDataResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{122} }
 
 func (m *RecruitAFriendDataResponse) GetTotalRecruitCount() uint32 {
-	if m != nil {
-		return m.TotalRecruitCount
+	if m != nil && m.TotalRecruitCount != nil {
+		return *m.TotalRecruitCount
 	}
 	return 0
 }
@@ -7917,50 +9892,52 @@ func (m *RecruitAFriendDataResponse) GetTopRecruits() []*RecruitData {
 
 // ref: PegasusUtil.RecruitAFriendURLResponse
 type RecruitAFriendURLResponse struct {
-	RafUrl           string           `protobuf:"bytes,1,opt,name=raf_url,json=rafUrl" json:"raf_url,omitempty"`
-	RafServiceStatus RAFServiceStatus `protobuf:"varint,2,opt,name=raf_service_status,json=rafServiceStatus,enum=pegasus.pegasusutil.RAFServiceStatus" json:"raf_service_status,omitempty"`
-	RafUrlFull       string           `protobuf:"bytes,3,opt,name=raf_url_full,json=rafUrlFull" json:"raf_url_full,omitempty"`
+	RafUrl           *string           `protobuf:"bytes,1,req,name=raf_url,json=rafUrl" json:"raf_url,omitempty"`
+	RafServiceStatus *RAFServiceStatus `protobuf:"varint,2,req,name=raf_service_status,json=rafServiceStatus,enum=pegasus.pegasusutil.RAFServiceStatus" json:"raf_service_status,omitempty"`
+	RafUrlFull       *string           `protobuf:"bytes,3,req,name=raf_url_full,json=rafUrlFull" json:"raf_url_full,omitempty"`
+	XXX_unrecognized []byte            `json:"-"`
 }
 
 func (m *RecruitAFriendURLResponse) Reset()                    { *m = RecruitAFriendURLResponse{} }
 func (m *RecruitAFriendURLResponse) String() string            { return proto.CompactTextString(m) }
 func (*RecruitAFriendURLResponse) ProtoMessage()               {}
-func (*RecruitAFriendURLResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{119} }
+func (*RecruitAFriendURLResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{123} }
 
 func (m *RecruitAFriendURLResponse) GetRafUrl() string {
-	if m != nil {
-		return m.RafUrl
+	if m != nil && m.RafUrl != nil {
+		return *m.RafUrl
 	}
 	return ""
 }
 
 func (m *RecruitAFriendURLResponse) GetRafServiceStatus() RAFServiceStatus {
-	if m != nil {
-		return m.RafServiceStatus
+	if m != nil && m.RafServiceStatus != nil {
+		return *m.RafServiceStatus
 	}
-	return RAFServiceStatus_RAFSERVICESTATUS_AUTO_INVALID
+	return RAFServiceStatus_rafservice_status__ok
 }
 
 func (m *RecruitAFriendURLResponse) GetRafUrlFull() string {
-	if m != nil {
-		return m.RafUrlFull
+	if m != nil && m.RafUrlFull != nil {
+		return *m.RafUrlFull
 	}
 	return ""
 }
 
 // ref: PegasusUtil.RecruitData
 type RecruitData struct {
-	GameAccountId   *pegasus_pegasusshared.BnetId             `protobuf:"bytes,1,opt,name=game_account_id,json=gameAccountId" json:"game_account_id,omitempty"`
-	Progress        uint32                                    `protobuf:"varint,2,opt,name=progress" json:"progress,omitempty"`
-	RecruitState    pegasus_pegasusshared.RecruitAFriendState `protobuf:"varint,3,opt,name=recruit_state,json=recruitState,enum=pegasus.pegasusshared.RecruitAFriendState" json:"recruit_state,omitempty"`
-	GraduationDate  *pegasus_pegasusshared.Date               `protobuf:"bytes,4,opt,name=graduation_date,json=graduationDate" json:"graduation_date,omitempty"`
-	RecruiterReward uint32                                    `protobuf:"varint,5,opt,name=recruiter_reward,json=recruiterReward" json:"recruiter_reward,omitempty"`
+	GameAccountId    *pegasus_pegasusshared.BnetId              `protobuf:"bytes,1,req,name=game_account_id,json=gameAccountId" json:"game_account_id,omitempty"`
+	Progress         *uint32                                    `protobuf:"varint,2,req,name=progress" json:"progress,omitempty"`
+	RecruitState     *pegasus_pegasusshared.RecruitAFriendState `protobuf:"varint,3,req,name=recruit_state,json=recruitState,enum=pegasus.pegasusshared.RecruitAFriendState" json:"recruit_state,omitempty"`
+	GraduationDate   *pegasus_pegasusshared.Date                `protobuf:"bytes,4,opt,name=graduation_date,json=graduationDate" json:"graduation_date,omitempty"`
+	RecruiterReward  *uint32                                    `protobuf:"varint,5,opt,name=recruiter_reward,json=recruiterReward" json:"recruiter_reward,omitempty"`
+	XXX_unrecognized []byte                                     `json:"-"`
 }
 
 func (m *RecruitData) Reset()                    { *m = RecruitData{} }
 func (m *RecruitData) String() string            { return proto.CompactTextString(m) }
 func (*RecruitData) ProtoMessage()               {}
-func (*RecruitData) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{120} }
+func (*RecruitData) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{124} }
 
 func (m *RecruitData) GetGameAccountId() *pegasus_pegasusshared.BnetId {
 	if m != nil {
@@ -7970,17 +9947,17 @@ func (m *RecruitData) GetGameAccountId() *pegasus_pegasusshared.BnetId {
 }
 
 func (m *RecruitData) GetProgress() uint32 {
-	if m != nil {
-		return m.Progress
+	if m != nil && m.Progress != nil {
+		return *m.Progress
 	}
 	return 0
 }
 
 func (m *RecruitData) GetRecruitState() pegasus_pegasusshared.RecruitAFriendState {
-	if m != nil {
-		return m.RecruitState
+	if m != nil && m.RecruitState != nil {
+		return *m.RecruitState
 	}
-	return pegasus_pegasusshared.RecruitAFriendState_RECRUITAFRIENDSTATE_AUTO_INVALID
+	return pegasus_pegasusshared.RecruitAFriendState_RAF_RECRUITABLE
 }
 
 func (m *RecruitData) GetGraduationDate() *pegasus_pegasusshared.Date {
@@ -7991,134 +9968,202 @@ func (m *RecruitData) GetGraduationDate() *pegasus_pegasusshared.Date {
 }
 
 func (m *RecruitData) GetRecruiterReward() uint32 {
-	if m != nil {
-		return m.RecruiterReward
+	if m != nil && m.RecruiterReward != nil {
+		return *m.RecruiterReward
 	}
 	return 0
 }
 
 // ref: PegasusUtil.RenameDeck
 type RenameDeck struct {
-	Deck int64  `protobuf:"varint,1,opt,name=deck" json:"deck,omitempty"`
-	Name string `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
+	Deck             *int64  `protobuf:"varint,1,req,name=deck" json:"deck,omitempty"`
+	Name             *string `protobuf:"bytes,2,req,name=name" json:"name,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *RenameDeck) Reset()                    { *m = RenameDeck{} }
 func (m *RenameDeck) String() string            { return proto.CompactTextString(m) }
 func (*RenameDeck) ProtoMessage()               {}
-func (*RenameDeck) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{121} }
+func (*RenameDeck) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{125} }
 
 func (m *RenameDeck) GetDeck() int64 {
-	if m != nil {
-		return m.Deck
+	if m != nil && m.Deck != nil {
+		return *m.Deck
 	}
 	return 0
 }
 
 func (m *RenameDeck) GetName() string {
-	if m != nil {
-		return m.Name
+	if m != nil && m.Name != nil {
+		return *m.Name
 	}
 	return ""
 }
 
 // ref: PegasusUtil.RequestTavernBrawlInfo
 type RequestTavernBrawlInfo struct {
-	ErrorCode pegasus_pegasusshared.ErrorCode `protobuf:"varint,1,opt,name=error_code,json=errorCode,enum=pegasus.pegasusshared.ErrorCode" json:"error_code,omitempty"`
-	BrawlType pegasus_pegasusshared.BrawlType `protobuf:"varint,2,opt,name=brawl_type,json=brawlType,enum=pegasus.pegasusshared.BrawlType" json:"brawl_type,omitempty"`
+	DeprecatedErrorCode *pegasus_pegasusshared.ErrorCode `protobuf:"varint,1,opt,name=deprecated_error_code,json=deprecatedErrorCode,enum=pegasus.pegasusshared.ErrorCode,def=0" json:"deprecated_error_code,omitempty"`
+	BrawlType           *pegasus_pegasusshared.BrawlType `protobuf:"varint,2,req,name=brawl_type,json=brawlType,enum=pegasus.pegasusshared.BrawlType" json:"brawl_type,omitempty"`
+	FsgId               *int64                           `protobuf:"varint,100,opt,name=fsg_id,json=fsgId" json:"fsg_id,omitempty"`
+	FsgSharedSecretKey  []byte                           `protobuf:"bytes,101,opt,name=fsg_shared_secret_key,json=fsgSharedSecretKey" json:"fsg_shared_secret_key,omitempty"`
+	XXX_unrecognized    []byte                           `json:"-"`
 }
 
 func (m *RequestTavernBrawlInfo) Reset()                    { *m = RequestTavernBrawlInfo{} }
 func (m *RequestTavernBrawlInfo) String() string            { return proto.CompactTextString(m) }
 func (*RequestTavernBrawlInfo) ProtoMessage()               {}
-func (*RequestTavernBrawlInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{122} }
+func (*RequestTavernBrawlInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{126} }
 
-func (m *RequestTavernBrawlInfo) GetErrorCode() pegasus_pegasusshared.ErrorCode {
-	if m != nil {
-		return m.ErrorCode
+const Default_RequestTavernBrawlInfo_DeprecatedErrorCode pegasus_pegasusshared.ErrorCode = pegasus_pegasusshared.ErrorCode_ERROR_OK
+
+func (m *RequestTavernBrawlInfo) GetDeprecatedErrorCode() pegasus_pegasusshared.ErrorCode {
+	if m != nil && m.DeprecatedErrorCode != nil {
+		return *m.DeprecatedErrorCode
 	}
-	return pegasus_pegasusshared.ErrorCode_ERROR_OK
+	return Default_RequestTavernBrawlInfo_DeprecatedErrorCode
 }
 
 func (m *RequestTavernBrawlInfo) GetBrawlType() pegasus_pegasusshared.BrawlType {
-	if m != nil {
-		return m.BrawlType
+	if m != nil && m.BrawlType != nil {
+		return *m.BrawlType
 	}
 	return pegasus_pegasusshared.BrawlType_BRAWL_TYPE_UNKNOWN
 }
 
+func (m *RequestTavernBrawlInfo) GetFsgId() int64 {
+	if m != nil && m.FsgId != nil {
+		return *m.FsgId
+	}
+	return 0
+}
+
+func (m *RequestTavernBrawlInfo) GetFsgSharedSecretKey() []byte {
+	if m != nil {
+		return m.FsgSharedSecretKey
+	}
+	return nil
+}
+
 // ref: PegasusUtil.RequestTavernBrawlPlayerRecord
 type RequestTavernBrawlPlayerRecord struct {
-	ErrorCode pegasus_pegasusshared.ErrorCode `protobuf:"varint,1,opt,name=error_code,json=errorCode,enum=pegasus.pegasusshared.ErrorCode" json:"error_code,omitempty"`
-	BrawlType pegasus_pegasusshared.BrawlType `protobuf:"varint,2,opt,name=brawl_type,json=brawlType,enum=pegasus.pegasusshared.BrawlType" json:"brawl_type,omitempty"`
+	DeprecatedErrorCode *pegasus_pegasusshared.ErrorCode `protobuf:"varint,1,opt,name=deprecated_error_code,json=deprecatedErrorCode,enum=pegasus.pegasusshared.ErrorCode,def=0" json:"deprecated_error_code,omitempty"`
+	BrawlType           *pegasus_pegasusshared.BrawlType `protobuf:"varint,2,req,name=brawl_type,json=brawlType,enum=pegasus.pegasusshared.BrawlType" json:"brawl_type,omitempty"`
+	FsgId               *int64                           `protobuf:"varint,100,opt,name=fsg_id,json=fsgId" json:"fsg_id,omitempty"`
+	FsgSharedSecretKey  []byte                           `protobuf:"bytes,101,opt,name=fsg_shared_secret_key,json=fsgSharedSecretKey" json:"fsg_shared_secret_key,omitempty"`
+	XXX_unrecognized    []byte                           `json:"-"`
 }
 
 func (m *RequestTavernBrawlPlayerRecord) Reset()         { *m = RequestTavernBrawlPlayerRecord{} }
 func (m *RequestTavernBrawlPlayerRecord) String() string { return proto.CompactTextString(m) }
 func (*RequestTavernBrawlPlayerRecord) ProtoMessage()    {}
 func (*RequestTavernBrawlPlayerRecord) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{123}
+	return fileDescriptor0, []int{127}
 }
 
-func (m *RequestTavernBrawlPlayerRecord) GetErrorCode() pegasus_pegasusshared.ErrorCode {
-	if m != nil {
-		return m.ErrorCode
+const Default_RequestTavernBrawlPlayerRecord_DeprecatedErrorCode pegasus_pegasusshared.ErrorCode = pegasus_pegasusshared.ErrorCode_ERROR_OK
+
+func (m *RequestTavernBrawlPlayerRecord) GetDeprecatedErrorCode() pegasus_pegasusshared.ErrorCode {
+	if m != nil && m.DeprecatedErrorCode != nil {
+		return *m.DeprecatedErrorCode
 	}
-	return pegasus_pegasusshared.ErrorCode_ERROR_OK
+	return Default_RequestTavernBrawlPlayerRecord_DeprecatedErrorCode
 }
 
 func (m *RequestTavernBrawlPlayerRecord) GetBrawlType() pegasus_pegasusshared.BrawlType {
-	if m != nil {
-		return m.BrawlType
+	if m != nil && m.BrawlType != nil {
+		return *m.BrawlType
 	}
 	return pegasus_pegasusshared.BrawlType_BRAWL_TYPE_UNKNOWN
 }
 
+func (m *RequestTavernBrawlPlayerRecord) GetFsgId() int64 {
+	if m != nil && m.FsgId != nil {
+		return *m.FsgId
+	}
+	return 0
+}
+
+func (m *RequestTavernBrawlPlayerRecord) GetFsgSharedSecretKey() []byte {
+	if m != nil {
+		return m.FsgSharedSecretKey
+	}
+	return nil
+}
+
 // ref: PegasusUtil.ReturningPlayerInfo
 type ReturningPlayerInfo struct {
-	Status      pegasus_pegasusshared.ReturningPlayerStatus `protobuf:"varint,1,opt,name=status,enum=pegasus.pegasusshared.ReturningPlayerStatus" json:"status,omitempty"`
-	AbTestGroup uint32                                      `protobuf:"varint,2,opt,name=ab_test_group,json=abTestGroup" json:"ab_test_group,omitempty"`
+	Status                          *pegasus_pegasusshared.ReturningPlayerStatus `protobuf:"varint,1,req,name=status,enum=pegasus.pegasusshared.ReturningPlayerStatus" json:"status,omitempty"`
+	AbTestGroup                     *uint32                                      `protobuf:"varint,2,opt,name=ab_test_group,json=abTestGroup" json:"ab_test_group,omitempty"`
+	NotificationSuppressionTimeDays *int64                                       `protobuf:"varint,3,req,name=notification_suppression_time_days,json=notificationSuppressionTimeDays" json:"notification_suppression_time_days,omitempty"`
+	XXX_unrecognized                []byte                                       `json:"-"`
 }
 
 func (m *ReturningPlayerInfo) Reset()                    { *m = ReturningPlayerInfo{} }
 func (m *ReturningPlayerInfo) String() string            { return proto.CompactTextString(m) }
 func (*ReturningPlayerInfo) ProtoMessage()               {}
-func (*ReturningPlayerInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{124} }
+func (*ReturningPlayerInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{128} }
 
 func (m *ReturningPlayerInfo) GetStatus() pegasus_pegasusshared.ReturningPlayerStatus {
-	if m != nil {
-		return m.Status
+	if m != nil && m.Status != nil {
+		return *m.Status
 	}
 	return pegasus_pegasusshared.ReturningPlayerStatus_RPS_UNKNOWN
 }
 
 func (m *ReturningPlayerInfo) GetAbTestGroup() uint32 {
-	if m != nil {
-		return m.AbTestGroup
+	if m != nil && m.AbTestGroup != nil {
+		return *m.AbTestGroup
+	}
+	return 0
+}
+
+func (m *ReturningPlayerInfo) GetNotificationSuppressionTimeDays() int64 {
+	if m != nil && m.NotificationSuppressionTimeDays != nil {
+		return *m.NotificationSuppressionTimeDays
 	}
 	return 0
 }
 
 // ref: PegasusUtil.ReturningPlayerOptOutRequest
 type ReturningPlayerOptOutRequest struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *ReturningPlayerOptOutRequest) Reset()                    { *m = ReturningPlayerOptOutRequest{} }
 func (m *ReturningPlayerOptOutRequest) String() string            { return proto.CompactTextString(m) }
 func (*ReturningPlayerOptOutRequest) ProtoMessage()               {}
-func (*ReturningPlayerOptOutRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{125} }
+func (*ReturningPlayerOptOutRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{129} }
+
+// ref: PegasusUtil.ReturningPlayerOptOutResponse
+type ReturningPlayerOptOutResponse struct {
+	ErrorCode        *pegasus_pegasusshared.ErrorCode `protobuf:"varint,1,req,name=error_code,json=errorCode,enum=pegasus.pegasusshared.ErrorCode" json:"error_code,omitempty"`
+	XXX_unrecognized []byte                           `json:"-"`
+}
+
+func (m *ReturningPlayerOptOutResponse) Reset()                    { *m = ReturningPlayerOptOutResponse{} }
+func (m *ReturningPlayerOptOutResponse) String() string            { return proto.CompactTextString(m) }
+func (*ReturningPlayerOptOutResponse) ProtoMessage()               {}
+func (*ReturningPlayerOptOutResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{130} }
+
+func (m *ReturningPlayerOptOutResponse) GetErrorCode() pegasus_pegasusshared.ErrorCode {
+	if m != nil && m.ErrorCode != nil {
+		return *m.ErrorCode
+	}
+	return pegasus_pegasusshared.ErrorCode_ERROR_OK
+}
 
 // ref: PegasusUtil.RewardProgress
 type RewardProgress struct {
-	SeasonEnd       *pegasus_pegasusshared.Date `protobuf:"bytes,1,opt,name=season_end,json=seasonEnd" json:"season_end,omitempty"`
-	SeasonNumber    int32                       `protobuf:"varint,5,opt,name=season_number,json=seasonNumber" json:"season_number,omitempty"`
-	NextQuestCancel *pegasus_pegasusshared.Date `protobuf:"bytes,11,opt,name=next_quest_cancel,json=nextQuestCancel" json:"next_quest_cancel,omitempty"`
+	SeasonEnd        *pegasus_pegasusshared.Date `protobuf:"bytes,1,req,name=season_end,json=seasonEnd" json:"season_end,omitempty"`
+	SeasonNumber     *int32                      `protobuf:"varint,5,req,name=season_number,json=seasonNumber" json:"season_number,omitempty"`
+	NextQuestCancel  *pegasus_pegasusshared.Date `protobuf:"bytes,11,req,name=next_quest_cancel,json=nextQuestCancel" json:"next_quest_cancel,omitempty"`
+	XXX_unrecognized []byte                      `json:"-"`
 }
 
 func (m *RewardProgress) Reset()                    { *m = RewardProgress{} }
 func (m *RewardProgress) String() string            { return proto.CompactTextString(m) }
 func (*RewardProgress) ProtoMessage()               {}
-func (*RewardProgress) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{126} }
+func (*RewardProgress) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{131} }
 
 func (m *RewardProgress) GetSeasonEnd() *pegasus_pegasusshared.Date {
 	if m != nil {
@@ -8128,8 +10173,8 @@ func (m *RewardProgress) GetSeasonEnd() *pegasus_pegasusshared.Date {
 }
 
 func (m *RewardProgress) GetSeasonNumber() int32 {
-	if m != nil {
-		return m.SeasonNumber
+	if m != nil && m.SeasonNumber != nil {
+		return *m.SeasonNumber
 	}
 	return 0
 }
@@ -8143,47 +10188,52 @@ func (m *RewardProgress) GetNextQuestCancel() *pegasus_pegasusshared.Date {
 
 // ref: PegasusUtil.RpcHeader
 type RpcHeader struct {
-	Type                   uint64 `protobuf:"varint,1,opt,name=type" json:"type,omitempty"`
-	RetryCount             uint64 `protobuf:"varint,2,opt,name=retry_count,json=retryCount" json:"retry_count,omitempty"`
-	RequestNotHandledCount uint64 `protobuf:"varint,3,opt,name=request_not_handled_count,json=requestNotHandledCount" json:"request_not_handled_count,omitempty"`
+	Type                   *uint64 `protobuf:"varint,1,req,name=type" json:"type,omitempty"`
+	RetryCount             *uint64 `protobuf:"varint,2,opt,name=retry_count,json=retryCount,def=0" json:"retry_count,omitempty"`
+	RequestNotHandledCount *uint64 `protobuf:"varint,3,opt,name=request_not_handled_count,json=requestNotHandledCount,def=0" json:"request_not_handled_count,omitempty"`
+	XXX_unrecognized       []byte  `json:"-"`
 }
 
 func (m *RpcHeader) Reset()                    { *m = RpcHeader{} }
 func (m *RpcHeader) String() string            { return proto.CompactTextString(m) }
 func (*RpcHeader) ProtoMessage()               {}
-func (*RpcHeader) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{127} }
+func (*RpcHeader) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{132} }
+
+const Default_RpcHeader_RetryCount uint64 = 0
+const Default_RpcHeader_RequestNotHandledCount uint64 = 0
 
 func (m *RpcHeader) GetType() uint64 {
-	if m != nil {
-		return m.Type
+	if m != nil && m.Type != nil {
+		return *m.Type
 	}
 	return 0
 }
 
 func (m *RpcHeader) GetRetryCount() uint64 {
-	if m != nil {
-		return m.RetryCount
+	if m != nil && m.RetryCount != nil {
+		return *m.RetryCount
 	}
-	return 0
+	return Default_RpcHeader_RetryCount
 }
 
 func (m *RpcHeader) GetRequestNotHandledCount() uint64 {
-	if m != nil {
-		return m.RequestNotHandledCount
+	if m != nil && m.RequestNotHandledCount != nil {
+		return *m.RequestNotHandledCount
 	}
-	return 0
+	return Default_RpcHeader_RequestNotHandledCount
 }
 
 // ref: PegasusUtil.RpcMessage
 type RpcMessage struct {
-	RpcHeader   *RpcHeader `protobuf:"bytes,1,opt,name=rpc_header,json=rpcHeader" json:"rpc_header,omitempty"`
-	MessageBody []byte     `protobuf:"bytes,2,opt,name=message_body,json=messageBody,proto3" json:"message_body,omitempty"`
+	RpcHeader        *RpcHeader `protobuf:"bytes,1,req,name=rpc_header,json=rpcHeader" json:"rpc_header,omitempty"`
+	MessageBody      []byte     `protobuf:"bytes,2,opt,name=message_body,json=messageBody" json:"message_body,omitempty"`
+	XXX_unrecognized []byte     `json:"-"`
 }
 
 func (m *RpcMessage) Reset()                    { *m = RpcMessage{} }
 func (m *RpcMessage) String() string            { return proto.CompactTextString(m) }
 func (*RpcMessage) ProtoMessage()               {}
-func (*RpcMessage) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{128} }
+func (*RpcMessage) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{133} }
 
 func (m *RpcMessage) GetRpcHeader() *RpcHeader {
 	if m != nil {
@@ -8201,63 +10251,66 @@ func (m *RpcMessage) GetMessageBody() []byte {
 
 // ref: PegasusUtil.SetCardBack
 type SetCardBack struct {
-	CardBack int32 `protobuf:"varint,1,opt,name=card_back,json=cardBack" json:"card_back,omitempty"`
-	DeckId   int64 `protobuf:"varint,2,opt,name=deck_id,json=deckId" json:"deck_id,omitempty"`
+	CardBack         *int32 `protobuf:"varint,1,req,name=card_back,json=cardBack" json:"card_back,omitempty"`
+	DeckId           *int64 `protobuf:"varint,2,opt,name=deck_id,json=deckId" json:"deck_id,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *SetCardBack) Reset()                    { *m = SetCardBack{} }
 func (m *SetCardBack) String() string            { return proto.CompactTextString(m) }
 func (*SetCardBack) ProtoMessage()               {}
-func (*SetCardBack) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{129} }
+func (*SetCardBack) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{134} }
 
 func (m *SetCardBack) GetCardBack() int32 {
-	if m != nil {
-		return m.CardBack
+	if m != nil && m.CardBack != nil {
+		return *m.CardBack
 	}
 	return 0
 }
 
 func (m *SetCardBack) GetDeckId() int64 {
-	if m != nil {
-		return m.DeckId
+	if m != nil && m.DeckId != nil {
+		return *m.DeckId
 	}
 	return 0
 }
 
 // ref: PegasusUtil.SetCardBackResponse
 type SetCardBackResponse struct {
-	Success  bool  `protobuf:"varint,1,opt,name=success" json:"success,omitempty"`
-	CardBack int32 `protobuf:"varint,2,opt,name=card_back,json=cardBack" json:"card_back,omitempty"`
+	Success          *bool  `protobuf:"varint,1,req,name=success" json:"success,omitempty"`
+	CardBack         *int32 `protobuf:"varint,2,req,name=card_back,json=cardBack" json:"card_back,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *SetCardBackResponse) Reset()                    { *m = SetCardBackResponse{} }
 func (m *SetCardBackResponse) String() string            { return proto.CompactTextString(m) }
 func (*SetCardBackResponse) ProtoMessage()               {}
-func (*SetCardBackResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{130} }
+func (*SetCardBackResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{135} }
 
 func (m *SetCardBackResponse) GetSuccess() bool {
-	if m != nil {
-		return m.Success
+	if m != nil && m.Success != nil {
+		return *m.Success
 	}
 	return false
 }
 
 func (m *SetCardBackResponse) GetCardBack() int32 {
-	if m != nil {
-		return m.CardBack
+	if m != nil && m.CardBack != nil {
+		return *m.CardBack
 	}
 	return 0
 }
 
 // ref: PegasusUtil.SetFavoriteHero
 type SetFavoriteHero struct {
-	FavoriteHero *pegasus_pegasusshared.FavoriteHero `protobuf:"bytes,1,opt,name=favorite_hero,json=favoriteHero" json:"favorite_hero,omitempty"`
+	FavoriteHero     *pegasus_pegasusshared.FavoriteHero `protobuf:"bytes,1,req,name=favorite_hero,json=favoriteHero" json:"favorite_hero,omitempty"`
+	XXX_unrecognized []byte                              `json:"-"`
 }
 
 func (m *SetFavoriteHero) Reset()                    { *m = SetFavoriteHero{} }
 func (m *SetFavoriteHero) String() string            { return proto.CompactTextString(m) }
 func (*SetFavoriteHero) ProtoMessage()               {}
-func (*SetFavoriteHero) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{131} }
+func (*SetFavoriteHero) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{136} }
 
 func (m *SetFavoriteHero) GetFavoriteHero() *pegasus_pegasusshared.FavoriteHero {
 	if m != nil {
@@ -8268,18 +10321,19 @@ func (m *SetFavoriteHero) GetFavoriteHero() *pegasus_pegasusshared.FavoriteHero 
 
 // ref: PegasusUtil.SetFavoriteHeroResponse
 type SetFavoriteHeroResponse struct {
-	Success      bool                                `protobuf:"varint,1,opt,name=success" json:"success,omitempty"`
-	FavoriteHero *pegasus_pegasusshared.FavoriteHero `protobuf:"bytes,2,opt,name=favorite_hero,json=favoriteHero" json:"favorite_hero,omitempty"`
+	Success          *bool                               `protobuf:"varint,1,req,name=success" json:"success,omitempty"`
+	FavoriteHero     *pegasus_pegasusshared.FavoriteHero `protobuf:"bytes,2,opt,name=favorite_hero,json=favoriteHero" json:"favorite_hero,omitempty"`
+	XXX_unrecognized []byte                              `json:"-"`
 }
 
 func (m *SetFavoriteHeroResponse) Reset()                    { *m = SetFavoriteHeroResponse{} }
 func (m *SetFavoriteHeroResponse) String() string            { return proto.CompactTextString(m) }
 func (*SetFavoriteHeroResponse) ProtoMessage()               {}
-func (*SetFavoriteHeroResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{132} }
+func (*SetFavoriteHeroResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{137} }
 
 func (m *SetFavoriteHeroResponse) GetSuccess() bool {
-	if m != nil {
-		return m.Success
+	if m != nil && m.Success != nil {
+		return *m.Success
 	}
 	return false
 }
@@ -8293,13 +10347,14 @@ func (m *SetFavoriteHeroResponse) GetFavoriteHero() *pegasus_pegasusshared.Favor
 
 // ref: PegasusUtil.SetOptions
 type SetOptions struct {
-	Options []*ClientOption `protobuf:"bytes,1,rep,name=options" json:"options,omitempty"`
+	Options          []*ClientOption `protobuf:"bytes,1,rep,name=options" json:"options,omitempty"`
+	XXX_unrecognized []byte          `json:"-"`
 }
 
 func (m *SetOptions) Reset()                    { *m = SetOptions{} }
 func (m *SetOptions) String() string            { return proto.CompactTextString(m) }
 func (*SetOptions) ProtoMessage()               {}
-func (*SetOptions) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{133} }
+func (*SetOptions) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{138} }
 
 func (m *SetOptions) GetOptions() []*ClientOption {
 	if m != nil {
@@ -8310,110 +10365,114 @@ func (m *SetOptions) GetOptions() []*ClientOption {
 
 // ref: PegasusUtil.SetProgress
 type SetProgress struct {
-	Value int64 `protobuf:"varint,1,opt,name=value" json:"value,omitempty"`
+	Value            *int64 `protobuf:"varint,1,req,name=value" json:"value,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *SetProgress) Reset()                    { *m = SetProgress{} }
 func (m *SetProgress) String() string            { return proto.CompactTextString(m) }
 func (*SetProgress) ProtoMessage()               {}
-func (*SetProgress) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{134} }
+func (*SetProgress) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{139} }
 
 func (m *SetProgress) GetValue() int64 {
-	if m != nil {
-		return m.Value
+	if m != nil && m.Value != nil {
+		return *m.Value
 	}
 	return 0
 }
 
 // ref: PegasusUtil.SetProgressResponse
 type SetProgressResponse struct {
-	Result   SetProgressResponse_Result `protobuf:"varint,1,opt,name=result,enum=pegasus.pegasusutil.SetProgressResponse_Result" json:"result,omitempty"`
-	Progress int64                      `protobuf:"varint,2,opt,name=progress" json:"progress,omitempty"`
+	Result           *SetProgressResponse_Result `protobuf:"varint,1,req,name=result,enum=pegasus.pegasusutil.SetProgressResponse_Result" json:"result,omitempty"`
+	Progress         *int64                      `protobuf:"varint,2,opt,name=progress" json:"progress,omitempty"`
+	XXX_unrecognized []byte                      `json:"-"`
 }
 
 func (m *SetProgressResponse) Reset()                    { *m = SetProgressResponse{} }
 func (m *SetProgressResponse) String() string            { return proto.CompactTextString(m) }
 func (*SetProgressResponse) ProtoMessage()               {}
-func (*SetProgressResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{135} }
+func (*SetProgressResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{140} }
 
 func (m *SetProgressResponse) GetResult() SetProgressResponse_Result {
-	if m != nil {
-		return m.Result
+	if m != nil && m.Result != nil {
+		return *m.Result
 	}
-	return SetProgressResponse_RESULT_AUTO_INVALID
+	return SetProgressResponse_SUCCESS
 }
 
 func (m *SetProgressResponse) GetProgress() int64 {
-	if m != nil {
-		return m.Progress
+	if m != nil && m.Progress != nil {
+		return *m.Progress
 	}
 	return 0
 }
 
 // ref: PegasusUtil.SpecialEventTiming
 type SpecialEventTiming struct {
-	Event string `protobuf:"bytes,1,opt,name=event" json:"event,omitempty"`
-	Start uint64 `protobuf:"varint,2,opt,name=start" json:"start,omitempty"`
-	End   uint64 `protobuf:"varint,3,opt,name=end" json:"end,omitempty"`
+	Event            *string `protobuf:"bytes,1,req,name=event" json:"event,omitempty"`
+	Start            *uint64 `protobuf:"varint,2,opt,name=start" json:"start,omitempty"`
+	End              *uint64 `protobuf:"varint,3,opt,name=end" json:"end,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *SpecialEventTiming) Reset()                    { *m = SpecialEventTiming{} }
 func (m *SpecialEventTiming) String() string            { return proto.CompactTextString(m) }
 func (*SpecialEventTiming) ProtoMessage()               {}
-func (*SpecialEventTiming) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{136} }
+func (*SpecialEventTiming) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{141} }
 
 func (m *SpecialEventTiming) GetEvent() string {
-	if m != nil {
-		return m.Event
+	if m != nil && m.Event != nil {
+		return *m.Event
 	}
 	return ""
 }
 
 func (m *SpecialEventTiming) GetStart() uint64 {
-	if m != nil {
-		return m.Start
+	if m != nil && m.Start != nil {
+		return *m.Start
 	}
 	return 0
 }
 
 func (m *SpecialEventTiming) GetEnd() uint64 {
-	if m != nil {
-		return m.End
+	if m != nil && m.End != nil {
+		return *m.End
 	}
 	return 0
 }
 
 // ref: PegasusUtil.StartThirdPartyPurchase
 type StartThirdPartyPurchase struct {
-	Provider            pegasus_pegasusshared.BattlePayProvider `protobuf:"varint,1,opt,name=provider,enum=pegasus.pegasusshared.BattlePayProvider" json:"provider,omitempty"`
-	ProductId           string                                  `protobuf:"bytes,2,opt,name=product_id,json=productId" json:"product_id,omitempty"`
-	Quantity            int32                                   `protobuf:"varint,3,opt,name=quantity" json:"quantity,omitempty"`
-	DanglingReceiptData *ThirdPartyReceiptData                  `protobuf:"bytes,4,opt,name=dangling_receipt_data,json=danglingReceiptData" json:"dangling_receipt_data,omitempty"`
-	DeviceId            string                                  `protobuf:"bytes,5,opt,name=device_id,json=deviceId" json:"device_id,omitempty"`
+	Provider            *pegasus_pegasusshared.BattlePayProvider `protobuf:"varint,1,req,name=provider,enum=pegasus.pegasusshared.BattlePayProvider" json:"provider,omitempty"`
+	ProductId           *string                                  `protobuf:"bytes,2,req,name=product_id,json=productId" json:"product_id,omitempty"`
+	Quantity            *int32                                   `protobuf:"varint,3,req,name=quantity" json:"quantity,omitempty"`
+	DanglingReceiptData *ThirdPartyReceiptData                   `protobuf:"bytes,4,opt,name=dangling_receipt_data,json=danglingReceiptData" json:"dangling_receipt_data,omitempty"`
+	DeviceId            *string                                  `protobuf:"bytes,5,req,name=device_id,json=deviceId" json:"device_id,omitempty"`
+	XXX_unrecognized    []byte                                   `json:"-"`
 }
 
 func (m *StartThirdPartyPurchase) Reset()                    { *m = StartThirdPartyPurchase{} }
 func (m *StartThirdPartyPurchase) String() string            { return proto.CompactTextString(m) }
 func (*StartThirdPartyPurchase) ProtoMessage()               {}
-func (*StartThirdPartyPurchase) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{137} }
+func (*StartThirdPartyPurchase) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{142} }
 
 func (m *StartThirdPartyPurchase) GetProvider() pegasus_pegasusshared.BattlePayProvider {
-	if m != nil {
-		return m.Provider
+	if m != nil && m.Provider != nil {
+		return *m.Provider
 	}
-	return pegasus_pegasusshared.BattlePayProvider_BATTLEPAYPROVIDER_AUTO_INVALID
+	return pegasus_pegasusshared.BattlePayProvider_BP_PROVIDER_BLIZZARD
 }
 
 func (m *StartThirdPartyPurchase) GetProductId() string {
-	if m != nil {
-		return m.ProductId
+	if m != nil && m.ProductId != nil {
+		return *m.ProductId
 	}
 	return ""
 }
 
 func (m *StartThirdPartyPurchase) GetQuantity() int32 {
-	if m != nil {
-		return m.Quantity
+	if m != nil && m.Quantity != nil {
+		return *m.Quantity
 	}
 	return 0
 }
@@ -8426,22 +10485,55 @@ func (m *StartThirdPartyPurchase) GetDanglingReceiptData() *ThirdPartyReceiptDat
 }
 
 func (m *StartThirdPartyPurchase) GetDeviceId() string {
-	if m != nil {
-		return m.DeviceId
+	if m != nil && m.DeviceId != nil {
+		return *m.DeviceId
 	}
 	return ""
 }
 
 // ref: PegasusUtil.SubmitThirdPartyReceipt
 type SubmitThirdPartyReceipt struct {
-	ReceiptData   *ThirdPartyReceiptData `protobuf:"bytes,1,opt,name=receipt_data,json=receiptData" json:"receipt_data,omitempty"`
-	TransactionId int64                  `protobuf:"varint,2,opt,name=transaction_id,json=transactionId" json:"transaction_id,omitempty"`
+	Provider         *pegasus_pegasusshared.BattlePayProvider `protobuf:"varint,1,req,name=provider,enum=pegasus.pegasusshared.BattlePayProvider" json:"provider,omitempty"`
+	ProductId        *string                                  `protobuf:"bytes,2,req,name=product_id,json=productId" json:"product_id,omitempty"`
+	Quantity         *int32                                   `protobuf:"varint,3,req,name=quantity" json:"quantity,omitempty"`
+	TransactionId    *int64                                   `protobuf:"varint,4,req,name=transaction_id,json=transactionId" json:"transaction_id,omitempty"`
+	ReceiptData      *ThirdPartyReceiptData                   `protobuf:"bytes,5,req,name=receipt_data,json=receiptData" json:"receipt_data,omitempty"`
+	DeviceId         *string                                  `protobuf:"bytes,6,req,name=device_id,json=deviceId" json:"device_id,omitempty"`
+	XXX_unrecognized []byte                                   `json:"-"`
 }
 
 func (m *SubmitThirdPartyReceipt) Reset()                    { *m = SubmitThirdPartyReceipt{} }
 func (m *SubmitThirdPartyReceipt) String() string            { return proto.CompactTextString(m) }
 func (*SubmitThirdPartyReceipt) ProtoMessage()               {}
-func (*SubmitThirdPartyReceipt) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{138} }
+func (*SubmitThirdPartyReceipt) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{143} }
+
+func (m *SubmitThirdPartyReceipt) GetProvider() pegasus_pegasusshared.BattlePayProvider {
+	if m != nil && m.Provider != nil {
+		return *m.Provider
+	}
+	return pegasus_pegasusshared.BattlePayProvider_BP_PROVIDER_BLIZZARD
+}
+
+func (m *SubmitThirdPartyReceipt) GetProductId() string {
+	if m != nil && m.ProductId != nil {
+		return *m.ProductId
+	}
+	return ""
+}
+
+func (m *SubmitThirdPartyReceipt) GetQuantity() int32 {
+	if m != nil && m.Quantity != nil {
+		return *m.Quantity
+	}
+	return 0
+}
+
+func (m *SubmitThirdPartyReceipt) GetTransactionId() int64 {
+	if m != nil && m.TransactionId != nil {
+		return *m.TransactionId
+	}
+	return 0
+}
 
 func (m *SubmitThirdPartyReceipt) GetReceiptData() *ThirdPartyReceiptData {
 	if m != nil {
@@ -8450,116 +10542,129 @@ func (m *SubmitThirdPartyReceipt) GetReceiptData() *ThirdPartyReceiptData {
 	return nil
 }
 
-func (m *SubmitThirdPartyReceipt) GetTransactionId() int64 {
-	if m != nil {
-		return m.TransactionId
+func (m *SubmitThirdPartyReceipt) GetDeviceId() string {
+	if m != nil && m.DeviceId != nil {
+		return *m.DeviceId
 	}
-	return 0
+	return ""
 }
 
 // ref: PegasusUtil.Subscribe
 type Subscribe struct {
-	FirstSubscribeForRoute bool `protobuf:"varint,1,opt,name=first_subscribe_for_route,json=firstSubscribeForRoute" json:"first_subscribe_for_route,omitempty"`
+	FirstSubscribeForRoute *bool  `protobuf:"varint,1,opt,name=first_subscribe_for_route,json=firstSubscribeForRoute,def=0" json:"first_subscribe_for_route,omitempty"`
+	XXX_unrecognized       []byte `json:"-"`
 }
 
 func (m *Subscribe) Reset()                    { *m = Subscribe{} }
 func (m *Subscribe) String() string            { return proto.CompactTextString(m) }
 func (*Subscribe) ProtoMessage()               {}
-func (*Subscribe) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{139} }
+func (*Subscribe) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{144} }
+
+const Default_Subscribe_FirstSubscribeForRoute bool = false
 
 func (m *Subscribe) GetFirstSubscribeForRoute() bool {
-	if m != nil {
-		return m.FirstSubscribeForRoute
+	if m != nil && m.FirstSubscribeForRoute != nil {
+		return *m.FirstSubscribeForRoute
 	}
-	return false
+	return Default_Subscribe_FirstSubscribeForRoute
 }
 
 // ref: PegasusUtil.SubscribeResponse
 type SubscribeResponse struct {
-	Route                   uint64                           `protobuf:"varint,1,opt,name=route" json:"route,omitempty"`
-	KeepAliveSecs           uint64                           `protobuf:"varint,3,opt,name=keep_alive_secs,json=keepAliveSecs" json:"keep_alive_secs,omitempty"`
-	MaxResubscribeAttempts  uint64                           `protobuf:"varint,4,opt,name=max_resubscribe_attempts,json=maxResubscribeAttempts" json:"max_resubscribe_attempts,omitempty"`
-	PendingResponseTimeout  uint64                           `protobuf:"varint,5,opt,name=pending_response_timeout,json=pendingResponseTimeout" json:"pending_response_timeout,omitempty"`
-	PendingSubscribeTimeout uint64                           `protobuf:"varint,6,opt,name=pending_subscribe_timeout,json=pendingSubscribeTimeout" json:"pending_subscribe_timeout,omitempty"`
-	Result                  SubscribeResponse_ResponseResult `protobuf:"varint,7,opt,name=result,enum=pegasus.pegasusutil.SubscribeResponse_ResponseResult" json:"result,omitempty"`
-	RequestMaxWaitSecs      uint64                           `protobuf:"varint,8,opt,name=request_max_wait_secs,json=requestMaxWaitSecs" json:"request_max_wait_secs,omitempty"`
+	Route                   *uint64                           `protobuf:"varint,1,opt,name=route" json:"route,omitempty"`
+	KeepAliveSecs           *uint64                           `protobuf:"varint,3,opt,name=keep_alive_secs,json=keepAliveSecs" json:"keep_alive_secs,omitempty"`
+	MaxResubscribeAttempts  *uint64                           `protobuf:"varint,4,opt,name=max_resubscribe_attempts,json=maxResubscribeAttempts,def=0" json:"max_resubscribe_attempts,omitempty"`
+	PendingResponseTimeout  *uint64                           `protobuf:"varint,5,opt,name=pending_response_timeout,json=pendingResponseTimeout,def=0" json:"pending_response_timeout,omitempty"`
+	PendingSubscribeTimeout *uint64                           `protobuf:"varint,6,opt,name=pending_subscribe_timeout,json=pendingSubscribeTimeout,def=0" json:"pending_subscribe_timeout,omitempty"`
+	Result                  *SubscribeResponse_ResponseResult `protobuf:"varint,7,opt,name=result,enum=pegasus.pegasusutil.SubscribeResponse_ResponseResult,def=1" json:"result,omitempty"`
+	RequestMaxWaitSecs      *uint64                           `protobuf:"varint,8,opt,name=request_max_wait_secs,json=requestMaxWaitSecs" json:"request_max_wait_secs,omitempty"`
+	XXX_unrecognized        []byte                            `json:"-"`
 }
 
 func (m *SubscribeResponse) Reset()                    { *m = SubscribeResponse{} }
 func (m *SubscribeResponse) String() string            { return proto.CompactTextString(m) }
 func (*SubscribeResponse) ProtoMessage()               {}
-func (*SubscribeResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{140} }
+func (*SubscribeResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{145} }
+
+const Default_SubscribeResponse_MaxResubscribeAttempts uint64 = 0
+const Default_SubscribeResponse_PendingResponseTimeout uint64 = 0
+const Default_SubscribeResponse_PendingSubscribeTimeout uint64 = 0
+const Default_SubscribeResponse_Result SubscribeResponse_ResponseResult = SubscribeResponse_SUCCESS
 
 func (m *SubscribeResponse) GetRoute() uint64 {
-	if m != nil {
-		return m.Route
+	if m != nil && m.Route != nil {
+		return *m.Route
 	}
 	return 0
 }
 
 func (m *SubscribeResponse) GetKeepAliveSecs() uint64 {
-	if m != nil {
-		return m.KeepAliveSecs
+	if m != nil && m.KeepAliveSecs != nil {
+		return *m.KeepAliveSecs
 	}
 	return 0
 }
 
 func (m *SubscribeResponse) GetMaxResubscribeAttempts() uint64 {
-	if m != nil {
-		return m.MaxResubscribeAttempts
+	if m != nil && m.MaxResubscribeAttempts != nil {
+		return *m.MaxResubscribeAttempts
 	}
-	return 0
+	return Default_SubscribeResponse_MaxResubscribeAttempts
 }
 
 func (m *SubscribeResponse) GetPendingResponseTimeout() uint64 {
-	if m != nil {
-		return m.PendingResponseTimeout
+	if m != nil && m.PendingResponseTimeout != nil {
+		return *m.PendingResponseTimeout
 	}
-	return 0
+	return Default_SubscribeResponse_PendingResponseTimeout
 }
 
 func (m *SubscribeResponse) GetPendingSubscribeTimeout() uint64 {
-	if m != nil {
-		return m.PendingSubscribeTimeout
+	if m != nil && m.PendingSubscribeTimeout != nil {
+		return *m.PendingSubscribeTimeout
 	}
-	return 0
+	return Default_SubscribeResponse_PendingSubscribeTimeout
 }
 
 func (m *SubscribeResponse) GetResult() SubscribeResponse_ResponseResult {
-	if m != nil {
-		return m.Result
+	if m != nil && m.Result != nil {
+		return *m.Result
 	}
-	return SubscribeResponse_RESPONSERESULT_AUTO_INVALID
+	return Default_SubscribeResponse_Result
 }
 
 func (m *SubscribeResponse) GetRequestMaxWaitSecs() uint64 {
-	if m != nil {
-		return m.RequestMaxWaitSecs
+	if m != nil && m.RequestMaxWaitSecs != nil {
+		return *m.RequestMaxWaitSecs
 	}
 	return 0
 }
 
 // ref: PegasusUtil.TavernBrawlAckSessionRewards
 type TavernBrawlAckSessionRewards struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *TavernBrawlAckSessionRewards) Reset()                    { *m = TavernBrawlAckSessionRewards{} }
 func (m *TavernBrawlAckSessionRewards) String() string            { return proto.CompactTextString(m) }
 func (*TavernBrawlAckSessionRewards) ProtoMessage()               {}
-func (*TavernBrawlAckSessionRewards) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{141} }
+func (*TavernBrawlAckSessionRewards) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{146} }
 
 // ref: PegasusUtil.TavernBrawlInfo
 type TavernBrawlInfo struct {
 	CurrentTavernBrawl      *pegasus_pegasusshared.TavernBrawlSpec         `protobuf:"bytes,1,opt,name=current_tavern_brawl,json=currentTavernBrawl" json:"current_tavern_brawl,omitempty"`
-	NextStartSecondsFromNow uint64                                         `protobuf:"varint,2,opt,name=next_start_seconds_from_now,json=nextStartSecondsFromNow" json:"next_start_seconds_from_now,omitempty"`
-	BrawlType               pegasus_pegasusshared.BrawlType                `protobuf:"varint,3,opt,name=brawl_type,json=brawlType,enum=pegasus.pegasusshared.BrawlType" json:"brawl_type,omitempty"`
+	NextStartSecondsFromNow *uint64                                        `protobuf:"varint,2,opt,name=next_start_seconds_from_now,json=nextStartSecondsFromNow" json:"next_start_seconds_from_now,omitempty"`
+	BrawlType               *pegasus_pegasusshared.BrawlType               `protobuf:"varint,3,opt,name=brawl_type,json=brawlType,enum=pegasus.pegasusshared.BrawlType,def=0" json:"brawl_type,omitempty"`
 	MyRecord                *pegasus_pegasusshared.TavernBrawlPlayerRecord `protobuf:"bytes,4,opt,name=my_record,json=myRecord" json:"my_record,omitempty"`
+	XXX_unrecognized        []byte                                         `json:"-"`
 }
 
 func (m *TavernBrawlInfo) Reset()                    { *m = TavernBrawlInfo{} }
 func (m *TavernBrawlInfo) String() string            { return proto.CompactTextString(m) }
 func (*TavernBrawlInfo) ProtoMessage()               {}
-func (*TavernBrawlInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{142} }
+func (*TavernBrawlInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{147} }
+
+const Default_TavernBrawlInfo_BrawlType pegasus_pegasusshared.BrawlType = pegasus_pegasusshared.BrawlType_BRAWL_TYPE_UNKNOWN
 
 func (m *TavernBrawlInfo) GetCurrentTavernBrawl() *pegasus_pegasusshared.TavernBrawlSpec {
 	if m != nil {
@@ -8569,17 +10674,17 @@ func (m *TavernBrawlInfo) GetCurrentTavernBrawl() *pegasus_pegasusshared.TavernB
 }
 
 func (m *TavernBrawlInfo) GetNextStartSecondsFromNow() uint64 {
-	if m != nil {
-		return m.NextStartSecondsFromNow
+	if m != nil && m.NextStartSecondsFromNow != nil {
+		return *m.NextStartSecondsFromNow
 	}
 	return 0
 }
 
 func (m *TavernBrawlInfo) GetBrawlType() pegasus_pegasusshared.BrawlType {
-	if m != nil {
-		return m.BrawlType
+	if m != nil && m.BrawlType != nil {
+		return *m.BrawlType
 	}
-	return pegasus_pegasusshared.BrawlType_BRAWL_TYPE_UNKNOWN
+	return Default_TavernBrawlInfo_BrawlType
 }
 
 func (m *TavernBrawlInfo) GetMyRecord() *pegasus_pegasusshared.TavernBrawlPlayerRecord {
@@ -8591,14 +10696,15 @@ func (m *TavernBrawlInfo) GetMyRecord() *pegasus_pegasusshared.TavernBrawlPlayer
 
 // ref: PegasusUtil.TavernBrawlPlayerRecordResponse
 type TavernBrawlPlayerRecordResponse struct {
-	Record *pegasus_pegasusshared.TavernBrawlPlayerRecord `protobuf:"bytes,6,opt,name=record" json:"record,omitempty"`
+	Record           *pegasus_pegasusshared.TavernBrawlPlayerRecord `protobuf:"bytes,6,opt,name=record" json:"record,omitempty"`
+	XXX_unrecognized []byte                                         `json:"-"`
 }
 
 func (m *TavernBrawlPlayerRecordResponse) Reset()         { *m = TavernBrawlPlayerRecordResponse{} }
 func (m *TavernBrawlPlayerRecordResponse) String() string { return proto.CompactTextString(m) }
 func (*TavernBrawlPlayerRecordResponse) ProtoMessage()    {}
 func (*TavernBrawlPlayerRecordResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{143}
+	return fileDescriptor0, []int{148}
 }
 
 func (m *TavernBrawlPlayerRecordResponse) GetRecord() *pegasus_pegasusshared.TavernBrawlPlayerRecord {
@@ -8610,19 +10716,21 @@ func (m *TavernBrawlPlayerRecordResponse) GetRecord() *pegasus_pegasusshared.Tav
 
 // ref: PegasusUtil.TavernBrawlRequestSessionBegin
 type TavernBrawlRequestSessionBegin struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *TavernBrawlRequestSessionBegin) Reset()         { *m = TavernBrawlRequestSessionBegin{} }
 func (m *TavernBrawlRequestSessionBegin) String() string { return proto.CompactTextString(m) }
 func (*TavernBrawlRequestSessionBegin) ProtoMessage()    {}
 func (*TavernBrawlRequestSessionBegin) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{144}
+	return fileDescriptor0, []int{149}
 }
 
 // ref: PegasusUtil.TavernBrawlRequestSessionBeginResponse
 type TavernBrawlRequestSessionBeginResponse struct {
-	ErrorCode    pegasus_pegasusshared.ErrorCode                `protobuf:"varint,1,opt,name=error_code,json=errorCode,enum=pegasus.pegasusshared.ErrorCode" json:"error_code,omitempty"`
-	PlayerRecord *pegasus_pegasusshared.TavernBrawlPlayerRecord `protobuf:"bytes,2,opt,name=player_record,json=playerRecord" json:"player_record,omitempty"`
+	ErrorCode        *pegasus_pegasusshared.ErrorCode               `protobuf:"varint,1,opt,name=error_code,json=errorCode,enum=pegasus.pegasusshared.ErrorCode,def=0" json:"error_code,omitempty"`
+	PlayerRecord     *pegasus_pegasusshared.TavernBrawlPlayerRecord `protobuf:"bytes,2,opt,name=player_record,json=playerRecord" json:"player_record,omitempty"`
+	XXX_unrecognized []byte                                         `json:"-"`
 }
 
 func (m *TavernBrawlRequestSessionBeginResponse) Reset() {
@@ -8631,14 +10739,16 @@ func (m *TavernBrawlRequestSessionBeginResponse) Reset() {
 func (m *TavernBrawlRequestSessionBeginResponse) String() string { return proto.CompactTextString(m) }
 func (*TavernBrawlRequestSessionBeginResponse) ProtoMessage()    {}
 func (*TavernBrawlRequestSessionBeginResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{145}
+	return fileDescriptor0, []int{150}
 }
 
+const Default_TavernBrawlRequestSessionBeginResponse_ErrorCode pegasus_pegasusshared.ErrorCode = pegasus_pegasusshared.ErrorCode_ERROR_OK
+
 func (m *TavernBrawlRequestSessionBeginResponse) GetErrorCode() pegasus_pegasusshared.ErrorCode {
-	if m != nil {
-		return m.ErrorCode
+	if m != nil && m.ErrorCode != nil {
+		return *m.ErrorCode
 	}
-	return pegasus_pegasusshared.ErrorCode_ERROR_OK
+	return Default_TavernBrawlRequestSessionBeginResponse_ErrorCode
 }
 
 func (m *TavernBrawlRequestSessionBeginResponse) GetPlayerRecord() *pegasus_pegasusshared.TavernBrawlPlayerRecord {
@@ -8650,20 +10760,22 @@ func (m *TavernBrawlRequestSessionBeginResponse) GetPlayerRecord() *pegasus_pega
 
 // ref: PegasusUtil.TavernBrawlRequestSessionRetire
 type TavernBrawlRequestSessionRetire struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *TavernBrawlRequestSessionRetire) Reset()         { *m = TavernBrawlRequestSessionRetire{} }
 func (m *TavernBrawlRequestSessionRetire) String() string { return proto.CompactTextString(m) }
 func (*TavernBrawlRequestSessionRetire) ProtoMessage()    {}
 func (*TavernBrawlRequestSessionRetire) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{146}
+	return fileDescriptor0, []int{151}
 }
 
 // ref: PegasusUtil.TavernBrawlRequestSessionRetireResponse
 type TavernBrawlRequestSessionRetireResponse struct {
-	ErrorCode    pegasus_pegasusshared.ErrorCode                `protobuf:"varint,1,opt,name=error_code,json=errorCode,enum=pegasus.pegasusshared.ErrorCode" json:"error_code,omitempty"`
-	PlayerRecord *pegasus_pegasusshared.TavernBrawlPlayerRecord `protobuf:"bytes,2,opt,name=player_record,json=playerRecord" json:"player_record,omitempty"`
-	Chest        *pegasus_pegasusshared.RewardChest             `protobuf:"bytes,3,opt,name=chest" json:"chest,omitempty"`
+	ErrorCode        *pegasus_pegasusshared.ErrorCode               `protobuf:"varint,1,req,name=error_code,json=errorCode,enum=pegasus.pegasusshared.ErrorCode" json:"error_code,omitempty"`
+	PlayerRecord     *pegasus_pegasusshared.TavernBrawlPlayerRecord `protobuf:"bytes,2,opt,name=player_record,json=playerRecord" json:"player_record,omitempty"`
+	Chest            *pegasus_pegasusshared.RewardChest             `protobuf:"bytes,3,opt,name=chest" json:"chest,omitempty"`
+	XXX_unrecognized []byte                                         `json:"-"`
 }
 
 func (m *TavernBrawlRequestSessionRetireResponse) Reset() {
@@ -8672,12 +10784,12 @@ func (m *TavernBrawlRequestSessionRetireResponse) Reset() {
 func (m *TavernBrawlRequestSessionRetireResponse) String() string { return proto.CompactTextString(m) }
 func (*TavernBrawlRequestSessionRetireResponse) ProtoMessage()    {}
 func (*TavernBrawlRequestSessionRetireResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{147}
+	return fileDescriptor0, []int{152}
 }
 
 func (m *TavernBrawlRequestSessionRetireResponse) GetErrorCode() pegasus_pegasusshared.ErrorCode {
-	if m != nil {
-		return m.ErrorCode
+	if m != nil && m.ErrorCode != nil {
+		return *m.ErrorCode
 	}
 	return pegasus_pegasusshared.ErrorCode_ERROR_OK
 }
@@ -8698,119 +10810,124 @@ func (m *TavernBrawlRequestSessionRetireResponse) GetChest() *pegasus_pegasussha
 
 // ref: PegasusUtil.TavernBrawlSessionAckRewardsResponse
 type TavernBrawlSessionAckRewardsResponse struct {
-	ErrorCode pegasus_pegasusshared.ErrorCode `protobuf:"varint,1,opt,name=error_code,json=errorCode,enum=pegasus.pegasusshared.ErrorCode" json:"error_code,omitempty"`
+	ErrorCode        *pegasus_pegasusshared.ErrorCode `protobuf:"varint,1,req,name=error_code,json=errorCode,enum=pegasus.pegasusshared.ErrorCode" json:"error_code,omitempty"`
+	XXX_unrecognized []byte                           `json:"-"`
 }
 
 func (m *TavernBrawlSessionAckRewardsResponse) Reset()         { *m = TavernBrawlSessionAckRewardsResponse{} }
 func (m *TavernBrawlSessionAckRewardsResponse) String() string { return proto.CompactTextString(m) }
 func (*TavernBrawlSessionAckRewardsResponse) ProtoMessage()    {}
 func (*TavernBrawlSessionAckRewardsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{148}
+	return fileDescriptor0, []int{153}
 }
 
 func (m *TavernBrawlSessionAckRewardsResponse) GetErrorCode() pegasus_pegasusshared.ErrorCode {
-	if m != nil {
-		return m.ErrorCode
+	if m != nil && m.ErrorCode != nil {
+		return *m.ErrorCode
 	}
 	return pegasus_pegasusshared.ErrorCode_ERROR_OK
 }
 
 // ref: PegasusUtil.ThirdPartyPurchaseStatusResponse
 type ThirdPartyPurchaseStatusResponse struct {
-	ThirdPartyId string                                  `protobuf:"bytes,1,opt,name=third_party_id,json=thirdPartyId" json:"third_party_id,omitempty"`
-	Status       ThirdPartyPurchaseStatusResponse_Status `protobuf:"varint,2,opt,name=status,enum=pegasus.pegasusutil.ThirdPartyPurchaseStatusResponse_Status" json:"status,omitempty"`
+	ThirdPartyId     *string                                  `protobuf:"bytes,1,req,name=third_party_id,json=thirdPartyId" json:"third_party_id,omitempty"`
+	Status           *ThirdPartyPurchaseStatusResponse_Status `protobuf:"varint,2,req,name=status,enum=pegasus.pegasusutil.ThirdPartyPurchaseStatusResponse_Status" json:"status,omitempty"`
+	XXX_unrecognized []byte                                   `json:"-"`
 }
 
 func (m *ThirdPartyPurchaseStatusResponse) Reset()         { *m = ThirdPartyPurchaseStatusResponse{} }
 func (m *ThirdPartyPurchaseStatusResponse) String() string { return proto.CompactTextString(m) }
 func (*ThirdPartyPurchaseStatusResponse) ProtoMessage()    {}
 func (*ThirdPartyPurchaseStatusResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{149}
+	return fileDescriptor0, []int{154}
 }
 
 func (m *ThirdPartyPurchaseStatusResponse) GetThirdPartyId() string {
-	if m != nil {
-		return m.ThirdPartyId
+	if m != nil && m.ThirdPartyId != nil {
+		return *m.ThirdPartyId
 	}
 	return ""
 }
 
 func (m *ThirdPartyPurchaseStatusResponse) GetStatus() ThirdPartyPurchaseStatusResponse_Status {
-	if m != nil {
-		return m.Status
+	if m != nil && m.Status != nil {
+		return *m.Status
 	}
-	return ThirdPartyPurchaseStatusResponse_STATUS_AUTO_INVALID
+	return ThirdPartyPurchaseStatusResponse_NOT_FOUND
 }
 
 // ref: PegasusUtil.ThirdPartyReceiptData
 type ThirdPartyReceiptData struct {
-	ThirdPartyId     string `protobuf:"bytes,1,opt,name=third_party_id,json=thirdPartyId" json:"third_party_id,omitempty"`
-	Receipt          string `protobuf:"bytes,2,opt,name=receipt" json:"receipt,omitempty"`
-	ThirdPartyUserId string `protobuf:"bytes,3,opt,name=third_party_user_id,json=thirdPartyUserId" json:"third_party_user_id,omitempty"`
+	ThirdPartyId     *string `protobuf:"bytes,1,req,name=third_party_id,json=thirdPartyId" json:"third_party_id,omitempty"`
+	Receipt          *string `protobuf:"bytes,2,req,name=receipt" json:"receipt,omitempty"`
+	ThirdPartyUserId *string `protobuf:"bytes,3,opt,name=third_party_user_id,json=thirdPartyUserId" json:"third_party_user_id,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *ThirdPartyReceiptData) Reset()                    { *m = ThirdPartyReceiptData{} }
 func (m *ThirdPartyReceiptData) String() string            { return proto.CompactTextString(m) }
 func (*ThirdPartyReceiptData) ProtoMessage()               {}
-func (*ThirdPartyReceiptData) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{150} }
+func (*ThirdPartyReceiptData) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{155} }
 
 func (m *ThirdPartyReceiptData) GetThirdPartyId() string {
-	if m != nil {
-		return m.ThirdPartyId
+	if m != nil && m.ThirdPartyId != nil {
+		return *m.ThirdPartyId
 	}
 	return ""
 }
 
 func (m *ThirdPartyReceiptData) GetReceipt() string {
-	if m != nil {
-		return m.Receipt
+	if m != nil && m.Receipt != nil {
+		return *m.Receipt
 	}
 	return ""
 }
 
 func (m *ThirdPartyReceiptData) GetThirdPartyUserId() string {
-	if m != nil {
-		return m.ThirdPartyUserId
+	if m != nil && m.ThirdPartyUserId != nil {
+		return *m.ThirdPartyUserId
 	}
 	return ""
 }
 
 // ref: PegasusUtil.TriggerEventResponse
 type TriggerEventResponse struct {
-	EventId int32 `protobuf:"varint,1,opt,name=event_id,json=eventId" json:"event_id,omitempty"`
-	Success bool  `protobuf:"varint,2,opt,name=success" json:"success,omitempty"`
+	EventId          *int32 `protobuf:"varint,1,req,name=event_id,json=eventId" json:"event_id,omitempty"`
+	Success          *bool  `protobuf:"varint,2,req,name=success" json:"success,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *TriggerEventResponse) Reset()                    { *m = TriggerEventResponse{} }
 func (m *TriggerEventResponse) String() string            { return proto.CompactTextString(m) }
 func (*TriggerEventResponse) ProtoMessage()               {}
-func (*TriggerEventResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{151} }
+func (*TriggerEventResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{156} }
 
 func (m *TriggerEventResponse) GetEventId() int32 {
-	if m != nil {
-		return m.EventId
+	if m != nil && m.EventId != nil {
+		return *m.EventId
 	}
 	return 0
 }
 
 func (m *TriggerEventResponse) GetSuccess() bool {
-	if m != nil {
-		return m.Success
+	if m != nil && m.Success != nil {
+		return *m.Success
 	}
 	return false
 }
 
 // ref: PegasusUtil.TriggerPlayedNearbyPlayerOnSubnet
 type TriggerPlayedNearbyPlayerOnSubnet struct {
-	LastPlayed  *NearbyPlayer `protobuf:"bytes,1,opt,name=last_played,json=lastPlayed" json:"last_played,omitempty"`
-	OtherPlayer *NearbyPlayer `protobuf:"bytes,2,opt,name=other_player,json=otherPlayer" json:"other_player,omitempty"`
+	LastPlayed       *NearbyPlayer `protobuf:"bytes,1,req,name=last_played,json=lastPlayed" json:"last_played,omitempty"`
+	OtherPlayer      *NearbyPlayer `protobuf:"bytes,2,req,name=other_player,json=otherPlayer" json:"other_player,omitempty"`
+	XXX_unrecognized []byte        `json:"-"`
 }
 
 func (m *TriggerPlayedNearbyPlayerOnSubnet) Reset()         { *m = TriggerPlayedNearbyPlayerOnSubnet{} }
 func (m *TriggerPlayedNearbyPlayerOnSubnet) String() string { return proto.CompactTextString(m) }
 func (*TriggerPlayedNearbyPlayerOnSubnet) ProtoMessage()    {}
 func (*TriggerPlayedNearbyPlayerOnSubnet) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{152}
+	return fileDescriptor0, []int{157}
 }
 
 func (m *TriggerPlayedNearbyPlayerOnSubnet) GetLastPlayed() *NearbyPlayer {
@@ -8829,127 +10946,134 @@ func (m *TriggerPlayedNearbyPlayerOnSubnet) GetOtherPlayer() *NearbyPlayer {
 
 // ref: PegasusUtil.Unsubscribe
 type Unsubscribe struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *Unsubscribe) Reset()                    { *m = Unsubscribe{} }
 func (m *Unsubscribe) String() string            { return proto.CompactTextString(m) }
 func (*Unsubscribe) ProtoMessage()               {}
-func (*Unsubscribe) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{153} }
+func (*Unsubscribe) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{158} }
 
 // ref: PegasusUtil.UpdateAccountLicenses
 type UpdateAccountLicenses struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *UpdateAccountLicenses) Reset()                    { *m = UpdateAccountLicenses{} }
 func (m *UpdateAccountLicenses) String() string            { return proto.CompactTextString(m) }
 func (*UpdateAccountLicenses) ProtoMessage()               {}
-func (*UpdateAccountLicenses) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{154} }
+func (*UpdateAccountLicenses) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{159} }
 
 // ref: PegasusUtil.UpdateAccountLicensesResponse
 type UpdateAccountLicensesResponse struct {
-	FixedLicenseSuccess      bool `protobuf:"varint,1,opt,name=fixed_license_success,json=fixedLicenseSuccess" json:"fixed_license_success,omitempty"`
-	ConsumableLicenseSuccess bool `protobuf:"varint,2,opt,name=consumable_license_success,json=consumableLicenseSuccess" json:"consumable_license_success,omitempty"`
+	FixedLicenseSuccess      *bool  `protobuf:"varint,1,req,name=fixed_license_success,json=fixedLicenseSuccess" json:"fixed_license_success,omitempty"`
+	ConsumableLicenseSuccess *bool  `protobuf:"varint,2,req,name=consumable_license_success,json=consumableLicenseSuccess" json:"consumable_license_success,omitempty"`
+	XXX_unrecognized         []byte `json:"-"`
 }
 
 func (m *UpdateAccountLicensesResponse) Reset()                    { *m = UpdateAccountLicensesResponse{} }
 func (m *UpdateAccountLicensesResponse) String() string            { return proto.CompactTextString(m) }
 func (*UpdateAccountLicensesResponse) ProtoMessage()               {}
-func (*UpdateAccountLicensesResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{155} }
+func (*UpdateAccountLicensesResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{160} }
 
 func (m *UpdateAccountLicensesResponse) GetFixedLicenseSuccess() bool {
-	if m != nil {
-		return m.FixedLicenseSuccess
+	if m != nil && m.FixedLicenseSuccess != nil {
+		return *m.FixedLicenseSuccess
 	}
 	return false
 }
 
 func (m *UpdateAccountLicensesResponse) GetConsumableLicenseSuccess() bool {
-	if m != nil {
-		return m.ConsumableLicenseSuccess
+	if m != nil && m.ConsumableLicenseSuccess != nil {
+		return *m.ConsumableLicenseSuccess
 	}
 	return false
 }
 
 // ref: PegasusUtil.UpdateLogin
 type UpdateLogin struct {
-	ReplyRequired         bool   `protobuf:"varint,1,opt,name=reply_required,json=replyRequired" json:"reply_required,omitempty"`
-	Referral              string `protobuf:"bytes,2,opt,name=referral" json:"referral,omitempty"`
-	DeviceModelDeprecated string `protobuf:"bytes,3,opt,name=device_model_deprecated,json=deviceModelDeprecated" json:"device_model_deprecated,omitempty"`
+	ReplyRequired         *bool   `protobuf:"varint,1,opt,name=reply_required,json=replyRequired" json:"reply_required,omitempty"`
+	Referral              *string `protobuf:"bytes,2,opt,name=referral" json:"referral,omitempty"`
+	DeviceModelDeprecated *string `protobuf:"bytes,3,opt,name=device_model_deprecated,json=deviceModelDeprecated" json:"device_model_deprecated,omitempty"`
+	XXX_unrecognized      []byte  `json:"-"`
 }
 
 func (m *UpdateLogin) Reset()                    { *m = UpdateLogin{} }
 func (m *UpdateLogin) String() string            { return proto.CompactTextString(m) }
 func (*UpdateLogin) ProtoMessage()               {}
-func (*UpdateLogin) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{156} }
+func (*UpdateLogin) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{161} }
 
 func (m *UpdateLogin) GetReplyRequired() bool {
-	if m != nil {
-		return m.ReplyRequired
+	if m != nil && m.ReplyRequired != nil {
+		return *m.ReplyRequired
 	}
 	return false
 }
 
 func (m *UpdateLogin) GetReferral() string {
-	if m != nil {
-		return m.Referral
+	if m != nil && m.Referral != nil {
+		return *m.Referral
 	}
 	return ""
 }
 
 func (m *UpdateLogin) GetDeviceModelDeprecated() string {
-	if m != nil {
-		return m.DeviceModelDeprecated
+	if m != nil && m.DeviceModelDeprecated != nil {
+		return *m.DeviceModelDeprecated
 	}
 	return ""
 }
 
 // ref: PegasusUtil.UpdateLoginComplete
 type UpdateLoginComplete struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *UpdateLoginComplete) Reset()                    { *m = UpdateLoginComplete{} }
 func (m *UpdateLoginComplete) String() string            { return proto.CompactTextString(m) }
 func (*UpdateLoginComplete) ProtoMessage()               {}
-func (*UpdateLoginComplete) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{157} }
+func (*UpdateLoginComplete) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{162} }
 
 // ref: PegasusUtil.ValidateAchieve
 type ValidateAchieve struct {
-	Achieve int32 `protobuf:"varint,1,opt,name=achieve" json:"achieve,omitempty"`
+	Achieve          *int32 `protobuf:"varint,1,req,name=achieve" json:"achieve,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *ValidateAchieve) Reset()                    { *m = ValidateAchieve{} }
 func (m *ValidateAchieve) String() string            { return proto.CompactTextString(m) }
 func (*ValidateAchieve) ProtoMessage()               {}
-func (*ValidateAchieve) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{158} }
+func (*ValidateAchieve) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{163} }
 
 func (m *ValidateAchieve) GetAchieve() int32 {
-	if m != nil {
-		return m.Achieve
+	if m != nil && m.Achieve != nil {
+		return *m.Achieve
 	}
 	return 0
 }
 
 // ref: PegasusUtil.ValidateAchieveResponse
 type ValidateAchieveResponse struct {
-	Achieve int32 `protobuf:"varint,1,opt,name=achieve" json:"achieve,omitempty"`
-	Success bool  `protobuf:"varint,2,opt,name=success" json:"success,omitempty"`
+	Achieve          *int32 `protobuf:"varint,1,req,name=achieve" json:"achieve,omitempty"`
+	Success          *bool  `protobuf:"varint,2,opt,name=success" json:"success,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *ValidateAchieveResponse) Reset()                    { *m = ValidateAchieveResponse{} }
 func (m *ValidateAchieveResponse) String() string            { return proto.CompactTextString(m) }
 func (*ValidateAchieveResponse) ProtoMessage()               {}
-func (*ValidateAchieveResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{159} }
+func (*ValidateAchieveResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{164} }
 
 func (m *ValidateAchieveResponse) GetAchieve() int32 {
-	if m != nil {
-		return m.Achieve
+	if m != nil && m.Achieve != nil {
+		return *m.Achieve
 	}
 	return 0
 }
 
 func (m *ValidateAchieveResponse) GetSuccess() bool {
-	if m != nil {
-		return m.Success
+	if m != nil && m.Success != nil {
+		return *m.Success
 	}
 	return false
 }
@@ -8977,6 +11101,8 @@ func init() {
 	proto.RegisterType((*BoosterCard)(nil), "pegasus.pegasusutil.BoosterCard")
 	proto.RegisterType((*BoosterContent)(nil), "pegasus.pegasusutil.BoosterContent")
 	proto.RegisterType((*BoosterList)(nil), "pegasus.pegasusutil.BoosterList")
+	proto.RegisterType((*BoosterModifications)(nil), "pegasus.pegasusutil.BoosterModifications")
+	proto.RegisterType((*Boosters)(nil), "pegasus.pegasusutil.Boosters")
 	proto.RegisterType((*BoughtSoldCard)(nil), "pegasus.pegasusutil.BoughtSoldCard")
 	proto.RegisterType((*Bundle)(nil), "pegasus.pegasusutil.Bundle")
 	proto.RegisterType((*BundleItem)(nil), "pegasus.pegasusutil.BundleItem")
@@ -9011,7 +11137,7 @@ func init() {
 	proto.RegisterType((*DeckSetTemplateSource)(nil), "pegasus.pegasusutil.DeckSetTemplateSource")
 	proto.RegisterType((*DeleteDeck)(nil), "pegasus.pegasusutil.DeleteDeck")
 	proto.RegisterType((*DevBnetIdentify)(nil), "pegasus.pegasusutil.DevBnetIdentify")
-	proto.RegisterType((*Disconnected)(nil), "pegasus.pegasusutil.Disconnected")
+	proto.RegisterType((*DisconnectedGame)(nil), "pegasus.pegasusutil.DisconnectedGame")
 	proto.RegisterType((*DoPurchase)(nil), "pegasus.pegasusutil.DoPurchase")
 	proto.RegisterType((*DraftAckRewards)(nil), "pegasus.pegasusutil.DraftAckRewards")
 	proto.RegisterType((*DraftBegin)(nil), "pegasus.pegasusutil.DraftBegin")
@@ -9021,6 +11147,8 @@ func init() {
 	proto.RegisterType((*DraftError)(nil), "pegasus.pegasusutil.DraftError")
 	proto.RegisterType((*DraftGetPicksAndContents)(nil), "pegasus.pegasusutil.DraftGetPicksAndContents")
 	proto.RegisterType((*DraftMakePick)(nil), "pegasus.pegasusutil.DraftMakePick")
+	proto.RegisterType((*DraftRemoveGoldensResponse)(nil), "pegasus.pegasusutil.DraftRemoveGoldensResponse")
+	proto.RegisterType((*DraftRequestRemoveGoldens)(nil), "pegasus.pegasusutil.DraftRequestRemoveGoldens")
 	proto.RegisterType((*DraftRetire)(nil), "pegasus.pegasusutil.DraftRetire")
 	proto.RegisterType((*DraftRetired)(nil), "pegasus.pegasusutil.DraftRetired")
 	proto.RegisterType((*DraftRewardsAcked)(nil), "pegasus.pegasusutil.DraftRewardsAcked")
@@ -9081,6 +11209,7 @@ func init() {
 	proto.RegisterType((*RequestTavernBrawlPlayerRecord)(nil), "pegasus.pegasusutil.RequestTavernBrawlPlayerRecord")
 	proto.RegisterType((*ReturningPlayerInfo)(nil), "pegasus.pegasusutil.ReturningPlayerInfo")
 	proto.RegisterType((*ReturningPlayerOptOutRequest)(nil), "pegasus.pegasusutil.ReturningPlayerOptOutRequest")
+	proto.RegisterType((*ReturningPlayerOptOutResponse)(nil), "pegasus.pegasusutil.ReturningPlayerOptOutResponse")
 	proto.RegisterType((*RewardProgress)(nil), "pegasus.pegasusutil.RewardProgress")
 	proto.RegisterType((*RpcHeader)(nil), "pegasus.pegasusutil.RpcHeader")
 	proto.RegisterType((*RpcMessage)(nil), "pegasus.pegasusutil.RpcMessage")
@@ -9133,7 +11262,6 @@ func init() {
 	proto.RegisterEnum("pegasus.pegasusutil.BattlePayStatusResponse_PacketID", BattlePayStatusResponse_PacketID_name, BattlePayStatusResponse_PacketID_value)
 	proto.RegisterEnum("pegasus.pegasusutil.BattlePayStatusResponse_PurchaseState", BattlePayStatusResponse_PurchaseState_name, BattlePayStatusResponse_PurchaseState_value)
 	proto.RegisterEnum("pegasus.pegasusutil.BoosterContent_PacketID", BoosterContent_PacketID_name, BoosterContent_PacketID_value)
-	proto.RegisterEnum("pegasus.pegasusutil.BoosterList_PacketID", BoosterList_PacketID_name, BoosterList_PacketID_value)
 	proto.RegisterEnum("pegasus.pegasusutil.BoughtSoldCard_PacketID", BoughtSoldCard_PacketID_name, BoughtSoldCard_PacketID_value)
 	proto.RegisterEnum("pegasus.pegasusutil.BoughtSoldCard_Result", BoughtSoldCard_Result_name, BoughtSoldCard_Result_value)
 	proto.RegisterEnum("pegasus.pegasusutil.BuySellCard_PacketID", BuySellCard_PacketID_name, BuySellCard_PacketID_value)
@@ -9162,7 +11290,6 @@ func init() {
 	proto.RegisterEnum("pegasus.pegasusutil.DeckSetTemplateSource_PacketID", DeckSetTemplateSource_PacketID_name, DeckSetTemplateSource_PacketID_value)
 	proto.RegisterEnum("pegasus.pegasusutil.DeleteDeck_PacketID", DeleteDeck_PacketID_name, DeleteDeck_PacketID_value)
 	proto.RegisterEnum("pegasus.pegasusutil.DevBnetIdentify_PacketID", DevBnetIdentify_PacketID_name, DevBnetIdentify_PacketID_value)
-	proto.RegisterEnum("pegasus.pegasusutil.Disconnected_PacketID", Disconnected_PacketID_name, Disconnected_PacketID_value)
 	proto.RegisterEnum("pegasus.pegasusutil.DoPurchase_PacketID", DoPurchase_PacketID_name, DoPurchase_PacketID_value)
 	proto.RegisterEnum("pegasus.pegasusutil.DraftAckRewards_PacketID", DraftAckRewards_PacketID_name, DraftAckRewards_PacketID_value)
 	proto.RegisterEnum("pegasus.pegasusutil.DraftBegin_PacketID", DraftBegin_PacketID_name, DraftBegin_PacketID_value)
@@ -9173,6 +11300,8 @@ func init() {
 	proto.RegisterEnum("pegasus.pegasusutil.DraftError_PacketID", DraftError_PacketID_name, DraftError_PacketID_value)
 	proto.RegisterEnum("pegasus.pegasusutil.DraftGetPicksAndContents_PacketID", DraftGetPicksAndContents_PacketID_name, DraftGetPicksAndContents_PacketID_value)
 	proto.RegisterEnum("pegasus.pegasusutil.DraftMakePick_PacketID", DraftMakePick_PacketID_name, DraftMakePick_PacketID_value)
+	proto.RegisterEnum("pegasus.pegasusutil.DraftRemoveGoldensResponse_PacketID", DraftRemoveGoldensResponse_PacketID_name, DraftRemoveGoldensResponse_PacketID_value)
+	proto.RegisterEnum("pegasus.pegasusutil.DraftRequestRemoveGoldens_PacketID", DraftRequestRemoveGoldens_PacketID_name, DraftRequestRemoveGoldens_PacketID_value)
 	proto.RegisterEnum("pegasus.pegasusutil.DraftRetire_PacketID", DraftRetire_PacketID_name, DraftRetire_PacketID_value)
 	proto.RegisterEnum("pegasus.pegasusutil.DraftRetired_PacketID", DraftRetired_PacketID_name, DraftRetired_PacketID_value)
 	proto.RegisterEnum("pegasus.pegasusutil.DraftRewardsAcked_PacketID", DraftRewardsAcked_PacketID_name, DraftRewardsAcked_PacketID_value)
@@ -9221,6 +11350,7 @@ func init() {
 	proto.RegisterEnum("pegasus.pegasusutil.RequestTavernBrawlInfo_PacketID", RequestTavernBrawlInfo_PacketID_name, RequestTavernBrawlInfo_PacketID_value)
 	proto.RegisterEnum("pegasus.pegasusutil.RequestTavernBrawlPlayerRecord_PacketID", RequestTavernBrawlPlayerRecord_PacketID_name, RequestTavernBrawlPlayerRecord_PacketID_value)
 	proto.RegisterEnum("pegasus.pegasusutil.ReturningPlayerOptOutRequest_PacketID", ReturningPlayerOptOutRequest_PacketID_name, ReturningPlayerOptOutRequest_PacketID_value)
+	proto.RegisterEnum("pegasus.pegasusutil.ReturningPlayerOptOutResponse_PacketID", ReturningPlayerOptOutResponse_PacketID_name, ReturningPlayerOptOutResponse_PacketID_value)
 	proto.RegisterEnum("pegasus.pegasusutil.RewardProgress_PacketID", RewardProgress_PacketID_name, RewardProgress_PacketID_value)
 	proto.RegisterEnum("pegasus.pegasusutil.SetCardBack_PacketID", SetCardBack_PacketID_name, SetCardBack_PacketID_value)
 	proto.RegisterEnum("pegasus.pegasusutil.SetCardBackResponse_PacketID", SetCardBackResponse_PacketID_name, SetCardBackResponse_PacketID_value)
@@ -9260,669 +11390,703 @@ func init() {
 func init() { proto.RegisterFile("pegasus/pegasusutil/pegasusutil.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
-	// 10619 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xcc, 0x7d, 0x7f, 0x70, 0x2c, 0xc9,
-	0x59, 0xd8, 0xcd, 0xec, 0x4a, 0xda, 0xfd, 0x76, 0xb5, 0x1a, 0xb5, 0xa4, 0xa7, 0x7d, 0xbf, 0xee,
-	0xbd, 0x37, 0xbe, 0xf3, 0xbd, 0x73, 0xce, 0xcf, 0xe6, 0xd9, 0x3e, 0xee, 0x9e, 0xcf, 0x9c, 0x47,
-	0xbb, 0x23, 0x69, 0xea, 0xad, 0x76, 0xf7, 0x66, 0x57, 0xef, 0x07, 0x36, 0x4c, 0x46, 0x33, 0xad,
-	0xd5, 0xa0, 0xdd, 0x99, 0xbd, 0x99, 0xd9, 0xf7, 0x24, 0x03, 0x85, 0x49, 0x52, 0x14, 0xae, 0xc4,
-	0x01, 0x93, 0x94, 0x1d, 0x6c, 0x30, 0x90, 0x90, 0x04, 0xc7, 0xa4, 0x12, 0x20, 0x06, 0x2a, 0x90,
-	0x10, 0x62, 0xc0, 0x21, 0x4e, 0xc0, 0xc1, 0x31, 0x60, 0x9c, 0x60, 0x48, 0xaa, 0x42, 0x48, 0x52,
-	0x24, 0x95, 0x04, 0x82, 0x93, 0x2a, 0x92, 0xea, 0x1f, 0x33, 0x3b, 0xb3, 0xda, 0xd5, 0x6a, 0x75,
-	0xe7, 0x14, 0xfa, 0x47, 0xd3, 0x5f, 0xf7, 0xf7, 0x75, 0xf7, 0xd7, 0xdd, 0x5f, 0x7f, 0xfd, 0xf5,
-	0xd7, 0xdf, 0xc2, 0xd3, 0x7d, 0xdc, 0x31, 0x83, 0x41, 0xf0, 0x16, 0xfe, 0x7f, 0x10, 0x3a, 0xdd,
-	0xe4, 0xf7, 0xad, 0xbe, 0xef, 0x85, 0x1e, 0x5a, 0xe1, 0xa0, 0x5b, 0x89, 0xac, 0x4b, 0xcf, 0x8e,
-	0xe0, 0x06, 0x07, 0xa6, 0x8f, 0xed, 0x74, 0x8a, 0xe1, 0xcb, 0x3f, 0x25, 0xc2, 0x55, 0xc5, 0xb2,
-	0xbc, 0x81, 0x1b, 0xd6, 0x1c, 0x0b, 0xbb, 0x01, 0x56, 0xac, 0x03, 0x07, 0x3f, 0xc2, 0x3a, 0x0e,
-	0xfa, 0x9e, 0x1b, 0x60, 0x54, 0x86, 0x05, 0x93, 0x81, 0xca, 0xc2, 0x75, 0xe1, 0xe6, 0x9c, 0x1e,
-	0x25, 0xd1, 0x2b, 0x30, 0xef, 0xe3, 0x60, 0xd0, 0x0d, 0xcb, 0xe2, 0x75, 0xe1, 0x66, 0xe9, 0xf6,
-	0x8b, 0xb7, 0xc6, 0x34, 0xe6, 0xd6, 0xa9, 0xd4, 0x6f, 0xe9, 0x94, 0x80, 0xce, 0x09, 0xc9, 0xb7,
-	0x20, 0xd7, 0x34, 0xad, 0x43, 0x1c, 0x6a, 0x55, 0x74, 0x11, 0xd6, 0x9a, 0x4a, 0xe5, 0xae, 0xda,
-	0xd6, 0xaa, 0x86, 0xb2, 0xdb, 0x6e, 0x18, 0x5a, 0xfd, 0x9e, 0x52, 0xd3, 0xaa, 0xd2, 0x13, 0x68,
-	0x01, 0x44, 0xad, 0x2a, 0xfd, 0x94, 0x28, 0x1f, 0xc3, 0x3c, 0xa3, 0x80, 0xd6, 0x61, 0x45, 0x57,
-	0x5b, 0xbb, 0xb5, 0xf6, 0x68, 0xd9, 0x15, 0x58, 0xe2, 0x09, 0x43, 0xa9, 0x6c, 0x6b, 0xea, 0x3d,
-	0x55, 0x12, 0x50, 0x09, 0xa0, 0xde, 0x68, 0x1b, 0x4a, 0xa5, 0xad, 0xdd, 0x53, 0x25, 0x11, 0x2d,
-	0x41, 0x41, 0xab, 0x1b, 0x4d, 0xbd, 0xb1, 0xa5, 0xab, 0xad, 0x96, 0x94, 0x41, 0x45, 0xc8, 0x55,
-	0x1a, 0x3b, 0xcd, 0x9a, 0xda, 0x56, 0xa5, 0x2c, 0x42, 0x50, 0x6a, 0xb5, 0x95, 0xf6, 0x6e, 0xcb,
-	0xd8, 0xad, 0xdf, 0xad, 0x37, 0xee, 0xd7, 0xa5, 0x39, 0xf9, 0xbb, 0x05, 0xb8, 0x9c, 0xee, 0x5b,
-	0xa0, 0xb9, 0xfb, 0x5e, 0xcc, 0x37, 0x05, 0xb2, 0x5d, 0x27, 0x08, 0xcb, 0xc2, 0xf5, 0xcc, 0xcd,
-	0xc2, 0xed, 0x67, 0x47, 0x79, 0xc3, 0x47, 0x21, 0x4d, 0x81, 0x10, 0xd8, 0x10, 0xa5, 0x27, 0x74,
-	0x8a, 0x3a, 0x1b, 0x37, 0x7e, 0x51, 0x94, 0xff, 0x7d, 0x06, 0x16, 0x38, 0x83, 0x51, 0x09, 0x44,
-	0xc7, 0xe6, 0x23, 0x26, 0x3a, 0x36, 0xba, 0x04, 0xb9, 0xbe, 0xef, 0x75, 0x7c, 0x1c, 0x04, 0x74,
-	0xb8, 0xe6, 0xf4, 0x38, 0x8d, 0x6e, 0x40, 0xd1, 0xb4, 0x0e, 0x8d, 0x38, 0x3f, 0x43, 0xf3, 0x0b,
-	0xa6, 0x75, 0xd8, 0x8c, 0x8a, 0x3c, 0x0b, 0x92, 0xe5, 0xf5, 0xfa, 0x5d, 0x1c, 0x3a, 0x9e, 0x6b,
-	0xd0, 0x36, 0x97, 0xb3, 0xb4, 0xd8, 0xd2, 0x10, 0x5e, 0x21, 0x60, 0x74, 0x01, 0xe6, 0x4d, 0x2b,
-	0x74, 0x1e, 0xe1, 0xf2, 0xdc, 0x75, 0xe1, 0x66, 0x4e, 0xe7, 0x29, 0xf4, 0x06, 0x58, 0x0c, 0x42,
-	0xd3, 0x0f, 0xb1, 0xcd, 0xf1, 0xe7, 0x29, 0x7e, 0x91, 0x03, 0x19, 0xf2, 0x1d, 0x00, 0xdb, 0x0c,
-	0xb1, 0xd1, 0x71, 0x1e, 0x61, 0xb7, 0xbc, 0x70, 0x5d, 0xb8, 0x59, 0xb8, 0x7d, 0x79, 0x02, 0xef,
-	0xaa, 0x66, 0x88, 0xf5, 0x3c, 0x29, 0xbe, 0x45, 0x4a, 0xa3, 0x0d, 0x28, 0x51, 0x5c, 0xde, 0x20,
-	0x6c, 0x97, 0x73, 0xd3, 0xf1, 0x17, 0x09, 0x4a, 0x25, 0xc2, 0x40, 0x57, 0x00, 0x6c, 0xcf, 0x70,
-	0xbd, 0xd0, 0x30, 0xad, 0xc3, 0x72, 0x9e, 0x76, 0x20, 0x67, 0x7b, 0x75, 0x2f, 0x54, 0xac, 0x43,
-	0x74, 0x1b, 0xd6, 0x1c, 0x37, 0xc4, 0xfe, 0x23, 0xb3, 0x6b, 0xf8, 0xf8, 0xb1, 0xe9, 0x47, 0x5d,
-	0x01, 0xda, 0x95, 0x95, 0x28, 0x53, 0xa7, 0x79, 0xac, 0x47, 0x8d, 0x93, 0x38, 0xb4, 0xc7, 0xe5,
-	0xc2, 0xf4, 0xc6, 0x8d, 0x10, 0x6c, 0x11, 0x3c, 0xf9, 0x03, 0x19, 0x58, 0xe7, 0xa3, 0xdc, 0xc3,
-	0x6e, 0x58, 0xf7, 0x42, 0x67, 0xdf, 0xb1, 0x4c, 0x32, 0x00, 0xe8, 0x32, 0xe4, 0xfb, 0x5d, 0xf3,
-	0x18, 0xfb, 0x06, 0x1f, 0xfc, 0x8c, 0x9e, 0x63, 0x00, 0xcd, 0x46, 0x4f, 0x43, 0xc9, 0x1c, 0xe2,
-	0x91, 0x12, 0x22, 0x2d, 0xb1, 0x98, 0x80, 0x6a, 0x36, 0x1d, 0xbf, 0x1e, 0xed, 0x15, 0x9b, 0x07,
-	0x3c, 0x85, 0x56, 0x61, 0xee, 0xd5, 0x81, 0x17, 0x9a, 0x7c, 0xdc, 0x59, 0x02, 0xa9, 0x20, 0xd1,
-	0xee, 0x18, 0x94, 0xf5, 0x5d, 0xcf, 0x32, 0xbb, 0x74, 0xdc, 0xa7, 0xf4, 0xac, 0x44, 0x91, 0xc8,
-	0x67, 0x8d, 0xa0, 0x20, 0x05, 0x4a, 0xd8, 0xb5, 0x93, 0x44, 0xe6, 0xa7, 0x13, 0x29, 0x62, 0xd7,
-	0x1e, 0x92, 0xb8, 0x04, 0xb9, 0x68, 0xe4, 0xe9, 0xc4, 0xc9, 0xe9, 0x71, 0x1a, 0x3d, 0x03, 0x4b,
-	0x2e, 0x7e, 0x6c, 0x24, 0x3a, 0x4a, 0xe7, 0x46, 0x4e, 0x2f, 0xb9, 0xf8, 0x71, 0x82, 0x99, 0xe8,
-	0xcd, 0x80, 0x7c, 0xdc, 0xf3, 0x1e, 0xe1, 0x54, 0x59, 0x36, 0x0f, 0x96, 0x59, 0x4e, 0xa2, 0xb8,
-	0xfc, 0x01, 0x01, 0xca, 0x13, 0xc6, 0x22, 0x40, 0x3d, 0xb8, 0x98, 0xe4, 0xb7, 0x9b, 0xcc, 0xe4,
-	0x62, 0xe1, 0xb9, 0x09, 0x22, 0x73, 0x2c, 0x45, 0x2a, 0x19, 0xca, 0xe6, 0x84, 0xea, 0xe4, 0x77,
-	0x43, 0x8e, 0x23, 0x06, 0xe8, 0xed, 0x29, 0xe1, 0x73, 0xe5, 0xb4, 0x5a, 0x12, 0xf2, 0xe6, 0x00,
-	0x90, 0x62, 0x1d, 0x72, 0x78, 0xbc, 0xf4, 0x47, 0x25, 0xc9, 0xa8, 0xb4, 0x10, 0x4f, 0x48, 0x0b,
-	0xf9, 0x5a, 0x42, 0x70, 0x01, 0xcc, 0x07, 0xc7, 0x41, 0x88, 0x7b, 0xb1, 0xa4, 0xfa, 0x1f, 0x82,
-	0xec, 0x41, 0x41, 0xb1, 0x0e, 0x2b, 0x64, 0x4e, 0x63, 0xec, 0xa2, 0x97, 0x21, 0x6f, 0x91, 0x85,
-	0x61, 0xe3, 0xfd, 0x88, 0x33, 0x4f, 0x4e, 0x18, 0x78, 0x82, 0x53, 0xc5, 0xfb, 0xb4, 0xd5, 0x39,
-	0x8b, 0x25, 0xa6, 0x55, 0xf8, 0x65, 0x41, 0xde, 0x80, 0xbc, 0x62, 0x1d, 0x12, 0x86, 0x59, 0x98,
-	0xcc, 0x64, 0xec, 0x86, 0xfe, 0x31, 0x5f, 0x21, 0x2c, 0x31, 0x85, 0xc6, 0x17, 0x04, 0xb9, 0x06,
-	0xcb, 0x8a, 0x75, 0xe8, 0x7a, 0x8f, 0xbb, 0xd8, 0xee, 0xe0, 0x0d, 0xd3, 0x75, 0xb1, 0x4f, 0x56,
-	0xcb, 0x1e, 0xfd, 0xe2, 0x1c, 0xe2, 0xa9, 0x29, 0xd4, 0x3e, 0x25, 0xca, 0x0f, 0x60, 0x49, 0xb1,
-	0x0e, 0xef, 0x3b, 0x6e, 0x27, 0xe6, 0x34, 0x82, 0xec, 0x63, 0xc7, 0xed, 0x70, 0x4a, 0xf4, 0x1b,
-	0x49, 0x90, 0x21, 0x92, 0x88, 0x31, 0x99, 0x7c, 0x4e, 0xa1, 0xfc, 0x0f, 0x44, 0xf9, 0x83, 0x02,
-	0x5c, 0x54, 0xec, 0x47, 0xd8, 0x0d, 0x07, 0x7e, 0x3c, 0x8c, 0xf1, 0xbe, 0xf4, 0xee, 0xd4, 0xd4,
-	0xb8, 0x39, 0x69, 0x5f, 0x1a, 0xc5, 0x3f, 0xef, 0xb6, 0xf4, 0xe3, 0xa2, 0x7c, 0x07, 0x8a, 0x8a,
-	0x8f, 0x5d, 0xb3, 0x85, 0x83, 0x80, 0x08, 0x29, 0xd6, 0xcd, 0x20, 0xd1, 0xcd, 0x80, 0xb0, 0xb1,
-	0xeb, 0x05, 0x01, 0x8e, 0xa6, 0x13, 0x4f, 0xc9, 0xcf, 0xc3, 0x4a, 0x12, 0x57, 0xc7, 0xaf, 0x0e,
-	0x70, 0x10, 0x4e, 0xe1, 0xc1, 0x6f, 0x89, 0xf2, 0x2f, 0x08, 0xb0, 0x9a, 0x46, 0xe4, 0xdd, 0x7f,
-	0x19, 0x00, 0xfb, 0xbe, 0xe7, 0x1b, 0x96, 0x67, 0x33, 0x8d, 0xa6, 0x74, 0xfb, 0xfa, 0x04, 0x26,
-	0xa8, 0xa4, 0x60, 0xc5, 0xb3, 0xb1, 0x9e, 0xc7, 0xd1, 0x27, 0x7a, 0x27, 0x2c, 0x04, 0x8c, 0x26,
-	0x6d, 0x6a, 0xe1, 0xf6, 0x8d, 0xf1, 0xab, 0x2b, 0x59, 0x79, 0x84, 0x31, 0x1b, 0xeb, 0xbe, 0x2c,
-	0xca, 0x1f, 0xc8, 0xc2, 0xa2, 0x12, 0x04, 0x38, 0x8c, 0xdb, 0x5f, 0x85, 0x45, 0x9f, 0x31, 0x01,
-	0xdb, 0xc6, 0x21, 0x66, 0x73, 0xb8, 0x70, 0xfb, 0xda, 0xa4, 0x71, 0x24, 0xc8, 0x77, 0xf1, 0xb1,
-	0x5e, 0x8c, 0xb1, 0xee, 0xe2, 0x63, 0x64, 0xc1, 0x25, 0x1b, 0xf7, 0x7d, 0x6c, 0x99, 0x84, 0x8c,
-	0x6d, 0x86, 0xe6, 0x9e, 0x19, 0x60, 0x23, 0xa5, 0xce, 0x3d, 0x3d, 0x59, 0xf4, 0xd2, 0xd2, 0x5c,
-	0x75, 0x2b, 0x0f, 0x09, 0xa5, 0x73, 0x46, 0x58, 0x9d, 0x99, 0x9d, 0xd5, 0x75, 0x28, 0x05, 0x16,
-	0x76, 0x4d, 0xdf, 0xf1, 0x0c, 0x93, 0x74, 0xa4, 0x6c, 0xd3, 0xce, 0x3e, 0x33, 0x81, 0x48, 0x8b,
-	0x17, 0xae, 0xee, 0xe9, 0xd8, 0xf2, 0x7c, 0x5b, 0x5f, 0x8c, 0xd0, 0x29, 0x1b, 0xd0, 0x1e, 0x5c,
-	0x08, 0x06, 0x7b, 0x01, 0x0e, 0x0d, 0x2a, 0x6d, 0xc8, 0x64, 0xe6, 0x74, 0x31, 0xa5, 0xfb, 0xe6,
-	0x49, 0x74, 0x29, 0x12, 0x91, 0x3c, 0x35, 0x27, 0x08, 0x63, 0xea, 0x2b, 0x41, 0x0a, 0xce, 0xea,
-	0x78, 0x00, 0xc8, 0xc6, 0xd6, 0xa1, 0xe1, 0x0f, 0xba, 0x98, 0xd4, 0xc4, 0xe8, 0xef, 0x53, 0xfa,
-	0x6f, 0x9a, 0xc4, 0x51, 0x6c, 0x1d, 0xea, 0xac, 0x7c, 0x4c, 0x5c, 0xb2, 0x87, 0x40, 0x4a, 0x59,
-	0xfe, 0x39, 0x01, 0xd6, 0xe8, 0x57, 0x70, 0x0f, 0xfb, 0xa9, 0x39, 0x5d, 0x86, 0x85, 0x47, 0x0c,
-	0x14, 0xa9, 0xe8, 0x3c, 0x89, 0xde, 0x0b, 0x6b, 0x3e, 0x0e, 0x07, 0xbe, 0xeb, 0xb8, 0x1d, 0x23,
-	0xd2, 0x0c, 0xdc, 0x7d, 0x8f, 0x4f, 0xdd, 0x9b, 0x63, 0xa7, 0xae, 0x1e, 0x61, 0x34, 0x99, 0xe6,
-	0x40, 0xb4, 0xda, 0x15, 0xff, 0x24, 0x70, 0xb6, 0xd9, 0xfc, 0xf7, 0x45, 0xf9, 0x2b, 0x22, 0xac,
-	0x6f, 0x98, 0x61, 0xd8, 0xc5, 0x4d, 0xf3, 0xb8, 0xe2, 0xb9, 0xfb, 0x4e, 0x27, 0xee, 0xc3, 0x8b,
-	0xb0, 0xb0, 0x37, 0x70, 0xed, 0x2e, 0x8e, 0x36, 0x80, 0xcb, 0x63, 0xdb, 0xb6, 0x41, 0xcb, 0x50,
-	0x61, 0x14, 0x95, 0xa7, 0x1b, 0xff, 0xc0, 0xf7, 0xb1, 0x6b, 0x1d, 0x47, 0xaa, 0x6d, 0x94, 0x46,
-	0xd7, 0xa1, 0x30, 0x70, 0xcd, 0x47, 0xa6, 0xd3, 0x35, 0xf7, 0xba, 0x98, 0xaa, 0x2e, 0x39, 0x3d,
-	0x09, 0x42, 0xef, 0x80, 0xf5, 0x00, 0x5b, 0x81, 0xb1, 0x87, 0xf7, 0x3d, 0x1f, 0x1b, 0xe6, 0x20,
-	0xf4, 0x0c, 0xcb, 0x74, 0x2d, 0xcc, 0xf4, 0x98, 0x39, 0x7d, 0x95, 0x64, 0x6f, 0xd0, 0x5c, 0x65,
-	0x10, 0x7a, 0x15, 0x9a, 0x87, 0xee, 0x01, 0xea, 0x78, 0x5d, 0xa2, 0xff, 0x05, 0xa1, 0xb1, 0xe7,
-	0x79, 0x41, 0x88, 0xfd, 0xa0, 0x3c, 0x4f, 0x9b, 0xfe, 0xd4, 0xd8, 0xa6, 0x6f, 0x79, 0x5d, 0xbb,
-	0xe2, 0x05, 0xe1, 0x06, 0x2b, 0x4c, 0xfb, 0x20, 0x75, 0xd2, 0xc0, 0x00, 0xbd, 0x11, 0x96, 0x86,
-	0x74, 0x4d, 0x22, 0x44, 0xa8, 0x32, 0x93, 0xd1, 0x17, 0xa3, 0xa2, 0x54, 0xb2, 0xcc, 0xc6, 0xfb,
-	0x3f, 0x10, 0xe4, 0x4f, 0x66, 0x13, 0xbc, 0x6f, 0x85, 0x66, 0x38, 0x18, 0x6e, 0x09, 0x3a, 0xcc,
-	0x07, 0x14, 0xc2, 0xe5, 0xe1, 0x9d, 0xf1, 0xac, 0x1f, 0x8f, 0x7d, 0xab, 0x39, 0xf0, 0xad, 0x03,
-	0x33, 0xc0, 0x04, 0x8c, 0x75, 0x4e, 0x09, 0x5d, 0x05, 0xe8, 0xfb, 0x9e, 0x3d, 0xb0, 0x62, 0x45,
-	0x33, 0xaf, 0xe7, 0x39, 0x44, 0xb3, 0x91, 0x06, 0xa5, 0x3e, 0xc7, 0x33, 0xe8, 0x82, 0xa7, 0xf2,
-	0xa1, 0x70, 0x5b, 0x1e, 0x5b, 0x75, 0x54, 0x05, 0x95, 0x12, 0xfa, 0x62, 0x3f, 0x99, 0x44, 0x6f,
-	0x85, 0xd5, 0x3d, 0xda, 0x34, 0xa3, 0x6f, 0x1e, 0x1b, 0xa3, 0x63, 0x8d, 0xf6, 0xa2, 0x66, 0x2b,
-	0xf1, 0x90, 0x3f, 0x0d, 0xa5, 0xd0, 0x37, 0xdd, 0x80, 0x1c, 0x4c, 0x3c, 0x97, 0xb4, 0x6f, 0x8e,
-	0xb1, 0x38, 0x01, 0xd5, 0x6c, 0xf4, 0x14, 0x94, 0xc2, 0x03, 0xc7, 0xb7, 0x8d, 0xbe, 0xe9, 0x87,
-	0xc7, 0xa4, 0xd8, 0x3c, 0xed, 0x46, 0x91, 0x42, 0x9b, 0x04, 0xa8, 0xd9, 0xa9, 0xd9, 0xb7, 0x30,
-	0x32, 0xfb, 0xaa, 0xf4, 0xd0, 0xf5, 0xc8, 0xb1, 0xb1, 0x4f, 0xf5, 0xcd, 0xd2, 0xc4, 0xfd, 0x36,
-	0x66, 0x6e, 0x93, 0x97, 0xd7, 0x63, 0xcc, 0xd9, 0x86, 0xfa, 0x03, 0xa2, 0xac, 0xc0, 0x62, 0x6a,
-	0x4c, 0xc8, 0x61, 0xb6, 0xd9, 0x32, 0x74, 0x55, 0xa9, 0x3e, 0x94, 0x9e, 0x40, 0xab, 0x20, 0x35,
-	0x5b, 0x46, 0x65, 0x5b, 0xad, 0xdc, 0x35, 0xd8, 0x91, 0xb9, 0x25, 0x09, 0xbc, 0x8c, 0xaa, 0xeb,
-	0x0d, 0x5d, 0x12, 0xe5, 0xef, 0x10, 0xa0, 0xc0, 0xa7, 0x24, 0x11, 0x6f, 0xe8, 0x45, 0xc8, 0x45,
-	0x0a, 0x1a, 0xdf, 0x70, 0xa6, 0xe8, 0x67, 0xfa, 0x02, 0xd7, 0xcd, 0xd0, 0x4b, 0x50, 0x70, 0xdc,
-	0x00, 0xf3, 0x13, 0x02, 0x17, 0x3c, 0xa7, 0xaa, 0xf5, 0xc0, 0xca, 0x93, 0x6f, 0xf9, 0x13, 0x02,
-	0x94, 0xa2, 0x86, 0x78, 0x6e, 0x48, 0x54, 0xf4, 0x17, 0x52, 0x0a, 0xcc, 0xf5, 0xf1, 0x73, 0x75,
-	0xd8, 0xf6, 0xa1, 0xe2, 0x42, 0x94, 0x7b, 0xcb, 0xeb, 0x76, 0x31, 0x1b, 0xf6, 0x48, 0x64, 0xb2,
-	0x43, 0xd0, 0xf2, 0x30, 0x87, 0x8b, 0xd7, 0xd9, 0xf8, 0xfe, 0xef, 0x04, 0xf9, 0x38, 0xe6, 0x19,
-	0xd9, 0x0e, 0xd0, 0x9d, 0x54, 0x3b, 0xe5, 0x49, 0x03, 0xcf, 0x30, 0x5e, 0xcb, 0xc9, 0xff, 0x77,
-	0x04, 0xf9, 0x2b, 0x59, 0xc2, 0xa6, 0x41, 0xe7, 0x20, 0x6c, 0x11, 0x29, 0x41, 0x86, 0xec, 0xad,
-	0x90, 0x39, 0xfb, 0x68, 0x91, 0xa2, 0x89, 0x83, 0x9f, 0x98, 0x3a, 0xf8, 0x6d, 0xc4, 0x76, 0x1e,
-	0xb6, 0x87, 0xbf, 0x69, 0x02, 0xcb, 0x93, 0xd5, 0x8f, 0x18, 0x76, 0x88, 0xca, 0x9d, 0x34, 0x1a,
-	0xb0, 0x04, 0xa9, 0xd1, 0xc5, 0xfe, 0x3e, 0xb6, 0x23, 0x53, 0x01, 0x4b, 0x11, 0x21, 0x38, 0x70,
-	0x9d, 0xd0, 0x08, 0x70, 0xb7, 0x6b, 0xf4, 0x7d, 0xc7, 0xc2, 0xdc, 0x58, 0xb0, 0x48, 0xc0, 0x2d,
-	0xdc, 0xed, 0x36, 0x09, 0x90, 0xac, 0x50, 0x5a, 0x6e, 0x6f, 0x70, 0xcc, 0x8b, 0xb1, 0x15, 0x58,
-	0x24, 0xd0, 0x8d, 0xc1, 0x31, 0x2b, 0xf5, 0x02, 0x94, 0xd9, 0x8a, 0x0c, 0x8d, 0xc4, 0xf0, 0xb3,
-	0xe6, 0xe4, 0x68, 0xf9, 0x0b, 0x3c, 0xbf, 0x12, 0x67, 0xb3, 0xb3, 0xfb, 0xf8, 0x09, 0x93, 0x7f,
-	0x5d, 0x26, 0xcc, 0x9f, 0x13, 0xe5, 0x4f, 0x0b, 0x67, 0x32, 0x5f, 0x6d, 0xa9, 0x75, 0x55, 0xd7,
-	0x2a, 0xc6, 0xa6, 0xa2, 0xd5, 0x76, 0x75, 0x55, 0x12, 0x50, 0x0e, 0xb2, 0xad, 0x46, 0xad, 0x2a,
-	0x89, 0x44, 0xf9, 0xdd, 0x68, 0xec, 0x6e, 0x6d, 0xb7, 0xa5, 0x0c, 0x5a, 0x84, 0x7c, 0xab, 0xb1,
-	0x5b, 0xdb, 0x68, 0xec, 0xd6, 0xab, 0x52, 0x96, 0xac, 0xf3, 0xfb, 0x7a, 0xa3, 0xbe, 0x65, 0xb4,
-	0xd4, 0x5a, 0xcd, 0x68, 0xea, 0x5a, 0x45, 0x95, 0xe6, 0x08, 0x3d, 0x06, 0xdd, 0xd8, 0x7d, 0xc8,
-	0x81, 0xf3, 0x68, 0x19, 0x16, 0xeb, 0x0d, 0xa3, 0xa9, 0xea, 0x3b, 0x5a, 0xab, 0xa5, 0x35, 0xea,
-	0xd2, 0x02, 0xc1, 0x56, 0xef, 0xa9, 0xf5, 0xb6, 0x91, 0xb0, 0x93, 0xe5, 0x10, 0x82, 0x52, 0xa5,
-	0xb1, 0x5b, 0x6f, 0x1b, 0x3b, 0x5a, 0x6b, 0x47, 0x69, 0x57, 0xb6, 0xa5, 0xbc, 0xfc, 0x63, 0x19,
-	0x98, 0x67, 0xdb, 0x72, 0xe2, 0xa8, 0x98, 0xa7, 0x47, 0x45, 0x04, 0x59, 0xb2, 0x8f, 0xd1, 0xf9,
-	0x24, 0xe8, 0xf4, 0x1b, 0x5d, 0x84, 0x9c, 0xd9, 0xef, 0x77, 0x31, 0x91, 0xa7, 0x19, 0x5a, 0x72,
-	0x81, 0xa6, 0x99, 0xc0, 0xed, 0x78, 0x5e, 0x87, 0x48, 0xf2, 0xae, 0x49, 0x05, 0x6e, 0x96, 0x09,
-	0x5c, 0x06, 0x25, 0x9a, 0x87, 0x46, 0x64, 0xd1, 0x9c, 0x13, 0xe2, 0x5e, 0x50, 0x9e, 0xa3, 0x0b,
-	0xeb, 0xda, 0x29, 0x7a, 0x82, 0x16, 0xe2, 0x1e, 0x5d, 0x55, 0x0c, 0x03, 0x5d, 0x86, 0x7c, 0xbc,
-	0xb9, 0xd2, 0x19, 0x95, 0xd1, 0x73, 0xd1, 0xb6, 0x4a, 0x32, 0xcd, 0x9e, 0xf9, 0x3e, 0xb6, 0x21,
-	0x2c, 0xd0, 0x8a, 0x73, 0x0c, 0xa0, 0xd9, 0xe8, 0x39, 0x40, 0xd1, 0x76, 0x86, 0x1f, 0xd1, 0xd3,
-	0xbc, 0xd9, 0xc3, 0x74, 0x26, 0xe4, 0x75, 0x89, 0xe7, 0xa8, 0x24, 0xa3, 0x6e, 0xf6, 0x30, 0xfa,
-	0x06, 0x58, 0xc1, 0x47, 0x56, 0x77, 0x10, 0x38, 0x8f, 0xb0, 0x11, 0xc9, 0xf1, 0xa0, 0x0c, 0xd7,
-	0x33, 0xb3, 0x6c, 0x01, 0xb4, 0xe5, 0x28, 0x26, 0x14, 0x81, 0x03, 0xf4, 0x6e, 0xb8, 0xea, 0x63,
-	0xb3, 0x6b, 0xf4, 0x3c, 0x17, 0x93, 0x89, 0x7f, 0xa2, 0x5d, 0x05, 0xda, 0xae, 0x8b, 0xa4, 0xd0,
-	0x0e, 0x29, 0xd3, 0x1c, 0x69, 0xa0, 0xfc, 0xed, 0x02, 0xc0, 0x90, 0x45, 0xa8, 0x02, 0xc5, 0x88,
-	0x4a, 0x78, 0xdc, 0x9f, 0x78, 0x2c, 0x62, 0x7b, 0x31, 0x2b, 0xd8, 0x3e, 0xee, 0x63, 0xbd, 0xd0,
-	0x1f, 0x26, 0xc8, 0x60, 0x93, 0x83, 0x04, 0x17, 0x1e, 0xf4, 0x9b, 0x6c, 0x8e, 0xaf, 0x0e, 0x4c,
-	0x37, 0x74, 0xc2, 0x63, 0x6e, 0x4d, 0x8a, 0xd3, 0xf2, 0x87, 0x45, 0x28, 0x6c, 0x0c, 0x8e, 0xc9,
-	0x6a, 0x3e, 0xa7, 0xc0, 0x8a, 0x85, 0x8a, 0x38, 0x22, 0x54, 0xf6, 0x06, 0xc7, 0xe4, 0x1c, 0x9d,
-	0x61, 0x42, 0x85, 0xa5, 0xc6, 0x09, 0x95, 0xec, 0xd9, 0x84, 0xca, 0xdc, 0x8c, 0x42, 0x65, 0xfe,
-	0x34, 0xa1, 0x32, 0xe5, 0xec, 0xfa, 0xed, 0xa2, 0xfc, 0x47, 0x19, 0x28, 0x31, 0x2d, 0x33, 0xda,
-	0xc6, 0x49, 0x9b, 0x9c, 0x20, 0xa5, 0x9b, 0x0a, 0xb4, 0x6f, 0x45, 0x27, 0x48, 0xe8, 0xa4, 0xdb,
-	0x44, 0x50, 0x9b, 0x01, 0xdf, 0xd3, 0x4a, 0xb7, 0xdf, 0x3a, 0x76, 0x00, 0xd3, 0xa4, 0x79, 0x52,
-	0xa7, 0x78, 0x3a, 0xc7, 0x27, 0x6b, 0xc1, 0xc6, 0x8f, 0x1c, 0x2b, 0xb1, 0x4a, 0x73, 0x0c, 0xa0,
-	0xd9, 0xe8, 0x0d, 0xb0, 0xc8, 0xce, 0x75, 0x3d, 0x1c, 0x04, 0x66, 0x07, 0x47, 0xab, 0x94, 0x02,
-	0x77, 0x18, 0x4c, 0xfe, 0x43, 0x01, 0x8a, 0x49, 0xd2, 0xe8, 0x2a, 0x5c, 0xac, 0x28, 0xf5, 0x8a,
-	0x5a, 0xd3, 0x55, 0xa5, 0xd5, 0xa8, 0x8f, 0xca, 0xb9, 0xab, 0x70, 0xb1, 0xa9, 0x37, 0xee, 0x69,
-	0x55, 0x55, 0x37, 0x74, 0xb5, 0xd9, 0xd0, 0xdb, 0x6a, 0x35, 0x21, 0xf1, 0x9e, 0x84, 0x4b, 0x44,
-	0x10, 0xe9, 0x6a, 0xa5, 0xb1, 0x55, 0xd7, 0xbe, 0x5e, 0xad, 0x1a, 0x1b, 0x44, 0x7c, 0x31, 0x04,
-	0x49, 0x44, 0xd7, 0xe1, 0xca, 0x6e, 0x4b, 0xd5, 0x0d, 0x56, 0x05, 0xc9, 0x56, 0x37, 0x1b, 0xba,
-	0x6a, 0x34, 0x95, 0x87, 0x3b, 0x6a, 0x9d, 0x48, 0xc7, 0xab, 0x70, 0x31, 0x51, 0x42, 0xab, 0x6f,
-	0x19, 0xed, 0x86, 0xb1, 0x5b, 0xdf, 0xa8, 0x35, 0x2a, 0x77, 0xa5, 0x2c, 0x5a, 0x83, 0xe5, 0xca,
-	0xb6, 0x52, 0xab, 0xa9, 0xf5, 0x2d, 0xd5, 0x68, 0x6b, 0x3b, 0x6a, 0x63, 0xb7, 0x2d, 0xcd, 0x11,
-	0x31, 0x38, 0x04, 0x57, 0xd5, 0xba, 0xa6, 0x56, 0xa5, 0x79, 0x22, 0xdc, 0x87, 0xd0, 0x46, 0x7b,
-	0x5b, 0xd5, 0xb9, 0xe6, 0xb4, 0x20, 0xdf, 0x39, 0xdb, 0x1e, 0x30, 0x1c, 0x78, 0x81, 0x0f, 0xfc,
-	0xf7, 0x88, 0xf2, 0xef, 0x8b, 0x70, 0x21, 0x3d, 0x3a, 0xb1, 0x8a, 0xde, 0x8c, 0xf7, 0x60, 0xb6,
-	0x36, 0x5f, 0x38, 0xc3, 0xd0, 0xc6, 0x1a, 0x7a, 0x34, 0x0e, 0xa9, 0x1d, 0xf9, 0xa4, 0x12, 0x2c,
-	0x8e, 0x53, 0x82, 0xd3, 0x7a, 0x7c, 0x66, 0x54, 0x8f, 0x4f, 0x6a, 0xbf, 0xd9, 0xb4, 0xf6, 0x2b,
-	0x1f, 0x0e, 0x67, 0x00, 0xad, 0x31, 0x31, 0x03, 0xc6, 0xed, 0x74, 0x25, 0x80, 0x8a, 0x6e, 0xb4,
-	0x76, 0x2b, 0x15, 0xb5, 0x45, 0x34, 0x52, 0xb2, 0xd7, 0xe8, 0x6c, 0xfb, 0xa9, 0xd5, 0x1a, 0xf7,
-	0x55, 0xb2, 0xdd, 0x95, 0x61, 0x95, 0xc1, 0xb6, 0xf9, 0x00, 0x32, 0x82, 0x52, 0x66, 0xb6, 0xbd,
-	0xf7, 0xaf, 0x88, 0xb2, 0x06, 0x05, 0xd6, 0xb8, 0x57, 0x06, 0x98, 0xed, 0x4a, 0xd4, 0x3c, 0x62,
-	0xc4, 0xa6, 0xce, 0x05, 0x9a, 0xd6, 0xec, 0x29, 0xeb, 0xf5, 0x7b, 0xe9, 0x36, 0xbe, 0x92, 0xa0,
-	0x15, 0x8f, 0xd9, 0x64, 0x9a, 0xe4, 0xc4, 0x1e, 0x0c, 0x2c, 0x2b, 0x32, 0x9f, 0xe6, 0xf4, 0x28,
-	0x89, 0xb6, 0x60, 0xd9, 0xc5, 0x47, 0xa1, 0xc1, 0x30, 0xf9, 0x62, 0xcf, 0x4c, 0x57, 0x9a, 0x97,
-	0x08, 0x16, 0xad, 0x9f, 0x35, 0x65, 0x36, 0x86, 0x7c, 0x54, 0x94, 0xbf, 0x19, 0xf2, 0x54, 0x5d,
-	0x36, 0xad, 0xc3, 0x00, 0xbd, 0x09, 0x96, 0x6d, 0xbc, 0x6f, 0x0e, 0xba, 0xdc, 0x54, 0xb2, 0x67,
-	0x5a, 0x87, 0xbc, 0x0f, 0x4b, 0x3c, 0x23, 0x2a, 0x8c, 0x6e, 0x00, 0xc4, 0x65, 0x48, 0x77, 0x32,
-	0x37, 0xe7, 0xe8, 0xce, 0x45, 0x4d, 0xba, 0x94, 0xdc, 0x14, 0x16, 0xfe, 0x17, 0x41, 0xfe, 0xa0,
-	0x00, 0x12, 0x21, 0xb8, 0xe3, 0xd9, 0xc3, 0xcb, 0x0c, 0x19, 0x16, 0xa9, 0xf5, 0x84, 0x35, 0x21,
-	0x66, 0x62, 0x81, 0x02, 0x49, 0x69, 0xc6, 0xc8, 0xbe, 0x8f, 0x7b, 0xce, 0xa0, 0xc7, 0x37, 0x81,
-	0x28, 0x79, 0xda, 0xd6, 0x83, 0xae, 0x41, 0x81, 0xe9, 0xb6, 0x46, 0x80, 0xb1, 0xcb, 0x27, 0x2e,
-	0x30, 0x50, 0x0b, 0x63, 0x57, 0xbe, 0x43, 0xa6, 0xae, 0x6f, 0xef, 0x06, 0xb8, 0x12, 0xdd, 0x7d,
-	0x30, 0x43, 0x0e, 0x6b, 0x02, 0x4b, 0x8c, 0xdf, 0x7f, 0xe4, 0x6f, 0x65, 0x8c, 0xbc, 0x67, 0x76,
-	0x07, 0x18, 0xdd, 0x86, 0x2c, 0x69, 0xfd, 0x19, 0x77, 0x35, 0x5a, 0x16, 0x49, 0x90, 0xd9, 0x1b,
-	0x44, 0xa6, 0x0c, 0xf2, 0x49, 0xb6, 0x56, 0xb2, 0x6b, 0xf1, 0x7e, 0xd0, 0xef, 0x84, 0xee, 0x9c,
-	0x4d, 0xea, 0xce, 0xf2, 0xc7, 0x05, 0x80, 0xb8, 0xfe, 0x00, 0xbd, 0x00, 0x73, 0x84, 0xe8, 0x44,
-	0xb3, 0x3a, 0x97, 0x1b, 0xbc, 0x3c, 0x53, 0x96, 0x28, 0x02, 0xd9, 0x2f, 0x29, 0xe3, 0x09, 0x5d,
-	0xc3, 0x71, 0x6d, 0x7c, 0xc4, 0x9b, 0xb4, 0x48, 0xc0, 0x75, 0xec, 0xef, 0x6b, 0x04, 0x38, 0xdb,
-	0x44, 0xfb, 0x0b, 0xa2, 0xec, 0xc3, 0xa5, 0xca, 0x01, 0xb6, 0x0e, 0xc7, 0x5e, 0x0c, 0x4f, 0xbe,
-	0x6e, 0x3e, 0xbf, 0x64, 0xfd, 0x84, 0x28, 0x7f, 0x92, 0xec, 0x46, 0x5d, 0x07, 0xbb, 0x61, 0xa3,
-	0x4f, 0xe7, 0xd6, 0x2a, 0xcc, 0xb1, 0x2e, 0xf1, 0x01, 0xa5, 0x09, 0xb4, 0x0e, 0x0b, 0x66, 0x60,
-	0xec, 0x79, 0x5e, 0x97, 0x2f, 0xcb, 0x79, 0x33, 0xd8, 0xf0, 0xbc, 0x2e, 0x55, 0x5a, 0x03, 0xc3,
-	0x71, 0xc3, 0xb7, 0xdd, 0xe6, 0x83, 0xb0, 0x60, 0x06, 0x1a, 0x49, 0x0e, 0xb3, 0x9e, 0x7f, 0x3b,
-	0x1d, 0x89, 0x0c, 0xcf, 0x7a, 0xfe, 0xed, 0x3c, 0x6b, 0xbf, 0xeb, 0x99, 0x21, 0xd5, 0x21, 0x44,
-	0x92, 0xb5, 0x49, 0x92, 0x54, 0xd9, 0x0c, 0x8c, 0x01, 0x43, 0x23, 0xfa, 0x42, 0x56, 0xcf, 0x99,
-	0xc1, 0x2e, 0x4d, 0xcb, 0x07, 0xb0, 0x98, 0x6c, 0x6c, 0x80, 0x5e, 0x86, 0x05, 0xaf, 0x9f, 0xbc,
-	0x37, 0x1a, 0x6f, 0x73, 0x4e, 0x22, 0x31, 0x13, 0x19, 0xc7, 0x22, 0x93, 0x65, 0xdf, 0x74, 0xba,
-	0xd8, 0x8e, 0xfa, 0xc5, 0x52, 0xf2, 0x8f, 0x88, 0xb0, 0xc6, 0xb0, 0xb8, 0x65, 0x3d, 0x16, 0x5e,
-	0x5d, 0x28, 0xf9, 0xfc, 0xdb, 0xd8, 0xef, 0x9a, 0x9d, 0xc8, 0x36, 0xa4, 0x9e, 0x52, 0xf3, 0x08,
-	0x8d, 0xf1, 0xd0, 0x4d, 0x42, 0x4c, 0x5f, 0xf4, 0x93, 0x49, 0xf9, 0x55, 0xb8, 0x34, 0xb9, 0x30,
-	0xdd, 0x9b, 0x75, 0x7d, 0xd3, 0x68, 0xa9, 0xfa, 0x3d, 0xad, 0xa2, 0x1a, 0xf5, 0x46, 0x5d, 0x95,
-	0x9e, 0x40, 0x57, 0xa0, 0x9c, 0x02, 0xef, 0xd6, 0x95, 0x7b, 0x8a, 0x56, 0x53, 0x36, 0x6a, 0x5c,
-	0x63, 0x18, 0xc9, 0xa5, 0x37, 0xf7, 0xb1, 0x89, 0x63, 0xa6, 0x69, 0xfb, 0xcf, 0x44, 0xf9, 0x67,
-	0x33, 0xb0, 0xce, 0xda, 0x48, 0x8d, 0x2a, 0xa9, 0x6b, 0xd7, 0x6f, 0x3a, 0xfd, 0xa6, 0x6f, 0xac,
-	0x6d, 0xf9, 0xb4, 0x9b, 0xbe, 0x60, 0xf2, 0x35, 0x1f, 0x7a, 0x0f, 0xac, 0xba, 0xf4, 0x1a, 0x6b,
-	0xa4, 0x9a, 0xd3, 0x2c, 0xba, 0xec, 0xde, 0x2b, 0x5d, 0xc3, 0x8a, 0x7b, 0x12, 0x88, 0x3a, 0x50,
-	0x4e, 0x68, 0xb3, 0xbd, 0x84, 0x34, 0x0e, 0xf8, 0x26, 0x34, 0xfe, 0xc6, 0x72, 0xa8, 0xe3, 0x26,
-	0x25, 0x78, 0xa0, 0xaf, 0x5b, 0xe3, 0x33, 0x50, 0x1d, 0x4a, 0x91, 0x9e, 0x60, 0x04, 0x84, 0x9f,
-	0x74, 0xed, 0x8c, 0x31, 0xed, 0x33, 0xd3, 0xa9, 0xd9, 0xc3, 0x15, 0x5e, 0x9c, 0x72, 0x3f, 0xd0,
-	0x17, 0xad, 0x64, 0x7a, 0xca, 0x0e, 0xf3, 0x2f, 0x45, 0xf9, 0xfb, 0x84, 0x68, 0x8a, 0x11, 0x04,
-	0xc7, 0x62, 0x96, 0xf4, 0x78, 0xba, 0xd7, 0xf9, 0x5e, 0x13, 0x18, 0xa1, 0x67, 0x74, 0x70, 0x64,
-	0xb5, 0x79, 0xe3, 0x69, 0xd7, 0x2a, 0xcc, 0x52, 0x1f, 0x5b, 0x6e, 0xd8, 0xbe, 0x14, 0xb4, 0xbd,
-	0x2d, 0x3c, 0xa3, 0x01, 0xe7, 0x0b, 0xa2, 0x7c, 0x0c, 0x30, 0xe4, 0x21, 0x7a, 0x89, 0x1a, 0x64,
-	0xc9, 0x76, 0x3a, 0xc1, 0xc8, 0x95, 0xd8, 0x37, 0x5a, 0xa4, 0x20, 0x6d, 0x00, 0xc7, 0x99, 0xd5,
-	0xcc, 0xf5, 0xd7, 0x05, 0x58, 0x9f, 0x30, 0x7e, 0xe8, 0x01, 0x20, 0xba, 0x07, 0xa4, 0x67, 0x02,
-	0x6b, 0xd4, 0xd3, 0x13, 0xb7, 0x92, 0x24, 0x0d, 0xda, 0xb2, 0x65, 0x6b, 0x04, 0x3a, 0x73, 0x23,
-	0x7f, 0x49, 0x04, 0xa8, 0xf8, 0xd8, 0x0c, 0x71, 0x15, 0x5b, 0x87, 0x64, 0x43, 0xa4, 0x07, 0x5d,
-	0x66, 0x6a, 0xa0, 0xdf, 0x04, 0x76, 0x80, 0x7d, 0x2f, 0x3a, 0x7f, 0x92, 0x6f, 0x74, 0x03, 0x8a,
-	0xe4, 0xbf, 0x11, 0xe9, 0x08, 0xdc, 0xb3, 0x85, 0xc0, 0x9a, 0x5c, 0x4f, 0x78, 0x89, 0x1c, 0x75,
-	0xac, 0x43, 0x76, 0xf0, 0xcd, 0x52, 0x19, 0x77, 0xed, 0x94, 0x7b, 0x1a, 0x7a, 0xee, 0xcd, 0xd9,
-	0xfc, 0x0b, 0x3d, 0x03, 0x4b, 0xa1, 0xd9, 0xe9, 0x60, 0xea, 0xd4, 0xe1, 0xda, 0x64, 0xab, 0x67,
-	0xa6, 0xac, 0x12, 0x03, 0xb7, 0x38, 0x94, 0xe8, 0xd1, 0x81, 0xe7, 0x87, 0x86, 0xe7, 0xdb, 0xd8,
-	0xe7, 0xb6, 0x87, 0x3c, 0x81, 0x34, 0x08, 0x00, 0x6d, 0x42, 0x21, 0xf0, 0x06, 0xbe, 0x85, 0x59,
-	0x3b, 0x16, 0x4e, 0xbf, 0x81, 0xc3, 0xd6, 0x61, 0x8b, 0x96, 0xa6, 0xad, 0x81, 0x20, 0xfe, 0x9e,
-	0xb2, 0x0e, 0xfe, 0x95, 0x20, 0x7f, 0x41, 0x80, 0x5c, 0x75, 0x43, 0x61, 0xf3, 0xec, 0x5d, 0xcc,
-	0x55, 0x87, 0xdf, 0x1b, 0x4d, 0xbf, 0xf2, 0x63, 0x68, 0x3a, 0x47, 0x22, 0xe8, 0xe7, 0xb9, 0x31,
-	0x8c, 0x4e, 0x20, 0x97, 0x21, 0xdf, 0xc3, 0xa1, 0x49, 0xaf, 0x1f, 0xe9, 0xc8, 0x64, 0xf4, 0x1c,
-	0x01, 0x90, 0xe2, 0xb3, 0x2d, 0xa0, 0xdf, 0x14, 0xe4, 0x03, 0x58, 0xa9, 0xe2, 0xbd, 0x41, 0xa7,
-	0xe2, 0xf5, 0x7a, 0xa6, 0x6b, 0xf3, 0x7d, 0x84, 0xa8, 0x13, 0x16, 0x83, 0xf0, 0xb9, 0x12, 0x25,
-	0xd1, 0x05, 0xc8, 0x9a, 0x7e, 0x87, 0x29, 0xac, 0x79, 0x66, 0x7a, 0x25, 0xe9, 0x29, 0x1c, 0xfc,
-	0xb4, 0x28, 0x7f, 0x0b, 0xac, 0xa6, 0x6b, 0x1a, 0xde, 0xc2, 0x45, 0x3a, 0xbd, 0x90, 0xd6, 0xe9,
-	0x2f, 0x41, 0x2e, 0xda, 0xee, 0xf8, 0x4d, 0x48, 0x9c, 0x9e, 0xad, 0x9f, 0xbf, 0x20, 0xca, 0xef,
-	0x17, 0xa0, 0x48, 0xc6, 0x9f, 0x5b, 0xc3, 0x83, 0x53, 0xaa, 0x5d, 0x87, 0x05, 0x3a, 0xb3, 0xe3,
-	0xa3, 0xdd, 0x3c, 0x49, 0x6a, 0x36, 0x7a, 0x57, 0xa4, 0x13, 0x66, 0xe8, 0x42, 0x7e, 0xc3, 0x29,
-	0xd3, 0x8c, 0x6a, 0xa6, 0x66, 0x68, 0x26, 0x14, 0x43, 0xd9, 0x87, 0x02, 0xcd, 0xa2, 0xcb, 0xd1,
-	0x46, 0x6f, 0x83, 0x2c, 0xbd, 0x52, 0x3c, 0xfd, 0x22, 0x9a, 0x60, 0xd0, 0x9b, 0x44, 0x5a, 0x78,
-	0xb6, 0x6e, 0x7f, 0x51, 0x90, 0x5f, 0x61, 0x75, 0x56, 0x31, 0x73, 0xd3, 0x42, 0x90, 0x25, 0x7d,
-	0xe1, 0x0e, 0x1c, 0xf4, 0x7b, 0x36, 0x92, 0xbf, 0x25, 0xc8, 0x03, 0xc8, 0x11, 0x92, 0xd4, 0x56,
-	0xff, 0x22, 0xcc, 0x11, 0x1a, 0x91, 0x68, 0x9b, 0xd6, 0x09, 0xc6, 0x0d, 0x8a, 0x31, 0x5b, 0xb5,
-	0xff, 0x5c, 0x90, 0x31, 0xeb, 0x89, 0x8e, 0x89, 0xd0, 0x1a, 0xdb, 0x93, 0x58, 0xba, 0x89, 0x43,
-	0xe9, 0x36, 0x5b, 0x35, 0x5f, 0x12, 0xe4, 0x8f, 0x8a, 0xac, 0x9e, 0x16, 0x0e, 0xc9, 0xf8, 0x8d,
-	0xad, 0x27, 0x9e, 0x07, 0xe2, 0x79, 0xe6, 0x01, 0x39, 0xdb, 0x50, 0x81, 0x9b, 0x39, 0xdb, 0xd9,
-	0x86, 0x0a, 0xe4, 0xcb, 0xdc, 0xd3, 0x87, 0x1e, 0x28, 0x23, 0x83, 0x41, 0x74, 0x92, 0x7c, 0x9d,
-	0x84, 0xe9, 0x94, 0x25, 0xfc, 0xdb, 0x82, 0xdc, 0x83, 0x35, 0xce, 0x9b, 0x36, 0xee, 0xf5, 0xbb,
-	0x66, 0x88, 0x99, 0x38, 0x1d, 0xcb, 0xa5, 0x6b, 0x50, 0x08, 0x79, 0xa9, 0x68, 0x29, 0xcd, 0xe9,
-	0x10, 0x81, 0xa6, 0x1a, 0x08, 0xfe, 0x85, 0x28, 0x2b, 0x00, 0x6c, 0xe2, 0x46, 0x7b, 0xd7, 0x89,
-	0xb9, 0x7b, 0x3a, 0x89, 0x5f, 0x13, 0xe4, 0x4d, 0x58, 0xaa, 0xe2, 0x47, 0x1b, 0x2e, 0x0e, 0x35,
-	0x1b, 0xbb, 0xa1, 0xb3, 0x7f, 0x3c, 0x6e, 0x0f, 0x9c, 0x42, 0xe7, 0xcf, 0x8b, 0xf2, 0x87, 0x44,
-	0x28, 0x56, 0x9d, 0xc0, 0xf2, 0x5c, 0x17, 0x5b, 0x64, 0x25, 0x91, 0xf3, 0x96, 0x6d, 0xfb, 0x91,
-	0xf8, 0xc8, 0xeb, 0x51, 0x92, 0xf4, 0xbb, 0x63, 0xf6, 0xb0, 0x71, 0x60, 0xba, 0x76, 0x17, 0x47,
-	0xfd, 0x26, 0xa0, 0x6d, 0x0a, 0x41, 0x6f, 0x80, 0x45, 0x8b, 0x6a, 0x54, 0x51, 0x11, 0x26, 0xc3,
-	0x8b, 0x0c, 0xc8, 0x0b, 0x21, 0xc8, 0xf6, 0x3d, 0x3f, 0xba, 0xf7, 0xa1, 0xdf, 0x49, 0x7f, 0x85,
-	0x39, 0x56, 0x67, 0xe4, 0xaf, 0xf0, 0x0c, 0x2c, 0x99, 0x03, 0xdf, 0xf3, 0x4d, 0xa3, 0x6f, 0x06,
-	0xc1, 0x63, 0xcf, 0x8f, 0xee, 0x5c, 0x4b, 0x0c, 0xdc, 0xe4, 0x50, 0x22, 0x52, 0x23, 0xdf, 0x8e,
-	0xe8, 0xd6, 0x35, 0x4a, 0xcf, 0xb6, 0x54, 0x7e, 0x48, 0x94, 0xb7, 0x01, 0xaa, 0x5e, 0x64, 0x34,
-	0x3b, 0xff, 0x31, 0xf3, 0x43, 0xa2, 0x6c, 0xc0, 0x52, 0xd5, 0x37, 0xf7, 0x43, 0x85, 0xac, 0xef,
-	0xc7, 0x74, 0x91, 0x24, 0x84, 0xb0, 0x90, 0x12, 0xc2, 0xe4, 0x4c, 0xdf, 0xf5, 0x22, 0xdb, 0x01,
-	0xfd, 0x9e, 0x32, 0x7c, 0x3f, 0x20, 0xca, 0x6f, 0x06, 0xa0, 0x15, 0x6c, 0xe0, 0x8e, 0xe3, 0x4e,
-	0x29, 0xfe, 0x9f, 0x05, 0xf9, 0xe3, 0x02, 0x94, 0x86, 0xe5, 0x5d, 0xc7, 0xed, 0x4c, 0x6e, 0x4f,
-	0x05, 0x0a, 0xd6, 0x81, 0x47, 0xce, 0x15, 0xf4, 0xd6, 0x32, 0x73, 0x66, 0x2f, 0x3c, 0x60, 0x68,
-	0xb5, 0x99, 0xef, 0x2d, 0xff, 0x48, 0x90, 0x7f, 0x32, 0x03, 0xeb, 0xb4, 0x81, 0x15, 0x4a, 0x23,
-	0x50, 0x5c, 0x3b, 0xde, 0xd8, 0x66, 0xe1, 0xdc, 0x50, 0x94, 0xcd, 0x9d, 0x4b, 0x94, 0x45, 0x2e,
-	0x69, 0xf3, 0x63, 0x5d, 0xd2, 0x16, 0x92, 0x2e, 0x69, 0xd4, 0xa2, 0x72, 0x80, 0x83, 0x90, 0x7b,
-	0x17, 0x4f, 0xba, 0xd8, 0xe5, 0x3e, 0xc0, 0xa4, 0xa4, 0xce, 0x10, 0x46, 0x59, 0x9c, 0x3f, 0x0f,
-	0x8b, 0xd1, 0x8b, 0x90, 0xa3, 0x2a, 0xad, 0x8d, 0xf7, 0xa9, 0xdb, 0xf1, 0x19, 0xae, 0xe2, 0x49,
-	0xf9, 0x2a, 0xde, 0x47, 0x17, 0x21, 0xd7, 0x33, 0x8f, 0x0c, 0xda, 0xd3, 0x02, 0xb3, 0x62, 0xf4,
-	0xcc, 0xa3, 0xfb, 0x8e, 0x3b, 0xe3, 0x2e, 0xf6, 0xc7, 0x82, 0xfc, 0x69, 0x01, 0x0a, 0xd1, 0xc0,
-	0x05, 0xd8, 0x45, 0xcf, 0xc3, 0xbc, 0x45, 0xbf, 0xce, 0xb8, 0x1b, 0xf0, 0xd2, 0xa8, 0x06, 0x12,
-	0x35, 0x77, 0x26, 0xf9, 0x92, 0x3d, 0x33, 0x5f, 0x4a, 0x04, 0xb7, 0x72, 0xce, 0xe9, 0xf7, 0x15,
-	0x41, 0xfe, 0x9c, 0xc8, 0xd7, 0x13, 0xf3, 0x24, 0xd9, 0x1e, 0xe3, 0x1b, 0xf8, 0xec, 0xd8, 0x53,
-	0xce, 0x10, 0x69, 0xac, 0xe7, 0x9a, 0xfc, 0x19, 0x01, 0xf2, 0x71, 0x06, 0x2a, 0x01, 0x54, 0x63,
-	0x03, 0x84, 0xf4, 0x04, 0x5a, 0x86, 0xc5, 0xaa, 0x6a, 0xd4, 0x1b, 0x46, 0x4d, 0xab, 0xa8, 0xf5,
-	0x96, 0x2a, 0x09, 0x68, 0x05, 0x96, 0xaa, 0xaa, 0xa1, 0xab, 0x6d, 0x4d, 0x57, 0x8d, 0x4d, 0x4d,
-	0x6f, 0xb5, 0x25, 0x91, 0x03, 0xeb, 0x8d, 0xb6, 0xa1, 0xd5, 0x8d, 0xaa, 0xae, 0x6c, 0xb6, 0xa5,
-	0x0c, 0x5a, 0x82, 0x42, 0x55, 0x35, 0x36, 0x94, 0xaa, 0x51, 0x55, 0xe9, 0xcd, 0xc5, 0x10, 0xd0,
-	0xaa, 0x35, 0xda, 0xd2, 0x1c, 0x92, 0xa0, 0xc8, 0x01, 0x5a, 0xbd, 0xaa, 0x3e, 0x90, 0xe6, 0xd1,
-	0x75, 0xb8, 0x32, 0x42, 0xc8, 0xd8, 0xd8, 0x6d, 0x1b, 0x95, 0xc6, 0x6e, 0xad, 0x6a, 0x6c, 0xa8,
-	0xd2, 0x02, 0x5a, 0x87, 0x95, 0xaa, 0x6a, 0x6c, 0xaa, 0x4a, 0x7b, 0x57, 0x57, 0x8d, 0xaa, 0xd6,
-	0x52, 0x36, 0x6a, 0x6a, 0x55, 0xca, 0xcd, 0xc6, 0xd2, 0xff, 0x23, 0xc8, 0xef, 0x84, 0x32, 0x65,
-	0xce, 0x16, 0x0e, 0x9b, 0x8e, 0x75, 0x98, 0x5c, 0xd1, 0x53, 0xe4, 0xd5, 0xff, 0xa4, 0x66, 0xe0,
-	0x45, 0x8a, 0xbd, 0x63, 0x1e, 0x62, 0x82, 0x3e, 0x9b, 0x10, 0x88, 0x8d, 0x7a, 0x99, 0xa4, 0x51,
-	0x2f, 0x61, 0x22, 0xce, 0xa6, 0x4c, 0xc4, 0x53, 0xda, 0xf3, 0x87, 0x82, 0xfc, 0x1e, 0x3e, 0xc9,
-	0x75, 0x1c, 0x3a, 0x3e, 0x7e, 0x3d, 0x65, 0xf9, 0x7f, 0x17, 0xe4, 0x0f, 0x11, 0x4d, 0x7e, 0x48,
-	0xdd, 0x9e, 0x4c, 0x3e, 0x96, 0x38, 0xe2, 0x8c, 0x12, 0x67, 0xb6, 0xd1, 0xfb, 0x5f, 0x82, 0xfc,
-	0x5e, 0x58, 0xe6, 0x4d, 0xa2, 0xbb, 0x97, 0x62, 0x1d, 0x9e, 0xd2, 0xae, 0xd9, 0xa8, 0xff, 0xa0,
-	0x28, 0x7f, 0x54, 0x80, 0x0b, 0x9b, 0xe6, 0x23, 0xcf, 0x77, 0x42, 0xbc, 0x8d, 0x7d, 0x0f, 0x07,
-	0x89, 0xfb, 0xad, 0xa5, 0x7d, 0x9e, 0x63, 0x1c, 0xd0, 0x2c, 0xae, 0x8a, 0x4f, 0x92, 0xe4, 0x49,
-	0x3a, 0x4c, 0x16, 0xec, 0xa7, 0x28, 0xcf, 0xd6, 0xb8, 0x7f, 0x2c, 0xca, 0xdf, 0x23, 0x02, 0x3a,
-	0x69, 0x67, 0x42, 0xb7, 0x60, 0xc5, 0xf4, 0x2d, 0xd3, 0xc5, 0x86, 0x3d, 0x08, 0x42, 0x63, 0xcf,
-	0xec, 0x9a, 0xae, 0x85, 0x39, 0x23, 0x96, 0x59, 0x56, 0x75, 0x10, 0x84, 0x1b, 0x2c, 0x83, 0x94,
-	0xb7, 0xcc, 0x7e, 0x1f, 0xdb, 0x06, 0xf5, 0x34, 0x88, 0xca, 0x47, 0x86, 0x0d, 0x9a, 0xb5, 0xe5,
-	0x75, 0xed, 0xa8, 0xfc, 0x73, 0x80, 0xf6, 0x3c, 0x77, 0x10, 0xa4, 0x8b, 0x33, 0x4d, 0x4a, 0xa2,
-	0x39, 0xc9, 0xd2, 0x17, 0x21, 0xc7, 0x1c, 0x18, 0xcc, 0x7e, 0x64, 0x6c, 0xa6, 0xfe, 0x0b, 0x66,
-	0x1f, 0xdd, 0x04, 0x29, 0xca, 0x32, 0x1e, 0x9b, 0xd4, 0x55, 0x93, 0xbb, 0xb5, 0x95, 0x78, 0x91,
-	0xfb, 0x0c, 0x4a, 0xdf, 0xf2, 0x44, 0xb6, 0xb7, 0x48, 0x0f, 0x63, 0x3a, 0xf4, 0x52, 0x04, 0x8f,
-	0xcc, 0x2e, 0xbf, 0x22, 0x40, 0x9e, 0x30, 0x85, 0x3e, 0x6d, 0x22, 0x0a, 0x1f, 0x51, 0xff, 0x02,
-	0x83, 0x3f, 0xd9, 0xe1, 0xc6, 0xf3, 0x22, 0x05, 0xb6, 0x18, 0x8c, 0xfa, 0x58, 0xd0, 0x42, 0x8f,
-	0xb9, 0x3d, 0x67, 0x4e, 0xcf, 0x51, 0xc0, 0x7d, 0x7a, 0x09, 0x0c, 0x2c, 0xb3, 0xeb, 0x05, 0xd1,
-	0xfb, 0x12, 0x56, 0xbc, 0xe6, 0x05, 0x21, 0x7a, 0x2b, 0xac, 0xee, 0xfb, 0x18, 0x47, 0xef, 0x64,
-	0xe2, 0x27, 0x06, 0x6c, 0xdd, 0x22, 0x92, 0xc7, 0x66, 0x66, 0xfc, 0xd2, 0x60, 0xa6, 0x51, 0xfe,
-	0x9c, 0x20, 0xdf, 0x81, 0xc2, 0x16, 0x76, 0xb1, 0xef, 0x58, 0xf4, 0x54, 0xb4, 0x0e, 0x0b, 0xe1,
-	0x71, 0x1f, 0x47, 0x53, 0x7b, 0x51, 0x9f, 0x27, 0x49, 0xb6, 0xa2, 0x63, 0x67, 0x86, 0x22, 0x73,
-	0x66, 0x20, 0xd3, 0xb7, 0xc4, 0x91, 0x23, 0xf3, 0xc2, 0x55, 0x00, 0xee, 0x57, 0x3d, 0xbc, 0x9f,
-	0xca, 0x73, 0x08, 0xd5, 0xa9, 0x8a, 0x1d, 0x86, 0x60, 0xc4, 0xd4, 0x26, 0xb9, 0xac, 0x25, 0x9a,
-	0xa5, 0x17, 0x3a, 0x89, 0x36, 0x3e, 0x05, 0xa5, 0xa8, 0x8e, 0x60, 0xb0, 0x17, 0xdd, 0xc2, 0xce,
-	0xc5, 0x1e, 0xdd, 0xad, 0xc1, 0x9e, 0x66, 0xcb, 0xef, 0x03, 0x94, 0x6e, 0x1b, 0x55, 0x16, 0x2a,
-	0x90, 0xe3, 0xa5, 0x26, 0xae, 0xa7, 0x64, 0xe5, 0x1c, 0x95, 0x3d, 0xae, 0x88, 0x10, 0xa7, 0x48,
-	0xb2, 0xcf, 0x88, 0xf2, 0x47, 0xb3, 0xb0, 0x14, 0x53, 0xe0, 0x0b, 0xba, 0x06, 0x05, 0x66, 0xe6,
-	0x49, 0x6e, 0xa6, 0x7f, 0xe6, 0xf4, 0xca, 0xd3, 0x6f, 0x02, 0x81, 0xe1, 0xd3, 0x1d, 0x34, 0xcd,
-	0x67, 0x71, 0x94, 0xcf, 0x67, 0x62, 0xd1, 0x89, 0xd1, 0xc8, 0x9e, 0x63, 0x34, 0x66, 0x9b, 0x70,
-	0xbf, 0x24, 0xca, 0x7f, 0x32, 0xf4, 0xf1, 0x5a, 0x84, 0x3c, 0xbf, 0xf9, 0x6e, 0xdc, 0x65, 0x1e,
-	0x0f, 0x3c, 0xa9, 0xab, 0xaf, 0xec, 0xaa, 0x2d, 0xba, 0x39, 0x37, 0xf5, 0x06, 0xbf, 0xfe, 0xbe,
-	0x0c, 0xeb, 0x23, 0xd9, 0xf1, 0x83, 0x44, 0x7a, 0x0f, 0xce, 0x33, 0xd3, 0xd7, 0x1a, 0x36, 0x69,
-	0x13, 0xcf, 0xd1, 0xea, 0x6d, 0x55, 0xaf, 0x2b, 0x35, 0x9e, 0x85, 0x89, 0x3a, 0xc1, 0xb3, 0xaa,
-	0x1b, 0x1c, 0xb8, 0x8f, 0x2e, 0xc1, 0x85, 0xb8, 0x3c, 0x7b, 0x25, 0xc9, 0xab, 0x93, 0x3a, 0x68,
-	0x0d, 0x96, 0x79, 0x5e, 0xad, 0xb1, 0xa5, 0xd5, 0x8d, 0x5a, 0x43, 0xa9, 0x4a, 0x07, 0xe8, 0x39,
-	0xb8, 0x19, 0xd1, 0x51, 0xda, 0x8a, 0xb1, 0xa3, 0x6d, 0xe9, 0x4a, 0x5b, 0x6b, 0xd4, 0x8d, 0x86,
-	0x6e, 0x34, 0x6b, 0xca, 0x43, 0x55, 0x37, 0xb4, 0x2a, 0xaf, 0xc0, 0x91, 0x3f, 0x3c, 0x47, 0x56,
-	0x4d, 0xc8, 0x6f, 0xfb, 0xa8, 0x1c, 0x51, 0x61, 0x81, 0x0f, 0xcc, 0x94, 0x79, 0x91, 0xc4, 0xba,
-	0x15, 0x5d, 0x0d, 0x45, 0xb8, 0x53, 0xe6, 0xe5, 0x2f, 0x0b, 0xf2, 0xc7, 0xb2, 0xb0, 0x30, 0x34,
-	0x04, 0xae, 0x46, 0x7c, 0x3c, 0xe9, 0x77, 0x50, 0x53, 0x5a, 0xbc, 0x8f, 0x92, 0x40, 0x86, 0x89,
-	0x68, 0x56, 0x46, 0x4d, 0xa3, 0x4a, 0x58, 0x09, 0xa0, 0xd2, 0xa8, 0xd5, 0xd4, 0x0a, 0xe9, 0xa2,
-	0x94, 0x21, 0xe9, 0x1d, 0xb5, 0xaa, 0xd4, 0x0c, 0xad, 0xbe, 0xd9, 0x90, 0xb2, 0x44, 0x99, 0x63,
-	0xe9, 0x6d, 0xad, 0xd5, 0x6e, 0xe8, 0x0f, 0xa5, 0x39, 0x54, 0x84, 0xdc, 0x46, 0xa3, 0xd1, 0x6a,
-	0xab, 0x7a, 0x4b, 0x9a, 0xa7, 0x04, 0x14, 0xbd, 0x6a, 0x6c, 0x28, 0x95, 0xbb, 0x2d, 0x69, 0x81,
-	0x20, 0x70, 0x2e, 0xe9, 0x6a, 0xa5, 0xa1, 0x57, 0xa5, 0x1c, 0xd1, 0xd8, 0xb6, 0x94, 0x1d, 0xb5,
-	0xc5, 0xd8, 0x57, 0x95, 0xf2, 0x4c, 0x65, 0xa4, 0x8d, 0xd8, 0xd1, 0xda, 0x12, 0x10, 0xa4, 0x8a,
-	0xb2, 0xd3, 0x54, 0xb4, 0xad, 0x3a, 0xab, 0xb8, 0x80, 0x0a, 0xb0, 0x50, 0x6f, 0xb4, 0xb5, 0x8a,
-	0xda, 0x92, 0x8a, 0x28, 0x07, 0xd9, 0x9d, 0x46, 0xbb, 0x2a, 0x2d, 0x52, 0xb7, 0x89, 0x9a, 0xa6,
-	0xd6, 0xdb, 0x46, 0xa3, 0x49, 0x9a, 0xdc, 0x92, 0x4a, 0x44, 0x45, 0xa4, 0x4d, 0xb8, 0xa7, 0xd4,
-	0x76, 0xd5, 0x96, 0xb4, 0x44, 0x55, 0x44, 0xad, 0x55, 0x69, 0xd4, 0xeb, 0x6a, 0xa5, 0xad, 0x56,
-	0x25, 0x89, 0x28, 0x80, 0x8a, 0x5e, 0x51, 0xea, 0xaa, 0x51, 0xdd, 0x6d, 0xb5, 0x8d, 0x0d, 0xa5,
-	0xa6, 0xd4, 0x2b, 0xaa, 0xb4, 0x4c, 0x3a, 0xc3, 0xd5, 0xc2, 0x96, 0x84, 0xd8, 0x1c, 0xba, 0x4f,
-	0x68, 0xc5, 0x8f, 0x65, 0x57, 0x68, 0xf3, 0x1b, 0x44, 0x93, 0xe4, 0x48, 0xab, 0xa4, 0x6d, 0xdb,
-	0xaa, 0xde, 0x30, 0x1e, 0x34, 0xa5, 0x35, 0xc2, 0xd0, 0xe6, 0xbd, 0xa6, 0xf1, 0xca, 0xae, 0xba,
-	0xab, 0x4a, 0x17, 0xc8, 0x48, 0x10, 0x4d, 0xb4, 0xd5, 0x30, 0x76, 0x94, 0x56, 0x4b, 0xbb, 0xa7,
-	0x72, 0xce, 0xaf, 0x93, 0x4e, 0x72, 0xbe, 0x19, 0x6d, 0xa5, 0x56, 0x7b, 0x28, 0x95, 0xc9, 0x14,
-	0x6c, 0x2b, 0xf7, 0x54, 0xbd, 0x6e, 0x6c, 0xe8, 0xca, 0x7d, 0xce, 0xf4, 0x8b, 0xa4, 0xb5, 0x29,
-	0x30, 0xe7, 0xe4, 0x25, 0xd2, 0xbe, 0x4d, 0xe5, 0x5e, 0x43, 0xd7, 0xda, 0xaa, 0x41, 0x5a, 0xa0,
-	0xb6, 0xa4, 0xcb, 0x68, 0x15, 0x24, 0xa5, 0xc2, 0xfc, 0x16, 0xb9, 0xc6, 0xdd, 0x92, 0xae, 0xc8,
-	0x5f, 0x0b, 0xab, 0x64, 0x86, 0x8d, 0x3e, 0x74, 0x9a, 0x32, 0xad, 0x7e, 0x4c, 0x94, 0x3f, 0x2c,
-	0x10, 0x71, 0x17, 0xf2, 0x3b, 0x20, 0x36, 0xbd, 0x5e, 0x3e, 0x21, 0x68, 0xa7, 0xbd, 0xc8, 0x49,
-	0x0b, 0x59, 0x74, 0x03, 0xb8, 0xdd, 0xc4, 0x08, 0xbd, 0x43, 0x1c, 0xed, 0x9c, 0x05, 0x06, 0x6b,
-	0x13, 0xd0, 0x94, 0x86, 0xfd, 0x3c, 0xbd, 0xe5, 0x96, 0x86, 0x0d, 0x8b, 0x1f, 0x0c, 0xe5, 0x23,
-	0x63, 0x73, 0x30, 0xc9, 0x17, 0x99, 0xdd, 0x45, 0x26, 0xd1, 0x98, 0x07, 0x47, 0x8c, 0x78, 0xa2,
-	0x79, 0x99, 0x93, 0xcd, 0x9b, 0x49, 0x32, 0xfe, 0x53, 0x51, 0xee, 0x0f, 0x1b, 0x1b, 0xbd, 0x68,
-	0x41, 0xef, 0x84, 0x5c, 0xbf, 0x6b, 0x86, 0xfb, 0x9e, 0xdf, 0x9b, 0x62, 0x4f, 0x6e, 0xf2, 0x62,
-	0x7a, 0x8c, 0x30, 0x85, 0x3f, 0x7f, 0x4f, 0x94, 0xb7, 0x60, 0x6d, 0x0b, 0x87, 0x27, 0x6f, 0x01,
-	0x67, 0x6b, 0xfa, 0xbf, 0x16, 0xe5, 0x06, 0x9d, 0x00, 0x29, 0x33, 0xfc, 0xe5, 0xa4, 0x92, 0x9c,
-	0xb9, 0x99, 0x61, 0x37, 0x72, 0x5c, 0x51, 0x3e, 0xbd, 0x65, 0xbf, 0x2e, 0xc8, 0xdf, 0x29, 0xc2,
-	0xfa, 0x08, 0xc5, 0x78, 0x00, 0x9f, 0x03, 0x94, 0x7c, 0xab, 0x95, 0xd2, 0xc4, 0xa5, 0xc4, 0xe3,
-	0x2b, 0x76, 0x56, 0xd0, 0x21, 0x01, 0x33, 0xce, 0x65, 0xde, 0x5d, 0x1a, 0x12, 0xa8, 0x50, 0xeb,
-	0xc8, 0x3b, 0x23, 0xeb, 0x78, 0xe6, 0x14, 0xe7, 0x83, 0x64, 0xdb, 0xcf, 0x6d, 0x1f, 0xff, 0x0d,
-	0x41, 0x7e, 0x33, 0xc0, 0x16, 0x8e, 0x3c, 0x1f, 0xa6, 0x70, 0xee, 0xbf, 0x09, 0xf2, 0xfb, 0x45,
-	0x58, 0x26, 0x67, 0x4d, 0x6e, 0xbe, 0xdb, 0xc1, 0xe1, 0x81, 0x37, 0xea, 0xb5, 0x26, 0x8c, 0xf1,
-	0x5a, 0x8b, 0x7d, 0x83, 0xc4, 0x11, 0xdf, 0xa0, 0xa4, 0x47, 0x5b, 0x66, 0xe4, 0x3d, 0x47, 0xca,
-	0x2d, 0x32, 0x3b, 0xe2, 0x16, 0x99, 0x9c, 0xbb, 0x73, 0xb3, 0xce, 0xdd, 0x73, 0x5b, 0x1d, 0xff,
-	0xb7, 0x20, 0xb7, 0xe8, 0xb4, 0xd6, 0xb1, 0xe5, 0x0f, 0x9c, 0x50, 0xd9, 0xf4, 0x1d, 0xf6, 0x2c,
-	0xda, 0x9c, 0x9d, 0xa8, 0x18, 0xdd, 0x13, 0x8a, 0xf2, 0x77, 0x09, 0x54, 0x3c, 0xa6, 0xa9, 0xee,
-	0xea, 0xb5, 0xd7, 0xb6, 0x44, 0xcf, 0xdd, 0xa2, 0x5f, 0x15, 0xe5, 0x6f, 0x83, 0xcb, 0x5b, 0x38,
-	0x6c, 0xc7, 0x6f, 0x6f, 0x92, 0x6f, 0x5c, 0x06, 0xc1, 0x98, 0xd7, 0x3a, 0xc2, 0xc9, 0xd7, 0x3a,
-	0xe7, 0xe7, 0xf3, 0xdf, 0x12, 0xe5, 0xf7, 0xc1, 0xd2, 0xc8, 0x1b, 0xae, 0xd8, 0xc1, 0x9d, 0xdb,
-	0xf2, 0x2d, 0xee, 0x47, 0xde, 0x37, 0xa3, 0x0b, 0xe5, 0x28, 0xd4, 0x82, 0xc9, 0xef, 0x8b, 0x9f,
-	0x87, 0xf2, 0xde, 0xe0, 0xd8, 0x78, 0xec, 0x84, 0x07, 0xec, 0xc4, 0x97, 0xf0, 0xda, 0x66, 0xce,
-	0x95, 0xab, 0x7b, 0x83, 0xe3, 0xfb, 0x4e, 0x78, 0x40, 0xaa, 0x1a, 0x3a, 0x6c, 0xff, 0x10, 0x40,
-	0x71, 0x6b, 0x60, 0xfa, 0xb6, 0x63, 0xba, 0xf7, 0x4c, 0x9f, 0x5e, 0xfb, 0x85, 0xde, 0xc0, 0x77,
-	0xf9, 0x0b, 0xd0, 0x9c, 0x1e, 0x25, 0x59, 0xa4, 0x07, 0xd3, 0x0a, 0x1d, 0x7e, 0xec, 0xcc, 0xe9,
-	0x71, 0x1a, 0x5d, 0x80, 0x79, 0xcb, 0x0c, 0x06, 0x66, 0x37, 0xf2, 0x8d, 0x66, 0x29, 0xb4, 0x0a,
-	0x73, 0xfb, 0x9e, 0xdf, 0x89, 0x1e, 0x4d, 0xb1, 0x04, 0xa1, 0xb4, 0x4f, 0xc7, 0xbd, 0x7b, 0xcc,
-	0x2f, 0x62, 0xe2, 0x34, 0xa9, 0xbf, 0x67, 0xba, 0x66, 0x87, 0xdf, 0xbf, 0xe4, 0xf4, 0x28, 0x49,
-	0x17, 0x90, 0x6f, 0xee, 0x87, 0xe4, 0x00, 0x1a, 0xbd, 0xc3, 0xe7, 0x69, 0x52, 0xff, 0xc1, 0xc0,
-	0x0d, 0xf9, 0x73, 0xa8, 0x9c, 0xce, 0x53, 0x84, 0x8f, 0x3d, 0xb3, 0x83, 0xf9, 0x43, 0x7b, 0xfa,
-	0x4d, 0xed, 0x36, 0x66, 0xd7, 0xb4, 0x1d, 0x97, 0xda, 0x39, 0x73, 0x7a, 0x94, 0x24, 0x54, 0xfa,
-	0xbe, 0x43, 0xd4, 0xc7, 0x02, 0xa3, 0xc2, 0x52, 0xa4, 0x17, 0xbe, 0xd7, 0x19, 0xe0, 0x72, 0x91,
-	0xf5, 0x82, 0x26, 0x48, 0xe9, 0xe0, 0xc0, 0xec, 0x99, 0x6e, 0x79, 0x91, 0x95, 0x66, 0x29, 0x42,
-	0xff, 0xb1, 0xe9, 0x77, 0x3d, 0xeb, 0xb0, 0x5c, 0x62, 0xf4, 0x79, 0x92, 0xe7, 0xf8, 0x8e, 0xe7,
-	0x97, 0x97, 0xe2, 0x1c, 0x92, 0x44, 0xd7, 0xa1, 0x18, 0x1c, 0x78, 0x8f, 0x8d, 0x41, 0x80, 0x7d,
-	0x63, 0xe0, 0x94, 0x25, 0x76, 0x29, 0x42, 0x60, 0xbb, 0x01, 0xf6, 0x77, 0x1d, 0xd2, 0x86, 0x20,
-	0xf4, 0x7c, 0x5c, 0x5e, 0x66, 0x6d, 0xa0, 0x09, 0x22, 0x8f, 0x86, 0x6f, 0xd4, 0xca, 0x88, 0x66,
-	0xe5, 0xe3, 0x97, 0x69, 0x48, 0x86, 0xc5, 0xd4, 0xac, 0x28, 0xaf, 0xb0, 0x77, 0x8a, 0x89, 0xa9,
-	0x40, 0x76, 0xe0, 0xd0, 0x7c, 0x84, 0x7d, 0xd7, 0xd8, 0xf3, 0xcd, 0xc7, 0xdd, 0xf2, 0x2a, 0x2b,
-	0xc2, 0x60, 0x1b, 0x04, 0x84, 0x74, 0x78, 0x23, 0xdf, 0xa4, 0xb9, 0xdf, 0x97, 0x31, 0xe8, 0xd3,
-	0x88, 0x0a, 0x71, 0x00, 0x8a, 0x00, 0x5b, 0x9e, 0x6b, 0x07, 0xe5, 0x35, 0xda, 0x6e, 0xd9, 0x4a,
-	0x7a, 0x99, 0xed, 0xd2, 0xb2, 0x1a, 0x2f, 0xda, 0x62, 0x25, 0xd1, 0x3b, 0x60, 0xdd, 0x32, 0x9d,
-	0xc0, 0xc0, 0xae, 0xb9, 0xd7, 0xc5, 0xb6, 0xe1, 0x52, 0xbf, 0xa0, 0x3d, 0xa7, 0x8b, 0xcb, 0x17,
-	0x68, 0x0b, 0x56, 0x49, 0xb6, 0xca, 0x72, 0xeb, 0x9e, 0xbb, 0x43, 0xf3, 0xd0, 0x8b, 0x70, 0x31,
-	0x85, 0xc6, 0x50, 0x0c, 0xeb, 0xc0, 0x71, 0xcd, 0xf2, 0x3a, 0x45, 0xbc, 0x90, 0x40, 0x64, 0x58,
-	0x15, 0x92, 0x8b, 0xaa, 0x70, 0x6d, 0x1c, 0x6a, 0xe0, 0x0d, 0xc2, 0x03, 0xe3, 0xd0, 0xf3, 0xb1,
-	0x59, 0x2e, 0x53, 0x02, 0x97, 0x4f, 0x10, 0x68, 0x91, 0x32, 0x77, 0x49, 0x11, 0xf4, 0x3c, 0xac,
-	0x07, 0xd8, 0xb5, 0x8d, 0x10, 0x77, 0x71, 0x0f, 0x87, 0xfe, 0xb1, 0xd1, 0xf7, 0x71, 0x80, 0x5d,
-	0x0b, 0x97, 0x2f, 0x52, 0xec, 0x35, 0x92, 0xdd, 0x8e, 0x72, 0x9b, 0x3c, 0x13, 0x6d, 0xc2, 0x75,
-	0x36, 0xc7, 0x8d, 0xc7, 0x18, 0x1f, 0x1a, 0x96, 0xe7, 0x5a, 0xd8, 0xc6, 0xbe, 0xd1, 0x33, 0x8f,
-	0x0c, 0x1b, 0xef, 0x63, 0x37, 0xc0, 0xe5, 0x4b, 0x94, 0x7b, 0x57, 0x58, 0xb9, 0xfb, 0x18, 0x93,
-	0x7d, 0x8f, 0x96, 0xda, 0x31, 0x8f, 0xaa, 0xac, 0x0c, 0x19, 0xd2, 0xc7, 0x8e, 0x1b, 0x18, 0x7d,
-	0xec, 0xb3, 0x21, 0xbd, 0xcc, 0x34, 0x26, 0x02, 0x6c, 0x62, 0x9f, 0x0e, 0x69, 0xf4, 0xd6, 0x93,
-	0x94, 0x61, 0x26, 0x8f, 0xf2, 0x15, 0xe6, 0x61, 0x49, 0xc0, 0x4d, 0xec, 0x33, 0x63, 0x07, 0x7a,
-	0x06, 0x24, 0x52, 0x7d, 0x5c, 0xd6, 0x36, 0x8f, 0xcb, 0x57, 0x59, 0xc1, 0x9e, 0x79, 0xb4, 0xc5,
-	0xca, 0x56, 0xd9, 0x3c, 0x3a, 0xea, 0x1b, 0x81, 0xd7, 0xf5, 0x8c, 0xae, 0xd3, 0x73, 0xc2, 0xf2,
-	0x93, 0xac, 0xd2, 0xa3, 0x7e, 0xcb, 0xeb, 0x7a, 0x35, 0x02, 0x22, 0x72, 0x92, 0x10, 0xa3, 0x77,
-	0x08, 0x5d, 0xfc, 0x08, 0x77, 0xcb, 0xd7, 0xd8, 0x59, 0xb9, 0x67, 0x1e, 0x6d, 0x63, 0xdf, 0xab,
-	0x11, 0x18, 0xba, 0x09, 0x12, 0x93, 0x4c, 0xa1, 0xd3, 0x73, 0xdc, 0x8e, 0xd1, 0xf3, 0xec, 0xf2,
-	0x75, 0xea, 0xc2, 0x58, 0xa2, 0xf0, 0x36, 0x05, 0xef, 0x78, 0x36, 0xba, 0x06, 0x85, 0xfd, 0xa0,
-	0x13, 0x8d, 0x56, 0xf9, 0x06, 0x65, 0x2e, 0xec, 0x07, 0x1d, 0x3e, 0x32, 0xe8, 0x6b, 0xa1, 0x4c,
-	0x0a, 0xb0, 0xc7, 0x0b, 0x07, 0xd8, 0x3a, 0x74, 0xdc, 0xb8, 0xb4, 0xcc, 0x86, 0x62, 0x3f, 0xe8,
-	0xd0, 0x67, 0x0c, 0x2c, 0x97, 0x23, 0xce, 0xa6, 0x39, 0x7c, 0xa7, 0x28, 0x1f, 0xc1, 0x3c, 0xe9,
-	0xc0, 0x83, 0x26, 0xfa, 0x3a, 0xc8, 0x1d, 0xf5, 0xe9, 0x43, 0xe7, 0x89, 0xda, 0x38, 0xd5, 0x59,
-	0x58, 0xf1, 0xf8, 0x46, 0x7f, 0xe1, 0xa8, 0x4f, 0xbe, 0x67, 0xd4, 0x59, 0x3e, 0x26, 0xca, 0x3f,
-	0x2d, 0x00, 0x0c, 0x69, 0xa1, 0x8b, 0x90, 0xb3, 0xba, 0x66, 0x10, 0x24, 0x1c, 0xbf, 0x69, 0x5a,
-	0xb3, 0x89, 0x78, 0x60, 0x4c, 0xe7, 0x2e, 0xc3, 0x34, 0x81, 0xd6, 0x61, 0x81, 0xe8, 0x18, 0xc6,
-	0x51, 0x9f, 0x5b, 0xfe, 0xe6, 0x49, 0xf2, 0x41, 0x1f, 0xad, 0xc1, 0x3c, 0x19, 0xac, 0xa3, 0xc8,
-	0xda, 0x37, 0xd7, 0x33, 0x8f, 0x1e, 0xf4, 0x91, 0x06, 0x05, 0x7a, 0x6b, 0xc2, 0x27, 0xcd, 0xdc,
-	0x69, 0xae, 0x7f, 0xf8, 0x28, 0x8c, 0x87, 0x95, 0xcd, 0x27, 0x1d, 0x08, 0x32, 0xfb, 0x96, 0xbf,
-	0x7f, 0x0e, 0x90, 0xe6, 0x3a, 0xa1, 0x63, 0x76, 0x13, 0xde, 0x8d, 0xe8, 0x65, 0x80, 0xa1, 0x13,
-	0xd6, 0xa4, 0x7d, 0x7e, 0xc4, 0xf5, 0x4f, 0x4f, 0xa0, 0xa0, 0x77, 0xc1, 0x02, 0x73, 0x30, 0x8c,
-	0x3c, 0x13, 0xdf, 0x30, 0xe9, 0x35, 0xd1, 0xbe, 0xd3, 0xc5, 0xcc, 0x41, 0x31, 0xd0, 0x23, 0x1c,
-	0xa4, 0x40, 0x31, 0xe1, 0x01, 0x19, 0x39, 0x1f, 0x5e, 0x3d, 0xcd, 0x89, 0x32, 0xd0, 0x53, 0x28,
-	0xe8, 0x21, 0xac, 0xd2, 0xfb, 0xeb, 0xb4, 0x9f, 0x61, 0x30, 0xab, 0xa3, 0x21, 0xea, 0x9c, 0x34,
-	0x0a, 0x6b, 0x50, 0x4a, 0x0b, 0x5a, 0x3e, 0x04, 0xf2, 0x54, 0xb7, 0xdc, 0x40, 0x5f, 0x4c, 0x09,
-	0x5d, 0xb4, 0x09, 0x8b, 0x1d, 0xbe, 0xaf, 0x1b, 0x8f, 0x4c, 0x3f, 0xe0, 0x71, 0x6f, 0xc6, 0xeb,
-	0xd8, 0x49, 0x0d, 0x40, 0x2f, 0x76, 0x92, 0xfa, 0xc0, 0x37, 0xc0, 0x6a, 0xd0, 0xc7, 0x96, 0x63,
-	0x76, 0x8d, 0xe4, 0xc2, 0x2d, 0x2f, 0xd0, 0xe9, 0x3f, 0xbe, 0xb7, 0x2d, 0x86, 0xa0, 0x0e, 0x17,
-	0x34, 0x7b, 0x72, 0x16, 0x9c, 0x80, 0xa3, 0x7b, 0x80, 0x92, 0xbb, 0x4f, 0xc0, 0x6e, 0xea, 0x72,
-	0xa7, 0x3c, 0x77, 0x6f, 0x0f, 0x37, 0xa6, 0x78, 0x81, 0x49, 0x89, 0xdd, 0x2a, 0xa0, 0x37, 0x76,
-	0xa7, 0xeb, 0xf7, 0xbf, 0x2a, 0xc8, 0x2f, 0xc0, 0xda, 0x8e, 0x19, 0x04, 0x55, 0x87, 0x88, 0xe7,
-	0x03, 0x33, 0xf6, 0x10, 0x9e, 0x82, 0xf9, 0x97, 0xa8, 0x06, 0x7b, 0x61, 0x14, 0x95, 0x1f, 0xa9,
-	0x86, 0x2f, 0x5d, 0x85, 0xd4, 0x4b, 0xd7, 0xaf, 0xe6, 0x03, 0xe1, 0x0f, 0x8a, 0xf2, 0x4f, 0x08,
-	0x90, 0xdf, 0xc1, 0xb6, 0x49, 0x19, 0x42, 0x84, 0x54, 0xec, 0xe6, 0x22, 0x9c, 0x32, 0x7d, 0x62,
-	0x0c, 0x6a, 0x8c, 0x8c, 0x71, 0xd0, 0xf3, 0x90, 0x7d, 0xec, 0x74, 0xed, 0x49, 0x97, 0x42, 0x63,
-	0x70, 0x69, 0xf9, 0xd9, 0x5a, 0xfd, 0x1f, 0xe9, 0x25, 0xe9, 0x62, 0x8a, 0x0e, 0x11, 0xf9, 0x01,
-	0x7d, 0xd4, 0xc5, 0xae, 0x92, 0x33, 0x5c, 0x09, 0xa2, 0xa0, 0xfb, 0x8e, 0x1b, 0x30, 0x25, 0x28,
-	0x9a, 0xcc, 0x73, 0x3a, 0x4b, 0x50, 0x45, 0x2c, 0xf4, 0xb1, 0x79, 0x18, 0x5d, 0xa8, 0xb3, 0x14,
-	0xf5, 0xe6, 0x09, 0x4d, 0x9f, 0xef, 0x46, 0xec, 0x45, 0x6e, 0x9e, 0x40, 0xd8, 0x56, 0x74, 0x0d,
-	0x0a, 0x34, 0x87, 0x87, 0xcd, 0xca, 0xb3, 0xda, 0x28, 0x88, 0xde, 0x39, 0x10, 0x85, 0x9b, 0x15,
-	0xc0, 0xae, 0xcd, 0x23, 0x71, 0xe5, 0x28, 0x40, 0x75, 0xa9, 0x69, 0xd8, 0x32, 0x5d, 0xa3, 0xeb,
-	0x05, 0x98, 0x57, 0xc0, 0x74, 0xc6, 0xa2, 0x65, 0xba, 0x35, 0x2f, 0xc0, 0x89, 0x3a, 0x3a, 0x64,
-	0xd7, 0xf7, 0x4d, 0xf7, 0x90, 0x2a, 0x8a, 0xb4, 0x0e, 0x02, 0xd2, 0x4d, 0xf7, 0x90, 0x6c, 0xd5,
-	0x7b, 0xd4, 0xbc, 0x3c, 0x6c, 0x68, 0x89, 0xed, 0xc0, 0x04, 0xdc, 0x8a, 0x1b, 0x9b, 0xac, 0x8e,
-	0xb1, 0x60, 0x29, 0x55, 0x1d, 0x29, 0x19, 0xc8, 0x47, 0x50, 0xac, 0x63, 0xd3, 0xdf, 0x3b, 0x66,
-	0xc1, 0x34, 0xd0, 0x15, 0x80, 0x3d, 0x17, 0x93, 0xb3, 0xaa, 0x71, 0xe0, 0xd0, 0xc9, 0x90, 0xd5,
-	0x73, 0x7b, 0xd4, 0xd9, 0x67, 0xdb, 0x49, 0xe6, 0x76, 0x99, 0x7b, 0x6b, 0x9c, 0x5b, 0xf3, 0xd0,
-	0x73, 0x80, 0x78, 0x74, 0x19, 0xc6, 0x20, 0xb2, 0xf0, 0xd9, 0x59, 0x22, 0xab, 0x4b, 0x3c, 0x87,
-	0xf2, 0xa9, 0xed, 0xf4, 0xb0, 0xfc, 0x83, 0x59, 0x58, 0x19, 0xb3, 0x25, 0x0c, 0xf7, 0x25, 0x21,
-	0xb9, 0x2f, 0x3d, 0x80, 0x12, 0xbf, 0x8a, 0xe1, 0x11, 0x2e, 0xf8, 0x64, 0xfb, 0x9a, 0x49, 0x27,
-	0xbe, 0xa4, 0x34, 0x67, 0x94, 0xf9, 0x49, 0x49, 0x5f, 0xf4, 0x93, 0x49, 0xd4, 0x80, 0x42, 0x14,
-	0x40, 0x8d, 0xcc, 0x7f, 0x26, 0xde, 0x6f, 0x9d, 0x9d, 0x6c, 0x85, 0xee, 0x63, 0x7e, 0xfc, 0x9d,
-	0x20, 0x68, 0x0f, 0x82, 0x90, 0x0b, 0xf9, 0x19, 0x08, 0x56, 0x07, 0x41, 0x18, 0x11, 0x24, 0xdf,
-	0x09, 0x82, 0x54, 0x7d, 0x9b, 0x9b, 0x95, 0x20, 0x51, 0xcb, 0x22, 0x82, 0x54, 0xdb, 0xd3, 0xa1,
-	0xc8, 0x09, 0xf6, 0xe2, 0x57, 0xa2, 0x85, 0xdb, 0x6f, 0x39, 0x3b, 0xc5, 0x1d, 0x82, 0xa6, 0xf3,
-	0x56, 0xd1, 0x44, 0x82, 0x26, 0x3b, 0xbe, 0x2d, 0xcc, 0x4a, 0x73, 0x93, 0xa0, 0x45, 0x34, 0x69,
-	0x42, 0x7e, 0x07, 0x64, 0xea, 0x8d, 0xe6, 0x6c, 0x62, 0xe2, 0x4f, 0x04, 0xb9, 0x09, 0xe8, 0xe4,
-	0x33, 0x03, 0x74, 0x07, 0xe6, 0xd9, 0x96, 0x7e, 0xaa, 0x88, 0x4b, 0x37, 0x8c, 0x63, 0xc8, 0x03,
-	0x58, 0x19, 0xf3, 0x70, 0x01, 0x7d, 0xe3, 0x84, 0x07, 0x10, 0xc2, 0x29, 0x3b, 0xdd, 0x49, 0x3a,
-	0x74, 0x3f, 0x1a, 0xf7, 0x06, 0x42, 0x7e, 0x05, 0x0a, 0x8d, 0x3e, 0x76, 0xa3, 0x99, 0x7a, 0x03,
-	0x8a, 0x7c, 0xf2, 0x27, 0x4f, 0xf4, 0x05, 0x0e, 0x3b, 0x83, 0xd3, 0xf5, 0xef, 0x0a, 0xf2, 0x47,
-	0x04, 0x28, 0xb2, 0xa5, 0xce, 0xde, 0x0c, 0xa0, 0xb7, 0x41, 0x36, 0xf1, 0xd0, 0x7a, 0x92, 0x01,
-	0x85, 0x68, 0x23, 0xd4, 0xc3, 0x9b, 0x16, 0x1e, 0xfb, 0xc0, 0x3a, 0x72, 0x5c, 0xca, 0x8c, 0x75,
-	0x5c, 0xca, 0xa6, 0x1c, 0x97, 0x10, 0x64, 0x43, 0x07, 0x07, 0xfc, 0x39, 0x33, 0xfd, 0x96, 0xdf,
-	0x2f, 0xc0, 0x62, 0xb2, 0x65, 0xf4, 0xad, 0x91, 0xcf, 0x3e, 0x4f, 0x7d, 0x6b, 0x94, 0x44, 0x62,
-	0xca, 0x33, 0xc7, 0x9a, 0x6d, 0xe2, 0xfc, 0x65, 0x51, 0x7e, 0x0c, 0x79, 0x42, 0xec, 0x95, 0x01,
-	0x1e, 0x60, 0x74, 0x07, 0xe6, 0x5e, 0x25, 0x1f, 0x7c, 0xba, 0x3c, 0x35, 0xd9, 0xb4, 0xc4, 0x10,
-	0xa8, 0x4b, 0x31, 0x43, 0x99, 0xad, 0xe2, 0x8f, 0x8b, 0x72, 0x0b, 0xd6, 0x9a, 0xbe, 0x67, 0xd1,
-	0xe0, 0x68, 0x49, 0x2b, 0xd7, 0xf9, 0xad, 0x54, 0x9f, 0x17, 0xe5, 0x1f, 0x16, 0xe0, 0xea, 0x58,
-	0xaa, 0xb1, 0xf2, 0xd1, 0x02, 0xe4, 0x9b, 0xfb, 0x46, 0x80, 0x7d, 0x6a, 0x49, 0x4c, 0x45, 0xde,
-	0x19, 0xff, 0xa6, 0x42, 0x57, 0x36, 0x5b, 0xac, 0x34, 0x0f, 0xbd, 0x23, 0xf9, 0xe6, 0x7e, 0x0a,
-	0x32, 0x5b, 0xdf, 0x7f, 0x5d, 0x94, 0x4d, 0x90, 0xf8, 0xa2, 0x63, 0x3e, 0xd0, 0xe4, 0x64, 0x78,
-	0x15, 0x80, 0x5a, 0x97, 0xd9, 0xd1, 0x91, 0x5f, 0x66, 0xdb, 0x51, 0xf6, 0x6c, 0x55, 0xfc, 0x9e,
-	0x20, 0x7f, 0xa6, 0x08, 0x8b, 0xa9, 0x85, 0x3d, 0x3e, 0xee, 0x1e, 0x7a, 0x19, 0xe6, 0x7a, 0x44,
-	0xbd, 0xe0, 0x7b, 0xcb, 0xb3, 0x67, 0x11, 0x5e, 0x54, 0x1f, 0xd1, 0x19, 0xde, 0x98, 0x5d, 0x2a,
-	0xf3, 0xd5, 0xd9, 0xa5, 0xb2, 0xaf, 0xc7, 0x2e, 0xd5, 0x27, 0xeb, 0xc4, 0xa5, 0x76, 0x7c, 0xbe,
-	0x05, 0x9c, 0x89, 0x60, 0x93, 0xa2, 0x51, 0xcf, 0x71, 0xe8, 0xc7, 0xdf, 0xa3, 0xdb, 0xde, 0xc2,
-	0xeb, 0xbd, 0xed, 0xe5, 0x5e, 0xf7, 0x6d, 0x2f, 0xff, 0x55, 0xd8, 0xf6, 0xe0, 0xb5, 0x6f, 0x7b,
-	0x44, 0x6a, 0x7a, 0xbe, 0xd3, 0x71, 0x5c, 0xee, 0x1a, 0xc9, 0x53, 0x44, 0x35, 0x64, 0x5f, 0xcc,
-	0x69, 0xa0, 0x48, 0xa7, 0x2e, 0x30, 0x10, 0xd5, 0x86, 0xdf, 0x02, 0xd9, 0xc7, 0x07, 0x98, 0x59,
-	0x17, 0xa7, 0x3c, 0xd2, 0xa6, 0x05, 0xd1, 0x36, 0xe4, 0xa2, 0x08, 0x56, 0x54, 0x89, 0x1c, 0xf3,
-	0xa8, 0x6e, 0xec, 0x0c, 0x88, 0x9e, 0xf5, 0xc7, 0xd8, 0xe8, 0x1e, 0x48, 0x89, 0xf9, 0xc9, 0x9c,
-	0xea, 0x97, 0xce, 0x4e, 0x31, 0x7a, 0xc2, 0xad, 0x97, 0x86, 0x53, 0x94, 0x3a, 0xe2, 0xff, 0x59,
-	0x28, 0xd9, 0x96, 0x41, 0x4f, 0xcf, 0xfc, 0x81, 0x8f, 0x44, 0xa9, 0xde, 0x39, 0x0b, 0xd5, 0xa4,
-	0x7b, 0x39, 0xd9, 0xc1, 0xb8, 0x3b, 0x47, 0xd1, 0xb6, 0x86, 0x29, 0x32, 0xcd, 0x98, 0xdb, 0x13,
-	0x53, 0x92, 0x97, 0xcf, 0x3e, 0xcd, 0x36, 0x08, 0x1a, 0x55, 0xa3, 0x75, 0xd8, 0x8b, 0xbf, 0x91,
-	0x0d, 0xc8, 0x8c, 0xae, 0x72, 0x87, 0x8e, 0x43, 0x88, 0xd2, 0x7d, 0xc7, 0x59, 0xe8, 0x9e, 0x8c,
-	0x98, 0xb9, 0x6c, 0x8e, 0x82, 0xd0, 0x26, 0xb0, 0x93, 0x85, 0x31, 0xe8, 0x53, 0x1b, 0x6d, 0xe1,
-	0xa4, 0xeb, 0xc2, 0x38, 0xda, 0x54, 0xd3, 0xde, 0xed, 0xeb, 0x0b, 0x5d, 0xf6, 0x81, 0xde, 0x03,
-	0x4b, 0x26, 0x73, 0x6d, 0x30, 0xba, 0xec, 0xfd, 0x33, 0xb5, 0xe7, 0x16, 0x6e, 0xdf, 0x3e, 0x53,
-	0x53, 0x53, 0x2f, 0xa7, 0xf5, 0x92, 0x99, 0x4a, 0xa3, 0x03, 0x58, 0x4d, 0x9e, 0xd5, 0xb9, 0x95,
-	0x88, 0x19, 0x7d, 0x0b, 0xb7, 0x9f, 0x3f, 0x4b, 0x0d, 0x89, 0xc3, 0x3b, 0x77, 0x05, 0xd4, 0x51,
-	0x78, 0x02, 0x86, 0x30, 0xac, 0xa4, 0x6a, 0x0a, 0x1d, 0xb2, 0x3f, 0x50, 0xc3, 0xf0, 0x19, 0xb9,
-	0x9e, 0xa8, 0xa8, 0x4d, 0x91, 0xf5, 0xe5, 0x70, 0x14, 0x24, 0xd7, 0xa0, 0x94, 0xb6, 0x13, 0x4d,
-	0x8b, 0xad, 0x75, 0x52, 0xa9, 0x4c, 0xc4, 0xd6, 0xfa, 0xb2, 0x00, 0x4b, 0x3c, 0x2f, 0x1e, 0xd7,
-	0x64, 0x74, 0xec, 0x28, 0x6c, 0x72, 0x94, 0x77, 0x15, 0x80, 0x1e, 0xfd, 0x98, 0xa8, 0xe1, 0xbe,
-	0x47, 0x04, 0xc2, 0xe4, 0xc6, 0x1d, 0x80, 0xae, 0x19, 0x67, 0x9f, 0x21, 0x52, 0x43, 0x9e, 0x14,
-	0x67, 0xb8, 0x4f, 0x43, 0xc9, 0x76, 0x02, 0x1a, 0xec, 0x88, 0x07, 0x91, 0xe5, 0x11, 0x69, 0x38,
-	0x94, 0xc5, 0x98, 0x9d, 0x6d, 0xe7, 0xfd, 0x7d, 0x41, 0xfe, 0x62, 0x6e, 0x18, 0x01, 0x8e, 0x79,
-	0x36, 0x7f, 0x1d, 0xcc, 0xb1, 0x28, 0x7b, 0xc2, 0xf8, 0x28, 0x74, 0x27, 0xa3, 0xec, 0x31, 0xbf,
-	0x66, 0x9d, 0xa1, 0xa1, 0xb7, 0xc2, 0x6a, 0x1c, 0xae, 0xcf, 0x71, 0xd3, 0xb1, 0x7f, 0xf3, 0x3a,
-	0x8a, 0xf2, 0x34, 0xb7, 0x99, 0xe0, 0xda, 0x48, 0xf0, 0xcf, 0x7c, 0xd2, 0x41, 0xfa, 0x27, 0x17,
-	0x60, 0x8e, 0x35, 0x6d, 0x11, 0xf2, 0x6a, 0x1c, 0xf5, 0xe3, 0x09, 0x74, 0x81, 0x24, 0x23, 0x57,
-	0xe9, 0xff, 0x1b, 0xfd, 0x09, 0x68, 0x1d, 0x56, 0x54, 0xa3, 0xd5, 0xd6, 0x6a, 0x35, 0x23, 0x19,
-	0xa9, 0x9d, 0x86, 0x09, 0x51, 0x63, 0xdf, 0xa5, 0x8d, 0xba, 0xda, 0x96, 0x44, 0x24, 0x41, 0x51,
-	0x1d, 0xbe, 0x16, 0x57, 0xa4, 0x0c, 0xba, 0x04, 0x17, 0x54, 0xa3, 0xb9, 0xab, 0x57, 0xb6, 0x95,
-	0x96, 0x9a, 0xa2, 0x90, 0x45, 0x25, 0x00, 0x95, 0xba, 0x32, 0x6d, 0x28, 0x2d, 0x55, 0x9a, 0x43,
-	0x17, 0x00, 0x0d, 0x29, 0xbe, 0xb2, 0xab, 0xd4, 0xdb, 0x5a, 0xfb, 0xa1, 0x34, 0xcf, 0x9a, 0x50,
-	0xdd, 0x6d, 0xd6, 0xb4, 0x8a, 0xd2, 0x56, 0x63, 0xe7, 0xed, 0x05, 0x86, 0x10, 0x79, 0x17, 0x51,
-	0xdf, 0x16, 0xb5, 0xde, 0x96, 0x72, 0x34, 0x86, 0x96, 0x51, 0x6f, 0xf0, 0xf0, 0x59, 0xc6, 0x46,
-	0x53, 0x79, 0x28, 0xe5, 0xd1, 0x32, 0x2c, 0xaa, 0x34, 0xb2, 0x8d, 0x5a, 0x35, 0x74, 0xad, 0x75,
-	0x57, 0x02, 0xd6, 0x82, 0x28, 0x74, 0x8d, 0x54, 0x60, 0xe9, 0xfb, 0x8a, 0xd6, 0x36, 0x76, 0x1a,
-	0x4d, 0xa9, 0x48, 0x06, 0x9d, 0xa7, 0xb9, 0x6b, 0x4f, 0xa5, 0x51, 0xdf, 0xd4, 0xf4, 0x1d, 0x69,
-	0x91, 0xd5, 0x9d, 0xcc, 0xa2, 0x24, 0x4b, 0x8c, 0x05, 0x4d, 0xbd, 0x51, 0xdd, 0xad, 0xb4, 0x09,
-	0x0b, 0x96, 0x18, 0xa3, 0x48, 0x6e, 0x1c, 0xde, 0x46, 0x42, 0x97, 0x61, 0x7d, 0x58, 0x4a, 0xa9,
-	0xd1, 0x10, 0x81, 0x46, 0xe3, 0x7e, 0x5d, 0xad, 0x4a, 0xcb, 0xe8, 0x49, 0xb8, 0xc4, 0x49, 0xb7,
-	0xb7, 0x35, 0xbd, 0x6a, 0x34, 0x15, 0xbd, 0xfd, 0xd0, 0xd0, 0xd5, 0x8a, 0xaa, 0x35, 0xdb, 0x12,
-	0x42, 0x57, 0xe1, 0xe2, 0x10, 0x99, 0x05, 0x0b, 0xdb, 0x56, 0x5a, 0x86, 0x5a, 0xaf, 0xaa, 0x55,
-	0x69, 0x05, 0xad, 0xc1, 0x32, 0xe9, 0xb3, 0x91, 0x0c, 0x5f, 0x26, 0xd9, 0x6c, 0x24, 0x36, 0x9a,
-	0x31, 0x83, 0x2b, 0x15, 0x43, 0x7d, 0xd0, 0xd4, 0xf4, 0x87, 0xcc, 0x43, 0x8d, 0xe6, 0xd1, 0x56,
-	0x46, 0x1e, 0x6a, 0xb4, 0xf3, 0x1b, 0x4d, 0xc2, 0x48, 0x86, 0x11, 0xc5, 0xf4, 0xe9, 0xc4, 0x55,
-	0x70, 0x08, 0x59, 0x10, 0xdb, 0xd2, 0x01, 0x2a, 0xc3, 0x2a, 0x03, 0x47, 0x01, 0x85, 0x78, 0xe0,
-	0x1e, 0x67, 0x88, 0x10, 0xcd, 0x84, 0x0d, 0xa5, 0x2e, 0x7d, 0x13, 0x1b, 0xd9, 0x8d, 0xa6, 0xd1,
-	0x6a, 0xaa, 0xf5, 0xaa, 0x56, 0xdf, 0xe2, 0x6e, 0x57, 0x87, 0x71, 0xdd, 0x4d, 0x45, 0x57, 0xeb,
-	0x6d, 0xa5, 0x46, 0x18, 0xdf, 0xd6, 0x1b, 0x35, 0xa9, 0xcb, 0xd8, 0xb9, 0xd1, 0x34, 0xda, 0xdb,
-	0x7a, 0xa3, 0xdd, 0x26, 0xe3, 0xd6, 0x43, 0xd7, 0xe1, 0x0a, 0x87, 0x0d, 0xf9, 0xb5, 0xa1, 0x54,
-	0x63, 0x9e, 0xb9, 0xe8, 0x06, 0x5c, 0x3d, 0x51, 0x82, 0xe7, 0x1a, 0xbb, 0x2d, 0xb5, 0x2a, 0x79,
-	0xe8, 0x29, 0xb8, 0x1e, 0xb5, 0x9e, 0x72, 0x76, 0xb7, 0xae, 0xbd, 0xb2, 0xab, 0xd6, 0xd5, 0x56,
-	0xcb, 0xb8, 0xa7, 0x35, 0x6a, 0x4a, 0x5b, 0xad, 0x4a, 0xfd, 0xb8, 0xc9, 0xba, 0xba, 0xa5, 0x35,
-	0xea, 0x86, 0xd6, 0x32, 0xaa, 0x64, 0xc5, 0xbc, 0x8a, 0x6e, 0xc3, 0xad, 0x13, 0x6c, 0x37, 0x74,
-	0xb5, 0xad, 0x3f, 0xa4, 0x8d, 0x57, 0x2a, 0x6d, 0xa3, 0xd2, 0x32, 0xb4, 0x4d, 0xa3, 0xa9, 0xea,
-	0x2d, 0xad, 0xd5, 0x6e, 0x49, 0x01, 0x7a, 0x16, 0x9e, 0xa6, 0x38, 0xc3, 0xa0, 0x46, 0x5a, 0x35,
-	0x9a, 0xa2, 0xf7, 0x54, 0x5d, 0xdb, 0x24, 0x33, 0x5e, 0x6b, 0xd4, 0xa5, 0x50, 0xfe, 0x54, 0x06,
-	0x4a, 0xff, 0x7f, 0x9c, 0x2d, 0xae, 0x41, 0xe1, 0xb1, 0xd9, 0xed, 0x62, 0x7e, 0x3b, 0xce, 0xdc,
-	0x2d, 0x80, 0x81, 0x68, 0x94, 0xb5, 0x1b, 0x50, 0x1c, 0x04, 0xd8, 0xc0, 0x91, 0xd3, 0xf4, 0x1c,
-	0x0f, 0xee, 0x1a, 0x60, 0x95, 0x83, 0xd0, 0x0b, 0x91, 0xdc, 0x9b, 0x3f, 0x73, 0x74, 0x51, 0x2e,
-	0xf1, 0x4e, 0x86, 0x47, 0x5a, 0x18, 0x17, 0x1e, 0xe9, 0x2d, 0xb0, 0xea, 0x04, 0xc6, 0xfb, 0xb0,
-	0xef, 0xb1, 0x88, 0xad, 0xd1, 0x6e, 0xce, 0xae, 0xb7, 0x97, 0x9d, 0xe0, 0xeb, 0xb1, 0xef, 0x55,
-	0xbc, 0x20, 0xde, 0x9c, 0x6f, 0x40, 0xd1, 0x3a, 0x20, 0x7d, 0x70, 0x3b, 0xd4, 0x8b, 0x84, 0x85,
-	0x90, 0x2b, 0xc4, 0x30, 0x16, 0x5f, 0x6b, 0x58, 0x64, 0xe0, 0x77, 0xa9, 0x7a, 0x9b, 0xd7, 0x87,
-	0x78, 0xbb, 0xfe, 0x8c, 0xe1, 0x7d, 0xbe, 0x5b, 0x94, 0x3f, 0x25, 0x82, 0x74, 0x22, 0xaa, 0xd4,
-	0x0b, 0xc9, 0x6d, 0xe1, 0x35, 0xb2, 0xe7, 0x3c, 0xd1, 0xa3, 0x4e, 0xfa, 0x6c, 0x64, 0xa7, 0x44,
-	0x58, 0x9d, 0x1b, 0x99, 0x24, 0x93, 0xf8, 0x3f, 0x3f, 0x81, 0xff, 0xb3, 0xf1, 0xed, 0xfd, 0xa2,
-	0xfc, 0x03, 0xc2, 0x90, 0x6f, 0xf1, 0x5d, 0x7c, 0x72, 0x4a, 0x0b, 0x23, 0x53, 0xfa, 0x0e, 0x2c,
-	0xf0, 0x0e, 0xf2, 0x57, 0xf1, 0xd3, 0xc3, 0xe8, 0x45, 0x08, 0xb1, 0x85, 0x27, 0x33, 0xb4, 0xf0,
-	0x4c, 0x31, 0x2e, 0x7d, 0x44, 0x94, 0xbf, 0x24, 0x42, 0x79, 0xb4, 0x85, 0xf1, 0x08, 0xb7, 0x47,
-	0xe2, 0x86, 0xbd, 0x74, 0xea, 0x10, 0x8f, 0xa2, 0xdf, 0x4a, 0xcc, 0x98, 0x91, 0x97, 0xfb, 0xf4,
-	0x32, 0x7a, 0x10, 0xe0, 0x68, 0xe0, 0xe9, 0xbb, 0x84, 0xdd, 0x60, 0xd6, 0x6b, 0xdb, 0xbf, 0x26,
-	0xca, 0x1f, 0x13, 0x86, 0x12, 0x85, 0x9f, 0x0e, 0xae, 0xc1, 0xe5, 0x48, 0x42, 0x4f, 0x8c, 0x15,
-	0xd6, 0x4c, 0xc6, 0x0a, 0x23, 0xf5, 0xe8, 0x86, 0x56, 0x6f, 0xed, 0x6e, 0x6e, 0x6a, 0x15, 0xba,
-	0x0f, 0x6e, 0xee, 0xd6, 0xab, 0x2d, 0x49, 0xa4, 0xee, 0xb6, 0x7a, 0x72, 0x27, 0xcc, 0x70, 0x50,
-	0xf4, 0xd8, 0xa9, 0xae, 0x48, 0x59, 0x22, 0x4e, 0x29, 0x81, 0x91, 0x4d, 0x7f, 0x4e, 0xfe, 0x45,
-	0x01, 0x2e, 0x9d, 0x74, 0xad, 0x8a, 0xf9, 0x7b, 0x0b, 0x56, 0x42, 0x2f, 0xa4, 0x3f, 0xed, 0x41,
-	0xcb, 0xf0, 0x08, 0x80, 0xec, 0x31, 0xc1, 0x32, 0xcd, 0xe2, 0xd8, 0x2c, 0x90, 0xd4, 0x16, 0x14,
-	0x43, 0xaf, 0x1f, 0x95, 0x8e, 0x5c, 0xf3, 0xae, 0x4f, 0x88, 0xc3, 0x4d, 0x0b, 0xc5, 0x7e, 0x79,
-	0x85, 0xd0, 0xeb, 0x73, 0xd8, 0x8c, 0x06, 0x9f, 0x5f, 0x13, 0xe5, 0x2f, 0x09, 0x70, 0xf1, 0x84,
-	0x33, 0x57, 0xdc, 0x8d, 0x75, 0x58, 0xf0, 0xcd, 0x7d, 0x2a, 0x6c, 0x98, 0xfc, 0x9e, 0xf7, 0xcd,
-	0xfd, 0x5d, 0xbf, 0x3b, 0xc1, 0x58, 0x25, 0xbe, 0x26, 0x63, 0x15, 0xba, 0x0e, 0x45, 0x5e, 0x9b,
-	0xb1, 0x3f, 0xe0, 0x61, 0xad, 0xf2, 0x3a, 0xb0, 0x2a, 0x37, 0x07, 0xdd, 0x19, 0xa5, 0xdb, 0xe7,
-	0x44, 0xf9, 0xc7, 0x45, 0x28, 0x24, 0xd8, 0x85, 0x54, 0x58, 0xa2, 0xa7, 0xd7, 0xe8, 0x90, 0xe5,
-	0x44, 0x57, 0x6c, 0x57, 0x27, 0x05, 0xdf, 0xa4, 0xd7, 0x29, 0x3a, 0x7d, 0xdf, 0x12, 0x39, 0x9d,
-	0x9f, 0xfc, 0xd1, 0x9c, 0xc5, 0xc4, 0xb1, 0xa0, 0x01, 0x8b, 0xd1, 0x98, 0xb3, 0x00, 0x36, 0x13,
-	0x82, 0xe3, 0xc6, 0x8f, 0xb3, 0x92, 0xbc, 0x67, 0xb1, 0xb2, 0x8b, 0x9c, 0x00, 0xbb, 0x72, 0xaf,
-	0xc2, 0x52, 0xc7, 0x37, 0xed, 0x01, 0x35, 0x43, 0xb3, 0x60, 0xc9, 0xd9, 0x33, 0xfc, 0x90, 0xca,
-	0x10, 0x87, 0xa4, 0xd1, 0xb3, 0x20, 0x71, 0xaa, 0x43, 0xa7, 0x92, 0x39, 0xda, 0xf4, 0xa5, 0x18,
-	0xce, 0xaf, 0xfe, 0x77, 0x01, 0x58, 0x14, 0x82, 0x49, 0xcf, 0xd2, 0xc7, 0x06, 0x22, 0x38, 0x5d,
-	0x1e, 0x7d, 0x5e, 0x90, 0x7f, 0x46, 0x80, 0x0b, 0xfc, 0x92, 0x76, 0xe4, 0x0e, 0xf8, 0xb5, 0xff,
-	0xf8, 0xc2, 0xcb, 0x00, 0xfc, 0xa4, 0x19, 0x99, 0xe2, 0x27, 0x13, 0x60, 0x27, 0x48, 0x22, 0x5f,
-	0xf3, 0x7b, 0xd1, 0xe7, 0x94, 0xd6, 0xff, 0x0e, 0x0d, 0xe6, 0xf7, 0xe4, 0xc9, 0xd6, 0xa7, 0x8c,
-	0xf7, 0x7f, 0xda, 0x7b, 0xf1, 0xbb, 0xa2, 0xfc, 0x6d, 0xb0, 0x32, 0x26, 0x8a, 0x3f, 0xaa, 0x8e,
-	0x04, 0x7a, 0x7f, 0x6e, 0xe2, 0x64, 0x4d, 0xe1, 0xf2, 0x85, 0x1c, 0x85, 0x76, 0x97, 0x61, 0xd1,
-	0xdc, 0x33, 0x42, 0x72, 0x26, 0xee, 0xf8, 0xde, 0xa0, 0xcf, 0x97, 0x46, 0xc1, 0xdc, 0x6b, 0xe3,
-	0x20, 0xdc, 0x22, 0x20, 0xb9, 0x0e, 0x57, 0x46, 0x88, 0x34, 0xfa, 0x61, 0x63, 0x10, 0xdf, 0xde,
-	0xcf, 0xb4, 0xc0, 0x7f, 0x5b, 0x94, 0xff, 0x93, 0x00, 0xa5, 0xf4, 0xd3, 0x2f, 0x72, 0xf0, 0xe6,
-	0xb7, 0xd0, 0xd8, 0x8d, 0x96, 0xf7, 0xe9, 0x07, 0x6f, 0x56, 0x5c, 0x75, 0xa9, 0x8a, 0xc5, 0x71,
-	0xdd, 0x41, 0x6f, 0x0f, 0xfb, 0x51, 0x88, 0x57, 0x06, 0xac, 0x53, 0xd8, 0xf8, 0x50, 0x8c, 0x85,
-	0xaf, 0x76, 0x28, 0xc6, 0xef, 0xa2, 0xa1, 0x18, 0xf5, 0xbe, 0xb5, 0x8d, 0x4d, 0x9b, 0xb9, 0x46,
-	0xc6, 0x57, 0x45, 0x59, 0x7e, 0x13, 0x74, 0x0d, 0x0a, 0x3e, 0xf5, 0x69, 0x1b, 0x86, 0x1f, 0xcc,
-	0xea, 0x40, 0x41, 0x6c, 0x9b, 0x79, 0x11, 0x2e, 0x46, 0x0f, 0xa2, 0x5c, 0x2f, 0x8a, 0xcf, 0x10,
-	0xfd, 0x58, 0x15, 0xbb, 0x1b, 0xbe, 0xc0, 0x0b, 0xd4, 0x3d, 0x1e, 0xaa, 0x81, 0xfd, 0x5e, 0x95,
-	0xec, 0x02, 0xe8, 0x7d, 0x8b, 0x87, 0x71, 0x45, 0xef, 0x02, 0xf0, 0xfb, 0x96, 0x71, 0x40, 0xdb,
-	0x32, 0x29, 0x8a, 0x21, 0x93, 0xfb, 0x51, 0x8b, 0xf5, 0xbc, 0x1f, 0x37, 0xfe, 0x06, 0x14, 0x79,
-	0x90, 0x58, 0x63, 0xcf, 0xb3, 0x8f, 0xf9, 0x73, 0xba, 0x02, 0x87, 0x6d, 0x78, 0xf6, 0xb1, 0x6c,
-	0x43, 0xa1, 0x85, 0x87, 0xd1, 0x24, 0x53, 0x01, 0x42, 0x84, 0x91, 0x00, 0x21, 0x93, 0x22, 0xda,
-	0x4c, 0x59, 0x10, 0x7f, 0x43, 0x94, 0xbf, 0x05, 0x56, 0x12, 0xb5, 0x9c, 0x21, 0x66, 0x4f, 0xaa,
-	0x1d, 0x62, 0xba, 0x1d, 0xb3, 0x0d, 0xe8, 0x0f, 0x93, 0xda, 0x97, 0x5a, 0x38, 0x4c, 0x3e, 0x59,
-	0x45, 0xdb, 0xb0, 0x98, 0x7a, 0xf0, 0xca, 0x79, 0x7b, 0x96, 0xe7, 0xae, 0x7a, 0x31, 0xf9, 0xd4,
-	0x75, 0x4a, 0xdf, 0x7f, 0x4e, 0x94, 0xff, 0xae, 0x00, 0xeb, 0x23, 0xd5, 0x9f, 0x81, 0x01, 0x27,
-	0x1a, 0x28, 0x9e, 0xb7, 0x81, 0x33, 0x71, 0xeb, 0x9f, 0x88, 0xf2, 0x8f, 0x0a, 0x00, 0x2d, 0xfc,
-	0xba, 0x05, 0x3f, 0x94, 0x5f, 0x82, 0xd2, 0x8e, 0x79, 0xc4, 0x72, 0xd8, 0xf2, 0xb8, 0x06, 0x97,
-	0x77, 0x94, 0x07, 0xec, 0x7d, 0x14, 0x7b, 0x17, 0x34, 0xd2, 0x96, 0x3c, 0xcc, 0x31, 0x13, 0xc0,
-	0xdb, 0xa6, 0xb0, 0xf7, 0xbf, 0x0a, 0x72, 0x95, 0x4e, 0xe0, 0x58, 0x2c, 0xad, 0xc2, 0xdc, 0x23,
-	0xb3, 0x3b, 0x88, 0x9e, 0x08, 0xb3, 0xc4, 0x14, 0x2a, 0xff, 0x41, 0x90, 0xff, 0x58, 0xa0, 0x33,
-	0xf4, 0xc4, 0xcf, 0x35, 0x6d, 0x8d, 0x28, 0xf0, 0x6f, 0x19, 0xef, 0xc9, 0x75, 0x12, 0x73, 0x34,
-	0x02, 0xff, 0xa8, 0x2e, 0x93, 0x30, 0x71, 0xce, 0x36, 0x42, 0x3f, 0x22, 0xca, 0xb5, 0xe9, 0x71,
-	0xeb, 0x0b, 0xb0, 0x30, 0x54, 0xcf, 0x01, 0xe6, 0x99, 0x35, 0x81, 0xd9, 0xe6, 0x22, 0x43, 0x53,
-	0xb5, 0x51, 0x57, 0xa5, 0x8c, 0xac, 0x03, 0x3a, 0xe9, 0x89, 0x46, 0x2f, 0x0b, 0x49, 0x92, 0x2b,
-	0xa4, 0x2c, 0x11, 0x79, 0x16, 0x45, 0x32, 0x8f, 0x25, 0x90, 0x04, 0x19, 0xb2, 0x07, 0x30, 0xc1,
-	0x46, 0x3e, 0xe5, 0xcf, 0x8b, 0xb0, 0xce, 0xbc, 0x5e, 0x4e, 0xbc, 0x17, 0x48, 0xfd, 0x2a, 0x87,
-	0x70, 0xde, 0x5f, 0xe5, 0x98, 0xf6, 0x03, 0x27, 0xa7, 0x85, 0x9f, 0xfd, 0x46, 0x58, 0xb3, 0x4d,
-	0xb7, 0xd3, 0x75, 0xdc, 0x0e, 0x39, 0x09, 0x60, 0xa7, 0x1f, 0x26, 0x5f, 0xa4, 0x8e, 0xff, 0x7d,
-	0x85, 0x61, 0x47, 0x74, 0x86, 0x42, 0xcf, 0x21, 0x2b, 0x11, 0xa1, 0x04, 0x30, 0xfd, 0x4c, 0x65,
-	0x2e, 0xfd, 0x4c, 0xe5, 0xfc, 0x2f, 0x20, 0x7e, 0x5a, 0x94, 0x3f, 0x4b, 0x24, 0xc9, 0x60, 0xaf,
-	0xe7, 0x84, 0x27, 0x5a, 0x83, 0x76, 0xa0, 0x98, 0xea, 0x8b, 0x30, 0x73, 0x5f, 0x0a, 0x7e, 0xa2,
-	0x0f, 0x67, 0x33, 0x30, 0x9c, 0xbf, 0x37, 0x7f, 0x53, 0x94, 0x1f, 0x41, 0xbe, 0x35, 0xd8, 0x0b,
-	0x2c, 0xdf, 0xd9, 0xa3, 0x0e, 0xeb, 0xfb, 0x8e, 0xcf, 0x1e, 0x10, 0x33, 0x90, 0xb1, 0xef, 0xf9,
-	0x86, 0xef, 0x0d, 0x42, 0xcc, 0x45, 0xe3, 0x05, 0x5a, 0x20, 0x46, 0xd9, 0xf4, 0x7c, 0x9d, 0xe4,
-	0xce, 0xb6, 0x7a, 0xfe, 0xa1, 0x28, 0xff, 0xc5, 0x2c, 0x2c, 0xc7, 0x54, 0xe2, 0x85, 0x4e, 0x1f,
-	0x2f, 0x44, 0x95, 0x65, 0x75, 0x96, 0x40, 0x6f, 0x84, 0xa5, 0x43, 0x8c, 0xfb, 0x86, 0xd9, 0x75,
-	0x1e, 0x61, 0x23, 0xc0, 0x56, 0xc0, 0x67, 0xf9, 0x22, 0x01, 0x2b, 0x04, 0xda, 0xc2, 0x56, 0x80,
-	0x5e, 0x80, 0x72, 0xcf, 0x3c, 0xa2, 0xb7, 0x75, 0x51, 0xf3, 0xcd, 0x30, 0xc4, 0xbd, 0x7e, 0xc8,
-	0xbc, 0x40, 0xb2, 0xfa, 0x85, 0x9e, 0x79, 0xa4, 0x0f, 0xb3, 0x15, 0x9e, 0x4b, 0x30, 0xfb, 0xd8,
-	0xb5, 0xd9, 0x5c, 0xe4, 0x01, 0x5f, 0x43, 0xa7, 0x87, 0xbd, 0x01, 0x0b, 0x5a, 0x9b, 0xd5, 0x2f,
-	0xf0, 0xfc, 0xa8, 0xa9, 0x6d, 0x96, 0x8b, 0xee, 0xc0, 0xc5, 0x08, 0x73, 0x58, 0x6b, 0x84, 0xca,
-	0x62, 0xda, 0xae, 0xf3, 0x02, 0x71, 0x77, 0x23, 0xdc, 0x9d, 0x58, 0xac, 0xb1, 0x50, 0x87, 0xef,
-	0x18, 0x2f, 0xd6, 0x46, 0xb9, 0x74, 0x2b, 0xfa, 0x18, 0x11, 0x6e, 0x5f, 0x03, 0x6b, 0x91, 0xbe,
-	0x43, 0x23, 0xdc, 0x98, 0x34, 0xce, 0xbf, 0x15, 0x50, 0x3b, 0x5c, 0x56, 0x47, 0x3c, 0x73, 0xc7,
-	0x3c, 0xba, 0x6f, 0x3a, 0x21, 0xe1, 0xd8, 0x6c, 0xa3, 0xf6, 0x33, 0xa2, 0x7c, 0x8f, 0x28, 0xa0,
-	0xc9, 0xca, 0xc9, 0x2e, 0xa2, 0xab, 0xad, 0x66, 0xa3, 0x3e, 0xc9, 0x4a, 0x91, 0x92, 0x81, 0x17,
-	0x00, 0x71, 0x8b, 0x6a, 0x32, 0x4e, 0xad, 0x28, 0xbf, 0x0c, 0x57, 0x12, 0x07, 0x0d, 0xc5, 0x3a,
-	0x8c, 0x7f, 0xb1, 0x8e, 0xde, 0xb1, 0x4d, 0xd9, 0x39, 0xbe, 0x28, 0xca, 0xbf, 0x27, 0xc2, 0xd2,
-	0xe8, 0x41, 0xeb, 0x01, 0xac, 0x46, 0xbf, 0x4e, 0x90, 0x7a, 0x34, 0xc2, 0x16, 0xe5, 0xa4, 0xa8,
-	0xa6, 0x09, 0x2a, 0x44, 0x20, 0xeb, 0x88, 0xd3, 0x48, 0xc0, 0xd1, 0x4b, 0x70, 0x99, 0x2a, 0xc5,
-	0xcc, 0xd7, 0x90, 0xbf, 0x27, 0x31, 0xf6, 0x7d, 0xaf, 0x67, 0xb8, 0xde, 0x63, 0x2e, 0x96, 0xd7,
-	0x49, 0x11, 0x2a, 0x7e, 0xf9, 0x33, 0x92, 0x4d, 0xdf, 0xeb, 0xd5, 0xbd, 0xc7, 0x23, 0x27, 0x9f,
-	0xcc, 0xcc, 0x27, 0x1f, 0x74, 0x17, 0xf2, 0xbd, 0x63, 0x83, 0xb9, 0x1a, 0x4d, 0xf1, 0xc7, 0x98,
-	0x70, 0x7c, 0xd3, 0x73, 0xbd, 0x63, 0xf6, 0x35, 0xdb, 0x14, 0xf8, 0x59, 0x51, 0xfe, 0x5e, 0x01,
-	0xae, 0x4d, 0xa2, 0x1a, 0x2d, 0xe3, 0x4d, 0x32, 0xb1, 0xad, 0x28, 0x70, 0xd9, 0xec, 0xad, 0xe3,
-	0xd8, 0xb3, 0xb5, 0xed, 0x1f, 0x89, 0xb2, 0x02, 0x4f, 0xa6, 0x2e, 0x6d, 0x59, 0xdc, 0x03, 0x36,
-	0x95, 0xce, 0x12, 0x2d, 0xec, 0x37, 0x44, 0xf9, 0x0f, 0x04, 0x78, 0xe3, 0xe9, 0x34, 0x5e, 0xbf,
-	0x5f, 0x51, 0x6c, 0xc1, 0x22, 0xff, 0x39, 0x3a, 0xce, 0x2d, 0xf1, 0x5c, 0xdc, 0x2a, 0xf6, 0x13,
-	0xa9, 0x19, 0x63, 0x24, 0x8a, 0xf2, 0x46, 0x6a, 0x38, 0xd3, 0xfd, 0x65, 0x41, 0x79, 0xa6, 0x30,
-	0xed, 0x37, 0x45, 0xf9, 0x13, 0x22, 0x3c, 0x33, 0x85, 0xc8, 0x9f, 0x6e, 0xae, 0x0d, 0xa3, 0x0b,
-	0x65, 0xbe, 0xaa, 0xd1, 0x85, 0xfe, 0x8d, 0x28, 0x7f, 0x44, 0x80, 0xa7, 0x92, 0x32, 0x86, 0x31,
-	0x69, 0x18, 0x2c, 0xef, 0x75, 0x63, 0xd4, 0x6c, 0x2d, 0xfb, 0xb7, 0xa2, 0xfc, 0xa3, 0x22, 0x5c,
-	0x9f, 0xf4, 0xb2, 0x34, 0x6e, 0xd5, 0x99, 0x5e, 0x98, 0xa2, 0x76, 0x6c, 0x63, 0x11, 0x4f, 0xb1,
-	0xb8, 0x4f, 0xab, 0xec, 0x56, 0xda, 0xe6, 0x32, 0x5b, 0x87, 0xfe, 0xb6, 0x28, 0xbf, 0x17, 0xe6,
-	0xb9, 0xb1, 0x75, 0x1d, 0x56, 0xf8, 0x6f, 0x97, 0x8f, 0x94, 0x5d, 0x84, 0x7c, 0xbd, 0xd1, 0x36,
-	0x36, 0xe9, 0xcf, 0x45, 0xd1, 0xb0, 0x17, 0x74, 0xb3, 0x52, 0xab, 0x2a, 0xff, 0x61, 0x29, 0xae,
-	0xb2, 0x67, 0x46, 0x7f, 0x1d, 0x3d, 0x2b, 0x7f, 0x87, 0x00, 0x6b, 0x63, 0x75, 0xb8, 0x33, 0xf2,
-	0xa8, 0x4c, 0x7d, 0x4c, 0x09, 0x12, 0x57, 0x9c, 0xa3, 0x24, 0x7a, 0x33, 0xac, 0x24, 0xf1, 0xe9,
-	0x3b, 0xcb, 0xf8, 0xe6, 0x48, 0x1a, 0x12, 0xd9, 0x0d, 0xb0, 0xaf, 0xd9, 0xf2, 0x37, 0xc3, 0x6a,
-	0xdb, 0x77, 0x3a, 0x1d, 0xec, 0xd3, 0xa3, 0x43, 0xf2, 0xa7, 0x37, 0xd8, 0x2b, 0x98, 0xe1, 0x0b,
-	0x2c, 0x9a, 0x3e, 0xed, 0xa7, 0x37, 0x66, 0xe3, 0xf1, 0x27, 0x45, 0xf9, 0x57, 0x04, 0xb8, 0xc1,
-	0x6b, 0xa7, 0xcb, 0xcb, 0x4e, 0xfa, 0xf4, 0x37, 0xdc, 0xd6, 0x60, 0xcf, 0xc5, 0x21, 0xda, 0x80,
-	0x02, 0xf5, 0x0f, 0xa1, 0x6b, 0x2e, 0xb2, 0x53, 0xdd, 0x98, 0xf0, 0x56, 0x6b, 0x88, 0xaf, 0x53,
-	0xaf, 0x12, 0x46, 0x17, 0x55, 0xa1, 0xe8, 0x85, 0x07, 0xd8, 0xe7, 0x3f, 0xe1, 0x79, 0xea, 0x0f,
-	0xcf, 0xa6, 0x88, 0x14, 0x28, 0x1a, 0x4b, 0x4c, 0x91, 0x65, 0x7f, 0x47, 0x94, 0xdf, 0x05, 0x85,
-	0x5d, 0x37, 0x56, 0xe5, 0x66, 0xe3, 0xc7, 0x2f, 0x53, 0x7f, 0x5a, 0xf6, 0x86, 0x74, 0xe4, 0x67,
-	0xf1, 0xcf, 0xaf, 0xa4, 0xff, 0x55, 0x51, 0xfe, 0x79, 0x01, 0xae, 0x8e, 0xa5, 0x1a, 0x8f, 0xf5,
-	0x6d, 0x58, 0xdb, 0x77, 0x8e, 0xb0, 0x1d, 0xdd, 0xfd, 0x19, 0x69, 0x83, 0xc6, 0x0a, 0xcd, 0xe4,
-	0x58, 0x2d, 0x6e, 0xdc, 0x78, 0x09, 0x2e, 0x59, 0x9e, 0x1b, 0x0c, 0x7a, 0xe6, 0x5e, 0x17, 0x9f,
-	0x40, 0x64, 0xf3, 0xa2, 0x3c, 0x2c, 0x91, 0xc6, 0x9e, 0x8d, 0x31, 0x9f, 0x15, 0xe5, 0x4f, 0x08,
-	0x50, 0x60, 0x7d, 0xa8, 0x79, 0x1d, 0xc7, 0x25, 0x67, 0x1b, 0x1f, 0xf7, 0xbb, 0x44, 0x8f, 0x79,
-	0x75, 0xe0, 0xf8, 0x7c, 0x56, 0xe4, 0xf4, 0x45, 0x0a, 0xd5, 0x39, 0x90, 0x85, 0x8d, 0xde, 0xc7,
-	0xbe, 0xcf, 0x7d, 0x63, 0x69, 0xd8, 0x68, 0x96, 0x46, 0xcf, 0xc3, 0x3a, 0x3f, 0xe2, 0xf5, 0x3c,
-	0x1b, 0x77, 0x8d, 0x61, 0xc8, 0x06, 0xbe, 0x56, 0xd6, 0x58, 0xf6, 0x0e, 0xc9, 0xad, 0xc6, 0x99,
-	0xd3, 0xe2, 0xe4, 0x0b, 0xb2, 0x0a, 0x2b, 0x89, 0xa6, 0x46, 0x3f, 0x8c, 0x3f, 0x5b, 0x97, 0x7f,
-	0x42, 0x94, 0x6b, 0xb0, 0x74, 0xcf, 0xec, 0x3a, 0x6c, 0xdc, 0xa6, 0xfd, 0xb2, 0xc7, 0xe9, 0x8d,
-	0xfa, 0x3e, 0x51, 0xfe, 0x56, 0x58, 0x1f, 0xa1, 0x96, 0x34, 0x60, 0x8d, 0xa7, 0xfa, 0x7a, 0x2d,
-	0xf4, 0xef, 0x17, 0xdf, 0xf4, 0x59, 0x11, 0x0a, 0x89, 0xfb, 0x5a, 0x54, 0x86, 0xd5, 0xe8, 0x3e,
-	0xb1, 0xfd, 0xb0, 0x99, 0x8c, 0xec, 0x38, 0x9a, 0xc3, 0xc3, 0xd9, 0x30, 0xf5, 0x3f, 0x95, 0xc3,
-	0xc2, 0x39, 0x8a, 0x68, 0x0d, 0x96, 0x53, 0xf0, 0xba, 0xf2, 0xe0, 0x81, 0x94, 0xa1, 0x3f, 0xd2,
-	0x99, 0x22, 0xa4, 0xef, 0x48, 0x59, 0x74, 0x09, 0x2e, 0xa4, 0xa0, 0x71, 0x5c, 0x21, 0x69, 0xee,
-	0x04, 0xa1, 0x6d, 0x55, 0x6f, 0x48, 0xf3, 0x27, 0x08, 0xd5, 0x1a, 0xaa, 0xb4, 0x70, 0xa2, 0xf0,
-	0x7d, 0xad, 0xbe, 0x25, 0xe5, 0xd0, 0x15, 0x28, 0xa7, 0xc0, 0xba, 0x52, 0xaf, 0x36, 0x76, 0x68,
-	0x35, 0x52, 0x9e, 0xde, 0xca, 0xa6, 0x6a, 0xd0, 0xaa, 0x55, 0xb5, 0x1e, 0xfb, 0x41, 0x01, 0x7a,
-	0x0a, 0xae, 0xa7, 0x0a, 0xa4, 0x42, 0xf4, 0xb4, 0x35, 0xc2, 0x65, 0xa9, 0xf0, 0xa6, 0x47, 0x20,
-	0x8d, 0xde, 0x11, 0xa2, 0x1b, 0x70, 0x95, 0xc0, 0x98, 0xc7, 0xd6, 0xf8, 0xed, 0xea, 0x22, 0xac,
-	0xf9, 0xe6, 0x7e, 0xfa, 0x22, 0xd2, 0x30, 0xbc, 0x43, 0x49, 0x20, 0xf5, 0x8e, 0xc9, 0x72, 0xbd,
-	0x70, 0xf8, 0x6b, 0xb0, 0x92, 0xb8, 0x37, 0xdf, 0xf7, 0xbd, 0xd0, 0x7b, 0xdb, 0xff, 0x0b, 0x00,
-	0x00, 0xff, 0xff, 0x8a, 0x70, 0x26, 0xbf, 0x5a, 0x85, 0x00, 0x00,
+	// 11165 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xec, 0xbd, 0x69, 0x94, 0x23, 0x59,
+	0x56, 0x18, 0xdc, 0x11, 0x92, 0x32, 0xa5, 0xab, 0x94, 0x32, 0xf2, 0x65, 0x66, 0xa5, 0x6a, 0x9b,
+	0xaa, 0x8a, 0xee, 0x9e, 0xae, 0xee, 0xaf, 0xbb, 0xa6, 0xa9, 0x99, 0x6e, 0x7a, 0x6a, 0x7a, 0x68,
+	0xb4, 0x44, 0x66, 0x8a, 0x52, 0x4a, 0xea, 0x27, 0x65, 0x2d, 0x0d, 0x87, 0x98, 0x48, 0xc5, 0x4b,
+	0x65, 0x90, 0x52, 0x84, 0x3a, 0x22, 0x54, 0x59, 0x39, 0x1f, 0x18, 0x8f, 0xb1, 0xb1, 0xe1, 0x00,
+	0xb6, 0xc1, 0xc7, 0xe0, 0x31, 0x06, 0x7c, 0x3c, 0x1e, 0xb3, 0xd8, 0x07, 0x03, 0x5e, 0x38, 0x78,
+	0xc3, 0x36, 0x18, 0x63, 0x63, 0xc0, 0x2c, 0xc3, 0x62, 0x76, 0x6c, 0x6c, 0x1f, 0x6f, 0x1c, 0xaf,
+	0x78, 0x39, 0x8c, 0xcf, 0x5b, 0x22, 0x14, 0x21, 0x85, 0x52, 0x59, 0x3d, 0x3d, 0xf0, 0xc7, 0xf9,
+	0x27, 0xe3, 0xdd, 0x77, 0xef, 0x7d, 0xfb, 0x7d, 0xf7, 0xdd, 0x77, 0xdf, 0x15, 0x3c, 0x3b, 0x22,
+	0x7d, 0xc3, 0x1b, 0x7b, 0xef, 0x13, 0xff, 0xc7, 0xbe, 0x35, 0x88, 0x7e, 0xdf, 0x1a, 0xb9, 0x8e,
+	0xef, 0xa0, 0x75, 0x01, 0xba, 0x15, 0xc9, 0xba, 0xf4, 0xfc, 0x14, 0xad, 0x77, 0x64, 0xb8, 0xc4,
+	0x8c, 0xa7, 0x38, 0xbd, 0xfa, 0x15, 0x32, 0x5c, 0x2d, 0xf7, 0x7a, 0xce, 0xd8, 0xf6, 0x1b, 0x56,
+	0x8f, 0xd8, 0x1e, 0x29, 0xf7, 0x8e, 0x2c, 0xf2, 0x88, 0x60, 0xe2, 0x8d, 0x1c, 0xdb, 0x23, 0xa8,
+	0x04, 0xcb, 0x06, 0x07, 0x95, 0xa4, 0xeb, 0xf2, 0xcd, 0x0c, 0x0e, 0x92, 0xe8, 0x4d, 0x58, 0x72,
+	0x89, 0x37, 0x1e, 0xf8, 0x25, 0xf9, 0xba, 0x7c, 0xb3, 0x78, 0xfb, 0x83, 0xb7, 0x12, 0x2a, 0x73,
+	0xeb, 0x4c, 0xee, 0xb7, 0x30, 0x63, 0x80, 0x05, 0x23, 0x75, 0x1d, 0xb2, 0x6d, 0xa3, 0x77, 0x4c,
+	0xfc, 0x7a, 0x0d, 0x2d, 0x83, 0x5c, 0xaf, 0x29, 0x7f, 0x53, 0x56, 0x3f, 0x02, 0x4b, 0x1c, 0x0d,
+	0xad, 0xc3, 0x6a, 0xbd, 0x79, 0xaf, 0xdc, 0xa8, 0xd7, 0xf4, 0x72, 0x75, 0xb7, 0xae, 0xdd, 0xd3,
+	0x14, 0x09, 0x15, 0x01, 0x9a, 0xad, 0xae, 0x5e, 0xae, 0x76, 0xeb, 0xf7, 0x34, 0x45, 0x46, 0xab,
+	0x90, 0xaf, 0x37, 0xf5, 0x36, 0x6e, 0xed, 0x60, 0xad, 0xd3, 0x51, 0x52, 0x68, 0x05, 0xb2, 0xd5,
+	0xd6, 0x5e, 0xbb, 0xa1, 0x75, 0x35, 0x25, 0x8d, 0x10, 0x14, 0x3b, 0xdd, 0x72, 0x77, 0xbf, 0xa3,
+	0xef, 0x37, 0xef, 0x36, 0x5b, 0xf7, 0x9b, 0x4a, 0x46, 0x7d, 0x1b, 0x2e, 0xc7, 0xab, 0xe9, 0xd5,
+	0xed, 0x43, 0x27, 0xec, 0x82, 0x0f, 0x43, 0x7a, 0x60, 0x79, 0x7e, 0x49, 0xba, 0x9e, 0xba, 0x99,
+	0xbf, 0xfd, 0xfc, 0x74, 0x33, 0x45, 0x87, 0xc6, 0x39, 0x30, 0x06, 0x8c, 0x2c, 0xa1, 0x51, 0x3f,
+	0x2c, 0xab, 0xbf, 0x99, 0x82, 0x65, 0xd1, 0x19, 0xa8, 0x08, 0xb2, 0x65, 0x8a, 0xde, 0x95, 0x2d,
+	0x13, 0x5d, 0x82, 0xec, 0xc8, 0x75, 0xfa, 0x2e, 0xf1, 0x3c, 0xd6, 0xb5, 0x19, 0x1c, 0xa6, 0xd1,
+	0x0d, 0x58, 0x31, 0x7a, 0xc7, 0x7a, 0x98, 0x9f, 0x62, 0xf9, 0x79, 0xa3, 0x77, 0xdc, 0x0e, 0x50,
+	0x9e, 0x07, 0xa5, 0xe7, 0x0c, 0x47, 0x03, 0xe2, 0x5b, 0x8e, 0xad, 0xb3, 0x4a, 0x95, 0xd2, 0xd7,
+	0xa5, 0x9b, 0x19, 0xbc, 0x3a, 0x81, 0x57, 0x29, 0x18, 0x5d, 0x80, 0x25, 0xa3, 0xe7, 0x5b, 0x8f,
+	0x48, 0x29, 0x73, 0x5d, 0xba, 0x99, 0xc5, 0x22, 0x85, 0x9e, 0x86, 0x82, 0xe7, 0x1b, 0xae, 0x4f,
+	0x4c, 0x41, 0xbf, 0xc4, 0xe8, 0x57, 0x04, 0x90, 0x13, 0xdf, 0x01, 0x30, 0x0d, 0x9f, 0xe8, 0x7d,
+	0xeb, 0x11, 0xb1, 0x4b, 0xcb, 0xd7, 0xa5, 0x9b, 0xf9, 0xdb, 0x97, 0xe7, 0x74, 0x4e, 0xcd, 0xf0,
+	0x09, 0xce, 0x51, 0xf4, 0x1d, 0x8a, 0x8d, 0x2a, 0x50, 0x64, 0xb4, 0xa2, 0x42, 0xc4, 0x2c, 0x65,
+	0x17, 0xd3, 0x17, 0x28, 0x49, 0x35, 0xa0, 0x40, 0x57, 0x00, 0x4c, 0x47, 0xb7, 0x1d, 0x5f, 0x37,
+	0x7a, 0xc7, 0xa5, 0x1c, 0x6b, 0x40, 0xd6, 0x74, 0x9a, 0x8e, 0x5f, 0xee, 0x1d, 0xa3, 0xdb, 0xb0,
+	0x69, 0xd9, 0x3e, 0x71, 0x1f, 0x19, 0x03, 0xdd, 0x25, 0x27, 0x86, 0x1b, 0x34, 0x05, 0x58, 0x53,
+	0xd6, 0x83, 0x4c, 0xcc, 0xf2, 0x78, 0x8b, 0x5a, 0xb3, 0x34, 0xac, 0xc5, 0xa5, 0xfc, 0xe2, 0xca,
+	0x4d, 0x31, 0xec, 0x50, 0x3a, 0xf5, 0xab, 0x52, 0xb0, 0x25, 0x46, 0x79, 0x48, 0x6c, 0xbf, 0xe9,
+	0xf8, 0xd6, 0xa1, 0xd5, 0x33, 0xe8, 0x00, 0xa0, 0xcb, 0x90, 0x1b, 0x0d, 0x8c, 0x53, 0xe2, 0xea,
+	0x62, 0xf0, 0x53, 0x38, 0xcb, 0x01, 0x75, 0x13, 0x3d, 0x0b, 0x45, 0x63, 0x42, 0x47, 0x31, 0x64,
+	0x86, 0x51, 0x88, 0x40, 0xeb, 0x26, 0x1b, 0xbf, 0x21, 0x6b, 0x15, 0x9f, 0x07, 0x22, 0x85, 0x36,
+	0x20, 0xf3, 0xf6, 0xd8, 0xf1, 0x8d, 0x52, 0x9a, 0x81, 0x79, 0x02, 0x69, 0xa0, 0xb0, 0xe6, 0xe8,
+	0xac, 0xeb, 0x07, 0x4e, 0xcf, 0x18, 0xb0, 0x71, 0x5f, 0xd0, 0xb2, 0x22, 0x23, 0xa2, 0x9f, 0x0d,
+	0x4a, 0x82, 0xca, 0x50, 0x24, 0xb6, 0x19, 0x65, 0xb2, 0xb4, 0x98, 0xc9, 0x0a, 0xb1, 0xcd, 0x09,
+	0x8b, 0x4b, 0x90, 0x0d, 0x46, 0xbe, 0xb4, 0x7c, 0x5d, 0xa6, 0x03, 0x17, 0xa4, 0xd1, 0x73, 0xb0,
+	0x6a, 0x93, 0x13, 0x3d, 0xd2, 0xd0, 0x52, 0x96, 0xa1, 0x14, 0x6d, 0x72, 0x12, 0xe9, 0x4c, 0xf4,
+	0x12, 0x20, 0x97, 0x0c, 0x9d, 0x47, 0x24, 0x86, 0x9b, 0x63, 0xb8, 0x6b, 0x3c, 0x27, 0x82, 0xae,
+	0xfe, 0x11, 0x09, 0x4a, 0x73, 0xc6, 0xc2, 0x43, 0x16, 0x5c, 0x8c, 0xf6, 0xb7, 0x1d, 0xcd, 0x14,
+	0xeb, 0xfe, 0xc5, 0x39, 0xe2, 0x2d, 0x91, 0x23, 0x2e, 0x19, 0x73, 0x8a, 0x52, 0x5f, 0x87, 0xac,
+	0x20, 0xf2, 0xd0, 0xcb, 0x31, 0xc9, 0x72, 0xe5, 0xac, 0x12, 0x84, 0x30, 0x39, 0x02, 0x54, 0xee,
+	0x1d, 0x0b, 0x58, 0xb8, 0xe4, 0xa7, 0x25, 0xc8, 0xb4, 0x94, 0x90, 0x67, 0xa4, 0x84, 0x7a, 0x2d,
+	0x22, 0x95, 0x00, 0x96, 0xbc, 0x53, 0xcf, 0x27, 0x43, 0xe5, 0x29, 0x21, 0xa1, 0xfe, 0x8b, 0xa4,
+	0x1e, 0x43, 0xbe, 0xdc, 0x3b, 0xae, 0xd2, 0xb9, 0x4c, 0x88, 0x8d, 0x3e, 0x04, 0xb9, 0x1e, 0x5d,
+	0x10, 0x26, 0x39, 0x0c, 0x7a, 0xe4, 0x3d, 0x73, 0x06, 0x9c, 0xd2, 0xd4, 0xc8, 0x21, 0xce, 0xf6,
+	0xf8, 0xc7, 0xa2, 0xc2, 0x7e, 0x55, 0x52, 0x2b, 0x90, 0x2b, 0xf7, 0x8e, 0x69, 0x47, 0xf5, 0x08,
+	0x9d, 0xbd, 0xc4, 0xf6, 0xdd, 0x53, 0xb1, 0x2a, 0x78, 0x62, 0x01, 0x8f, 0x9f, 0x95, 0xd4, 0x06,
+	0xac, 0x95, 0x7b, 0xc7, 0xb6, 0x73, 0x32, 0x20, 0x66, 0x9f, 0x54, 0x0c, 0xdb, 0x26, 0x2e, 0x5d,
+	0x21, 0x07, 0xec, 0x4b, 0xf4, 0x8e, 0x48, 0x2d, 0xe0, 0xf6, 0xd7, 0x65, 0xf5, 0x01, 0xac, 0x96,
+	0x7b, 0xc7, 0xf7, 0x2d, 0xbb, 0x1f, 0xf6, 0x32, 0x82, 0xf4, 0x89, 0x65, 0xf7, 0x05, 0x27, 0xf6,
+	0x8d, 0x14, 0x48, 0x51, 0xe9, 0xc3, 0x3b, 0x98, 0x7e, 0x2e, 0xe0, 0xfc, 0xd7, 0x64, 0xd5, 0x86,
+	0x8b, 0x65, 0xf3, 0x11, 0xb1, 0xfd, 0xb1, 0x1b, 0x8e, 0x60, 0xb8, 0xd7, 0xbc, 0x1e, 0x9b, 0x11,
+	0x37, 0xe7, 0xed, 0x35, 0x33, 0xf4, 0xf3, 0xb6, 0x9a, 0xef, 0x95, 0xd5, 0x3b, 0xb0, 0x52, 0x76,
+	0x89, 0x6d, 0x74, 0x88, 0xe7, 0x51, 0xc1, 0xc3, 0x9b, 0xe1, 0x45, 0x9a, 0xe1, 0xd1, 0x6e, 0x1a,
+	0x38, 0x9e, 0x47, 0x82, 0xa9, 0x22, 0x52, 0xea, 0xab, 0xb0, 0x1e, 0xa5, 0xc5, 0xe4, 0xed, 0x31,
+	0xf1, 0xfc, 0x05, 0x6d, 0xfc, 0x45, 0x59, 0xfd, 0x0e, 0x09, 0x36, 0xe2, 0x84, 0xa2, 0x7d, 0x6f,
+	0x00, 0x10, 0xd7, 0x75, 0x5c, 0xbd, 0xe7, 0x98, 0x5c, 0xa3, 0x28, 0xde, 0xbe, 0x3e, 0xa7, 0x95,
+	0x1a, 0x45, 0xac, 0x3a, 0x26, 0xc1, 0x39, 0x12, 0x7c, 0xa2, 0x0f, 0xc1, 0xb2, 0xc7, 0x79, 0x96,
+	0x64, 0x26, 0x76, 0x6e, 0x24, 0xaf, 0x9a, 0x68, 0xe1, 0x01, 0x45, 0x42, 0xff, 0xfc, 0xaa, 0xac,
+	0xfe, 0x76, 0x1a, 0x0a, 0x65, 0xcf, 0x23, 0x7e, 0x58, 0xc9, 0x1a, 0x14, 0x5c, 0xde, 0x52, 0x62,
+	0xea, 0xc7, 0x84, 0x4f, 0xc4, 0xfc, 0xed, 0x6b, 0xf3, 0x46, 0x83, 0x12, 0xdf, 0x25, 0xa7, 0x78,
+	0x25, 0xa4, 0xba, 0x4b, 0x4e, 0xd1, 0x08, 0x2e, 0x99, 0x64, 0xe4, 0x92, 0x9e, 0x41, 0xd9, 0x98,
+	0x86, 0x6f, 0x1c, 0x18, 0x1e, 0xd1, 0x43, 0x9d, 0x49, 0xba, 0x59, 0xbc, 0xfd, 0xec, 0x7c, 0x99,
+	0xc9, 0xb0, 0xb9, 0xe2, 0x73, 0x27, 0x5f, 0xab, 0xe8, 0x9a, 0xde, 0x79, 0xb3, 0xa1, 0x6b, 0x0f,
+	0x70, 0x69, 0xc2, 0x35, 0x8e, 0x36, 0xd5, 0xb9, 0xa9, 0x27, 0xef, 0xdc, 0x26, 0x14, 0xbd, 0x1e,
+	0xb1, 0x0d, 0xd7, 0x72, 0x74, 0x83, 0xb6, 0xaa, 0x64, 0xb2, 0x3e, 0x7e, 0x6e, 0x0e, 0x93, 0x8e,
+	0x40, 0xae, 0x1d, 0x60, 0xd2, 0x73, 0x5c, 0x13, 0x17, 0x02, 0x72, 0xd6, 0x27, 0xe8, 0x00, 0x2e,
+	0x78, 0xe3, 0x03, 0x8f, 0xf8, 0x3a, 0x93, 0x1d, 0x74, 0x8e, 0x0a, 0xbe, 0x84, 0xf1, 0x7d, 0x69,
+	0x1e, 0x5f, 0x46, 0x44, 0xe5, 0x48, 0xc3, 0xf2, 0xfc, 0x90, 0xfb, 0xba, 0x17, 0x83, 0xf3, 0x32,
+	0x1e, 0x00, 0x32, 0x49, 0xef, 0x58, 0x77, 0xc7, 0x03, 0x42, 0x4b, 0xe2, 0xfc, 0x0f, 0x19, 0xff,
+	0x17, 0xe6, 0x75, 0x2f, 0xe9, 0x1d, 0x63, 0x8e, 0x1f, 0x32, 0x57, 0xcc, 0x09, 0x30, 0xe4, 0x1c,
+	0x68, 0x0e, 0x47, 0x24, 0xac, 0x79, 0xff, 0x4c, 0xce, 0x42, 0x9d, 0xa0, 0xf8, 0x13, 0xce, 0xee,
+	0x04, 0xc8, 0x38, 0xab, 0x9f, 0x90, 0x60, 0x93, 0x7d, 0x79, 0xf7, 0x88, 0x1b, 0x5b, 0x1f, 0x25,
+	0x58, 0x7e, 0xc4, 0x41, 0x81, 0xba, 0x2d, 0x92, 0xe8, 0x8b, 0x60, 0xd3, 0x25, 0xfe, 0xd8, 0xb5,
+	0x2d, 0xbb, 0xaf, 0x07, 0x9a, 0x83, 0x7d, 0xe8, 0x88, 0x65, 0x70, 0x33, 0x71, 0x19, 0xe0, 0x80,
+	0xa2, 0xcd, 0x35, 0x0b, 0xaa, 0x95, 0xae, 0xbb, 0xb3, 0xc0, 0x84, 0x95, 0xf1, 0x57, 0x65, 0xf5,
+	0x53, 0x32, 0x6c, 0x55, 0x0c, 0xdf, 0x1f, 0x90, 0xb6, 0x71, 0x5a, 0x75, 0xec, 0x43, 0xab, 0x1f,
+	0x56, 0xf4, 0x15, 0x58, 0x3e, 0x18, 0xdb, 0xe6, 0x80, 0x04, 0xbb, 0xc1, 0xe5, 0xc4, 0x0a, 0x54,
+	0x18, 0x0e, 0x0e, 0x70, 0xd9, 0xce, 0x3f, 0x76, 0x5d, 0x62, 0xf7, 0x4e, 0x59, 0xc5, 0x33, 0x38,
+	0x4c, 0xa3, 0xeb, 0x90, 0x1f, 0xdb, 0xc6, 0x23, 0xc3, 0x1a, 0x18, 0x07, 0x03, 0xc2, 0x74, 0xd6,
+	0x2c, 0x8e, 0x82, 0xd0, 0x2b, 0xb0, 0xe5, 0x91, 0x9e, 0xa7, 0x1f, 0x90, 0x43, 0xc7, 0x25, 0xba,
+	0x31, 0xf6, 0x1d, 0xbd, 0x67, 0xd8, 0x3d, 0xc2, 0x15, 0x99, 0x0c, 0xde, 0xa0, 0xd9, 0x15, 0x96,
+	0x5b, 0x1e, 0xfb, 0x4e, 0x95, 0xe5, 0x21, 0x0c, 0xa8, 0xef, 0x0c, 0xa8, 0x02, 0xe8, 0xf9, 0xfa,
+	0x81, 0xe3, 0x78, 0x3e, 0x71, 0xbd, 0xd2, 0x12, 0xab, 0xf6, 0x33, 0x89, 0xd5, 0xde, 0x71, 0x06,
+	0x66, 0xd5, 0xf1, 0xfc, 0x0a, 0x47, 0xc6, 0x4a, 0x3f, 0x0e, 0xf0, 0xd0, 0x7b, 0x61, 0x75, 0xc2,
+	0xd3, 0xa0, 0xd2, 0x86, 0xa9, 0xc0, 0x29, 0x5c, 0x08, 0x50, 0x99, 0x08, 0x4a, 0xe8, 0xd8, 0xff,
+	0x28, 0xa9, 0x9f, 0x4c, 0x47, 0x3a, 0xb6, 0xe3, 0x1b, 0xfe, 0x78, 0xb2, 0x03, 0x60, 0x58, 0xf2,
+	0x18, 0x44, 0x48, 0xc7, 0x3b, 0xc9, 0xfd, 0x9a, 0x4c, 0x7d, 0xab, 0x3d, 0x76, 0x7b, 0x47, 0x86,
+	0x47, 0x28, 0x98, 0x60, 0xc1, 0x09, 0x5d, 0x05, 0x18, 0xb9, 0x8e, 0x39, 0xee, 0x09, 0x55, 0x52,
+	0xba, 0x99, 0xc3, 0x39, 0x01, 0xa9, 0x9b, 0xa8, 0x0e, 0xc5, 0x91, 0xa0, 0xd3, 0x99, 0x30, 0x28,
+	0xa5, 0xd8, 0x9c, 0x52, 0x13, 0x8b, 0x0e, 0x8a, 0x60, 0x12, 0x04, 0x17, 0x46, 0xd1, 0x24, 0x7a,
+	0x19, 0x36, 0x0e, 0x58, 0xd5, 0xf4, 0x91, 0x71, 0xaa, 0x47, 0x07, 0x93, 0xaa, 0x65, 0xe8, 0x20,
+	0xa8, 0x76, 0x39, 0x1c, 0xd3, 0x67, 0xa1, 0xe8, 0xbb, 0x86, 0xed, 0xd1, 0xa3, 0x87, 0x63, 0xd3,
+	0xfa, 0x65, 0x78, 0x3f, 0x46, 0xa0, 0x75, 0x13, 0x3d, 0x03, 0x45, 0xff, 0xc8, 0x72, 0x4d, 0x7d,
+	0x64, 0xb8, 0xfe, 0x29, 0x45, 0x5b, 0x62, 0xcd, 0x58, 0x61, 0xd0, 0x36, 0x05, 0xd6, 0xcd, 0xd8,
+	0xf4, 0x5a, 0x9e, 0x9a, 0x5e, 0x6f, 0xb1, 0x63, 0xd5, 0x23, 0xcb, 0x24, 0x2e, 0x3b, 0x6d, 0x14,
+	0xe7, 0x6e, 0xaf, 0x61, 0xe7, 0xb6, 0x05, 0xfe, 0x9d, 0x8d, 0x4a, 0x9b, 0x1e, 0x29, 0xef, 0xd5,
+	0x6b, 0x1a, 0xd6, 0x2b, 0x8d, 0xfa, 0x5b, 0x6f, 0x95, 0x71, 0x0d, 0x87, 0xfc, 0x12, 0x46, 0xf9,
+	0xab, 0x64, 0xb5, 0x0c, 0x85, 0xd8, 0x70, 0xd0, 0x93, 0x68, 0xbb, 0xa3, 0x63, 0xad, 0x5c, 0x7b,
+	0xa8, 0x3c, 0x85, 0x36, 0x40, 0x69, 0x77, 0xf4, 0xea, 0xae, 0x56, 0xbd, 0xab, 0x63, 0xad, 0xb3,
+	0xdf, 0xe8, 0x76, 0x14, 0x49, 0xe0, 0x68, 0x18, 0xb7, 0xb0, 0x22, 0xab, 0x5f, 0x29, 0x41, 0x5e,
+	0x4c, 0x39, 0x2a, 0xf5, 0xd0, 0x07, 0x21, 0x1b, 0x68, 0x61, 0x62, 0x53, 0x5a, 0xa4, 0x84, 0x2d,
+	0x0b, 0x25, 0x0c, 0xbd, 0x0e, 0x79, 0xcb, 0xf6, 0x88, 0x50, 0xff, 0xd9, 0x3e, 0xbf, 0x40, 0x67,
+	0x07, 0x8e, 0x4f, 0xbf, 0xd5, 0xaf, 0x96, 0xa0, 0x18, 0x54, 0xc4, 0xb1, 0x7d, 0xaa, 0x7f, 0x7f,
+	0x20, 0xa6, 0xaa, 0x5c, 0x4f, 0x9e, 0xa6, 0x93, 0xba, 0x73, 0x15, 0x85, 0x6a, 0xed, 0x3d, 0x67,
+	0x30, 0x20, 0x7c, 0xb4, 0x03, 0x59, 0x27, 0xb3, 0x21, 0x5f, 0x9b, 0xe4, 0x08, 0xb9, 0x98, 0xd0,
+	0xb1, 0xbf, 0x21, 0xa9, 0x5a, 0xd8, 0x29, 0x74, 0x1b, 0x40, 0xaf, 0xc6, 0x2a, 0xa2, 0xce, 0x1b,
+	0x54, 0x4e, 0x11, 0x39, 0x98, 0x7f, 0x04, 0x36, 0x04, 0x70, 0xcf, 0x31, 0x23, 0x87, 0x81, 0x5d,
+	0x28, 0x0c, 0xa3, 0x80, 0x27, 0x60, 0x1c, 0x27, 0x54, 0x2b, 0x90, 0x0d, 0x05, 0xc6, 0x3b, 0xad,
+	0xe5, 0x0f, 0xa7, 0x69, 0xcf, 0x8f, 0xfb, 0x47, 0x7e, 0x87, 0x0a, 0x16, 0x3a, 0x0b, 0x5e, 0x86,
+	0xd4, 0xf9, 0x27, 0x00, 0x45, 0x8d, 0x1c, 0x14, 0xe5, 0xd8, 0x41, 0xb1, 0x12, 0xda, 0x70, 0xb8,
+	0xb6, 0xf0, 0xc2, 0x9c, 0x51, 0x8c, 0x16, 0x3f, 0x65, 0xb4, 0xa1, 0xea, 0x7a, 0xd4, 0xc8, 0xc0,
+	0x13, 0xb4, 0x44, 0x9b, 0xb8, 0x87, 0xc4, 0x0c, 0x4c, 0x0b, 0x3c, 0x45, 0xe5, 0xe6, 0xd8, 0xb6,
+	0x7c, 0xdd, 0x23, 0x83, 0x81, 0x3e, 0x72, 0xad, 0x1e, 0x11, 0xc6, 0x85, 0x02, 0x05, 0x77, 0xc8,
+	0x60, 0xd0, 0xa6, 0x40, 0xba, 0xde, 0x19, 0xde, 0xc1, 0xf8, 0x54, 0xa0, 0xf1, 0xf5, 0xbc, 0x42,
+	0xa1, 0x95, 0xf1, 0x29, 0xc7, 0x7a, 0x0d, 0x4a, 0x7c, 0x7d, 0xfb, 0x7a, 0x64, 0x56, 0xf1, 0xea,
+	0x64, 0x19, 0xfe, 0x05, 0x91, 0x5f, 0x0d, 0xb3, 0xf9, 0x59, 0x3f, 0x79, 0x1e, 0xe6, 0xce, 0x3f,
+	0x0f, 0xff, 0x90, 0xac, 0x7e, 0xa7, 0x14, 0x35, 0x4d, 0xed, 0x68, 0x4d, 0x0d, 0xd7, 0xab, 0xfa,
+	0x76, 0xb9, 0xde, 0xd8, 0xc7, 0x9a, 0x22, 0xa1, 0x2c, 0xa4, 0x3b, 0xad, 0x46, 0x4d, 0x91, 0xa9,
+	0x92, 0x5c, 0x69, 0xed, 0xef, 0xec, 0x76, 0x95, 0x14, 0x2a, 0x40, 0xae, 0xd3, 0xda, 0x6f, 0x54,
+	0x5a, 0xfb, 0xcd, 0x9a, 0x92, 0xa6, 0x62, 0xe0, 0x3e, 0x6e, 0x35, 0x77, 0xf4, 0x8e, 0xd6, 0x68,
+	0xe8, 0x6d, 0x5c, 0xaf, 0x6a, 0x4a, 0x86, 0xf2, 0xe3, 0xd0, 0xca, 0xfe, 0x43, 0x01, 0x5c, 0x42,
+	0x6b, 0x50, 0x68, 0xb6, 0xf4, 0xb6, 0x86, 0xf7, 0xea, 0x9d, 0x4e, 0xbd, 0xd5, 0x54, 0x96, 0x29,
+	0xb5, 0x76, 0x4f, 0x6b, 0x76, 0xf5, 0x88, 0x0d, 0x2c, 0x8b, 0x10, 0x14, 0xab, 0xad, 0xfd, 0x66,
+	0x57, 0xdf, 0xab, 0x77, 0xf6, 0xca, 0xdd, 0xea, 0xae, 0x92, 0x53, 0xbf, 0x23, 0x05, 0x4b, 0x7c,
+	0x37, 0x8e, 0x1c, 0x17, 0x73, 0xec, 0xb8, 0x88, 0x20, 0x4d, 0xb7, 0x31, 0xb6, 0x0a, 0x25, 0xcc,
+	0xbe, 0xd1, 0x45, 0xc8, 0x1a, 0xa3, 0xd1, 0x80, 0x50, 0x49, 0x9b, 0x62, 0x92, 0x76, 0x99, 0xa5,
+	0xb9, 0x28, 0xee, 0x3b, 0x4e, 0x9f, 0xca, 0xf8, 0x81, 0xc1, 0x44, 0x71, 0x9a, 0x8b, 0x62, 0x0e,
+	0xa5, 0x5a, 0x45, 0xdd, 0x44, 0xaf, 0x40, 0xc6, 0xf2, 0xc9, 0xd0, 0x2b, 0x65, 0xd8, 0x84, 0xbf,
+	0x76, 0x86, 0x7a, 0x50, 0xf7, 0xc9, 0x10, 0x73, 0x6c, 0x74, 0x19, 0x72, 0xe1, 0xbe, 0xca, 0x66,
+	0x46, 0x0a, 0x67, 0x83, 0x1d, 0x95, 0x66, 0x1a, 0x43, 0xe3, 0xa3, 0x7c, 0x9b, 0x58, 0x66, 0x85,
+	0x66, 0x39, 0xa0, 0x6e, 0xa2, 0x17, 0x01, 0x05, 0x9b, 0x1c, 0x79, 0xc4, 0x4e, 0xf1, 0xc6, 0x90,
+	0xb0, 0x11, 0xcd, 0x61, 0x45, 0xe4, 0x68, 0x34, 0xa3, 0x69, 0x0c, 0x09, 0x7a, 0x08, 0xeb, 0xe4,
+	0x71, 0x6f, 0x30, 0xf6, 0xac, 0x47, 0x44, 0x0f, 0xe4, 0xb8, 0x57, 0x82, 0xeb, 0xa9, 0x27, 0xd9,
+	0x18, 0x30, 0x0a, 0x99, 0x04, 0x20, 0x0f, 0x7d, 0x3e, 0x5c, 0x75, 0x89, 0x31, 0xd0, 0x87, 0x8e,
+	0x4d, 0xe8, 0xe4, 0x9d, 0xa9, 0x53, 0x9e, 0xd5, 0xe9, 0x22, 0x45, 0xda, 0xa3, 0x38, 0xed, 0xa9,
+	0xca, 0xa9, 0x1f, 0x93, 0x00, 0x26, 0x5d, 0x83, 0xaa, 0xb0, 0x12, 0x70, 0xf1, 0x4f, 0x47, 0x73,
+	0x8f, 0x4d, 0x7c, 0x77, 0xe6, 0x88, 0xdd, 0xd3, 0x11, 0xc1, 0xf9, 0xd1, 0x24, 0x41, 0x07, 0x99,
+	0x9e, 0x41, 0x84, 0x00, 0x60, 0xdf, 0x74, 0xbb, 0x7c, 0x7b, 0x6c, 0xd8, 0xbe, 0xe5, 0x9f, 0x0a,
+	0x0b, 0x52, 0x98, 0x56, 0xff, 0xb4, 0x0c, 0xf9, 0xca, 0xf8, 0x94, 0xae, 0xc8, 0x77, 0x28, 0x74,
+	0x42, 0xc1, 0x20, 0x4f, 0x09, 0x86, 0x83, 0xf1, 0x29, 0x3d, 0x47, 0xa7, 0x98, 0x4e, 0x20, 0x52,
+	0x49, 0x82, 0x21, 0x7d, 0x3e, 0xc1, 0x90, 0x79, 0x42, 0xc1, 0xb0, 0x74, 0x96, 0x60, 0x58, 0x70,
+	0xb6, 0xfd, 0x98, 0xac, 0xfe, 0x5c, 0x0a, 0x8a, 0x5c, 0xb1, 0x0c, 0x76, 0x77, 0x5a, 0x27, 0xcb,
+	0x8b, 0xa9, 0xa3, 0x12, 0x6b, 0xdb, 0x8a, 0xe5, 0x45, 0xd4, 0xd0, 0x1e, 0x15, 0xb6, 0x86, 0x27,
+	0xb6, 0xbb, 0xe2, 0xed, 0x97, 0x13, 0x07, 0x30, 0xce, 0x5a, 0x24, 0x31, 0xa3, 0xbb, 0x73, 0x31,
+	0xd4, 0x41, 0xb0, 0xd6, 0x6e, 0xe1, 0xae, 0x56, 0x0b, 0xa4, 0x0d, 0x16, 0xac, 0xe9, 0x12, 0x31,
+	0xc9, 0x23, 0xab, 0x27, 0x16, 0x2e, 0x5d, 0xe2, 0x59, 0x0e, 0xa8, 0x9b, 0xe8, 0x69, 0x28, 0xf0,
+	0x03, 0xe2, 0x90, 0x78, 0x9e, 0xd1, 0x27, 0xc1, 0xc2, 0x65, 0xc0, 0x3d, 0x0e, 0x53, 0x3f, 0x25,
+	0xc1, 0x4a, 0xb4, 0x54, 0x74, 0x15, 0xe6, 0x97, 0xab, 0x48, 0xe8, 0x3d, 0x70, 0x89, 0x0a, 0x1f,
+	0xac, 0x55, 0x5b, 0x3b, 0xcd, 0xfa, 0x5b, 0x5a, 0x4d, 0xaf, 0x3c, 0x0c, 0x95, 0x25, 0x45, 0x46,
+	0xd7, 0xe1, 0xca, 0x7e, 0x47, 0xc3, 0x7a, 0xb5, 0xdc, 0xac, 0x6a, 0x0d, 0x9a, 0xad, 0x6d, 0xb7,
+	0xb0, 0xa6, 0xb7, 0xcb, 0x0f, 0xf7, 0xb4, 0x26, 0x95, 0x88, 0x57, 0xe1, 0x62, 0x04, 0xa3, 0xde,
+	0xdc, 0xd1, 0xbb, 0x2d, 0x7d, 0xbf, 0x59, 0x69, 0xb4, 0xaa, 0x77, 0x95, 0x34, 0xda, 0x84, 0xb5,
+	0xea, 0x6e, 0xb9, 0xd1, 0xd0, 0x9a, 0x3b, 0x9a, 0xde, 0xad, 0xef, 0x69, 0xad, 0xfd, 0xae, 0x92,
+	0xa1, 0xa2, 0x6f, 0x02, 0xae, 0x69, 0xcd, 0xba, 0x56, 0x53, 0x96, 0xd0, 0x45, 0xd8, 0x9c, 0x40,
+	0x5b, 0xdd, 0x5d, 0x0d, 0x0b, 0x65, 0x6a, 0x79, 0xce, 0xc8, 0x4a, 0x62, 0x64, 0xbf, 0x5e, 0x56,
+	0xbf, 0x5b, 0x86, 0x0b, 0xf1, 0xee, 0x0f, 0xb5, 0xf2, 0x76, 0xb8, 0x51, 0xf2, 0xc5, 0xf7, 0xda,
+	0x39, 0xc6, 0x2e, 0x54, 0xca, 0x83, 0xde, 0x8c, 0x6d, 0x9b, 0xb3, 0x7a, 0xaf, 0x9c, 0xa4, 0xf7,
+	0xc6, 0x55, 0xf7, 0xd4, 0xb4, 0xea, 0x1e, 0x55, 0x78, 0xd3, 0x71, 0x85, 0x57, 0x6d, 0x4c, 0xc6,
+	0x91, 0x95, 0x58, 0x04, 0xa8, 0x62, 0xbd, 0xb3, 0x5f, 0xad, 0x6a, 0x1d, 0xaa, 0x6a, 0xd2, 0x5d,
+	0x02, 0xf3, 0x8d, 0xa3, 0xd1, 0x68, 0xdd, 0xd7, 0xe8, 0x46, 0x55, 0x82, 0x0d, 0x0e, 0xdb, 0x15,
+	0xc3, 0xc0, 0xc7, 0x44, 0x49, 0x25, 0xec, 0x80, 0xdf, 0x20, 0xab, 0x75, 0xc8, 0xf3, 0x22, 0xde,
+	0x1c, 0x13, 0xbe, 0x69, 0x30, 0x03, 0x88, 0x1e, 0x5a, 0x23, 0x97, 0x59, 0xba, 0x6e, 0x2e, 0x58,
+	0x56, 0x7f, 0x46, 0x56, 0xbf, 0x5d, 0x82, 0xf5, 0x08, 0xaf, 0xb0, 0xe7, 0xe7, 0xf3, 0xa4, 0x87,
+	0x65, 0x6f, 0xdc, 0xeb, 0x05, 0x16, 0xce, 0x2c, 0x0e, 0x92, 0x68, 0x07, 0xd6, 0x6c, 0xf2, 0xd8,
+	0xd7, 0x39, 0xa5, 0x58, 0x93, 0xa9, 0xc5, 0x66, 0xea, 0x55, 0x4a, 0xc5, 0xca, 0xe7, 0x55, 0x49,
+	0x68, 0xf5, 0xc7, 0x65, 0xf5, 0x04, 0x72, 0x54, 0xd0, 0x55, 0x8c, 0xde, 0xb1, 0x87, 0x5e, 0x80,
+	0x35, 0x93, 0x1c, 0x1a, 0xe3, 0x81, 0x30, 0x72, 0x1c, 0x18, 0xbd, 0x63, 0x51, 0xd1, 0x55, 0x91,
+	0x11, 0x20, 0xd3, 0xc1, 0x0c, 0x71, 0x68, 0x9d, 0x53, 0x37, 0x33, 0x98, 0x99, 0x55, 0x19, 0xab,
+	0x05, 0x7d, 0xf4, 0xef, 0x25, 0xf5, 0x6b, 0x25, 0x50, 0x28, 0xb3, 0xa8, 0xbe, 0x8a, 0x54, 0x28,
+	0x30, 0xcb, 0x04, 0x2f, 0x3e, 0xec, 0xa5, 0x3c, 0x03, 0x52, 0x6c, 0xde, 0x53, 0x23, 0x97, 0x0c,
+	0xad, 0xf1, 0x50, 0xc8, 0xff, 0x20, 0x79, 0xd6, 0x16, 0x80, 0xae, 0x41, 0x9e, 0xeb, 0x89, 0xba,
+	0x47, 0x88, 0x2d, 0x2e, 0x13, 0x80, 0x83, 0x3a, 0x84, 0xd8, 0xea, 0x1d, 0x3a, 0xc3, 0x5c, 0x73,
+	0xdf, 0x23, 0xd5, 0xe0, 0xde, 0x81, 0x1b, 0x49, 0x78, 0x15, 0x78, 0x22, 0xba, 0x0f, 0xc8, 0xe1,
+	0x3e, 0xa0, 0x7e, 0x19, 0xef, 0xc4, 0x7b, 0xc6, 0x60, 0x4c, 0xd0, 0x6d, 0x48, 0xd3, 0xda, 0x9f,
+	0x73, 0x77, 0x61, 0xb8, 0x48, 0x81, 0xd4, 0xc1, 0xf8, 0x34, 0x30, 0xbd, 0x1e, 0x8c, 0x4f, 0xe9,
+	0x16, 0x47, 0x77, 0x0f, 0xd1, 0x0e, 0xf6, 0x1d, 0xd1, 0x43, 0xf9, 0x11, 0x54, 0xa4, 0xd4, 0x2f,
+	0x07, 0x08, 0x8b, 0xf7, 0xd0, 0x07, 0x20, 0x43, 0x79, 0xce, 0xb5, 0x6c, 0x8b, 0xd5, 0x2d, 0xf0,
+	0x31, 0x47, 0xa6, 0x5b, 0x16, 0xeb, 0x73, 0xca, 0x52, 0xb7, 0x6c, 0x93, 0x3c, 0x16, 0xb5, 0x29,
+	0x50, 0x70, 0x93, 0xb8, 0x87, 0x75, 0x0a, 0x4c, 0x98, 0x44, 0x7f, 0x58, 0x56, 0xef, 0xc3, 0xa5,
+	0xea, 0x11, 0xe9, 0x1d, 0x27, 0x5e, 0x90, 0xce, 0xbf, 0x76, 0x5d, 0x20, 0xc5, 0xbe, 0x43, 0x56,
+	0xbf, 0x8b, 0xca, 0xef, 0x81, 0x45, 0x6c, 0xbf, 0x35, 0x62, 0x13, 0x64, 0x03, 0x32, 0xbc, 0x72,
+	0x62, 0x54, 0x58, 0x02, 0x6d, 0xc1, 0xb2, 0xe1, 0xe9, 0x07, 0x8e, 0x33, 0x60, 0x82, 0x27, 0x8b,
+	0x97, 0x0c, 0xaf, 0xe2, 0x38, 0x03, 0xa6, 0xf9, 0x79, 0xba, 0x65, 0xfb, 0xef, 0xbf, 0xcd, 0x96,
+	0x0c, 0x2d, 0xdb, 0xab, 0xd3, 0xe4, 0x24, 0xeb, 0xd5, 0x0f, 0x30, 0x69, 0x93, 0x12, 0x59, 0xaf,
+	0x7e, 0x40, 0x64, 0x1d, 0x0e, 0x1c, 0xc3, 0x67, 0x1b, 0xb2, 0x4c, 0xb3, 0xb6, 0x69, 0x92, 0x69,
+	0x6d, 0x9e, 0x3e, 0xe6, 0x64, 0x74, 0xf3, 0x4d, 0xe3, 0xac, 0xe1, 0xed, 0xb3, 0xb4, 0x6a, 0x42,
+	0x21, 0x5a, 0x59, 0x0f, 0x7d, 0x08, 0x96, 0x9d, 0x51, 0xf4, 0xdc, 0x95, 0x6c, 0xe0, 0x8d, 0x12,
+	0xe1, 0x80, 0x82, 0x8e, 0xf6, 0xa1, 0x61, 0x0d, 0x88, 0x19, 0xb4, 0x89, 0xa7, 0xd4, 0x6f, 0x93,
+	0x61, 0x93, 0x53, 0x08, 0x13, 0x76, 0x28, 0x5e, 0xbe, 0x1c, 0x8a, 0xae, 0xf8, 0xd6, 0x0f, 0x07,
+	0x46, 0x9f, 0x96, 0x4a, 0x37, 0x67, 0xed, 0x8c, 0x52, 0xa7, 0x78, 0x24, 0x43, 0xb7, 0x29, 0xb3,
+	0x3b, 0x6b, 0x55, 0x8c, 0xb7, 0xf5, 0x8e, 0x86, 0xef, 0xd5, 0xab, 0x9a, 0xde, 0x6c, 0x35, 0x35,
+	0x5c, 0x70, 0xa3, 0x18, 0xea, 0xdb, 0x70, 0x69, 0x3e, 0x3d, 0xdb, 0xfb, 0xa6, 0x39, 0x28, 0x4f,
+	0xa1, 0x2b, 0x50, 0x8a, 0x81, 0xf7, 0x9b, 0xe5, 0x7b, 0xe5, 0x7a, 0xa3, 0x5c, 0x69, 0x88, 0x1d,
+	0x79, 0x2a, 0x97, 0xdd, 0x74, 0x87, 0x56, 0x85, 0xd9, 0xf9, 0xf8, 0x8f, 0x65, 0xf5, 0x9b, 0xd3,
+	0xb0, 0xc5, 0x2b, 0xc2, 0x8c, 0x15, 0xb1, 0xbb, 0xca, 0x2f, 0x39, 0xfb, 0x7a, 0x2c, 0xd1, 0x94,
+	0x7b, 0xd6, 0xf5, 0x98, 0x37, 0xff, 0x7e, 0x0c, 0x7d, 0x21, 0x6c, 0xd8, 0xec, 0x1e, 0x68, 0xaa,
+	0x98, 0xb3, 0xcc, 0x9c, 0xfc, 0xe2, 0x28, 0x5e, 0xc2, 0xba, 0x3d, 0x0b, 0x44, 0x7d, 0x28, 0x45,
+	0xd4, 0xc1, 0xf8, 0x29, 0x9f, 0x6f, 0x0f, 0xc9, 0xd7, 0x7c, 0x13, 0x25, 0x31, 0x66, 0x2a, 0xc0,
+	0x5b, 0xbd, 0xe4, 0x0c, 0xd4, 0x84, 0x62, 0xb0, 0x0f, 0xeb, 0x1e, 0xed, 0x4f, 0xb6, 0x5e, 0x12,
+	0x2c, 0xe9, 0xdc, 0xdc, 0x68, 0x0c, 0x49, 0x55, 0xa0, 0xb3, 0xde, 0xf7, 0x70, 0xa1, 0x17, 0x4d,
+	0xa3, 0x2f, 0x86, 0x4d, 0x61, 0xb8, 0x9c, 0xaa, 0x35, 0xbf, 0xc0, 0x7d, 0xfe, 0x2c, 0xeb, 0x4b,
+	0xbc, 0xca, 0x1b, 0x07, 0x09, 0xd0, 0x05, 0x5b, 0xcf, 0x3f, 0x93, 0xd5, 0x2f, 0x0b, 0xa6, 0x29,
+	0xad, 0x8f, 0xd5, 0xe3, 0xd6, 0xeb, 0x70, 0x15, 0x7d, 0x81, 0xd8, 0x83, 0x3c, 0xdd, 0x77, 0xf4,
+	0x3e, 0x09, 0xac, 0x1c, 0xef, 0x3d, 0xeb, 0xc6, 0x84, 0x5b, 0xc7, 0x99, 0xa5, 0x83, 0xef, 0x55,
+	0x5e, 0xd7, 0xd9, 0x21, 0x49, 0x97, 0x58, 0x3f, 0x2b, 0xab, 0x8f, 0x01, 0x26, 0x63, 0x80, 0x5e,
+	0x63, 0x36, 0x52, 0xba, 0x87, 0xce, 0x31, 0x3e, 0x45, 0x36, 0x8c, 0x0e, 0x45, 0xc4, 0x02, 0x1f,
+	0xbd, 0x3c, 0xdf, 0xfc, 0x74, 0x47, 0x7a, 0x39, 0xe9, 0xe4, 0xff, 0xe7, 0x25, 0xd8, 0x9a, 0x33,
+	0xfc, 0xa8, 0x0b, 0x88, 0x6d, 0x00, 0x49, 0xe6, 0xa2, 0x67, 0xe7, 0xee, 0x21, 0x51, 0x1e, 0x78,
+	0xad, 0x37, 0x05, 0x79, 0x27, 0x75, 0xfc, 0x99, 0x14, 0x40, 0xd5, 0x25, 0x86, 0x4f, 0x6a, 0xa4,
+	0x77, 0x4c, 0xf7, 0x41, 0x76, 0xce, 0xe4, 0x27, 0x7c, 0xf6, 0x4d, 0x61, 0x47, 0xc4, 0x75, 0x82,
+	0xe3, 0x1f, 0xfd, 0x46, 0x37, 0x60, 0x85, 0xfe, 0xd7, 0x03, 0xd5, 0x40, 0x38, 0x93, 0x50, 0x58,
+	0x5b, 0xa8, 0x07, 0xaf, 0xd3, 0xe3, 0x44, 0xef, 0x98, 0x9f, 0x3b, 0xd3, 0x4c, 0xf5, 0xbd, 0x76,
+	0xc6, 0xa5, 0x0a, 0x3b, 0x76, 0x66, 0x4d, 0xf1, 0x85, 0x9e, 0x83, 0x55, 0xdf, 0xe8, 0xf7, 0x09,
+	0xf3, 0xa3, 0xb0, 0x4d, 0xba, 0xc3, 0x73, 0x6b, 0x50, 0x91, 0x83, 0x3b, 0x02, 0x4a, 0x15, 0x23,
+	0xcf, 0x71, 0x7d, 0xdd, 0x71, 0x4d, 0xe2, 0x96, 0x96, 0xd8, 0xbd, 0x6f, 0x8e, 0x42, 0x5a, 0x14,
+	0x80, 0x3e, 0x02, 0x79, 0xcf, 0x19, 0xbb, 0x3d, 0xc2, 0xeb, 0xb1, 0x7c, 0xf6, 0xdd, 0x19, 0xe9,
+	0x1d, 0x77, 0x18, 0x36, 0xad, 0xc3, 0x9d, 0x52, 0x4d, 0xab, 0xde, 0xd5, 0x3b, 0xad, 0x7d, 0x5c,
+	0xd5, 0xf4, 0xee, 0xc3, 0x76, 0x28, 0x0e, 0x31, 0x78, 0x21, 0x16, 0xba, 0x09, 0xca, 0xc8, 0x60,
+	0xf7, 0x7d, 0xac, 0xb9, 0x47, 0x86, 0x77, 0xc4, 0x0c, 0x48, 0x39, 0x5c, 0xe4, 0x70, 0xca, 0x75,
+	0xd7, 0xf0, 0x8e, 0xd0, 0x26, 0x2c, 0x1d, 0x7a, 0x7d, 0xaa, 0x67, 0x99, 0x6c, 0x07, 0xcc, 0x1c,
+	0x7a, 0xfd, 0xba, 0x89, 0x3e, 0x07, 0x36, 0x29, 0x98, 0xd7, 0x41, 0xf7, 0x48, 0xcf, 0x25, 0x3e,
+	0xbb, 0x3b, 0x24, 0xd7, 0xa5, 0x9b, 0x2b, 0x18, 0x1d, 0x7a, 0xfd, 0x0e, 0xcb, 0xeb, 0xb0, 0xac,
+	0xbb, 0x64, 0xd1, 0x8d, 0xf6, 0x3f, 0x97, 0xd4, 0x1f, 0x90, 0x20, 0x5b, 0xab, 0x94, 0xf9, 0x9c,
+	0xff, 0x30, 0xf7, 0xd5, 0x11, 0x17, 0x43, 0x8b, 0xaf, 0x0e, 0x39, 0x19, 0x16, 0x44, 0x94, 0x3c,
+	0xe6, 0xad, 0x75, 0xbe, 0x9b, 0xc7, 0xf0, 0xb4, 0x72, 0x19, 0x72, 0x43, 0xe2, 0x1b, 0xec, 0x1a,
+	0x93, 0x49, 0xca, 0x14, 0xce, 0x52, 0x00, 0x45, 0x4f, 0x58, 0xb1, 0x3f, 0x2f, 0xa9, 0x26, 0xac,
+	0xd7, 0xc8, 0xc1, 0xb8, 0x5f, 0x75, 0x86, 0x43, 0xc3, 0x36, 0xc5, 0xee, 0x46, 0x15, 0x9b, 0x1e,
+	0x87, 0x88, 0xe9, 0x19, 0x24, 0xe9, 0x0c, 0x35, 0xdc, 0x3e, 0x57, 0x8b, 0x73, 0x98, 0x7d, 0x2f,
+	0xe8, 0xa2, 0x7f, 0x28, 0xab, 0x06, 0x6c, 0xc4, 0x4b, 0x99, 0xdc, 0xa3, 0x05, 0x47, 0x03, 0x29,
+	0x7e, 0x34, 0xb8, 0x04, 0xd9, 0x60, 0x03, 0x16, 0x37, 0x21, 0x61, 0x3a, 0xa1, 0x21, 0x3f, 0x24,
+	0xab, 0x5f, 0x0a, 0x2b, 0x74, 0xf0, 0x85, 0xd9, 0xdb, 0x3b, 0x83, 0xf5, 0x16, 0x2c, 0xb3, 0xd9,
+	0x13, 0xba, 0xeb, 0x2c, 0xd1, 0x64, 0xdd, 0x44, 0x1f, 0x0c, 0xd4, 0xcb, 0x14, 0x13, 0x0d, 0x4f,
+	0x9f, 0x31, 0x73, 0x99, 0x8e, 0x6b, 0xf8, 0x86, 0xd0, 0x31, 0xd5, 0xfb, 0x90, 0x67, 0x60, 0xb6,
+	0xba, 0x4d, 0xf4, 0x7e, 0x48, 0xb3, 0x4b, 0xbf, 0xb3, 0x6f, 0xa4, 0x29, 0x05, 0x37, 0x21, 0x5b,
+	0xc9, 0x97, 0x7b, 0xbf, 0x20, 0xa9, 0xaf, 0x72, 0xc6, 0x35, 0xc2, 0xbd, 0xa9, 0x10, 0xa4, 0x69,
+	0x65, 0x85, 0xcf, 0x05, 0xfb, 0x4e, 0xa0, 0xfb, 0x45, 0x49, 0xbd, 0x07, 0x59, 0x4a, 0xc7, 0x2c,
+	0xef, 0xaf, 0x40, 0x86, 0x22, 0x06, 0x22, 0x6f, 0x61, 0x75, 0x38, 0x76, 0x02, 0xdf, 0x7f, 0x22,
+	0xa9, 0x5f, 0xc0, 0xeb, 0x83, 0x09, 0x15, 0x57, 0x89, 0xf5, 0x09, 0xe5, 0x9a, 0x3c, 0x91, 0x6b,
+	0x09, 0xbc, 0xfe, 0x85, 0xa4, 0x7e, 0x75, 0x8a, 0x33, 0xeb, 0x10, 0x9f, 0xf6, 0x65, 0x22, 0xb3,
+	0x70, 0x4c, 0xe4, 0x27, 0x1d, 0x13, 0x7a, 0x5a, 0x61, 0xb2, 0x94, 0x6b, 0x0c, 0x0b, 0x4f, 0x2b,
+	0x4c, 0xd6, 0x5e, 0x16, 0xfe, 0x33, 0xec, 0x78, 0x18, 0x9c, 0xd4, 0x83, 0x73, 0xe1, 0x3b, 0x96,
+	0x93, 0x52, 0x5c, 0x4e, 0x26, 0x49, 0xb1, 0xe5, 0xdf, 0x57, 0x29, 0xf6, 0x2b, 0x92, 0x3a, 0x84,
+	0x4d, 0x31, 0x16, 0x5d, 0x32, 0x1c, 0x0d, 0x0c, 0x9f, 0x70, 0xe9, 0x9c, 0x38, 0x2a, 0xd7, 0x20,
+	0xef, 0x0b, 0xac, 0x60, 0x19, 0x65, 0x30, 0x04, 0xa0, 0x85, 0x76, 0x84, 0x1f, 0x93, 0xd5, 0x32,
+	0x00, 0x9f, 0xd3, 0xc1, 0x56, 0x38, 0x33, 0xad, 0xcf, 0x66, 0xf1, 0x53, 0x92, 0xba, 0x0d, 0xab,
+	0x35, 0xf2, 0xa8, 0x62, 0x13, 0xbf, 0x6e, 0x12, 0xdb, 0xb7, 0x0e, 0x4f, 0x93, 0xb6, 0xd4, 0x05,
+	0x7c, 0xbe, 0x42, 0x56, 0x3f, 0x2d, 0x83, 0x52, 0xb3, 0xbc, 0x9e, 0x63, 0xdb, 0xa4, 0xe7, 0x13,
+	0x93, 0xaa, 0x79, 0xec, 0x64, 0x67, 0x9a, 0x2e, 0x17, 0x1f, 0xdc, 0xae, 0xce, 0x93, 0xb4, 0xed,
+	0x7d, 0x63, 0x48, 0xf4, 0x23, 0xc3, 0x36, 0x07, 0x44, 0x58, 0x4d, 0x81, 0x82, 0x76, 0x19, 0x04,
+	0x3d, 0x0d, 0x85, 0x1e, 0xd3, 0xc1, 0x02, 0x14, 0x2e, 0x88, 0x57, 0x38, 0x50, 0x20, 0x21, 0x48,
+	0x8f, 0x1c, 0x37, 0xb8, 0x8d, 0x61, 0xdf, 0x51, 0xaf, 0x82, 0x0c, 0x2f, 0x33, 0xf0, 0x2a, 0x78,
+	0x0e, 0x56, 0x8d, 0xb1, 0xeb, 0xb8, 0x86, 0x3e, 0x32, 0x3c, 0xef, 0xc4, 0x71, 0x83, 0x7b, 0xd5,
+	0x22, 0x07, 0xb7, 0x05, 0x94, 0x8a, 0xcd, 0xc0, 0xb7, 0x23, 0xb8, 0x59, 0x0d, 0xd2, 0x68, 0x17,
+	0x72, 0xac, 0xe2, 0x6c, 0x73, 0xe6, 0x57, 0xab, 0xf3, 0x44, 0x01, 0xed, 0x02, 0xb6, 0x2d, 0xc3,
+	0x4e, 0x37, 0xdc, 0x88, 0xb3, 0x7d, 0x01, 0x45, 0x4d, 0xc8, 0x1f, 0x3a, 0xee, 0xd0, 0x10, 0x86,
+	0xee, 0x1c, 0xe3, 0x75, 0x63, 0x0e, 0xaf, 0x6d, 0x86, 0xc9, 0xb9, 0x6d, 0x4f, 0xb8, 0xc1, 0x61,
+	0x08, 0x57, 0x5f, 0x02, 0xa8, 0x39, 0x81, 0x3d, 0x6e, 0xc1, 0xd1, 0xf9, 0x4f, 0xca, 0xaa, 0x0e,
+	0xab, 0x35, 0xd7, 0x38, 0xf4, 0xcb, 0x54, 0x0e, 0x9d, 0xb0, 0xb5, 0x1e, 0x91, 0xe9, 0x52, 0x4c,
+	0xa6, 0x23, 0x48, 0x7b, 0x03, 0x27, 0x30, 0x6a, 0xb0, 0xef, 0x05, 0x33, 0xe2, 0x5b, 0x65, 0x56,
+	0x1f, 0x5a, 0x40, 0x85, 0xf4, 0x2d, 0x7b, 0x01, 0xfa, 0xbf, 0x93, 0xd4, 0x6f, 0x90, 0xa0, 0x38,
+	0xc1, 0xb7, 0x2d, 0xbb, 0x3f, 0xbf, 0x3e, 0x6f, 0x40, 0xbe, 0x77, 0xe4, 0xd0, 0x73, 0x13, 0xbb,
+	0x66, 0x4c, 0x9d, 0xcb, 0x45, 0x0f, 0x38, 0x09, 0x13, 0xe6, 0x81, 0x5f, 0x98, 0x98, 0x38, 0xf4,
+	0x3b, 0x41, 0xba, 0xfe, 0x77, 0x49, 0xfd, 0x86, 0x14, 0x6c, 0xb1, 0x5a, 0x55, 0x19, 0xb1, 0x57,
+	0xb6, 0xcd, 0x70, 0x73, 0x7c, 0x92, 0xee, 0x9a, 0x88, 0xe0, 0xcc, 0x13, 0x8b, 0xe0, 0xa0, 0xb2,
+	0x4b, 0x89, 0x4e, 0x6c, 0xcb, 0x51, 0x27, 0x36, 0xf4, 0x1a, 0x64, 0x98, 0x03, 0x8f, 0xf0, 0x31,
+	0x56, 0x17, 0xbb, 0xee, 0x60, 0x4e, 0x30, 0xdd, 0xa7, 0xb9, 0x27, 0xee, 0xd3, 0x0f, 0x42, 0x96,
+	0x69, 0xd8, 0x26, 0x39, 0x2c, 0xc1, 0xf9, 0xee, 0xeb, 0x29, 0x7e, 0x8d, 0x1c, 0xa2, 0x8b, 0x90,
+	0x1d, 0x1a, 0x8f, 0x75, 0xd6, 0xca, 0x3c, 0x37, 0xc3, 0x0c, 0x8d, 0xc7, 0xf7, 0x93, 0x47, 0xe5,
+	0x77, 0x24, 0xf5, 0x13, 0x12, 0xe4, 0x83, 0x51, 0xf1, 0x88, 0x8d, 0x5e, 0x85, 0xa5, 0x1e, 0xfb,
+	0x62, 0x6a, 0xfd, 0xe2, 0x82, 0x05, 0x36, 0xda, 0x05, 0x85, 0x99, 0x4e, 0xa3, 0x0d, 0x4f, 0x9f,
+	0xab, 0xe1, 0x45, 0x4a, 0x57, 0x0d, 0x1b, 0x9f, 0x50, 0xcd, 0xff, 0x29, 0xa9, 0xbf, 0x2e, 0x8b,
+	0x25, 0xc0, 0xfd, 0x45, 0x76, 0x13, 0xfc, 0x01, 0x93, 0x0f, 0xb3, 0x13, 0xa2, 0x64, 0xdf, 0xb5,
+	0x17, 0x60, 0xcd, 0x1e, 0x0f, 0x75, 0xdf, 0xa2, 0x25, 0x7a, 0xba, 0x73, 0x62, 0x0b, 0x2b, 0x50,
+	0x06, 0xaf, 0xda, 0xe3, 0x61, 0x97, 0xc3, 0x5b, 0x14, 0xac, 0xfe, 0x88, 0x04, 0xb9, 0x90, 0x09,
+	0x2a, 0x02, 0xd4, 0xc2, 0x53, 0x81, 0xf2, 0x14, 0x5a, 0x83, 0x42, 0x4d, 0xd3, 0x9b, 0x2d, 0xbd,
+	0x51, 0xaf, 0x6a, 0xcd, 0x8e, 0xa6, 0x48, 0x68, 0x1d, 0x56, 0x6b, 0x9a, 0x8e, 0xb5, 0x6e, 0x1d,
+	0x6b, 0xfa, 0x76, 0x1d, 0x77, 0xba, 0x8a, 0x2c, 0x80, 0xcd, 0x56, 0x57, 0xaf, 0x37, 0xf5, 0x1a,
+	0x2e, 0x6f, 0x77, 0x95, 0x14, 0x5a, 0x85, 0x7c, 0x4d, 0xd3, 0x2b, 0xe5, 0x9a, 0x4e, 0xcf, 0x1d,
+	0x4a, 0x3a, 0x02, 0xe8, 0x34, 0x5a, 0x5d, 0x25, 0x83, 0x14, 0x58, 0x11, 0x80, 0x7a, 0xb3, 0xa6,
+	0x3d, 0x50, 0x96, 0xd0, 0x75, 0xb8, 0x32, 0xc5, 0x48, 0xaf, 0xec, 0x77, 0xf5, 0x6a, 0x6b, 0xbf,
+	0x51, 0xd3, 0x2b, 0x9a, 0xb2, 0x8c, 0xb6, 0x60, 0xbd, 0xa6, 0xe9, 0xdb, 0x5a, 0xb9, 0xbb, 0x8f,
+	0x35, 0xbd, 0x56, 0xef, 0x94, 0x2b, 0x0d, 0xad, 0xa6, 0x64, 0x13, 0xfa, 0xf8, 0x7f, 0x4b, 0xea,
+	0x87, 0xa0, 0xc4, 0x7a, 0x6b, 0x87, 0xf8, 0x6d, 0xab, 0x77, 0x1c, 0x5d, 0xa0, 0x0b, 0x64, 0xce,
+	0x7f, 0x65, 0x36, 0xe6, 0x02, 0xa3, 0xde, 0x33, 0x8e, 0x09, 0x25, 0x7f, 0xb2, 0x35, 0x1d, 0x1a,
+	0x1b, 0x53, 0x51, 0x63, 0x63, 0xc4, 0xfe, 0x9c, 0x8e, 0xd9, 0x9f, 0x17, 0xd4, 0xe7, 0xbf, 0x49,
+	0xea, 0x5f, 0x91, 0xe0, 0x12, 0xab, 0x0f, 0x66, 0x2e, 0xdd, 0x3b, 0xce, 0xc0, 0x24, 0xf6, 0xc4,
+	0xf2, 0xf0, 0xc1, 0xb8, 0xe5, 0xf6, 0x49, 0x64, 0xc8, 0xd4, 0xea, 0x96, 0x9f, 0x74, 0x75, 0x27,
+	0x74, 0xfe, 0x6f, 0xca, 0xea, 0xeb, 0x70, 0x51, 0x54, 0x57, 0x98, 0xf3, 0x22, 0xb5, 0x5e, 0xd0,
+	0xda, 0xdf, 0x90, 0xd5, 0x2f, 0x14, 0x8b, 0x18, 0x13, 0xdf, 0x72, 0xc9, 0xbb, 0xb9, 0xfb, 0xfc,
+	0x67, 0x49, 0x7d, 0x04, 0x2b, 0x11, 0xe6, 0xe6, 0x7c, 0xee, 0xa1, 0xc4, 0xe4, 0x5e, 0x42, 0xe7,
+	0x97, 0x98, 0x09, 0x5d, 0xf2, 0x3f, 0x24, 0xb5, 0x0c, 0x6b, 0xa2, 0x5c, 0xb6, 0xa7, 0x96, 0x7b,
+	0xc7, 0x67, 0x14, 0x9e, 0xc0, 0xe2, 0xdb, 0x64, 0xf5, 0xff, 0x87, 0x0b, 0xdb, 0xc6, 0x23, 0xc7,
+	0xb5, 0x7c, 0xb2, 0x4b, 0x5c, 0x87, 0x4c, 0x26, 0x40, 0x03, 0x56, 0x0f, 0x45, 0x8e, 0x7e, 0xc4,
+	0xb2, 0x16, 0x4c, 0x85, 0x28, 0x1f, 0x5c, 0x3c, 0x8c, 0x71, 0x4d, 0x28, 0xfc, 0xef, 0xca, 0xea,
+	0xd7, 0xcb, 0x80, 0x66, 0x4d, 0x74, 0xe8, 0x16, 0xac, 0x1b, 0x6e, 0xcf, 0xb0, 0x89, 0x6e, 0x8e,
+	0x3d, 0x5f, 0x3f, 0x30, 0x06, 0x86, 0xdd, 0x23, 0x4c, 0xab, 0x4b, 0xe1, 0x35, 0x9e, 0x55, 0x1b,
+	0x7b, 0x7e, 0x85, 0x67, 0x50, 0xfc, 0x9e, 0x31, 0x1a, 0x11, 0x53, 0x67, 0x1e, 0x0e, 0x01, 0x7e,
+	0xe0, 0xfb, 0xc4, 0xb2, 0xe8, 0x44, 0x09, 0xf0, 0x5f, 0x04, 0x74, 0xe0, 0xd8, 0x63, 0x2f, 0x8e,
+	0xce, 0x75, 0x3e, 0x85, 0xe5, 0x44, 0xb1, 0x2f, 0x42, 0x96, 0x3b, 0x4e, 0x18, 0xa3, 0xc0, 0x36,
+	0xcf, 0xfc, 0x26, 0x8c, 0x11, 0x3d, 0x16, 0x04, 0x59, 0xfa, 0x89, 0xc1, 0x5c, 0x3f, 0x85, 0x93,
+	0x5d, 0x51, 0xa0, 0xdc, 0xe7, 0x50, 0xf6, 0x76, 0x28, 0x30, 0x5b, 0x06, 0x1a, 0x23, 0x3f, 0x65,
+	0xac, 0x06, 0xf0, 0xc0, 0xe6, 0xf4, 0x7d, 0x12, 0xe4, 0x68, 0xa7, 0xb0, 0xb7, 0x52, 0x54, 0x35,
+	0xa5, 0x4a, 0x9c, 0xa7, 0x8b, 0x27, 0x42, 0xe2, 0xae, 0x61, 0x85, 0x01, 0x3b, 0x1c, 0xc6, 0x7c,
+	0x3b, 0x18, 0xd2, 0x09, 0xb3, 0x67, 0xb1, 0xcb, 0x26, 0x06, 0xb8, 0xcf, 0x6e, 0x99, 0x81, 0x67,
+	0x0e, 0x1c, 0x2f, 0x78, 0xcf, 0xc2, 0xd1, 0x1b, 0x8e, 0xe7, 0xa3, 0x97, 0x61, 0xe3, 0xd0, 0x25,
+	0x24, 0x78, 0x97, 0x13, 0x3e, 0x6d, 0xe0, 0xe2, 0x04, 0xd1, 0x3c, 0x3e, 0xbd, 0xc2, 0x17, 0x0e,
+	0xb3, 0x43, 0xf9, 0x93, 0x92, 0x7a, 0x07, 0xf2, 0x3b, 0xc4, 0x26, 0xae, 0xd5, 0x63, 0x07, 0xc3,
+	0x2d, 0x58, 0xa6, 0x8a, 0x66, 0x30, 0x09, 0x0b, 0x78, 0x89, 0x26, 0xf9, 0xfa, 0x0a, 0xbd, 0x25,
+	0x56, 0xb8, 0xb7, 0x84, 0xfa, 0x71, 0x09, 0x8a, 0x82, 0x38, 0xb0, 0x66, 0x5c, 0x05, 0x10, 0x3e,
+	0xdf, 0x93, 0x8b, 0xb7, 0x9c, 0x80, 0xd4, 0x4d, 0x54, 0x85, 0x95, 0x3e, 0x27, 0xd0, 0x05, 0x37,
+	0x69, 0xae, 0xab, 0x5c, 0xa4, 0x5a, 0x38, 0xdf, 0x8f, 0xd4, 0xf1, 0x19, 0x28, 0x06, 0x65, 0x78,
+	0xe3, 0x83, 0xe0, 0x16, 0x38, 0x13, 0x7a, 0x9b, 0x77, 0xc6, 0x07, 0x75, 0x53, 0x7d, 0x04, 0x28,
+	0x5e, 0x37, 0xa6, 0x7f, 0xbc, 0x01, 0x59, 0x81, 0x35, 0x77, 0x55, 0x44, 0x0b, 0x0f, 0x64, 0x56,
+	0x48, 0xb4, 0x40, 0xa6, 0xfc, 0x88, 0xac, 0x7e, 0x3a, 0x05, 0xab, 0x21, 0x75, 0xb8, 0x24, 0xf3,
+	0xdc, 0x6c, 0x14, 0xdd, 0xd5, 0xff, 0xbf, 0xb3, 0x0b, 0x8e, 0x3f, 0x08, 0x04, 0x4e, 0xcf, 0xb6,
+	0xe7, 0x78, 0x1f, 0xcb, 0xd3, 0x7d, 0x7c, 0xae, 0xee, 0x99, 0x19, 0x89, 0xf4, 0x3b, 0x18, 0x89,
+	0x84, 0x19, 0xf5, 0x8f, 0x64, 0xf5, 0x77, 0x27, 0x4e, 0x60, 0x05, 0xc8, 0x71, 0x47, 0x4e, 0xbd,
+	0x75, 0x57, 0x79, 0x0a, 0x5d, 0x85, 0x8b, 0x22, 0x89, 0xb5, 0x37, 0xf7, 0xb5, 0x0e, 0xdb, 0xde,
+	0xdb, 0xb8, 0x25, 0xae, 0xdf, 0x2f, 0xc3, 0xd6, 0x54, 0x76, 0xf8, 0x4c, 0x91, 0xdd, 0xc3, 0x8b,
+	0xcc, 0xf8, 0xe5, 0x8d, 0x89, 0x2e, 0xc2, 0xa6, 0xc8, 0xa9, 0x37, 0xbb, 0x1a, 0x6e, 0x96, 0x1b,
+	0x22, 0x8b, 0x50, 0x85, 0x44, 0x64, 0xd5, 0x2a, 0x02, 0x78, 0x88, 0x2e, 0xc1, 0x85, 0x10, 0x9f,
+	0xbf, 0x9d, 0x14, 0xc5, 0x29, 0x7d, 0xb4, 0x09, 0x6b, 0x22, 0xaf, 0xd1, 0xda, 0xa9, 0x37, 0xf5,
+	0x46, 0xab, 0x5c, 0x53, 0x8e, 0xd0, 0x8b, 0x70, 0x33, 0xe0, 0x53, 0xee, 0x96, 0xf5, 0xbd, 0xfa,
+	0x0e, 0x2e, 0x77, 0xeb, 0xad, 0xa6, 0xde, 0xc2, 0x7a, 0xbb, 0x51, 0x7e, 0xa8, 0x61, 0xbd, 0x5e,
+	0x13, 0x05, 0x58, 0xea, 0xff, 0x49, 0xd3, 0x65, 0xe1, 0x8b, 0x7b, 0x4c, 0x26, 0x0d, 0x34, 0x58,
+	0x16, 0xbd, 0xbf, 0x60, 0xf0, 0xa3, 0x54, 0xb7, 0x82, 0xd9, 0x17, 0xd0, 0x2e, 0x98, 0x7c, 0x3f,
+	0x2a, 0xa9, 0x1f, 0x4b, 0xc3, 0x72, 0xb0, 0x14, 0x8b, 0x00, 0x8d, 0x72, 0x47, 0xb4, 0x44, 0x91,
+	0xe8, 0x60, 0x30, 0xcb, 0x6f, 0xa3, 0xce, 0x94, 0xb5, 0x22, 0x40, 0xb5, 0xd5, 0x68, 0x68, 0x55,
+	0xda, 0x10, 0x25, 0x45, 0xd3, 0x7b, 0x5a, 0xad, 0xdc, 0xd0, 0xeb, 0xcd, 0xed, 0x96, 0x92, 0xa6,
+	0x4a, 0x1f, 0x4f, 0xef, 0xd6, 0x3b, 0xdd, 0x16, 0x7e, 0xa8, 0x64, 0xd0, 0x0a, 0x64, 0x2b, 0xad,
+	0x56, 0xa7, 0xab, 0xe1, 0x8e, 0xb2, 0xc4, 0x18, 0x94, 0x71, 0x4d, 0xaf, 0x94, 0xab, 0x77, 0x3b,
+	0xca, 0x32, 0x25, 0x10, 0x7d, 0x81, 0xb5, 0x6a, 0x0b, 0xd7, 0x94, 0x2c, 0xd5, 0xec, 0x76, 0xca,
+	0x7b, 0x5a, 0x87, 0x77, 0x52, 0x4d, 0xc9, 0x71, 0xd5, 0x92, 0x55, 0x62, 0xaf, 0xde, 0x55, 0x80,
+	0x12, 0x55, 0xcb, 0x7b, 0xed, 0x72, 0x7d, 0xa7, 0xc9, 0x0b, 0xce, 0xa3, 0x3c, 0x2c, 0x37, 0x5b,
+	0xdd, 0x7a, 0x55, 0xeb, 0x28, 0x2b, 0x28, 0x0b, 0xe9, 0xbd, 0x56, 0xb7, 0xa6, 0x14, 0x98, 0x73,
+	0x46, 0xa3, 0xae, 0x35, 0xbb, 0x7a, 0xab, 0x4d, 0xab, 0xdc, 0x51, 0x8a, 0x54, 0x95, 0x64, 0x55,
+	0xb8, 0x57, 0x6e, 0xec, 0x6b, 0x1d, 0x65, 0x95, 0xa9, 0x92, 0xf5, 0x4e, 0xb5, 0xd5, 0x6c, 0x6a,
+	0xd5, 0xae, 0x56, 0x53, 0x14, 0xaa, 0x28, 0x96, 0x71, 0xb5, 0xdc, 0xd4, 0xf4, 0xda, 0x7e, 0xa7,
+	0xab, 0x57, 0xca, 0x8d, 0x72, 0xb3, 0xaa, 0x29, 0x6b, 0xb4, 0x31, 0x42, 0x7d, 0xec, 0x28, 0x88,
+	0xcf, 0x94, 0xfb, 0x94, 0x57, 0xf8, 0x50, 0x76, 0x9d, 0x55, 0xbf, 0x45, 0x35, 0x4e, 0x41, 0xb4,
+	0x41, 0xeb, 0xb6, 0xab, 0xe1, 0x96, 0xfe, 0xa0, 0xad, 0x6c, 0xd2, 0x0e, 0x6d, 0xdf, 0x6b, 0xeb,
+	0x6f, 0xee, 0x6b, 0xfb, 0x9a, 0x72, 0x81, 0xce, 0x50, 0xaa, 0xb1, 0x76, 0x5a, 0xfa, 0x5e, 0xb9,
+	0xd3, 0xa9, 0xdf, 0xd3, 0x44, 0xcf, 0x6f, 0xd1, 0x46, 0x8a, 0x7e, 0xd3, 0xbb, 0xe5, 0x46, 0xe3,
+	0xa1, 0x52, 0xa2, 0x13, 0xad, 0x5b, 0xbe, 0xa7, 0xe1, 0xa6, 0x5e, 0xc1, 0xe5, 0xfb, 0xa2, 0xd3,
+	0x2f, 0xd2, 0xda, 0xc6, 0xc0, 0xa2, 0x27, 0x2f, 0xd1, 0xfa, 0x6d, 0x97, 0xef, 0xb5, 0x70, 0xbd,
+	0xab, 0xe9, 0xb4, 0x06, 0x5a, 0x47, 0xb9, 0x8c, 0x36, 0x40, 0x29, 0x57, 0xb9, 0x5f, 0xa3, 0xd0,
+	0xcc, 0x3b, 0xca, 0x15, 0xf5, 0x73, 0x61, 0x83, 0xce, 0xa3, 0xe9, 0x17, 0x51, 0x0b, 0x26, 0xcf,
+	0xf7, 0xc8, 0xea, 0x2f, 0x49, 0x54, 0x72, 0xf9, 0xe2, 0x2e, 0x8a, 0x4f, 0xa2, 0x0f, 0xcd, 0xc8,
+	0xcb, 0x85, 0x8f, 0x7e, 0x42, 0x02, 0x74, 0x03, 0x84, 0x25, 0x46, 0xf7, 0x9d, 0x63, 0x12, 0xec,
+	0x70, 0x79, 0x0e, 0xeb, 0x52, 0xd0, 0xef, 0x99, 0xd9, 0xed, 0xef, 0xcb, 0xea, 0xd7, 0x48, 0xa0,
+	0x4c, 0x9a, 0x27, 0x24, 0xf3, 0xe7, 0x43, 0x2e, 0x30, 0x76, 0xcf, 0x75, 0x6b, 0xe6, 0x17, 0xb7,
+	0x51, 0x32, 0x3c, 0x21, 0x9a, 0x69, 0x64, 0x6a, 0xa6, 0x91, 0x09, 0x62, 0xf2, 0x1f, 0xc8, 0xea,
+	0x68, 0x52, 0x9b, 0xe0, 0xd1, 0x0b, 0xed, 0xed, 0xd1, 0xc0, 0xf0, 0x0f, 0x1d, 0x77, 0x28, 0x6e,
+	0x91, 0xe7, 0xf5, 0x76, 0x5b, 0xa0, 0xe1, 0x90, 0x60, 0x41, 0x07, 0x7c, 0xb7, 0xac, 0xbe, 0x08,
+	0x9b, 0x3b, 0xc4, 0x9f, 0xbd, 0xb4, 0x4c, 0xa8, 0xdf, 0xcf, 0xc8, 0xea, 0x5d, 0x36, 0x19, 0x62,
+	0x86, 0xfe, 0x98, 0x86, 0x9a, 0x8a, 0x68, 0xa8, 0x67, 0x17, 0xfd, 0x29, 0x49, 0xfd, 0x57, 0x12,
+	0x6c, 0x4d, 0x71, 0x0b, 0x87, 0xe0, 0x45, 0x40, 0xd1, 0x67, 0x61, 0x61, 0x01, 0x4c, 0xab, 0x8b,
+	0x3c, 0xed, 0xe2, 0x9a, 0x78, 0x13, 0x22, 0x30, 0xfd, 0x89, 0x0d, 0xd6, 0xab, 0x13, 0xe2, 0x2a,
+	0x3b, 0xf3, 0x7c, 0x6e, 0x60, 0xb1, 0x4f, 0x9d, 0xe1, 0x5b, 0x11, 0xab, 0xf7, 0x5c, 0x9b, 0xfd,
+	0xcf, 0x49, 0xea, 0x4b, 0x00, 0x3b, 0x24, 0xf0, 0xdc, 0x58, 0xd0, 0x2d, 0xbf, 0xcd, 0xba, 0x65,
+	0x8d, 0x9e, 0x49, 0x85, 0x3d, 0x6e, 0x8f, 0xf8, 0x47, 0xce, 0xb4, 0x87, 0x1b, 0x37, 0xb0, 0xc6,
+	0x3d, 0xdc, 0x42, 0x07, 0x25, 0x79, 0xca, 0x41, 0x29, 0xea, 0xfd, 0x26, 0x9c, 0x97, 0xc2, 0xe7,
+	0x1e, 0x31, 0x47, 0xc8, 0xf4, 0x94, 0x23, 0x64, 0x74, 0xe6, 0x65, 0xde, 0x9d, 0x99, 0x17, 0x98,
+	0x11, 0xff, 0x97, 0xa4, 0xbe, 0xc6, 0x66, 0x1e, 0x26, 0x3d, 0x77, 0x6c, 0xf9, 0xe5, 0x6d, 0xd7,
+	0xe2, 0x8f, 0x9f, 0x8d, 0x39, 0x94, 0x72, 0x70, 0xe3, 0x27, 0xab, 0x3e, 0x13, 0x66, 0x71, 0xca,
+	0x7d, 0xdc, 0x98, 0x5a, 0x29, 0xf2, 0xbb, 0x51, 0xdf, 0xa0, 0xd4, 0x9f, 0x90, 0x55, 0x13, 0x2e,
+	0xef, 0x10, 0xbf, 0x1b, 0x3e, 0xa4, 0x89, 0xbe, 0x5a, 0x19, 0x7b, 0x09, 0x4f, 0x6f, 0xf8, 0x20,
+	0xc5, 0x9e, 0xde, 0x2c, 0xe8, 0x95, 0x4f, 0xca, 0xea, 0x47, 0x61, 0x75, 0xea, 0x59, 0x55, 0xe8,
+	0x78, 0x2e, 0xac, 0xf3, 0x3d, 0xe1, 0xe3, 0x3d, 0x32, 0x82, 0x1b, 0xe7, 0x20, 0xfc, 0x81, 0x21,
+	0x2e, 0x94, 0x5f, 0x85, 0xd2, 0xc1, 0xf8, 0x54, 0x3f, 0xb1, 0xfc, 0x23, 0x7e, 0x2a, 0x8a, 0x78,
+	0x55, 0x73, 0xdf, 0xc8, 0x8d, 0x83, 0xf1, 0xe9, 0x7d, 0xcb, 0x3f, 0xa2, 0x45, 0x4d, 0x1c, 0xaa,
+	0xff, 0x43, 0x1e, 0x56, 0x76, 0xc6, 0x86, 0x6b, 0x5a, 0x86, 0x7d, 0xcf, 0x70, 0xd9, 0x25, 0x9e,
+	0xef, 0x8c, 0x5d, 0x9b, 0x3d, 0xee, 0x94, 0x6e, 0x66, 0x71, 0x90, 0xe4, 0xd1, 0x17, 0x8c, 0x9e,
+	0x6f, 0x89, 0xa3, 0x59, 0x16, 0x87, 0x69, 0x74, 0x01, 0x96, 0x7a, 0x86, 0x37, 0x36, 0xb8, 0x2f,
+	0x61, 0x16, 0x8b, 0x14, 0xda, 0x80, 0xcc, 0xa1, 0xe3, 0xf6, 0x83, 0x37, 0x6b, 0x3c, 0x41, 0x39,
+	0x1d, 0xb2, 0x11, 0x1c, 0x9c, 0x8a, 0xeb, 0x9c, 0x30, 0x4d, 0xcb, 0x1f, 0x1a, 0xb6, 0xd1, 0x17,
+	0xb7, 0x38, 0x59, 0x1c, 0x24, 0xd9, 0x9c, 0xa6, 0x87, 0x65, 0x7a, 0x48, 0x5b, 0xe6, 0x54, 0x41,
+	0x9a, 0x96, 0x7f, 0x34, 0xb6, 0x7d, 0xf1, 0x80, 0x29, 0x8b, 0x45, 0x8a, 0xf6, 0xe3, 0xd0, 0xe8,
+	0x13, 0x11, 0x04, 0x81, 0x7d, 0x33, 0x93, 0x8b, 0x31, 0x30, 0x4c, 0xcb, 0x66, 0x21, 0x0f, 0xb2,
+	0x38, 0x48, 0x52, 0x2e, 0x23, 0xd7, 0xa2, 0xca, 0x59, 0x9e, 0x73, 0xe1, 0x29, 0xda, 0x0a, 0xd7,
+	0xe9, 0x8f, 0x49, 0x69, 0x85, 0xb7, 0x82, 0x25, 0x28, 0xb6, 0x77, 0x64, 0x0c, 0x0d, 0xbb, 0x54,
+	0xe0, 0xd8, 0x3c, 0x45, 0xf9, 0x9f, 0x18, 0xee, 0xc0, 0xe9, 0x1d, 0x97, 0x8a, 0x9c, 0xbf, 0x48,
+	0x8a, 0x1c, 0xd7, 0x72, 0xdc, 0xd2, 0x6a, 0x98, 0x43, 0x93, 0xe8, 0x3a, 0xac, 0x78, 0x47, 0xce,
+	0x89, 0x3e, 0xf6, 0x88, 0xab, 0x8f, 0xad, 0x92, 0xc2, 0xaf, 0x38, 0x28, 0x6c, 0xdf, 0x23, 0xee,
+	0xbe, 0x45, 0xeb, 0xe0, 0xf9, 0x8e, 0x4b, 0x4a, 0x6b, 0xbc, 0x0e, 0x2c, 0x41, 0x45, 0xc4, 0xe4,
+	0x55, 0x59, 0x09, 0xb1, 0xac, 0x5c, 0xf8, 0x96, 0x0c, 0xa9, 0x50, 0x88, 0xcd, 0x8a, 0xd2, 0x3a,
+	0x7f, 0x3a, 0x18, 0x99, 0x0a, 0x74, 0xdf, 0xf2, 0x8d, 0x47, 0xc4, 0xb5, 0xf5, 0x03, 0xd7, 0x38,
+	0x19, 0x94, 0x36, 0x38, 0x0a, 0x87, 0x55, 0x28, 0x08, 0x61, 0x78, 0xaf, 0xd8, 0xda, 0x84, 0x3b,
+	0x99, 0x3e, 0x1e, 0xb1, 0x28, 0x07, 0x61, 0x50, 0x08, 0x8f, 0xf4, 0x1c, 0xdb, 0xf4, 0x4a, 0x9b,
+	0xac, 0xde, 0x6a, 0x2f, 0xea, 0xb8, 0xb6, 0xcf, 0x70, 0xeb, 0x02, 0xb5, 0xc3, 0x31, 0xd1, 0x2b,
+	0xb0, 0xd5, 0x33, 0x2c, 0x4f, 0x27, 0xb6, 0x71, 0x30, 0x20, 0xa6, 0x6e, 0x33, 0xb7, 0xa3, 0x03,
+	0x6b, 0x40, 0x4a, 0x17, 0x58, 0x0d, 0x36, 0x68, 0xb6, 0xc6, 0x73, 0x9b, 0x8e, 0xbd, 0xc7, 0xf2,
+	0xd0, 0x07, 0xe1, 0x62, 0x8c, 0x8c, 0x93, 0xe8, 0xbd, 0x23, 0xcb, 0x36, 0x4a, 0x5b, 0x8c, 0xf0,
+	0x42, 0x84, 0x90, 0x53, 0x55, 0x69, 0x2e, 0xaa, 0xc1, 0xb5, 0x24, 0x52, 0xcf, 0x19, 0xfb, 0x47,
+	0xfa, 0xb1, 0xe3, 0x12, 0xa3, 0x54, 0x62, 0x0c, 0x2e, 0xcf, 0x30, 0xe8, 0x50, 0x9c, 0xbb, 0x14,
+	0x05, 0xbd, 0x0a, 0x5b, 0x1e, 0xb1, 0x4d, 0xdd, 0x27, 0x03, 0x32, 0x24, 0xbe, 0x7b, 0xaa, 0x8f,
+	0x5c, 0xe2, 0x11, 0xbb, 0x47, 0x4a, 0x17, 0x19, 0xf5, 0x26, 0xcd, 0xee, 0x06, 0xb9, 0x6d, 0x91,
+	0x89, 0xb6, 0xe1, 0x3a, 0x9f, 0xe3, 0xfa, 0x09, 0x21, 0xc7, 0x7a, 0xcf, 0xb1, 0x7b, 0xc4, 0x24,
+	0xae, 0x3e, 0x34, 0x1e, 0xeb, 0x26, 0x39, 0x24, 0xb6, 0x47, 0x4a, 0x97, 0x58, 0xef, 0x5d, 0xe1,
+	0x78, 0xf7, 0x09, 0xa1, 0x7b, 0x0d, 0xc3, 0xda, 0x33, 0x1e, 0xd7, 0x38, 0x0e, 0x1d, 0xd2, 0x13,
+	0xcb, 0xf6, 0xf4, 0x11, 0x71, 0xf9, 0x90, 0x5e, 0x66, 0x44, 0x79, 0x0a, 0x6c, 0x13, 0x97, 0x0d,
+	0x69, 0xf0, 0x04, 0x93, 0xe2, 0x70, 0xb3, 0x40, 0xe9, 0x0a, 0x7f, 0x31, 0x40, 0xc1, 0x6d, 0xe2,
+	0x72, 0x83, 0x00, 0x7a, 0x0e, 0x14, 0x5a, 0x7c, 0x88, 0x6b, 0x1a, 0xa7, 0xa5, 0xab, 0x1c, 0x71,
+	0x68, 0x3c, 0xde, 0xe1, 0xb8, 0x35, 0x3e, 0x8f, 0x1e, 0x8f, 0x74, 0xcf, 0x19, 0x38, 0xfa, 0xc0,
+	0x1a, 0x5a, 0x7e, 0xe9, 0x3d, 0xbc, 0xd0, 0xc7, 0xa3, 0x8e, 0x33, 0x70, 0x1a, 0x14, 0x44, 0x85,
+	0x21, 0x65, 0xc6, 0xac, 0xfa, 0x03, 0xf2, 0x88, 0x0c, 0x4a, 0xd7, 0xf8, 0x71, 0x73, 0x68, 0x3c,
+	0xde, 0x25, 0xae, 0xd3, 0xa0, 0x30, 0x74, 0x13, 0x14, 0x2e, 0x99, 0x7c, 0x6b, 0x68, 0xd9, 0x7d,
+	0x7d, 0xe8, 0x98, 0xa5, 0xeb, 0xcc, 0x2b, 0xb2, 0xc8, 0xe0, 0x5d, 0x06, 0xde, 0x73, 0x4c, 0x74,
+	0x0d, 0xf2, 0x54, 0xf5, 0x13, 0xa3, 0x55, 0xba, 0xc1, 0x3a, 0x17, 0x0e, 0xbd, 0xbe, 0x18, 0x19,
+	0xf4, 0xb9, 0x50, 0xa2, 0x08, 0xfc, 0x71, 0xc1, 0x11, 0xe9, 0x1d, 0x5b, 0x76, 0x88, 0xad, 0xf2,
+	0xa1, 0x38, 0xf4, 0xfa, 0xec, 0x99, 0x01, 0xcf, 0x0d, 0x08, 0xef, 0xc1, 0xf3, 0x09, 0x43, 0x61,
+	0xea, 0xec, 0xaa, 0x6e, 0x68, 0xd9, 0xba, 0xef, 0xf8, 0xc6, 0x40, 0xf7, 0xc7, 0xae, 0xed, 0x95,
+	0x9e, 0x66, 0x8d, 0x78, 0x7a, 0x66, 0x4c, 0xd8, 0x9d, 0xe5, 0x9e, 0x65, 0x77, 0x29, 0x6e, 0x97,
+	0xa2, 0xa2, 0x2f, 0x86, 0x97, 0xa2, 0x7c, 0x8d, 0xc1, 0xc0, 0x39, 0xf1, 0xf4, 0xe8, 0xe2, 0xd2,
+	0x5d, 0xe6, 0xda, 0x25, 0x96, 0x4f, 0xe9, 0x19, 0x56, 0xcb, 0xe7, 0x26, 0xbc, 0xcb, 0x8c, 0xa4,
+	0x3b, 0x59, 0x7a, 0xdc, 0x15, 0x8c, 0xaf, 0x20, 0xf4, 0x12, 0xac, 0x73, 0x65, 0xd8, 0x39, 0xd1,
+	0x0f, 0x88, 0x6f, 0xe8, 0x03, 0xe3, 0x80, 0x0c, 0x4a, 0xcf, 0x32, 0x2e, 0x0a, 0x53, 0x85, 0x9d,
+	0x93, 0x0a, 0xf1, 0x8d, 0x06, 0x85, 0x27, 0x28, 0x26, 0x7f, 0x4c, 0x56, 0x1f, 0xc2, 0x12, 0x1d,
+	0x8c, 0x07, 0x6d, 0x74, 0x07, 0xb2, 0x8f, 0x47, 0xec, 0xa1, 0xf4, 0x5c, 0x8d, 0x9e, 0xe9, 0x3c,
+	0x1c, 0x9d, 0x79, 0x29, 0x2c, 0x3f, 0x1e, 0xd1, 0xff, 0x49, 0x3a, 0xcf, 0x9f, 0x95, 0xd5, 0xef,
+	0x97, 0x00, 0x26, 0xc8, 0xe8, 0x22, 0x64, 0x7b, 0x03, 0xc3, 0xf3, 0x22, 0xee, 0xe9, 0x2c, 0x5d,
+	0x37, 0xa9, 0x2c, 0xe3, 0x33, 0x44, 0xf8, 0x3d, 0xb3, 0x04, 0xd5, 0x2a, 0xa9, 0x8e, 0xa2, 0x3f,
+	0x1e, 0x31, 0x95, 0x25, 0x85, 0x97, 0x68, 0xf2, 0xc1, 0x88, 0x9e, 0x0d, 0xe8, 0xcc, 0x7a, 0x3c,
+	0x62, 0xda, 0x4a, 0x0a, 0x67, 0x86, 0xc6, 0xe3, 0x07, 0x23, 0x54, 0x87, 0x3c, 0xbb, 0x8f, 0x11,
+	0x33, 0x3c, 0x73, 0x96, 0x1b, 0x24, 0x79, 0xec, 0x87, 0x73, 0x90, 0x4f, 0x7e, 0x0c, 0x94, 0x98,
+	0x7f, 0xab, 0x9f, 0x58, 0x02, 0x54, 0xb7, 0x2d, 0xdf, 0x32, 0x06, 0x11, 0x4f, 0x4f, 0xf4, 0x06,
+	0xc0, 0xc4, 0xa5, 0x6c, 0x9e, 0x22, 0x3e, 0xe5, 0x06, 0x89, 0x23, 0x24, 0xe8, 0xc3, 0xb0, 0xcc,
+	0x9d, 0x2d, 0x03, 0x2f, 0xcd, 0xa7, 0xe7, 0x3d, 0x4d, 0x3a, 0xb4, 0x06, 0x84, 0x3b, 0x6b, 0x7a,
+	0x38, 0xa0, 0x41, 0x65, 0x58, 0x89, 0x78, 0x83, 0x06, 0x8e, 0x98, 0x57, 0xcf, 0x72, 0x28, 0xf5,
+	0x70, 0x8c, 0x04, 0x3d, 0x84, 0x0d, 0x36, 0xad, 0xe3, 0x3e, 0x97, 0xde, 0x93, 0x3a, 0x5d, 0xa2,
+	0xfe, 0xac, 0x95, 0xb7, 0x0e, 0xc5, 0xf8, 0xae, 0x20, 0x86, 0x40, 0x5d, 0xe8, 0x96, 0xec, 0xe1,
+	0x42, 0x6c, 0x87, 0x40, 0xdb, 0x50, 0xe8, 0x0b, 0x25, 0x44, 0x7f, 0x64, 0xb0, 0x27, 0xe8, 0xf3,
+	0x23, 0x58, 0x44, 0xd5, 0x15, 0xbc, 0xd2, 0x8f, 0x2a, 0x2f, 0x0f, 0x61, 0xc3, 0x1b, 0x91, 0x9e,
+	0x65, 0x0c, 0xf4, 0xa8, 0x94, 0x29, 0x2d, 0xb3, 0xf9, 0x9d, 0xdc, 0xda, 0x0e, 0x27, 0xd0, 0x26,
+	0xd2, 0x07, 0x23, 0x6f, 0x06, 0x86, 0x30, 0xa0, 0xe8, 0x4a, 0xf6, 0xf8, 0xd5, 0x48, 0xf6, 0x8c,
+	0xa7, 0xf2, 0x91, 0x65, 0xcc, 0x56, 0x8f, 0x12, 0xd9, 0x52, 0xbd, 0xe0, 0x12, 0x34, 0x7c, 0x74,
+	0x9f, 0x3b, 0x63, 0x6c, 0x83, 0xa7, 0xb2, 0x38, 0x44, 0x47, 0x18, 0xd6, 0xcc, 0x88, 0x03, 0x05,
+	0x93, 0x5d, 0x4c, 0x9d, 0x99, 0xe7, 0x5f, 0x39, 0xed, 0x6e, 0x81, 0x15, 0x73, 0x0a, 0xb2, 0xe0,
+	0x98, 0xf2, 0x13, 0x4c, 0x7d, 0xdf, 0x33, 0x3c, 0xaf, 0x66, 0xd1, 0x2d, 0xed, 0xc8, 0x08, 0x3d,
+	0xb3, 0x17, 0x50, 0x7e, 0x0d, 0x55, 0xdf, 0x2f, 0x4c, 0x53, 0x8a, 0x53, 0xdf, 0xe4, 0x01, 0xae,
+	0x14, 0x7b, 0x80, 0xfb, 0x19, 0x3f, 0x87, 0xfe, 0x5a, 0x59, 0xfd, 0x26, 0x09, 0x72, 0x7b, 0xc4,
+	0x34, 0x58, 0xff, 0xa3, 0xcf, 0x83, 0x6c, 0xe8, 0x44, 0x24, 0x25, 0x5f, 0xdf, 0xb0, 0x9e, 0x0a,
+	0x29, 0xd8, 0x41, 0x31, 0xa4, 0x41, 0xaf, 0x42, 0xfa, 0xc4, 0x1a, 0x98, 0xf3, 0xae, 0x7e, 0x12,
+	0x68, 0x19, 0x7e, 0x42, 0xd5, 0xfe, 0x8d, 0xa4, 0xfe, 0xa4, 0x0c, 0x85, 0x18, 0x32, 0xdd, 0xef,
+	0x3c, 0xf6, 0xac, 0x8c, 0xdf, 0x6c, 0xf3, 0x53, 0x1b, 0x70, 0xd0, 0x7d, 0xcb, 0xf6, 0xb8, 0x06,
+	0xc8, 0x17, 0x07, 0x93, 0x9a, 0x2c, 0xc1, 0xb4, 0x50, 0xdf, 0x25, 0xc6, 0x71, 0x70, 0xb7, 0xcf,
+	0x53, 0xcc, 0x21, 0xca, 0x37, 0x5c, 0xb1, 0x15, 0x67, 0xb9, 0x71, 0x98, 0x42, 0xf8, 0x3e, 0x7c,
+	0x0d, 0xf2, 0x2c, 0x47, 0xc4, 0xf1, 0xca, 0xf1, 0xd2, 0x18, 0x88, 0x5d, 0x4a, 0xd0, 0xd3, 0x06,
+	0x47, 0x20, 0xb6, 0xc9, 0x6e, 0xe8, 0x33, 0x38, 0xcb, 0x00, 0x9a, 0xcd, 0x4c, 0xcb, 0x3d, 0xc3,
+	0xd6, 0x07, 0x8e, 0x47, 0x44, 0x01, 0x79, 0xfe, 0xac, 0xaf, 0x67, 0xd8, 0x0d, 0xc7, 0x23, 0x91,
+	0x32, 0xfa, 0x74, 0x3f, 0x74, 0x0d, 0xfb, 0x98, 0x69, 0xc9, 0xac, 0x0c, 0x0a, 0xc2, 0x86, 0x7d,
+	0x4c, 0xf5, 0x94, 0x03, 0x66, 0x9e, 0x9e, 0x54, 0xb4, 0xc8, 0xd5, 0x0f, 0x0a, 0xee, 0x84, 0x95,
+	0x8d, 0x16, 0xc7, 0xbb, 0x80, 0xab, 0xcf, 0x41, 0x71, 0x14, 0xd3, 0x53, 0x1f, 0xc3, 0x4a, 0x93,
+	0x18, 0xee, 0xc1, 0x29, 0x8f, 0xde, 0x81, 0xae, 0x00, 0x1c, 0xd8, 0x84, 0x9e, 0x9d, 0xf5, 0x23,
+	0x8b, 0x8d, 0x78, 0x1a, 0x67, 0x0f, 0x98, 0xef, 0xd2, 0xae, 0x15, 0xcd, 0x1d, 0x70, 0xe7, 0xdf,
+	0x30, 0xb7, 0xe1, 0xa0, 0x17, 0x01, 0x89, 0xd0, 0x38, 0xbc, 0x83, 0xa8, 0x20, 0xe1, 0x81, 0x63,
+	0xd2, 0x58, 0x11, 0x39, 0xac, 0x9f, 0xba, 0xd6, 0x90, 0xa8, 0xdf, 0x96, 0x86, 0xf5, 0x84, 0x2d,
+	0x66, 0xb2, 0xcf, 0x49, 0xd1, 0x7d, 0xee, 0x01, 0x14, 0xc5, 0x5d, 0x8d, 0x58, 0xcd, 0x62, 0x6f,
+	0xf8, 0x9c, 0x79, 0x07, 0xd7, 0xe8, 0xee, 0xc0, 0x39, 0x07, 0xd1, 0x37, 0x0a, 0x6e, 0x34, 0x89,
+	0x5a, 0x90, 0x0f, 0xe2, 0xb2, 0xd0, 0x49, 0xce, 0xb7, 0x8b, 0x5b, 0xe7, 0x67, 0xcb, 0xa2, 0x11,
+	0x80, 0x1b, 0x7e, 0x47, 0x18, 0x9a, 0x63, 0xcf, 0x17, 0x9b, 0xc6, 0x13, 0x30, 0xac, 0x8d, 0x3d,
+	0x3f, 0x60, 0x48, 0xbf, 0x23, 0x0c, 0x99, 0xee, 0x9a, 0x79, 0x52, 0x86, 0x54, 0x27, 0x0d, 0x18,
+	0x32, 0x55, 0x17, 0xc3, 0x8a, 0x60, 0x38, 0x0c, 0x9f, 0xb0, 0xe6, 0x6f, 0xbf, 0xef, 0xfc, 0x1c,
+	0xf7, 0x28, 0x19, 0x16, 0xb5, 0x62, 0x89, 0x08, 0x4f, 0x7e, 0x76, 0x5d, 0x7e, 0x52, 0x9e, 0xdb,
+	0x94, 0x2c, 0xe0, 0xc9, 0x12, 0xea, 0x25, 0x48, 0x35, 0x5b, 0xed, 0x04, 0x59, 0xf0, 0xbb, 0x92,
+	0xda, 0x06, 0x34, 0xfb, 0x4e, 0x03, 0xdd, 0x81, 0x25, 0xae, 0x07, 0x9c, 0x29, 0xac, 0xe2, 0xa5,
+	0x0b, 0x0a, 0xf5, 0x6d, 0x58, 0x4f, 0x78, 0xf9, 0x81, 0xde, 0x9a, 0xf3, 0x82, 0x44, 0x3a, 0x63,
+	0x7b, 0x9c, 0xe5, 0x93, 0xf8, 0x80, 0x44, 0x7d, 0x13, 0xf2, 0xad, 0x11, 0xb1, 0x83, 0xa9, 0x78,
+	0x03, 0x56, 0x82, 0x67, 0x19, 0x11, 0x7b, 0x45, 0x5e, 0xc0, 0x98, 0x0b, 0xda, 0xd9, 0x9b, 0xc6,
+	0xaf, 0x4b, 0xea, 0x37, 0x4a, 0xb0, 0xc2, 0xd7, 0x32, 0x57, 0x83, 0xd1, 0xfb, 0x21, 0x1d, 0x79,
+	0xe6, 0xbd, 0xc8, 0x93, 0x0e, 0x33, 0xe4, 0xc8, 0x85, 0xa5, 0x14, 0x3e, 0xef, 0x0e, 0x9c, 0xa4,
+	0x52, 0x89, 0x4e, 0x52, 0xe9, 0x98, 0x93, 0x14, 0x82, 0xb4, 0x6f, 0x11, 0x4f, 0x3c, 0xa6, 0x66,
+	0xdf, 0xaa, 0x01, 0x85, 0x68, 0xc5, 0xd8, 0xdb, 0x2c, 0xae, 0xda, 0x9f, 0xfd, 0x36, 0x2b, 0x4a,
+	0x84, 0x03, 0x8a, 0x84, 0x49, 0xf1, 0x75, 0xb2, 0xfa, 0x45, 0x90, 0xa3, 0xd8, 0x6f, 0x8e, 0xc9,
+	0x98, 0xa0, 0x3b, 0x90, 0x79, 0x9b, 0x7e, 0x88, 0xa9, 0xf0, 0xcc, 0x7c, 0x13, 0x17, 0x27, 0xe0,
+	0x3e, 0xc5, 0x8c, 0x24, 0x81, 0xfb, 0xb7, 0xc8, 0x74, 0x27, 0x6f, 0xbb, 0x4e, 0x8f, 0x05, 0x58,
+	0x8b, 0x9a, 0xd4, 0x16, 0x98, 0xc4, 0x7e, 0x5a, 0x56, 0xbf, 0x4a, 0x82, 0xab, 0x89, 0xa4, 0xe1,
+	0x8e, 0xde, 0x01, 0xe4, 0x1a, 0x87, 0xba, 0x47, 0x5c, 0x66, 0x64, 0x8c, 0xc5, 0xec, 0x49, 0xd6,
+	0x4d, 0x70, 0x79, 0xbb, 0xc3, 0xb1, 0x45, 0xd0, 0x1e, 0xc5, 0x35, 0x0e, 0x63, 0x90, 0x84, 0x56,
+	0x7c, 0x4a, 0x56, 0xb7, 0x41, 0x11, 0xf3, 0x9f, 0x3b, 0x5e, 0xd3, 0x63, 0xe8, 0x55, 0x00, 0x66,
+	0x3a, 0xe6, 0xe7, 0x54, 0x71, 0xf1, 0x6c, 0x06, 0xd9, 0x09, 0x7c, 0xfe, 0xb5, 0xa4, 0x7e, 0x4f,
+	0x01, 0x0a, 0xb1, 0x85, 0x94, 0x1c, 0x69, 0x0f, 0xbd, 0x01, 0x99, 0x21, 0xdd, 0xb3, 0x85, 0xc0,
+	0x7e, 0xfe, 0x3c, 0x12, 0x81, 0x6d, 0xf2, 0x98, 0xd3, 0x25, 0x88, 0xfe, 0xd4, 0x67, 0x47, 0xf4,
+	0xa7, 0xdf, 0x0d, 0xd1, 0x3f, 0xa2, 0x13, 0xd4, 0x66, 0x96, 0x78, 0x21, 0x57, 0xcf, 0xc5, 0xb0,
+	0xcd, 0xc8, 0x98, 0xcb, 0x3a, 0x8c, 0xc2, 0xef, 0xe9, 0xbd, 0x64, 0xf9, 0xdd, 0xde, 0x4b, 0xb2,
+	0xef, 0xfa, 0x5e, 0x92, 0xfb, 0x2c, 0xec, 0x25, 0xf0, 0x99, 0xef, 0x25, 0x54, 0x52, 0x39, 0xae,
+	0xd5, 0xb7, 0x6c, 0xa6, 0x75, 0x65, 0xb0, 0x48, 0x51, 0x7d, 0x8b, 0x7f, 0xf1, 0x9b, 0xfc, 0x15,
+	0xa6, 0x2b, 0x03, 0x07, 0x31, 0x15, 0xf3, 0x7d, 0x90, 0x3e, 0x39, 0x22, 0x76, 0xa9, 0xb0, 0x38,
+	0xc4, 0x11, 0x43, 0x44, 0xbb, 0x90, 0x0d, 0xa2, 0x58, 0x31, 0xcd, 0x2c, 0xe1, 0x15, 0x60, 0xe2,
+	0x0c, 0x08, 0xde, 0xf9, 0x87, 0xd4, 0xe8, 0x1e, 0x28, 0x91, 0xf9, 0xc9, 0x9d, 0xfd, 0x57, 0xcf,
+	0xcf, 0x31, 0x78, 0x28, 0x8e, 0x8b, 0x93, 0x29, 0xca, 0x1e, 0x08, 0x7c, 0x04, 0x8a, 0x66, 0x8f,
+	0x5b, 0x6e, 0xc4, 0x2b, 0x1e, 0x85, 0x71, 0xbd, 0x73, 0x1e, 0xae, 0x33, 0x67, 0x22, 0xee, 0x63,
+	0xb1, 0x62, 0xf6, 0x26, 0x29, 0x3a, 0xcd, 0xb8, 0xb3, 0x11, 0xd7, 0x3c, 0xd7, 0xce, 0x3f, 0xcd,
+	0x2a, 0x94, 0x8c, 0xe9, 0xa6, 0x18, 0x0e, 0xc2, 0x6f, 0x64, 0x02, 0x32, 0x82, 0x4b, 0xd9, 0x89,
+	0xbb, 0x0e, 0x62, 0x7c, 0x5f, 0x39, 0x0f, 0xdf, 0xd9, 0x20, 0x97, 0x6b, 0xc6, 0x34, 0x08, 0x6d,
+	0x03, 0x57, 0xd7, 0xf5, 0xf1, 0x88, 0x59, 0x7d, 0xf3, 0xb3, 0xae, 0x06, 0x49, 0xbc, 0x99, 0xfa,
+	0xba, 0x3f, 0xc2, 0xcb, 0x03, 0xfe, 0x81, 0xbe, 0x10, 0x56, 0x0d, 0xee, 0x8a, 0xa0, 0x0f, 0xf8,
+	0x4b, 0x6c, 0x66, 0x21, 0xce, 0xdf, 0xbe, 0x7d, 0xae, 0xaa, 0xc6, 0xde, 0x70, 0xe3, 0xa2, 0x11,
+	0x4b, 0xa3, 0x23, 0xd8, 0x98, 0x32, 0x8f, 0x31, 0x3f, 0x38, 0x66, 0x46, 0xce, 0xdf, 0x7e, 0xf5,
+	0x3c, 0x25, 0xc4, 0x8c, 0x65, 0x8c, 0x1a, 0x23, 0x7f, 0x06, 0x86, 0x08, 0xac, 0xc7, 0x4a, 0xe2,
+	0xde, 0xb0, 0xcc, 0xd4, 0x7c, 0xce, 0x5e, 0x8f, 0x14, 0xc4, 0x5d, 0x66, 0xf1, 0x9a, 0x3f, 0x0d,
+	0xa2, 0x0d, 0x0a, 0xbc, 0x69, 0xa2, 0x11, 0x12, 0x99, 0x65, 0xfa, 0x9c, 0x0d, 0x0a, 0x1d, 0x7f,
+	0x26, 0x2e, 0x84, 0xa8, 0x3f, 0x03, 0x53, 0x77, 0xa1, 0x18, 0x37, 0x1b, 0x2d, 0x8a, 0xa3, 0x95,
+	0xa0, 0x2e, 0xf2, 0x38, 0x5a, 0x3f, 0x22, 0xc1, 0xaa, 0x80, 0x87, 0xb3, 0x27, 0x1a, 0x69, 0x3b,
+	0x08, 0xc1, 0x1c, 0xe4, 0x5d, 0x05, 0x60, 0xa7, 0x36, 0x2e, 0xd0, 0x84, 0xdb, 0x11, 0x85, 0x70,
+	0xe9, 0x74, 0x07, 0x60, 0x60, 0x84, 0xd9, 0xe7, 0x08, 0x2d, 0x91, 0xa3, 0xe8, 0x9c, 0xf6, 0x26,
+	0x14, 0x4d, 0xcb, 0x63, 0xc1, 0x93, 0x44, 0x70, 0x5a, 0xe6, 0x73, 0x7f, 0x47, 0x7a, 0x19, 0x17,
+	0x44, 0x06, 0x0f, 0x5f, 0x9b, 0xb0, 0x8f, 0xff, 0x5b, 0x49, 0xfd, 0x85, 0xec, 0x24, 0xb0, 0x1c,
+	0xf7, 0xa2, 0xfe, 0x3c, 0xc8, 0xf0, 0xb8, 0x7d, 0x5c, 0xfd, 0xb8, 0xb9, 0x38, 0x6e, 0x1f, 0xf7,
+	0xa1, 0xc6, 0x9c, 0x0c, 0xbd, 0x0c, 0x1b, 0x61, 0x00, 0x40, 0xcb, 0x8e, 0xc6, 0x0d, 0x96, 0x6e,
+	0xe6, 0x30, 0x0a, 0xf2, 0xea, 0x76, 0x3b, 0xd2, 0x3b, 0xb1, 0x50, 0xa3, 0x2c, 0x2c, 0x49, 0xe8,
+	0x8c, 0xad, 0xfe, 0x8d, 0x65, 0xc8, 0xf0, 0xaa, 0x5d, 0x80, 0xdc, 0xc4, 0xb7, 0xfa, 0xd3, 0xc1,
+	0x1f, 0x73, 0xcf, 0xd1, 0xc2, 0x58, 0x24, 0x4f, 0xa1, 0x2d, 0x58, 0xd7, 0xf4, 0x4e, 0xb7, 0xde,
+	0x68, 0xe8, 0xd1, 0xe8, 0xed, 0x2c, 0x48, 0x89, 0x16, 0x7a, 0x2e, 0x55, 0x9a, 0x5a, 0x57, 0x91,
+	0x91, 0x02, 0x2b, 0xda, 0xe4, 0x45, 0x7c, 0x59, 0x49, 0xa1, 0x4b, 0x70, 0x41, 0xd3, 0xdb, 0xfb,
+	0xb8, 0xba, 0x5b, 0xee, 0x68, 0x31, 0x0e, 0x69, 0x54, 0x04, 0xd0, 0x98, 0x23, 0x53, 0xa5, 0xdc,
+	0xd1, 0x94, 0x0c, 0xba, 0x00, 0x68, 0xc2, 0xf1, 0xcd, 0xfd, 0x72, 0xb3, 0x5b, 0xef, 0x3e, 0x54,
+	0x96, 0x78, 0x15, 0x6a, 0xfb, 0xed, 0x46, 0xbd, 0x5a, 0xee, 0x6a, 0xa1, 0xf3, 0xf7, 0x32, 0x27,
+	0x08, 0x7c, 0xb4, 0x98, 0xcf, 0x8b, 0xd6, 0xec, 0x2a, 0x59, 0x16, 0x7b, 0x4b, 0x6f, 0xb6, 0x44,
+	0xd8, 0x2d, 0xbd, 0xd2, 0x2e, 0x3f, 0x54, 0x72, 0x68, 0x0d, 0x0a, 0x1a, 0x8b, 0x8e, 0xa3, 0xd5,
+	0x74, 0x5c, 0xef, 0xdc, 0x55, 0x80, 0xd7, 0x20, 0x08, 0x7f, 0xa3, 0xe4, 0x79, 0xfa, 0x7e, 0xb9,
+	0xde, 0xd5, 0xf7, 0x5a, 0x6d, 0x65, 0x05, 0x5d, 0x84, 0x4d, 0x91, 0x16, 0x2e, 0x3f, 0xd5, 0x56,
+	0x73, 0xbb, 0x8e, 0xf7, 0x94, 0x02, 0x2f, 0x3b, 0x9a, 0xc5, 0x58, 0x16, 0x79, 0x17, 0xb4, 0x71,
+	0xab, 0xb6, 0x5f, 0xed, 0xd2, 0x2e, 0x58, 0xe5, 0x1d, 0x45, 0x73, 0xc3, 0x10, 0x39, 0x0a, 0xba,
+	0x0c, 0x5b, 0x13, 0xac, 0x72, 0x83, 0x45, 0x1e, 0xd4, 0x5b, 0xf7, 0x9b, 0x5a, 0x4d, 0x59, 0x43,
+	0xef, 0x81, 0x4b, 0x82, 0x75, 0x77, 0xb7, 0x8e, 0x6b, 0x7a, 0xbb, 0x8c, 0xbb, 0x0f, 0x75, 0xac,
+	0x55, 0xb5, 0x7a, 0xbb, 0xab, 0x20, 0x74, 0x15, 0x2e, 0x4e, 0x88, 0x79, 0x90, 0xb1, 0xdd, 0x72,
+	0x47, 0xd7, 0x9a, 0x35, 0xad, 0xa6, 0xac, 0xa3, 0x4d, 0x58, 0xa3, 0x6d, 0xd6, 0xa3, 0x61, 0xcf,
+	0x14, 0x93, 0x8f, 0x44, 0xa5, 0x1d, 0x76, 0x70, 0xb5, 0xaa, 0x6b, 0x0f, 0xda, 0x75, 0xfc, 0x90,
+	0xfb, 0xa7, 0xb1, 0x3c, 0x56, 0xcb, 0xc0, 0x3f, 0x8d, 0x35, 0xbe, 0xd2, 0xa6, 0x1d, 0xc9, 0x29,
+	0x82, 0xb8, 0x40, 0xfd, 0xb0, 0x08, 0x01, 0xd1, 0xcb, 0xfb, 0xdd, 0x5d, 0xe5, 0x08, 0x95, 0x60,
+	0x83, 0x83, 0x83, 0xa0, 0x44, 0x22, 0xf8, 0x8f, 0x35, 0x21, 0x08, 0x66, 0x42, 0xa5, 0xdc, 0x54,
+	0xbe, 0x84, 0x8f, 0x6c, 0xa5, 0xad, 0x77, 0xda, 0x5a, 0xb3, 0x56, 0x6f, 0xee, 0x08, 0x77, 0xac,
+	0xe3, 0xb0, 0xec, 0x76, 0x19, 0x6b, 0xcd, 0x6e, 0xb9, 0x41, 0x3b, 0xbe, 0x8b, 0x5b, 0x0d, 0x65,
+	0xc0, 0xbb, 0xb3, 0xd2, 0xd6, 0xbb, 0xbb, 0xb8, 0xd5, 0xed, 0xd2, 0x71, 0x1b, 0xa2, 0xeb, 0x70,
+	0x45, 0xc0, 0x26, 0xfd, 0x55, 0x29, 0xd7, 0xc2, 0x3e, 0xb3, 0xd1, 0x0d, 0xb8, 0x3a, 0x83, 0x21,
+	0x72, 0xf5, 0xfd, 0x8e, 0x56, 0x53, 0x1c, 0xf4, 0x0c, 0x5c, 0x0f, 0x6a, 0xcf, 0x7a, 0x76, 0xbf,
+	0x59, 0x7f, 0x73, 0x5f, 0x6b, 0x6a, 0x9d, 0x8e, 0x7e, 0xaf, 0xde, 0x6a, 0x94, 0xbb, 0x5a, 0x4d,
+	0x19, 0x85, 0x55, 0xc6, 0xda, 0x4e, 0xbd, 0xd5, 0xd4, 0xeb, 0x1d, 0xbd, 0x46, 0x17, 0xd0, 0xdb,
+	0xe8, 0x36, 0xdc, 0x9a, 0xe9, 0x76, 0x1d, 0x6b, 0x5d, 0xfc, 0x90, 0x55, 0xbe, 0x5c, 0xed, 0xea,
+	0xd5, 0x8e, 0x5e, 0xdf, 0xd6, 0xdb, 0x1a, 0xee, 0xd4, 0x3b, 0xdd, 0x8e, 0xe2, 0xa1, 0xe7, 0xe1,
+	0x59, 0x46, 0x33, 0x09, 0x8c, 0x54, 0xaf, 0x05, 0x53, 0xf4, 0x9e, 0x86, 0xeb, 0xdb, 0x74, 0xc6,
+	0xd7, 0x5b, 0x4d, 0xc5, 0x57, 0x3f, 0x9e, 0x82, 0xe2, 0x02, 0xff, 0x0c, 0xe9, 0x2c, 0xff, 0x0c,
+	0xe9, 0x0c, 0xff, 0x8c, 0x78, 0x38, 0xce, 0x6b, 0x90, 0x3f, 0x31, 0x06, 0x03, 0x22, 0x6e, 0xef,
+	0x79, 0x24, 0x2a, 0xe0, 0x20, 0x16, 0xa1, 0xed, 0x06, 0xac, 0x8c, 0x3d, 0xa2, 0x93, 0xc0, 0xf1,
+	0x39, 0x23, 0xe2, 0xc1, 0x7a, 0x44, 0x13, 0x20, 0xf4, 0x5a, 0x20, 0xf7, 0x96, 0xce, 0x1d, 0xaf,
+	0x54, 0x48, 0xbc, 0xd9, 0xe8, 0x4b, 0xcb, 0x49, 0xd1, 0x97, 0xde, 0x07, 0x1b, 0x96, 0xa7, 0x7f,
+	0x94, 0xb8, 0x0e, 0x0f, 0xf4, 0x1a, 0xe8, 0x06, 0xfc, 0xfa, 0x7d, 0xcd, 0xf2, 0xde, 0x22, 0xae,
+	0x53, 0x75, 0xbc, 0x70, 0xab, 0xbf, 0x01, 0x2b, 0xbd, 0x23, 0xda, 0x06, 0xbb, 0xcf, 0x1c, 0x4f,
+	0x78, 0xf8, 0xb9, 0x7c, 0x08, 0xe3, 0x41, 0xb8, 0x26, 0x28, 0x63, 0x77, 0xc0, 0x94, 0xe5, 0x1c,
+	0x9e, 0xd0, 0xed, 0xbb, 0x49, 0xb7, 0x5a, 0x7f, 0x42, 0x56, 0x3f, 0x2e, 0x83, 0x32, 0x13, 0x99,
+	0xea, 0xb5, 0xa8, 0xec, 0xff, 0x0c, 0xfb, 0xe0, 0x9d, 0x44, 0xa0, 0x9a, 0xf5, 0x0e, 0x49, 0x2f,
+	0x08, 0xcc, 0x9a, 0x99, 0x9a, 0x09, 0xf3, 0x3a, 0x79, 0x69, 0x4e, 0x27, 0x27, 0x74, 0xce, 0x1f,
+	0x94, 0xd5, 0x6f, 0x95, 0x26, 0x9d, 0x13, 0xde, 0xfa, 0x47, 0x27, 0xa7, 0x34, 0xe5, 0x3c, 0x74,
+	0x07, 0x96, 0x45, 0x2b, 0xc4, 0x93, 0xf8, 0xc5, 0x01, 0xf5, 0x02, 0x82, 0xd0, 0xda, 0x92, 0x9a,
+	0x58, 0x5b, 0x16, 0x18, 0x7a, 0xbe, 0x51, 0x56, 0xbf, 0x45, 0x86, 0xd2, 0x74, 0x0d, 0xc3, 0x61,
+	0xec, 0x4e, 0x05, 0x18, 0x7b, 0xfd, 0xcc, 0x71, 0x9c, 0x26, 0xbf, 0x15, 0x99, 0x16, 0x53, 0xcf,
+	0xf6, 0xd9, 0xb5, 0xf7, 0xd8, 0x23, 0xc1, 0xe8, 0xb2, 0x57, 0x02, 0xfb, 0x1e, 0x49, 0xb2, 0xd8,
+	0x7f, 0x93, 0xac, 0x7e, 0x74, 0xb2, 0xfe, 0x27, 0x61, 0xc3, 0xda, 0xd1, 0xb0, 0x61, 0x17, 0x61,
+	0xb3, 0x8d, 0xf5, 0x7a, 0xb3, 0xb3, 0xbf, 0xbd, 0x5d, 0xaf, 0xb2, 0x4d, 0x69, 0x7b, 0xbf, 0x59,
+	0xeb, 0x28, 0x32, 0xf3, 0x89, 0xc5, 0xd1, 0x6d, 0x29, 0x25, 0x40, 0xc1, 0xcb, 0xa5, 0x66, 0x59,
+	0x49, 0x53, 0xd9, 0xc6, 0x18, 0x4c, 0xed, 0xc0, 0x19, 0xf5, 0x93, 0x12, 0x5c, 0x9a, 0xf5, 0x9a,
+	0x0a, 0xbb, 0xe8, 0x16, 0xac, 0xf3, 0x2b, 0x6b, 0x97, 0xe3, 0x88, 0x70, 0x7e, 0xdc, 0x71, 0x7f,
+	0x8d, 0x65, 0x09, 0x6a, 0x1e, 0x8d, 0xaa, 0x0a, 0x2b, 0xbe, 0x33, 0x0a, 0xb0, 0x03, 0xbf, 0xb9,
+	0xeb, 0x73, 0x02, 0x65, 0x33, 0x24, 0xee, 0xf3, 0xed, 0x3b, 0x23, 0x91, 0x4e, 0xb2, 0xc8, 0xfc,
+	0x94, 0xac, 0xfe, 0xa0, 0x04, 0x17, 0x67, 0x9c, 0xb4, 0xc2, 0x7a, 0x6e, 0xc1, 0xb2, 0x6b, 0x1c,
+	0xb2, 0xa5, 0xcd, 0x1d, 0xa5, 0x96, 0x5c, 0xe3, 0x70, 0xdf, 0x1d, 0xcc, 0x31, 0x19, 0xc9, 0x9f,
+	0x91, 0xc9, 0x08, 0x5d, 0x87, 0x15, 0x51, 0x9a, 0x7e, 0x38, 0x16, 0xc1, 0xaf, 0x72, 0x18, 0x78,
+	0x91, 0xdb, 0xe3, 0x41, 0x92, 0x2c, 0xf9, 0x49, 0x59, 0xfd, 0x5e, 0x19, 0xf2, 0x91, 0x46, 0x23,
+	0x0d, 0x56, 0xd9, 0xf1, 0x32, 0x38, 0x05, 0x59, 0xc1, 0xed, 0xd1, 0xd5, 0x79, 0xb1, 0x30, 0xd9,
+	0x25, 0x02, 0x66, 0xcf, 0x3e, 0x02, 0x2f, 0xee, 0xd9, 0xdf, 0xae, 0x29, 0x44, 0x34, 0xea, 0x16,
+	0x14, 0x82, 0x91, 0xe3, 0x21, 0x71, 0xe6, 0xc4, 0x9c, 0x0d, 0x5f, 0x17, 0x45, 0x3b, 0x98, 0x07,
+	0xb4, 0x5e, 0x11, 0x0c, 0xf8, 0xc5, 0x75, 0x0d, 0x56, 0xfb, 0xae, 0x61, 0x8e, 0x99, 0x6d, 0x96,
+	0x87, 0x35, 0x4e, 0x9f, 0xe3, 0xf7, 0x4c, 0x26, 0x34, 0x34, 0x8d, 0x9e, 0xa7, 0x67, 0x76, 0xc6,
+	0x75, 0xe2, 0x47, 0x42, 0x45, 0x54, 0x01, 0xaf, 0x86, 0x70, 0x71, 0x81, 0xbe, 0x0f, 0xc0, 0xe3,
+	0x13, 0xcc, 0x7b, 0x5b, 0x9e, 0x18, 0xa2, 0xe0, 0x6c, 0xc1, 0xf0, 0xd3, 0x92, 0xfa, 0x09, 0x19,
+	0x2e, 0x88, 0x3b, 0xc6, 0xa9, 0xdb, 0x54, 0xf4, 0xc5, 0xb0, 0x19, 0xf1, 0xff, 0x8c, 0x3d, 0x95,
+	0x94, 0xce, 0x13, 0xdd, 0xff, 0x4e, 0x96, 0xe9, 0x59, 0x7a, 0xeb, 0x2e, 0x5e, 0x9f, 0x30, 0x9a,
+	0xbc, 0x7d, 0x7c, 0x03, 0x40, 0x9c, 0x14, 0x03, 0xf3, 0xf5, 0x7c, 0xa6, 0xfc, 0x04, 0x48, 0xe5,
+	0x60, 0xee, 0x20, 0xf8, 0xfc, 0x3d, 0xf3, 0x68, 0xfe, 0x35, 0x59, 0xfd, 0xcb, 0x32, 0xbc, 0x67,
+	0xb6, 0x9b, 0x62, 0xa6, 0xf3, 0xff, 0xd7, 0x5d, 0xc1, 0xbd, 0x82, 0xac, 0xfe, 0x98, 0x04, 0xeb,
+	0x09, 0xf1, 0xff, 0x51, 0x6d, 0x2a, 0xc0, 0xfc, 0x8b, 0x73, 0xd7, 0x5f, 0x8c, 0x56, 0x08, 0xa0,
+	0x20, 0xa4, 0xbc, 0x0a, 0x05, 0xe3, 0x40, 0xf7, 0xe9, 0x09, 0xb9, 0xef, 0x3a, 0xe3, 0x11, 0xdb,
+	0x5d, 0x0a, 0x38, 0x6f, 0x1c, 0x74, 0x89, 0xe7, 0xef, 0x50, 0x10, 0xba, 0x0b, 0x6a, 0xf4, 0x06,
+	0x46, 0xf7, 0xc6, 0xa3, 0x91, 0x2b, 0xee, 0x1b, 0x7d, 0x6b, 0x48, 0x74, 0xd3, 0x38, 0xf5, 0x84,
+	0x17, 0xcc, 0xb5, 0x28, 0x66, 0x67, 0x82, 0xd8, 0xb5, 0x86, 0xa4, 0x66, 0x9c, 0x7a, 0xea, 0x1b,
+	0x70, 0x65, 0xaa, 0x46, 0xad, 0x91, 0xdf, 0x1a, 0x9f, 0xf3, 0x72, 0xfe, 0x57, 0x64, 0x75, 0x0c,
+	0x57, 0xe7, 0x30, 0x78, 0x97, 0x7e, 0x9b, 0x24, 0x41, 0xd0, 0xfe, 0x4b, 0x59, 0xfd, 0x09, 0x09,
+	0x8a, 0xf1, 0x97, 0x69, 0xe8, 0x0e, 0x88, 0x0b, 0x6f, 0x76, 0xeb, 0x2c, 0x2d, 0x36, 0x53, 0xe6,
+	0x38, 0xba, 0x66, 0x33, 0xed, 0x51, 0xd0, 0xda, 0xe3, 0xe1, 0x01, 0x71, 0x4b, 0x19, 0xfe, 0xd0,
+	0x8e, 0x03, 0x9b, 0x0c, 0x96, 0x1c, 0xfe, 0x32, 0xbf, 0xb8, 0x9c, 0x73, 0x84, 0xbf, 0xfc, 0xe3,
+	0xb2, 0xfa, 0x31, 0x09, 0x72, 0x78, 0xd4, 0xdb, 0x25, 0x86, 0xc9, 0x7d, 0x4f, 0xc3, 0xdb, 0xaa,
+	0xb4, 0xb8, 0x8c, 0x52, 0x21, 0xef, 0x32, 0xa7, 0xc1, 0x49, 0xfc, 0xdf, 0xf4, 0x1d, 0xe9, 0x65,
+	0x0c, 0x0c, 0xca, 0x77, 0xe7, 0xd7, 0xe1, 0x62, 0xf0, 0x6e, 0xcb, 0x76, 0x82, 0x88, 0x16, 0xc1,
+	0x8f, 0x74, 0xa5, 0x02, 0x8a, 0x0b, 0x02, 0xa7, 0xe9, 0x88, 0xf8, 0x16, 0xfc, 0xa7, 0xba, 0x54,
+	0x1b, 0x00, 0x8f, 0x7a, 0x22, 0x64, 0x2d, 0xfa, 0x30, 0x80, 0x3b, 0xea, 0xe9, 0x47, 0xac, 0x46,
+	0xf3, 0x82, 0x48, 0xf2, 0x0d, 0x35, 0xa8, 0x37, 0xce, 0xb9, 0x61, 0x13, 0x6e, 0xc0, 0x8a, 0x08,
+	0x88, 0xab, 0x1f, 0x38, 0x26, 0x3f, 0xc6, 0xac, 0xe0, 0xbc, 0x80, 0x55, 0x1c, 0xf3, 0x54, 0x35,
+	0x21, 0xdf, 0x21, 0x93, 0x40, 0x9e, 0xb1, 0x68, 0x2e, 0x42, 0xb1, 0x0c, 0xa3, 0xb9, 0xc4, 0xc2,
+	0x00, 0x49, 0xe7, 0x7e, 0x37, 0xf0, 0x17, 0x64, 0xd5, 0x80, 0xf5, 0x48, 0x29, 0xe7, 0x08, 0x66,
+	0x14, 0xab, 0x87, 0x1c, 0xaf, 0x47, 0xc2, 0xe0, 0x7d, 0x42, 0x56, 0xbf, 0x14, 0x56, 0x3b, 0xc4,
+	0x8f, 0xbe, 0x81, 0x45, 0xbb, 0x50, 0x88, 0xbd, 0xa0, 0x15, 0x1d, 0x78, 0xae, 0xf7, 0xb3, 0x2b,
+	0xd1, 0xf7, 0xb3, 0x0b, 0x1a, 0xf8, 0xf7, 0x64, 0xf5, 0xeb, 0x25, 0xd8, 0x9a, 0x2a, 0xfe, 0x1c,
+	0xad, 0x9c, 0xa9, 0xe0, 0x1c, 0x2f, 0xb3, 0xc5, 0x15, 0x9c, 0xed, 0x92, 0x1f, 0x94, 0xd5, 0x3f,
+	0x2a, 0x01, 0x74, 0xc8, 0xbb, 0x12, 0x80, 0x52, 0xbd, 0x0c, 0xc5, 0x3d, 0xe3, 0x31, 0x87, 0xf2,
+	0x79, 0x9e, 0x83, 0x0c, 0x37, 0x37, 0xbc, 0x7f, 0x41, 0xf7, 0xfc, 0x27, 0x49, 0xad, 0xb1, 0x59,
+	0x16, 0xca, 0x89, 0x0d, 0xc8, 0x3c, 0x32, 0x06, 0xe2, 0x3e, 0x34, 0x85, 0x79, 0x62, 0x01, 0x97,
+	0xdf, 0x92, 0xd4, 0x1f, 0x92, 0xd8, 0x34, 0x9a, 0xf9, 0x6d, 0xa9, 0x9d, 0xa9, 0x23, 0xc6, 0xfb,
+	0x92, 0x1d, 0xc5, 0x66, 0x29, 0xa7, 0x23, 0xfe, 0xc7, 0x95, 0x3c, 0x29, 0x6a, 0x36, 0x4d, 0xe8,
+	0xe1, 0x6f, 0x97, 0xd5, 0xf7, 0x87, 0x4f, 0x24, 0xf3, 0xb0, 0x3c, 0x39, 0x49, 0x00, 0x2c, 0x71,
+	0x2b, 0x04, 0xb7, 0xe9, 0x05, 0x06, 0xaa, 0x5a, 0xab, 0xa9, 0x29, 0x29, 0x15, 0x03, 0x9a, 0x75,
+	0x5a, 0x63, 0x57, 0x96, 0x34, 0x29, 0x54, 0x6b, 0x9e, 0x08, 0x9c, 0x86, 0x84, 0xa8, 0xe1, 0x4e,
+	0x43, 0x3e, 0x52, 0x20, 0x45, 0x05, 0x2c, 0x13, 0x26, 0x98, 0x7e, 0xaa, 0xdf, 0x2f, 0xc3, 0x16,
+	0x77, 0x68, 0x99, 0x79, 0xec, 0x80, 0x6a, 0x91, 0xdf, 0x07, 0x99, 0x63, 0x47, 0x9d, 0x1b, 0x06,
+	0x3e, 0xa4, 0x9c, 0xf9, 0xa9, 0x95, 0x33, 0x5e, 0xb3, 0x4c, 0x87, 0xdb, 0xa5, 0xca, 0x8b, 0x61,
+	0xf7, 0x07, 0x96, 0xdd, 0xa7, 0x87, 0x16, 0x62, 0x8d, 0xfc, 0xe8, 0x63, 0xd5, 0xe4, 0xdf, 0x66,
+	0x98, 0x34, 0x04, 0x73, 0x12, 0x76, 0x84, 0x59, 0x0f, 0x18, 0x45, 0x80, 0xf1, 0x17, 0x31, 0x99,
+	0xf8, 0x8b, 0x98, 0x05, 0xcf, 0x37, 0xbe, 0x5f, 0x56, 0x7f, 0x9c, 0x76, 0xdd, 0xf8, 0x60, 0x68,
+	0xf9, 0x33, 0x45, 0xfe, 0xfe, 0x77, 0xdd, 0xac, 0x29, 0x83, 0xfb, 0xd0, 0x4e, 0x99, 0x32, 0xf6,
+	0x60, 0x25, 0xd6, 0xb1, 0x19, 0x26, 0xe8, 0x9e, 0xa4, 0x63, 0xf3, 0xee, 0xbc, 0x0e, 0x5d, 0x7a,
+	0xa2, 0x0e, 0xfd, 0x8b, 0xb2, 0x7a, 0x00, 0xb9, 0xce, 0xf8, 0xc0, 0xeb, 0xb9, 0xd6, 0x01, 0x41,
+	0x9f, 0x0f, 0x17, 0x0f, 0x2d, 0x97, 0xbf, 0x61, 0xe6, 0x20, 0xfd, 0xd0, 0x71, 0x75, 0xd7, 0x19,
+	0xfb, 0x5c, 0x79, 0xcd, 0xde, 0xc9, 0x1c, 0x1a, 0x03, 0x8f, 0xe0, 0x0b, 0x0c, 0x2f, 0xa4, 0xdc,
+	0x76, 0x5c, 0x4c, 0x91, 0x12, 0x16, 0xde, 0x0f, 0xc8, 0xea, 0xaf, 0xa7, 0x60, 0x2d, 0x44, 0x0d,
+	0x05, 0x01, 0x7b, 0xe8, 0x11, 0x30, 0x4e, 0x63, 0x9e, 0x40, 0xef, 0x85, 0xd5, 0x63, 0x42, 0x46,
+	0xba, 0x31, 0xb0, 0x1e, 0x11, 0xaa, 0x83, 0x7a, 0x62, 0xe5, 0x14, 0x28, 0xb8, 0x4c, 0xa1, 0x1d,
+	0xd2, 0xa3, 0xf2, 0xb1, 0x34, 0x34, 0x1e, 0xb3, 0x7b, 0xc8, 0xa0, 0xaa, 0x86, 0xef, 0x93, 0xe1,
+	0xc8, 0xe7, 0xfe, 0xb6, 0x7c, 0xdf, 0x1e, 0x1a, 0x8f, 0xf1, 0x04, 0xa3, 0x2c, 0x10, 0x28, 0xf1,
+	0x88, 0xd8, 0x26, 0x9f, 0xe2, 0x22, 0xec, 0x2e, 0x55, 0x05, 0x9d, 0x31, 0x0f, 0x1b, 0xcc, 0x89,
+	0x05, 0x4a, 0x50, 0xe1, 0x2e, 0x47, 0x40, 0x1f, 0x86, 0x8b, 0x01, 0xf1, 0xa4, 0xec, 0x80, 0x7a,
+	0x29, 0xa0, 0xde, 0x12, 0x38, 0x61, 0xbb, 0x03, 0xf2, 0x7b, 0xa1, 0xfc, 0xe3, 0x01, 0x24, 0x5f,
+	0x49, 0x96, 0x7f, 0xd3, 0xdd, 0x75, 0x2b, 0x7c, 0x06, 0xc9, 0x7f, 0x8c, 0x2d, 0x10, 0x60, 0xa1,
+	0x38, 0xfc, 0x1c, 0xd8, 0x0c, 0x34, 0x19, 0x16, 0xb1, 0xc7, 0x60, 0xbf, 0x62, 0xd0, 0xf3, 0x98,
+	0x95, 0x30, 0x8d, 0x91, 0xc8, 0xdc, 0x33, 0x1e, 0xdf, 0x37, 0x2c, 0x9f, 0xf6, 0x61, 0xc2, 0x60,
+	0xfd, 0x2d, 0x59, 0x7d, 0x85, 0x2a, 0x8a, 0xd1, 0xa2, 0xe2, 0xd2, 0xf2, 0x02, 0x20, 0x61, 0xb3,
+	0x8d, 0x46, 0xfb, 0x95, 0xa9, 0x62, 0x1c, 0x39, 0x0e, 0x95, 0x7b, 0xc7, 0xe1, 0x6f, 0xee, 0xb1,
+	0x3b, 0xc1, 0x05, 0xfb, 0xc5, 0x2f, 0xc8, 0xea, 0xaf, 0xc9, 0xb0, 0x3a, 0x7d, 0xee, 0x7c, 0x00,
+	0x1b, 0xc1, 0xef, 0x27, 0xc4, 0x9e, 0xcd, 0x70, 0xef, 0xf0, 0x79, 0x71, 0x5d, 0x23, 0x5c, 0xa8,
+	0xe8, 0xc6, 0x48, 0xf0, 0x88, 0xc0, 0xd1, 0xeb, 0x70, 0x99, 0xe9, 0xa6, 0xdc, 0xe1, 0x50, 0xbc,
+	0xa8, 0xd1, 0x0f, 0x5d, 0x67, 0xa8, 0xdb, 0xce, 0x89, 0x10, 0xe0, 0x5b, 0x14, 0x85, 0x09, 0x6a,
+	0xf1, 0x90, 0x66, 0xdb, 0x75, 0x86, 0x4d, 0xe7, 0x04, 0x75, 0x62, 0x07, 0xb0, 0xd4, 0x99, 0xa7,
+	0xba, 0xf0, 0x00, 0x76, 0x07, 0xf1, 0xe7, 0xc5, 0xb1, 0xe8, 0x9f, 0x91, 0x43, 0xd9, 0x5d, 0xc8,
+	0x0d, 0x4f, 0xc5, 0xa3, 0x85, 0x05, 0x3e, 0x25, 0x73, 0x0e, 0x9e, 0x38, 0x3b, 0x3c, 0xe5, 0x5f,
+	0x09, 0x43, 0xfb, 0xb7, 0x65, 0xf5, 0x0f, 0xc0, 0xb5, 0x79, 0x94, 0xc1, 0xa2, 0xdc, 0xa6, 0xb3,
+	0xb3, 0x17, 0x04, 0x60, 0x7b, 0xf2, 0x1a, 0x08, 0xea, 0x84, 0xf2, 0xff, 0x8e, 0xac, 0x96, 0xe1,
+	0x3d, 0xb1, 0x1b, 0x64, 0x1e, 0x19, 0x81, 0xcf, 0x93, 0xf3, 0xc4, 0x22, 0xfb, 0x39, 0x59, 0xfd,
+	0x65, 0x09, 0xde, 0x7b, 0x36, 0x8f, 0xb0, 0x29, 0xf5, 0xa9, 0x83, 0xd4, 0x93, 0x1e, 0xbd, 0x23,
+	0x51, 0x9d, 0x3a, 0x50, 0x10, 0xbf, 0x75, 0x27, 0x3a, 0x47, 0x7e, 0x47, 0x9d, 0xb3, 0x32, 0x8a,
+	0xa4, 0x92, 0x62, 0x46, 0xca, 0x6a, 0x25, 0x36, 0x44, 0xf1, 0xe6, 0xf1, 0x80, 0x39, 0x0b, 0xfa,
+	0xe8, 0xe7, 0x65, 0xf5, 0xeb, 0x64, 0x78, 0x6e, 0x01, 0x93, 0x77, 0xef, 0x97, 0x30, 0x3f, 0x1b,
+	0x5d, 0x33, 0x89, 0xfc, 0x93, 0x7a, 0xc2, 0x58, 0x69, 0x09, 0x9d, 0xfa, 0x4b, 0xf4, 0xb4, 0xf1,
+	0x4c, 0x54, 0x26, 0xf0, 0x8e, 0x98, 0x44, 0xd7, 0xfb, 0x6c, 0x1e, 0xbd, 0x7f, 0x59, 0x56, 0x7f,
+	0x47, 0x82, 0xeb, 0xf3, 0x5e, 0xb5, 0x86, 0x45, 0x9f, 0xeb, 0x75, 0x2b, 0xea, 0x86, 0x46, 0x13,
+	0xf9, 0x0c, 0xf3, 0xfc, 0xa2, 0xc2, 0x6e, 0xc5, 0x8d, 0x28, 0x09, 0xb5, 0xfe, 0x4b, 0xb2, 0x5a,
+	0x85, 0x25, 0x61, 0xda, 0x2d, 0x40, 0xae, 0xd9, 0xea, 0xea, 0xdb, 0xec, 0x97, 0xa2, 0xd8, 0x95,
+	0x39, 0xdb, 0x0d, 0xb4, 0x9a, 0x26, 0x7e, 0x53, 0x4a, 0x68, 0xcf, 0xa9, 0xe9, 0x1f, 0x3d, 0x4f,
+	0xab, 0x5f, 0x29, 0xc1, 0x66, 0xa2, 0x06, 0x73, 0xce, 0xf6, 0x96, 0x98, 0xa7, 0x27, 0x25, 0x12,
+	0x8a, 0x58, 0x90, 0x44, 0x2f, 0xc1, 0x7a, 0x94, 0x9e, 0x3d, 0xe5, 0x0c, 0xef, 0x85, 0x94, 0x09,
+	0x93, 0x7d, 0x8f, 0xb8, 0x75, 0x53, 0xfd, 0x08, 0x6c, 0x74, 0x5d, 0xab, 0xdf, 0x27, 0x2e, 0xd3,
+	0xe2, 0xa3, 0x3f, 0xeb, 0xc1, 0xdf, 0xae, 0x4c, 0xde, 0x4d, 0xb1, 0xf4, 0x59, 0x3f, 0xeb, 0x91,
+	0xd0, 0x5f, 0xdf, 0x25, 0xab, 0x3f, 0x2e, 0xc1, 0x0d, 0x51, 0x04, 0x9b, 0xd8, 0x66, 0xd4, 0x3d,
+	0xbe, 0x65, 0x77, 0xc6, 0x07, 0x36, 0xf1, 0x51, 0x05, 0xf2, 0xcc, 0x5f, 0x83, 0xcd, 0xf6, 0xc0,
+	0xe8, 0x72, 0x63, 0xce, 0x33, 0xaa, 0x09, 0x3d, 0x66, 0x5e, 0x1e, 0x9c, 0x2f, 0xaa, 0xc1, 0x8a,
+	0xe3, 0x1f, 0x11, 0x57, 0xfc, 0xfc, 0xa6, 0x78, 0x22, 0x71, 0x0e, 0x26, 0x79, 0x46, 0xc6, 0x13,
+	0x0b, 0xa4, 0xc8, 0x77, 0xca, 0xaa, 0x0a, 0xf9, 0x7d, 0x3b, 0x54, 0x70, 0x12, 0x1a, 0xfd, 0xa3,
+	0xcc, 0xb3, 0x95, 0x3f, 0x97, 0x9b, 0xfa, 0xe1, 0xfa, 0x05, 0x6a, 0xe7, 0x9f, 0x92, 0xd5, 0x4f,
+	0x4a, 0x70, 0x35, 0x91, 0x34, 0x1c, 0x9a, 0xdb, 0xb0, 0x79, 0x68, 0x3d, 0x26, 0x66, 0x70, 0x11,
+	0xa7, 0xc7, 0x8f, 0xe5, 0xeb, 0x2c, 0x53, 0x50, 0x75, 0xc4, 0x11, 0xfd, 0x75, 0xb8, 0xd4, 0x73,
+	0x6c, 0x6f, 0x3c, 0x34, 0x0e, 0x06, 0x64, 0x86, 0x90, 0x0f, 0x63, 0x69, 0x82, 0x11, 0xa7, 0x4e,
+	0x68, 0xe2, 0x3f, 0x65, 0xbf, 0x21, 0x9c, 0xe7, 0x15, 0x6d, 0x38, 0x7d, 0xcb, 0xa6, 0x3a, 0xbe,
+	0x4b, 0x46, 0x03, 0xba, 0x51, 0xbf, 0x3d, 0xb6, 0x5c, 0x62, 0x8a, 0x97, 0xdb, 0x05, 0x06, 0xc5,
+	0x02, 0xc8, 0xe3, 0x3b, 0x1f, 0x12, 0xd7, 0x15, 0x0e, 0xac, 0x2c, 0xbe, 0x33, 0x4f, 0xa3, 0x57,
+	0x61, 0x4b, 0x28, 0xec, 0x43, 0xc7, 0x24, 0x03, 0x7d, 0x62, 0xe2, 0x15, 0xf3, 0x77, 0x93, 0x67,
+	0xef, 0xd1, 0xdc, 0x5a, 0x98, 0xb9, 0x28, 0x3a, 0xbe, 0xa4, 0xbe, 0x00, 0xeb, 0x91, 0xaa, 0x06,
+	0xbf, 0x51, 0x9f, 0xd0, 0xae, 0xef, 0x93, 0xd5, 0x06, 0xac, 0xde, 0x33, 0x06, 0x16, 0x1f, 0x81,
+	0x77, 0xf6, 0x6b, 0x1f, 0x41, 0xc9, 0xdf, 0x4c, 0x4f, 0x11, 0x5b, 0x53, 0xdc, 0xa2, 0x06, 0x95,
+	0x64, 0xae, 0xf1, 0x15, 0x26, 0x9d, 0xbd, 0xc2, 0xfe, 0x9c, 0xfc, 0xc2, 0x6f, 0xc9, 0x90, 0x8f,
+	0x5c, 0x83, 0xa2, 0x12, 0x6c, 0x04, 0x77, 0x7c, 0x51, 0x95, 0x4a, 0x79, 0x6a, 0x26, 0x47, 0xc4,
+	0x81, 0xe1, 0xda, 0x6b, 0x2c, 0x87, 0xc7, 0x4b, 0x94, 0xd1, 0x26, 0xac, 0xc5, 0xe0, 0xcd, 0xf2,
+	0x83, 0x07, 0x4a, 0x8a, 0xfd, 0x38, 0x66, 0x8c, 0x11, 0xde, 0x53, 0xd2, 0xe8, 0x12, 0x5c, 0x88,
+	0x41, 0xc3, 0x80, 0x3c, 0x4a, 0x66, 0x86, 0xd1, 0xae, 0x86, 0x5b, 0xca, 0xd2, 0x0c, 0xa3, 0x46,
+	0x4b, 0x53, 0x96, 0x67, 0x90, 0xef, 0xd7, 0x9b, 0x3b, 0x4a, 0x16, 0x5d, 0x81, 0x52, 0x0c, 0x8c,
+	0xcb, 0xcd, 0x5a, 0x6b, 0x8f, 0x15, 0xa3, 0xe4, 0xd0, 0x35, 0xb8, 0x1c, 0x2f, 0xa1, 0x5e, 0xab,
+	0x69, 0xcd, 0xd0, 0x51, 0x08, 0xd0, 0x33, 0x70, 0x3d, 0x86, 0x10, 0x8b, 0x6d, 0xd3, 0xad, 0x57,
+	0xef, 0x6a, 0x5d, 0x25, 0xcf, 0xef, 0x4f, 0xa3, 0x8d, 0xd8, 0xc7, 0x58, 0x6b, 0x56, 0x1f, 0x2a,
+	0x2b, 0x2f, 0x74, 0x40, 0x99, 0xbe, 0xf1, 0xa3, 0xe8, 0xae, 0x71, 0x18, 0xbf, 0x33, 0xd4, 0x75,
+	0xe7, 0x58, 0x91, 0x68, 0x79, 0x09, 0x59, 0xb6, 0xe3, 0x4f, 0x7e, 0x78, 0x55, 0x91, 0xff, 0x6f,
+	0x00, 0x00, 0x00, 0xff, 0xff, 0x19, 0x4c, 0xae, 0x5f, 0x4b, 0x84, 0x00, 0x00,
 }

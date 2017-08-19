@@ -39,11 +39,11 @@ package bnet_protocol_channel_invitation
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import bnet_protocol_channel "bnet/protocol/channel"
-import bnet_protocol_channel_extracted "bnet/protocol/channel_extracted"
-import bnet_protocol_friends "bnet/protocol/friends"
-import bnet_protocol_invitation "bnet/protocol/invitation"
-import bnet_protocol "bnet/protocol"
+import bnet_protocol_channel "github.com/HearthSim/hs-proto-go/bnet/protocol/channel"
+import bnet_protocol_channel_extracted "github.com/HearthSim/hs-proto-go/bnet/protocol/channel_extracted"
+import bnet_protocol_friends "github.com/HearthSim/hs-proto-go/bnet/protocol/friends"
+import bnet_protocol_invitation "github.com/HearthSim/hs-proto-go/bnet/protocol/invitation"
+import bnet_protocol "github.com/HearthSim/hs-proto-go/bnet/protocol"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -58,19 +58,22 @@ const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 // ref: bnet.protocol.channel_invitation.AcceptInvitationRequest
 type AcceptInvitationRequest struct {
-	AgentId         *bnet_protocol.EntityId            `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
-	MemberState     *bnet_protocol_channel.MemberState `protobuf:"bytes,2,opt,name=member_state,json=memberState" json:"member_state,omitempty"`
-	InvitationId    uint64                             `protobuf:"fixed64,3,opt,name=invitation_id,json=invitationId" json:"invitation_id,omitempty"`
-	ObjectId        uint64                             `protobuf:"varint,4,opt,name=object_id,json=objectId" json:"object_id,omitempty"`
-	ChannelId       *bnet_protocol.EntityId            `protobuf:"bytes,5,opt,name=channel_id,json=channelId" json:"channel_id,omitempty"`
-	ServiceType     uint32                             `protobuf:"varint,6,opt,name=service_type,json=serviceType" json:"service_type,omitempty"`
-	LocalSubscriber bool                               `protobuf:"varint,7,opt,name=local_subscriber,json=localSubscriber" json:"local_subscriber,omitempty"`
+	AgentId          *bnet_protocol.EntityId            `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	MemberState      *bnet_protocol_channel.MemberState `protobuf:"bytes,2,opt,name=member_state,json=memberState" json:"member_state,omitempty"`
+	InvitationId     *uint64                            `protobuf:"fixed64,3,req,name=invitation_id,json=invitationId" json:"invitation_id,omitempty"`
+	ObjectId         *uint64                            `protobuf:"varint,4,req,name=object_id,json=objectId" json:"object_id,omitempty"`
+	ChannelId        *bnet_protocol.EntityId            `protobuf:"bytes,5,opt,name=channel_id,json=channelId" json:"channel_id,omitempty"`
+	ServiceType      *uint32                            `protobuf:"varint,6,opt,name=service_type,json=serviceType" json:"service_type,omitempty"`
+	LocalSubscriber  *bool                              `protobuf:"varint,7,opt,name=local_subscriber,json=localSubscriber,def=1" json:"local_subscriber,omitempty"`
+	XXX_unrecognized []byte                             `json:"-"`
 }
 
 func (m *AcceptInvitationRequest) Reset()                    { *m = AcceptInvitationRequest{} }
 func (m *AcceptInvitationRequest) String() string            { return proto.CompactTextString(m) }
 func (*AcceptInvitationRequest) ProtoMessage()               {}
 func (*AcceptInvitationRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+
+const Default_AcceptInvitationRequest_LocalSubscriber bool = true
 
 func (m *AcceptInvitationRequest) GetAgentId() *bnet_protocol.EntityId {
 	if m != nil {
@@ -87,15 +90,15 @@ func (m *AcceptInvitationRequest) GetMemberState() *bnet_protocol_channel.Member
 }
 
 func (m *AcceptInvitationRequest) GetInvitationId() uint64 {
-	if m != nil {
-		return m.InvitationId
+	if m != nil && m.InvitationId != nil {
+		return *m.InvitationId
 	}
 	return 0
 }
 
 func (m *AcceptInvitationRequest) GetObjectId() uint64 {
-	if m != nil {
-		return m.ObjectId
+	if m != nil && m.ObjectId != nil {
+		return *m.ObjectId
 	}
 	return 0
 }
@@ -108,22 +111,23 @@ func (m *AcceptInvitationRequest) GetChannelId() *bnet_protocol.EntityId {
 }
 
 func (m *AcceptInvitationRequest) GetServiceType() uint32 {
-	if m != nil {
-		return m.ServiceType
+	if m != nil && m.ServiceType != nil {
+		return *m.ServiceType
 	}
 	return 0
 }
 
 func (m *AcceptInvitationRequest) GetLocalSubscriber() bool {
-	if m != nil {
-		return m.LocalSubscriber
+	if m != nil && m.LocalSubscriber != nil {
+		return *m.LocalSubscriber
 	}
-	return false
+	return Default_AcceptInvitationRequest_LocalSubscriber
 }
 
 // ref: bnet.protocol.channel_invitation.AcceptInvitationResponse
 type AcceptInvitationResponse struct {
-	ObjectId uint64 `protobuf:"varint,1,opt,name=object_id,json=objectId" json:"object_id,omitempty"`
+	ObjectId         *uint64 `protobuf:"varint,1,req,name=object_id,json=objectId" json:"object_id,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *AcceptInvitationResponse) Reset()                    { *m = AcceptInvitationResponse{} }
@@ -132,22 +136,25 @@ func (*AcceptInvitationResponse) ProtoMessage()               {}
 func (*AcceptInvitationResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
 func (m *AcceptInvitationResponse) GetObjectId() uint64 {
-	if m != nil {
-		return m.ObjectId
+	if m != nil && m.ObjectId != nil {
+		return *m.ObjectId
 	}
 	return 0
 }
 
 // ref: bnet.protocol.channel_invitation.ChannelCount
 type ChannelCount struct {
-	ChannelId   *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=channel_id,json=channelId" json:"channel_id,omitempty"`
-	ChannelType string                  `protobuf:"bytes,2,opt,name=channel_type,json=channelType" json:"channel_type,omitempty"`
+	ChannelId        *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=channel_id,json=channelId" json:"channel_id,omitempty"`
+	ChannelType      *string                 `protobuf:"bytes,2,opt,name=channel_type,json=channelType,def=default" json:"channel_type,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *ChannelCount) Reset()                    { *m = ChannelCount{} }
 func (m *ChannelCount) String() string            { return proto.CompactTextString(m) }
 func (*ChannelCount) ProtoMessage()               {}
 func (*ChannelCount) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
+
+const Default_ChannelCount_ChannelType string = "default"
 
 func (m *ChannelCount) GetChannelId() *bnet_protocol.EntityId {
 	if m != nil {
@@ -157,18 +164,19 @@ func (m *ChannelCount) GetChannelId() *bnet_protocol.EntityId {
 }
 
 func (m *ChannelCount) GetChannelType() string {
-	if m != nil {
-		return m.ChannelType
+	if m != nil && m.ChannelType != nil {
+		return *m.ChannelType
 	}
-	return ""
+	return Default_ChannelCount_ChannelType
 }
 
 // ref: bnet.protocol.channel_invitation.ChannelCountDescription
 type ChannelCountDescription struct {
-	ServiceType uint32                  `protobuf:"varint,1,opt,name=service_type,json=serviceType" json:"service_type,omitempty"`
-	Program     uint32                  `protobuf:"fixed32,2,opt,name=program" json:"program,omitempty"`
-	ChannelType string                  `protobuf:"bytes,3,opt,name=channel_type,json=channelType" json:"channel_type,omitempty"`
-	ChannelId   *bnet_protocol.EntityId `protobuf:"bytes,4,opt,name=channel_id,json=channelId" json:"channel_id,omitempty"`
+	ServiceType      *uint32                 `protobuf:"varint,1,req,name=service_type,json=serviceType" json:"service_type,omitempty"`
+	Program          *uint32                 `protobuf:"fixed32,2,req,name=program" json:"program,omitempty"`
+	ChannelType      *string                 `protobuf:"bytes,3,opt,name=channel_type,json=channelType,def=default" json:"channel_type,omitempty"`
+	ChannelId        *bnet_protocol.EntityId `protobuf:"bytes,4,opt,name=channel_id,json=channelId" json:"channel_id,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *ChannelCountDescription) Reset()                    { *m = ChannelCountDescription{} }
@@ -176,25 +184,27 @@ func (m *ChannelCountDescription) String() string            { return proto.Comp
 func (*ChannelCountDescription) ProtoMessage()               {}
 func (*ChannelCountDescription) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
 
+const Default_ChannelCountDescription_ChannelType string = "default"
+
 func (m *ChannelCountDescription) GetServiceType() uint32 {
-	if m != nil {
-		return m.ServiceType
+	if m != nil && m.ServiceType != nil {
+		return *m.ServiceType
 	}
 	return 0
 }
 
 func (m *ChannelCountDescription) GetProgram() uint32 {
-	if m != nil {
-		return m.Program
+	if m != nil && m.Program != nil {
+		return *m.Program
 	}
 	return 0
 }
 
 func (m *ChannelCountDescription) GetChannelType() string {
-	if m != nil {
-		return m.ChannelType
+	if m != nil && m.ChannelType != nil {
+		return *m.ChannelType
 	}
-	return ""
+	return Default_ChannelCountDescription_ChannelType
 }
 
 func (m *ChannelCountDescription) GetChannelId() *bnet_protocol.EntityId {
@@ -206,10 +216,11 @@ func (m *ChannelCountDescription) GetChannelId() *bnet_protocol.EntityId {
 
 // ref: bnet.protocol.channel_invitation.ChannelInvitationParams
 type ChannelInvitationParams struct {
-	ChannelId   *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=channel_id,json=channelId" json:"channel_id,omitempty"`
-	Reserved    bool                    `protobuf:"varint,2,opt,name=reserved" json:"reserved,omitempty"`
-	Rejoin      bool                    `protobuf:"varint,3,opt,name=rejoin" json:"rejoin,omitempty"`
-	ServiceType uint32                  `protobuf:"varint,4,opt,name=service_type,json=serviceType" json:"service_type,omitempty"`
+	ChannelId        *bnet_protocol.EntityId `protobuf:"bytes,1,req,name=channel_id,json=channelId" json:"channel_id,omitempty"`
+	Reserved         *bool                   `protobuf:"varint,2,opt,name=reserved" json:"reserved,omitempty"`
+	Rejoin           *bool                   `protobuf:"varint,3,opt,name=rejoin" json:"rejoin,omitempty"`
+	ServiceType      *uint32                 `protobuf:"varint,4,req,name=service_type,json=serviceType" json:"service_type,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *ChannelInvitationParams) Reset()                    { *m = ChannelInvitationParams{} }
@@ -225,31 +236,32 @@ func (m *ChannelInvitationParams) GetChannelId() *bnet_protocol.EntityId {
 }
 
 func (m *ChannelInvitationParams) GetReserved() bool {
-	if m != nil {
-		return m.Reserved
+	if m != nil && m.Reserved != nil {
+		return *m.Reserved
 	}
 	return false
 }
 
 func (m *ChannelInvitationParams) GetRejoin() bool {
-	if m != nil {
-		return m.Rejoin
+	if m != nil && m.Rejoin != nil {
+		return *m.Rejoin
 	}
 	return false
 }
 
 func (m *ChannelInvitationParams) GetServiceType() uint32 {
-	if m != nil {
-		return m.ServiceType
+	if m != nil && m.ServiceType != nil {
+		return *m.ServiceType
 	}
 	return 0
 }
 
 // ref: bnet.protocol.channel_invitation.DecrementChannelCountRequest
 type DecrementChannelCountRequest struct {
-	AgentId          *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	AgentId          *bnet_protocol.EntityId `protobuf:"bytes,1,req,name=agent_id,json=agentId" json:"agent_id,omitempty"`
 	ChannelId        *bnet_protocol.EntityId `protobuf:"bytes,2,opt,name=channel_id,json=channelId" json:"channel_id,omitempty"`
-	ReservationToken uint64                  `protobuf:"varint,3,opt,name=reservation_token,json=reservationToken" json:"reservation_token,omitempty"`
+	ReservationToken *uint64                 `protobuf:"varint,3,opt,name=reservation_token,json=reservationToken" json:"reservation_token,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *DecrementChannelCountRequest) Reset()                    { *m = DecrementChannelCountRequest{} }
@@ -272,17 +284,18 @@ func (m *DecrementChannelCountRequest) GetChannelId() *bnet_protocol.EntityId {
 }
 
 func (m *DecrementChannelCountRequest) GetReservationToken() uint64 {
-	if m != nil {
-		return m.ReservationToken
+	if m != nil && m.ReservationToken != nil {
+		return *m.ReservationToken
 	}
 	return 0
 }
 
 // ref: bnet.protocol.channel_invitation.HasRoomForInvitationRequest
 type HasRoomForInvitationRequest struct {
-	ServiceType uint32 `protobuf:"varint,1,opt,name=service_type,json=serviceType" json:"service_type,omitempty"`
-	Program     uint32 `protobuf:"fixed32,2,opt,name=program" json:"program,omitempty"`
-	ChannelType string `protobuf:"bytes,3,opt,name=channel_type,json=channelType" json:"channel_type,omitempty"`
+	ServiceType      *uint32 `protobuf:"varint,1,req,name=service_type,json=serviceType" json:"service_type,omitempty"`
+	Program          *uint32 `protobuf:"fixed32,2,opt,name=program" json:"program,omitempty"`
+	ChannelType      *string `protobuf:"bytes,3,opt,name=channel_type,json=channelType,def=default" json:"channel_type,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *HasRoomForInvitationRequest) Reset()                    { *m = HasRoomForInvitationRequest{} }
@@ -290,31 +303,34 @@ func (m *HasRoomForInvitationRequest) String() string            { return proto.
 func (*HasRoomForInvitationRequest) ProtoMessage()               {}
 func (*HasRoomForInvitationRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
 
+const Default_HasRoomForInvitationRequest_ChannelType string = "default"
+
 func (m *HasRoomForInvitationRequest) GetServiceType() uint32 {
-	if m != nil {
-		return m.ServiceType
+	if m != nil && m.ServiceType != nil {
+		return *m.ServiceType
 	}
 	return 0
 }
 
 func (m *HasRoomForInvitationRequest) GetProgram() uint32 {
-	if m != nil {
-		return m.Program
+	if m != nil && m.Program != nil {
+		return *m.Program
 	}
 	return 0
 }
 
 func (m *HasRoomForInvitationRequest) GetChannelType() string {
-	if m != nil {
-		return m.ChannelType
+	if m != nil && m.ChannelType != nil {
+		return *m.ChannelType
 	}
-	return ""
+	return Default_HasRoomForInvitationRequest_ChannelType
 }
 
 // ref: bnet.protocol.channel_invitation.IncrementChannelCountRequest
 type IncrementChannelCountRequest struct {
-	AgentId      *bnet_protocol.EntityId    `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
-	Descriptions []*ChannelCountDescription `protobuf:"bytes,2,rep,name=descriptions" json:"descriptions,omitempty"`
+	AgentId          *bnet_protocol.EntityId    `protobuf:"bytes,1,req,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	Descriptions     []*ChannelCountDescription `protobuf:"bytes,2,rep,name=descriptions" json:"descriptions,omitempty"`
+	XXX_unrecognized []byte                     `json:"-"`
 }
 
 func (m *IncrementChannelCountRequest) Reset()                    { *m = IncrementChannelCountRequest{} }
@@ -339,6 +355,7 @@ func (m *IncrementChannelCountRequest) GetDescriptions() []*ChannelCountDescript
 // ref: bnet.protocol.channel_invitation.IncrementChannelCountResponse
 type IncrementChannelCountResponse struct {
 	ReservationTokens []uint64 `protobuf:"varint,1,rep,name=reservation_tokens,json=reservationTokens" json:"reservation_tokens,omitempty"`
+	XXX_unrecognized  []byte   `json:"-"`
 }
 
 func (m *IncrementChannelCountResponse) Reset()                    { *m = IncrementChannelCountResponse{} }
@@ -355,7 +372,8 @@ func (m *IncrementChannelCountResponse) GetReservationTokens() []uint64 {
 
 // ref: bnet.protocol.channel_invitation.InvitationAddedNotification
 type InvitationAddedNotification struct {
-	Invitation *bnet_protocol_channel_extracted.Invitation `protobuf:"bytes,1,opt,name=invitation" json:"invitation,omitempty"`
+	Invitation       *bnet_protocol_channel_extracted.Invitation `protobuf:"bytes,1,req,name=invitation" json:"invitation,omitempty"`
+	XXX_unrecognized []byte                                      `json:"-"`
 }
 
 func (m *InvitationAddedNotification) Reset()                    { *m = InvitationAddedNotification{} }
@@ -372,10 +390,11 @@ func (m *InvitationAddedNotification) GetInvitation() *bnet_protocol_channel_ext
 
 // ref: bnet.protocol.channel_invitation.InvitationCollection
 type InvitationCollection struct {
-	ServiceType            uint32                                        `protobuf:"varint,1,opt,name=service_type,json=serviceType" json:"service_type,omitempty"`
-	MaxReceivedInvitations uint32                                        `protobuf:"varint,2,opt,name=max_received_invitations,json=maxReceivedInvitations" json:"max_received_invitations,omitempty"`
-	ObjectId               uint64                                        `protobuf:"varint,3,opt,name=object_id,json=objectId" json:"object_id,omitempty"`
+	ServiceType            *uint32                                       `protobuf:"varint,1,opt,name=service_type,json=serviceType" json:"service_type,omitempty"`
+	MaxReceivedInvitations *uint32                                       `protobuf:"varint,2,opt,name=max_received_invitations,json=maxReceivedInvitations" json:"max_received_invitations,omitempty"`
+	ObjectId               *uint64                                       `protobuf:"varint,3,opt,name=object_id,json=objectId" json:"object_id,omitempty"`
 	ReceivedInvitation     []*bnet_protocol_channel_extracted.Invitation `protobuf:"bytes,4,rep,name=received_invitation,json=receivedInvitation" json:"received_invitation,omitempty"`
+	XXX_unrecognized       []byte                                        `json:"-"`
 }
 
 func (m *InvitationCollection) Reset()                    { *m = InvitationCollection{} }
@@ -384,22 +403,22 @@ func (*InvitationCollection) ProtoMessage()               {}
 func (*InvitationCollection) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{10} }
 
 func (m *InvitationCollection) GetServiceType() uint32 {
-	if m != nil {
-		return m.ServiceType
+	if m != nil && m.ServiceType != nil {
+		return *m.ServiceType
 	}
 	return 0
 }
 
 func (m *InvitationCollection) GetMaxReceivedInvitations() uint32 {
-	if m != nil {
-		return m.MaxReceivedInvitations
+	if m != nil && m.MaxReceivedInvitations != nil {
+		return *m.MaxReceivedInvitations
 	}
 	return 0
 }
 
 func (m *InvitationCollection) GetObjectId() uint64 {
-	if m != nil {
-		return m.ObjectId
+	if m != nil && m.ObjectId != nil {
+		return *m.ObjectId
 	}
 	return 0
 }
@@ -413,10 +432,11 @@ func (m *InvitationCollection) GetReceivedInvitation() []*bnet_protocol_channel_
 
 // ref: bnet.protocol.invitation.InvitationParams
 type InvitationParams struct {
-	InvitationMessage string                                        `protobuf:"bytes,1,opt,name=invitation_message,json=invitationMessage" json:"invitation_message,omitempty"`
-	ExpirationTime    uint64                                        `protobuf:"varint,2,opt,name=expiration_time,json=expirationTime" json:"expiration_time,omitempty"`
+	InvitationMessage *string                                       `protobuf:"bytes,1,opt,name=invitation_message,json=invitationMessage" json:"invitation_message,omitempty"`
+	ExpirationTime    *uint64                                       `protobuf:"varint,2,opt,name=expiration_time,json=expirationTime,def=0" json:"expiration_time,omitempty"`
 	FriendParams      *bnet_protocol_friends.FriendInvitationParams `protobuf:"bytes,103,opt,name=friend_params,json=friendParams" json:"friend_params,omitempty"`
 	ChannelParams     *ChannelInvitationParams                      `protobuf:"bytes,105,opt,name=channel_params,json=channelParams" json:"channel_params,omitempty"`
+	XXX_unrecognized  []byte                                        `json:"-"`
 }
 
 func (m *InvitationParams) Reset()                    { *m = InvitationParams{} }
@@ -424,18 +444,20 @@ func (m *InvitationParams) String() string            { return proto.CompactText
 func (*InvitationParams) ProtoMessage()               {}
 func (*InvitationParams) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{11} }
 
+const Default_InvitationParams_ExpirationTime uint64 = 0
+
 func (m *InvitationParams) GetInvitationMessage() string {
-	if m != nil {
-		return m.InvitationMessage
+	if m != nil && m.InvitationMessage != nil {
+		return *m.InvitationMessage
 	}
 	return ""
 }
 
 func (m *InvitationParams) GetExpirationTime() uint64 {
-	if m != nil {
-		return m.ExpirationTime
+	if m != nil && m.ExpirationTime != nil {
+		return *m.ExpirationTime
 	}
-	return 0
+	return Default_InvitationParams_ExpirationTime
 }
 
 func (m *InvitationParams) GetFriendParams() *bnet_protocol_friends.FriendInvitationParams {
@@ -454,8 +476,9 @@ func (m *InvitationParams) GetChannelParams() *ChannelInvitationParams {
 
 // ref: bnet.protocol.channel_invitation.InvitationRemovedNotification
 type InvitationRemovedNotification struct {
-	Invitation *bnet_protocol_channel_extracted.Invitation `protobuf:"bytes,1,opt,name=invitation" json:"invitation,omitempty"`
-	Reason     uint32                                      `protobuf:"varint,2,opt,name=reason" json:"reason,omitempty"`
+	Invitation       *bnet_protocol_channel_extracted.Invitation `protobuf:"bytes,1,req,name=invitation" json:"invitation,omitempty"`
+	Reason           *uint32                                     `protobuf:"varint,2,opt,name=reason" json:"reason,omitempty"`
+	XXX_unrecognized []byte                                      `json:"-"`
 }
 
 func (m *InvitationRemovedNotification) Reset()                    { *m = InvitationRemovedNotification{} }
@@ -471,17 +494,18 @@ func (m *InvitationRemovedNotification) GetInvitation() *bnet_protocol_channel_e
 }
 
 func (m *InvitationRemovedNotification) GetReason() uint32 {
-	if m != nil {
-		return m.Reason
+	if m != nil && m.Reason != nil {
+		return *m.Reason
 	}
 	return 0
 }
 
 // ref: bnet.protocol.channel_invitation.ListChannelCountRequest
 type ListChannelCountRequest struct {
-	MemberId    *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=member_id,json=memberId" json:"member_id,omitempty"`
-	ServiceType uint32                  `protobuf:"varint,2,opt,name=service_type,json=serviceType" json:"service_type,omitempty"`
-	Program     uint32                  `protobuf:"fixed32,3,opt,name=program" json:"program,omitempty"`
+	MemberId         *bnet_protocol.EntityId `protobuf:"bytes,1,req,name=member_id,json=memberId" json:"member_id,omitempty"`
+	ServiceType      *uint32                 `protobuf:"varint,2,req,name=service_type,json=serviceType" json:"service_type,omitempty"`
+	Program          *uint32                 `protobuf:"fixed32,3,opt,name=program" json:"program,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *ListChannelCountRequest) Reset()                    { *m = ListChannelCountRequest{} }
@@ -497,22 +521,23 @@ func (m *ListChannelCountRequest) GetMemberId() *bnet_protocol.EntityId {
 }
 
 func (m *ListChannelCountRequest) GetServiceType() uint32 {
-	if m != nil {
-		return m.ServiceType
+	if m != nil && m.ServiceType != nil {
+		return *m.ServiceType
 	}
 	return 0
 }
 
 func (m *ListChannelCountRequest) GetProgram() uint32 {
-	if m != nil {
-		return m.Program
+	if m != nil && m.Program != nil {
+		return *m.Program
 	}
 	return 0
 }
 
 // ref: bnet.protocol.channel_invitation.ListChannelCountResponse
 type ListChannelCountResponse struct {
-	Channel []*ChannelCount `protobuf:"bytes,1,rep,name=channel" json:"channel,omitempty"`
+	Channel          []*ChannelCount `protobuf:"bytes,1,rep,name=channel" json:"channel,omitempty"`
+	XXX_unrecognized []byte          `json:"-"`
 }
 
 func (m *ListChannelCountResponse) Reset()                    { *m = ListChannelCountResponse{} }
@@ -529,10 +554,11 @@ func (m *ListChannelCountResponse) GetChannel() []*ChannelCount {
 
 // ref: bnet.protocol.channel_invitation.RevokeInvitationRequest
 type RevokeInvitationRequest struct {
-	AgentId      *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
-	TargetId     *bnet_protocol.EntityId `protobuf:"bytes,2,opt,name=target_id,json=targetId" json:"target_id,omitempty"`
-	InvitationId uint64                  `protobuf:"fixed64,3,opt,name=invitation_id,json=invitationId" json:"invitation_id,omitempty"`
-	ChannelId    *bnet_protocol.EntityId `protobuf:"bytes,4,opt,name=channel_id,json=channelId" json:"channel_id,omitempty"`
+	AgentId          *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	TargetId         *bnet_protocol.EntityId `protobuf:"bytes,2,opt,name=target_id,json=targetId" json:"target_id,omitempty"`
+	InvitationId     *uint64                 `protobuf:"fixed64,3,req,name=invitation_id,json=invitationId" json:"invitation_id,omitempty"`
+	ChannelId        *bnet_protocol.EntityId `protobuf:"bytes,4,req,name=channel_id,json=channelId" json:"channel_id,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *RevokeInvitationRequest) Reset()                    { *m = RevokeInvitationRequest{} }
@@ -555,8 +581,8 @@ func (m *RevokeInvitationRequest) GetTargetId() *bnet_protocol.EntityId {
 }
 
 func (m *RevokeInvitationRequest) GetInvitationId() uint64 {
-	if m != nil {
-		return m.InvitationId
+	if m != nil && m.InvitationId != nil {
+		return *m.InvitationId
 	}
 	return 0
 }
@@ -570,11 +596,12 @@ func (m *RevokeInvitationRequest) GetChannelId() *bnet_protocol.EntityId {
 
 // ref: bnet.protocol.invitation.SendInvitationRequest
 type SendInvitationRequest struct {
-	AgentIdentity *bnet_protocol.Identity                    `protobuf:"bytes,1,opt,name=agent_identity,json=agentIdentity" json:"agent_identity,omitempty"`
-	TargetId      *bnet_protocol.EntityId                    `protobuf:"bytes,2,opt,name=target_id,json=targetId" json:"target_id,omitempty"`
-	Params        *InvitationParams                          `protobuf:"bytes,3,opt,name=params" json:"params,omitempty"`
-	AgentInfo     *bnet_protocol.AccountInfo                 `protobuf:"bytes,4,opt,name=agent_info,json=agentInfo" json:"agent_info,omitempty"`
-	Target        *bnet_protocol_invitation.InvitationTarget `protobuf:"bytes,5,opt,name=target" json:"target,omitempty"`
+	AgentIdentity    *bnet_protocol.Identity                    `protobuf:"bytes,1,opt,name=agent_identity,json=agentIdentity" json:"agent_identity,omitempty"`
+	TargetId         *bnet_protocol.EntityId                    `protobuf:"bytes,2,req,name=target_id,json=targetId" json:"target_id,omitempty"`
+	Params           *InvitationParams                          `protobuf:"bytes,3,req,name=params" json:"params,omitempty"`
+	AgentInfo        *bnet_protocol.AccountInfo                 `protobuf:"bytes,4,opt,name=agent_info,json=agentInfo" json:"agent_info,omitempty"`
+	Target           *bnet_protocol_invitation.InvitationTarget `protobuf:"bytes,5,opt,name=target" json:"target,omitempty"`
+	XXX_unrecognized []byte                                     `json:"-"`
 }
 
 func (m *SendInvitationRequest) Reset()                    { *m = SendInvitationRequest{} }
@@ -619,8 +646,9 @@ func (m *SendInvitationRequest) GetTarget() *bnet_protocol_invitation.Invitation
 
 // ref: bnet.protocol.channel_invitation.SubscribeRequest
 type SubscribeRequest struct {
-	AgentId  *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
-	ObjectId uint64                  `protobuf:"varint,2,opt,name=object_id,json=objectId" json:"object_id,omitempty"`
+	AgentId          *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	ObjectId         *uint64                 `protobuf:"varint,2,req,name=object_id,json=objectId" json:"object_id,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *SubscribeRequest) Reset()                    { *m = SubscribeRequest{} }
@@ -636,8 +664,8 @@ func (m *SubscribeRequest) GetAgentId() *bnet_protocol.EntityId {
 }
 
 func (m *SubscribeRequest) GetObjectId() uint64 {
-	if m != nil {
-		return m.ObjectId
+	if m != nil && m.ObjectId != nil {
+		return *m.ObjectId
 	}
 	return 0
 }
@@ -646,6 +674,7 @@ func (m *SubscribeRequest) GetObjectId() uint64 {
 type SubscribeResponse struct {
 	Collection         []*InvitationCollection                       `protobuf:"bytes,1,rep,name=collection" json:"collection,omitempty"`
 	ReceivedInvitation []*bnet_protocol_channel_extracted.Invitation `protobuf:"bytes,2,rep,name=received_invitation,json=receivedInvitation" json:"received_invitation,omitempty"`
+	XXX_unrecognized   []byte                                        `json:"-"`
 }
 
 func (m *SubscribeResponse) Reset()                    { *m = SubscribeResponse{} }
@@ -669,12 +698,13 @@ func (m *SubscribeResponse) GetReceivedInvitation() []*bnet_protocol_channel_ext
 
 // ref: bnet.protocol.channel_invitation.SuggestInvitationRequest
 type SuggestInvitationRequest struct {
-	AgentId       *bnet_protocol.EntityId    `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
-	ChannelId     *bnet_protocol.EntityId    `protobuf:"bytes,2,opt,name=channel_id,json=channelId" json:"channel_id,omitempty"`
-	TargetId      *bnet_protocol.EntityId    `protobuf:"bytes,3,opt,name=target_id,json=targetId" json:"target_id,omitempty"`
-	ApprovalId    *bnet_protocol.EntityId    `protobuf:"bytes,4,opt,name=approval_id,json=approvalId" json:"approval_id,omitempty"`
-	AgentIdentity *bnet_protocol.Identity    `protobuf:"bytes,5,opt,name=agent_identity,json=agentIdentity" json:"agent_identity,omitempty"`
-	AgentInfo     *bnet_protocol.AccountInfo `protobuf:"bytes,6,opt,name=agent_info,json=agentInfo" json:"agent_info,omitempty"`
+	AgentId          *bnet_protocol.EntityId    `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	ChannelId        *bnet_protocol.EntityId    `protobuf:"bytes,2,req,name=channel_id,json=channelId" json:"channel_id,omitempty"`
+	TargetId         *bnet_protocol.EntityId    `protobuf:"bytes,3,req,name=target_id,json=targetId" json:"target_id,omitempty"`
+	ApprovalId       *bnet_protocol.EntityId    `protobuf:"bytes,4,opt,name=approval_id,json=approvalId" json:"approval_id,omitempty"`
+	AgentIdentity    *bnet_protocol.Identity    `protobuf:"bytes,5,opt,name=agent_identity,json=agentIdentity" json:"agent_identity,omitempty"`
+	AgentInfo        *bnet_protocol.AccountInfo `protobuf:"bytes,6,opt,name=agent_info,json=agentInfo" json:"agent_info,omitempty"`
+	XXX_unrecognized []byte                     `json:"-"`
 }
 
 func (m *SuggestInvitationRequest) Reset()                    { *m = SuggestInvitationRequest{} }
@@ -726,7 +756,8 @@ func (m *SuggestInvitationRequest) GetAgentInfo() *bnet_protocol.AccountInfo {
 
 // ref: bnet.protocol.channel_invitation.SuggestionAddedNotification
 type SuggestionAddedNotification struct {
-	Suggestion *bnet_protocol_invitation.Suggestion `protobuf:"bytes,1,opt,name=suggestion" json:"suggestion,omitempty"`
+	Suggestion       *bnet_protocol_invitation.Suggestion `protobuf:"bytes,1,req,name=suggestion" json:"suggestion,omitempty"`
+	XXX_unrecognized []byte                               `json:"-"`
 }
 
 func (m *SuggestionAddedNotification) Reset()                    { *m = SuggestionAddedNotification{} }
@@ -743,7 +774,8 @@ func (m *SuggestionAddedNotification) GetSuggestion() *bnet_protocol_invitation.
 
 // ref: bnet.protocol.channel_invitation.UnsubscribeRequest
 type UnsubscribeRequest struct {
-	AgentId *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	AgentId          *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *UnsubscribeRequest) Reset()                    { *m = UnsubscribeRequest{} }
@@ -760,9 +792,10 @@ func (m *UnsubscribeRequest) GetAgentId() *bnet_protocol.EntityId {
 
 // ref: bnet.protocol.channel_invitation.UpdateChannelCountRequest
 type UpdateChannelCountRequest struct {
-	AgentId          *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
-	ReservationToken uint64                  `protobuf:"varint,2,opt,name=reservation_token,json=reservationToken" json:"reservation_token,omitempty"`
-	ChannelId        *bnet_protocol.EntityId `protobuf:"bytes,3,opt,name=channel_id,json=channelId" json:"channel_id,omitempty"`
+	AgentId          *bnet_protocol.EntityId `protobuf:"bytes,1,req,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	ReservationToken *uint64                 `protobuf:"varint,2,opt,name=reservation_token,json=reservationToken" json:"reservation_token,omitempty"`
+	ChannelId        *bnet_protocol.EntityId `protobuf:"bytes,3,req,name=channel_id,json=channelId" json:"channel_id,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *UpdateChannelCountRequest) Reset()                    { *m = UpdateChannelCountRequest{} }
@@ -778,8 +811,8 @@ func (m *UpdateChannelCountRequest) GetAgentId() *bnet_protocol.EntityId {
 }
 
 func (m *UpdateChannelCountRequest) GetReservationToken() uint64 {
-	if m != nil {
-		return m.ReservationToken
+	if m != nil && m.ReservationToken != nil {
+		return *m.ReservationToken
 	}
 	return 0
 }
@@ -793,9 +826,10 @@ func (m *UpdateChannelCountRequest) GetChannelId() *bnet_protocol.EntityId {
 
 // ref: bnet.protocol.invitation.UpdateInvitationRequest
 type UpdateInvitationRequest struct {
-	AgentIdentity *bnet_protocol.Identity `protobuf:"bytes,1,opt,name=agent_identity,json=agentIdentity" json:"agent_identity,omitempty"`
-	InvitationId  uint64                  `protobuf:"fixed64,2,opt,name=invitation_id,json=invitationId" json:"invitation_id,omitempty"`
-	Params        *InvitationParams       `protobuf:"bytes,3,opt,name=params" json:"params,omitempty"`
+	AgentIdentity    *bnet_protocol.Identity `protobuf:"bytes,1,opt,name=agent_identity,json=agentIdentity" json:"agent_identity,omitempty"`
+	InvitationId     *uint64                 `protobuf:"fixed64,2,req,name=invitation_id,json=invitationId" json:"invitation_id,omitempty"`
+	Params           *InvitationParams       `protobuf:"bytes,3,req,name=params" json:"params,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *UpdateInvitationRequest) Reset()                    { *m = UpdateInvitationRequest{} }
@@ -811,8 +845,8 @@ func (m *UpdateInvitationRequest) GetAgentIdentity() *bnet_protocol.Identity {
 }
 
 func (m *UpdateInvitationRequest) GetInvitationId() uint64 {
-	if m != nil {
-		return m.InvitationId
+	if m != nil && m.InvitationId != nil {
+		return *m.InvitationId
 	}
 	return 0
 }
@@ -856,78 +890,80 @@ func init() {
 }
 
 var fileDescriptor0 = []byte{
-	// 1161 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xb4, 0x57, 0x4f, 0x73, 0xdb, 0x44,
-	0x14, 0x47, 0xb2, 0xeb, 0xd8, 0xcf, 0x76, 0x9b, 0x08, 0xa8, 0x45, 0x12, 0x66, 0xcc, 0x96, 0x19,
-	0x5c, 0x3a, 0x75, 0x07, 0xd3, 0x69, 0x9b, 0x0b, 0x33, 0x69, 0xd2, 0x4e, 0x05, 0x2d, 0xc3, 0x6c,
-	0xd2, 0x0b, 0x17, 0x57, 0x96, 0xd6, 0xae, 0x52, 0x4b, 0x2b, 0xb4, 0x1b, 0x4f, 0x72, 0xe0, 0xc6,
-	0x91, 0x0f, 0xc1, 0x91, 0x2b, 0x33, 0x30, 0x7c, 0x07, 0x6e, 0xdc, 0x38, 0x70, 0xe0, 0x2b, 0xc0,
-	0x27, 0x60, 0xb4, 0x5a, 0x59, 0x7f, 0xdd, 0xd8, 0xa9, 0x7b, 0x92, 0xf7, 0xed, 0x7b, 0x6f, 0xdf,
-	0xef, 0xfd, 0x37, 0xec, 0x8d, 0x3c, 0xc2, 0xef, 0xf8, 0x01, 0xe5, 0xd4, 0xa2, 0xd3, 0x3b, 0xd6,
-	0x4b, 0xd3, 0xf3, 0xc8, 0x74, 0xe8, 0x78, 0x33, 0x87, 0x9b, 0xdc, 0xa1, 0x5e, 0x09, 0xa9, 0x2f,
-	0xd8, 0xb5, 0x6e, 0x28, 0xda, 0x8f, 0x45, 0xfb, 0x45, 0xbe, 0xed, 0x1b, 0xa5, 0xca, 0xe3, 0x6f,
-	0x24, 0xba, 0x7d, 0xbf, 0xdc, 0x02, 0x72, 0xc6, 0x03, 0xd3, 0xe2, 0xc4, 0x2e, 0x52, 0xa4, 0x60,
-	0x4e, 0xfb, 0x38, 0x70, 0x88, 0x67, 0xb3, 0xf8, 0x2b, 0x99, 0x6e, 0x66, 0x99, 0x52, 0xb8, 0xf2,
-	0x78, 0xb6, 0x77, 0xb3, 0xac, 0x73, 0x60, 0xe2, 0x07, 0xfa, 0x5b, 0x85, 0xce, 0xbe, 0x65, 0x11,
-	0x9f, 0x1b, 0x73, 0x41, 0x4c, 0xbe, 0x3b, 0x25, 0x8c, 0x6b, 0x03, 0xa8, 0x9b, 0x13, 0xe2, 0xf1,
-	0xa1, 0x63, 0xeb, 0x4a, 0x57, 0xe9, 0x35, 0x07, 0x9d, 0x7e, 0xd6, 0x39, 0x8f, 0x3c, 0xee, 0xf0,
-	0x73, 0xc3, 0xc6, 0x1b, 0x82, 0xd1, 0xb0, 0xb5, 0x47, 0xd0, 0x72, 0x89, 0x3b, 0x22, 0xc1, 0x90,
-	0x71, 0x93, 0x13, 0x5d, 0x15, 0x72, 0xa8, 0x5f, 0xea, 0xd4, 0xfe, 0x33, 0xc1, 0x7a, 0x14, 0x72,
-	0xe2, 0xa6, 0x9b, 0x1c, 0xb4, 0x1b, 0xd0, 0x4e, 0x80, 0x84, 0xef, 0x57, 0xba, 0x4a, 0xaf, 0x86,
-	0x5b, 0x09, 0xd1, 0xb0, 0xb5, 0x1d, 0x68, 0xd0, 0xd1, 0x09, 0xb1, 0x84, 0x81, 0xd5, 0xae, 0xd2,
-	0xab, 0xe2, 0x7a, 0x44, 0x30, 0x6c, 0xed, 0x1e, 0xc0, 0x3c, 0x74, 0xb6, 0x7e, 0xe5, 0xf5, 0xe6,
-	0x37, 0x24, 0xab, 0x61, 0x6b, 0x1f, 0x41, 0x8b, 0x91, 0x60, 0xe6, 0x58, 0x64, 0xc8, 0xcf, 0x7d,
-	0xa2, 0xd7, 0xba, 0x4a, 0xaf, 0x8d, 0x9b, 0x92, 0x76, 0x7c, 0xee, 0x13, 0xed, 0x26, 0x6c, 0x4e,
-	0xa9, 0x65, 0x4e, 0x87, 0xec, 0x74, 0xc4, 0xac, 0xc0, 0x19, 0x91, 0x40, 0xdf, 0xe8, 0x2a, 0xbd,
-	0x3a, 0xbe, 0x26, 0xe8, 0x47, 0x73, 0x32, 0xba, 0x0f, 0x7a, 0xd1, 0xbb, 0xcc, 0xa7, 0x1e, 0x23,
-	0x59, 0xf3, 0x95, 0xac, 0xf9, 0xc8, 0x81, 0xd6, 0x41, 0x64, 0xd3, 0x01, 0x3d, 0xf5, 0x78, 0x0e,
-	0x8e, 0xb2, 0x0a, 0x9c, 0x58, 0x4e, 0xc0, 0x09, 0xe3, 0xd1, 0xc0, 0x4d, 0x49, 0x0b, 0xe1, 0xa0,
-	0x5f, 0x14, 0xe8, 0xa4, 0xdf, 0x3a, 0x24, 0xa1, 0xf5, 0x7e, 0x68, 0x6b, 0xc1, 0x1b, 0x4a, 0xd1,
-	0x1b, 0x3a, 0x6c, 0xf8, 0x01, 0x9d, 0x04, 0xa6, 0x2b, 0x94, 0x6f, 0xe0, 0xf8, 0x58, 0x78, 0xbb,
-	0x52, 0x78, 0x3b, 0x07, 0xab, 0xba, 0x2c, 0x2c, 0xf4, 0x73, 0x62, 0x73, 0xe2, 0xd9, 0x6f, 0xcc,
-	0xc0, 0x74, 0xd9, 0xa5, 0x5d, 0xb5, 0x0d, 0xf5, 0x80, 0x84, 0xc8, 0x88, 0x2d, 0x90, 0xd4, 0xf1,
-	0xfc, 0xac, 0x5d, 0x87, 0x5a, 0x40, 0x4e, 0xa8, 0xe3, 0x09, 0x10, 0x75, 0x2c, 0x4f, 0x05, 0xff,
-	0x54, 0x0b, 0xfe, 0x41, 0xbf, 0x2b, 0xb0, 0x7b, 0x48, 0xac, 0x80, 0xb8, 0xc4, 0xe3, 0x69, 0x3f,
-	0xbf, 0x49, 0x99, 0x65, 0x31, 0xaa, 0x4b, 0x63, 0xbc, 0x05, 0x5b, 0x11, 0xa6, 0xa8, 0xb0, 0x38,
-	0x7d, 0x45, 0x22, 0x48, 0x55, 0xbc, 0x99, 0xba, 0x38, 0x0e, 0xe9, 0xe8, 0x7b, 0xd8, 0x79, 0x62,
-	0x32, 0x4c, 0xa9, 0xfb, 0x98, 0x06, 0xc5, 0xf6, 0xf0, 0x96, 0x73, 0x03, 0xfd, 0xa6, 0xc0, 0xae,
-	0xe1, 0xad, 0xd9, 0x71, 0x26, 0xb4, 0xec, 0x24, 0xbf, 0x99, 0xae, 0x76, 0x2b, 0xbd, 0xe6, 0x60,
-	0xaf, 0x7f, 0x51, 0xd3, 0xef, 0x2f, 0xa8, 0x90, 0x87, 0xea, 0xe6, 0x3b, 0x38, 0xa3, 0x12, 0x61,
-	0xf8, 0x70, 0x81, 0xd9, 0xb2, 0xf0, 0x3f, 0x03, 0xad, 0x10, 0x04, 0xa6, 0x2b, 0xdd, 0x4a, 0xaf,
-	0x2a, 0xd4, 0x6d, 0xe5, 0x23, 0xc1, 0xd0, 0x09, 0xec, 0x24, 0x01, 0xd8, 0xb7, 0x6d, 0x62, 0x7f,
-	0x4d, 0xb9, 0x33, 0x76, 0x2c, 0x41, 0xd0, 0xbe, 0x02, 0x48, 0x4c, 0x95, 0xbe, 0xb8, 0xb5, 0x00,
-	0x53, 0x32, 0x6f, 0x52, 0x21, 0x4d, 0x89, 0xa3, 0xff, 0x14, 0x78, 0x2f, 0xb9, 0x3a, 0xa0, 0xd3,
-	0x29, 0xb1, 0x96, 0x6d, 0x06, 0x0f, 0x40, 0x77, 0xcd, 0xb3, 0x61, 0x40, 0x2c, 0xe2, 0xcc, 0x88,
-	0x9d, 0x72, 0x20, 0x13, 0x19, 0xd0, 0xc6, 0xd7, 0x5d, 0xf3, 0x0c, 0xcb, 0xeb, 0xe4, 0x15, 0x96,
-	0xed, 0x86, 0x95, 0x5c, 0x33, 0x7f, 0x01, 0xef, 0x96, 0xa8, 0xd4, 0xab, 0x22, 0x78, 0xab, 0x00,
-	0x15, 0xfe, 0xd5, 0x82, 0xc2, 0xfb, 0xe8, 0x27, 0x15, 0x36, 0x0b, 0x9d, 0xe4, 0x36, 0x68, 0xa9,
-	0x29, 0xe4, 0x12, 0xc6, 0xcc, 0x49, 0x04, 0xbb, 0x81, 0xb7, 0x92, 0x9b, 0x67, 0xd1, 0x85, 0xf6,
-	0x09, 0x5c, 0x23, 0x67, 0xbe, 0x13, 0xc8, 0xb0, 0x3a, 0x6e, 0xd4, 0x6e, 0xab, 0xf8, 0x6a, 0x42,
-	0x3e, 0x76, 0x5c, 0xa2, 0x61, 0x68, 0x47, 0xe3, 0x7c, 0xe8, 0x8b, 0x87, 0xf4, 0x89, 0x88, 0xd8,
-	0xed, 0x1c, 0x90, 0x78, 0xe4, 0x3f, 0x16, 0xdf, 0xbc, 0x75, 0xb8, 0x15, 0xdd, 0x4b, 0x5b, 0x5f,
-	0xc0, 0xd5, 0x18, 0xb8, 0x54, 0xea, 0x08, 0xa5, 0xcb, 0xa7, 0x76, 0xe1, 0x81, 0xb6, 0xe4, 0x8d,
-	0x8e, 0xe8, 0x07, 0x25, 0x4c, 0xec, 0xa4, 0x0b, 0xb8, 0x74, 0xf6, 0x16, 0xd3, 0x30, 0x6a, 0xb9,
-	0x26, 0xa3, 0x9e, 0x4c, 0x1c, 0x79, 0x42, 0x3f, 0x2a, 0xd0, 0x79, 0xea, 0xb0, 0xd2, 0x8e, 0x70,
-	0x17, 0x1a, 0x72, 0xfb, 0xb8, 0xb8, 0x25, 0xd4, 0x23, 0xce, 0x92, 0x91, 0xaf, 0xbe, 0xb6, 0x91,
-	0x55, 0x32, 0x8d, 0x0c, 0xbd, 0x04, 0xbd, 0x68, 0x8d, 0x2c, 0xf4, 0xa7, 0xb0, 0x21, 0xe1, 0x8a,
-	0xea, 0x6e, 0x0e, 0xfa, 0xab, 0xf5, 0x19, 0x91, 0xad, 0xb1, 0x0a, 0xf4, 0x8f, 0x02, 0x1d, 0x4c,
-	0x66, 0xf4, 0x15, 0x59, 0xcf, 0xaa, 0x76, 0x17, 0x1a, 0xdc, 0x0c, 0x26, 0x84, 0x2f, 0x31, 0x42,
-	0xea, 0x11, 0xa7, 0x61, 0x2f, 0xb7, 0x99, 0x5d, 0x76, 0xac, 0xff, 0xa5, 0xc2, 0xfb, 0x47, 0x99,
-	0x5c, 0x8f, 0x01, 0x7e, 0x01, 0x57, 0x63, 0x80, 0x44, 0x08, 0x2e, 0x80, 0x69, 0xc8, 0x6b, 0xdc,
-	0x96, 0x30, 0xa3, 0xe3, 0x25, 0xc1, 0x7e, 0x09, 0x35, 0x59, 0x4c, 0x15, 0x21, 0x32, 0xb8, 0x38,
-	0x7e, 0x85, 0x2a, 0x92, 0x1a, 0xb4, 0x3d, 0x00, 0x89, 0xc0, 0x1b, 0x53, 0xe9, 0x93, 0xed, 0x9c,
-	0xbe, 0x7d, 0xcb, 0x0a, 0xe3, 0x6e, 0x78, 0x63, 0x8a, 0x1b, 0x11, 0x00, 0x6f, 0x4c, 0xb5, 0x87,
-	0x50, 0x8b, 0x4c, 0x92, 0x7b, 0xec, 0xa7, 0x39, 0xb1, 0xd2, 0xe7, 0x8f, 0x85, 0x04, 0x96, 0x92,
-	0xc8, 0x82, 0xcd, 0xf9, 0x5e, 0xfa, 0x26, 0x59, 0x93, 0xe9, 0xd3, 0x6a, 0x6e, 0x6b, 0xfd, 0x53,
-	0x81, 0xad, 0xd4, 0x2b, 0xb2, 0x0c, 0xbe, 0x05, 0xb0, 0xe6, 0x53, 0x44, 0x56, 0xc2, 0xbd, 0x55,
-	0x3c, 0x99, 0xcc, 0x20, 0x51, 0x11, 0x29, 0x6d, 0x8b, 0x26, 0x83, 0xba, 0xbe, 0xc9, 0xf0, 0xaf,
-	0x0a, 0xfa, 0xd1, 0xe9, 0x64, 0x42, 0xd8, 0x9a, 0xfe, 0x22, 0x5d, 0x76, 0x77, 0xcb, 0xa4, 0x70,
-	0x65, 0xd9, 0x14, 0x7e, 0x00, 0x4d, 0xd3, 0xf7, 0x03, 0x3a, 0x33, 0x97, 0xa9, 0x45, 0x88, 0x79,
-	0x0d, 0xbb, 0xa4, 0xe4, 0xae, 0xac, 0x54, 0x72, 0xd9, 0x84, 0xaf, 0xad, 0x90, 0xf0, 0xc8, 0x82,
-	0x1d, 0xe9, 0xf2, 0xd2, 0x75, 0xe7, 0x10, 0x80, 0xcd, 0xaf, 0xa5, 0xdf, 0x3f, 0x5e, 0x5c, 0x13,
-	0x89, 0x2a, 0x9c, 0x92, 0x43, 0x4f, 0x40, 0x7b, 0xee, 0xb1, 0x35, 0xd4, 0x04, 0xfa, 0x55, 0x81,
-	0x0f, 0x9e, 0xfb, 0xb6, 0xc9, 0xc9, 0xba, 0xd6, 0xd4, 0xd2, 0x3d, 0x5d, 0x2d, 0xdf, 0xd3, 0x73,
-	0x09, 0x55, 0x59, 0xba, 0xdb, 0xfe, 0xa1, 0x40, 0x27, 0x32, 0x7b, 0xfd, 0xfd, 0xb6, 0x30, 0x26,
-	0xd4, 0x92, 0x31, 0xb1, 0xc6, 0xf6, 0x3a, 0xaa, 0x09, 0xa9, 0xcf, 0xff, 0x0f, 0x00, 0x00, 0xff,
-	0xff, 0x4e, 0xd7, 0x49, 0x89, 0xfa, 0x11, 0x00, 0x00,
+	// 1195 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xb4, 0x57, 0xdd, 0x6e, 0xe3, 0xc4,
+	0x17, 0x97, 0x9d, 0x6c, 0x3e, 0x4e, 0x92, 0x6e, 0xeb, 0xff, 0x9f, 0x8d, 0x69, 0x8b, 0x14, 0x66,
+	0xb9, 0x08, 0x5d, 0x35, 0x45, 0xd5, 0x6a, 0x77, 0xdb, 0x0b, 0xa4, 0xd2, 0xee, 0xaa, 0x06, 0x76,
+	0x85, 0xa6, 0x5d, 0xae, 0x40, 0xc1, 0xb1, 0x27, 0xc1, 0xdd, 0xd8, 0x63, 0x3c, 0x93, 0xa8, 0xbd,
+	0x47, 0x5c, 0xf1, 0x16, 0xdc, 0x70, 0x8b, 0x84, 0x84, 0xc4, 0x1b, 0xc0, 0x13, 0x70, 0x89, 0x78,
+	0x00, 0x24, 0xde, 0x00, 0xd9, 0x1e, 0xc7, 0x9f, 0xd9, 0x3a, 0x10, 0xae, 0x9c, 0x99, 0x73, 0xce,
+	0xcc, 0xf9, 0x9d, 0x39, 0xe7, 0x77, 0x4e, 0xe0, 0x68, 0xe4, 0x10, 0x7e, 0xe0, 0x7a, 0x94, 0x53,
+	0x83, 0x4e, 0x0f, 0x8c, 0x2f, 0x75, 0xc7, 0x21, 0xd3, 0xa1, 0xe5, 0xcc, 0x2d, 0xae, 0x73, 0x8b,
+	0x3a, 0x05, 0x5b, 0x83, 0x40, 0x5d, 0xe9, 0xf9, 0xa6, 0x83, 0xc8, 0x74, 0x90, 0xd7, 0xdb, 0xbe,
+	0x5f, 0x78, 0x78, 0xf4, 0x0d, 0x4d, 0xb7, 0x1f, 0x17, 0x7b, 0x40, 0xae, 0xb9, 0xa7, 0x1b, 0x9c,
+	0x98, 0xf9, 0x1d, 0x61, 0x98, 0x39, 0x7d, 0xec, 0x59, 0xc4, 0x31, 0x59, 0xf4, 0x15, 0x4a, 0xef,
+	0xa6, 0x95, 0x12, 0xb8, 0xb2, 0x78, 0xb6, 0x77, 0xd3, 0xaa, 0x0b, 0x60, 0xc1, 0x0f, 0xf4, 0x87,
+	0x0c, 0xdd, 0x13, 0xc3, 0x20, 0x2e, 0xd7, 0x16, 0x86, 0x98, 0x7c, 0x35, 0x23, 0x8c, 0x2b, 0x87,
+	0xd0, 0xd0, 0x27, 0xc4, 0xe1, 0x43, 0xcb, 0x54, 0xa5, 0x9e, 0xd4, 0x6f, 0x1d, 0x76, 0x07, 0xe9,
+	0xe0, 0x3c, 0x75, 0xb8, 0xc5, 0x6f, 0x34, 0x13, 0xd7, 0x03, 0x45, 0xcd, 0x54, 0x9e, 0x42, 0xdb,
+	0x26, 0xf6, 0x88, 0x78, 0x43, 0xc6, 0x75, 0x4e, 0x54, 0x39, 0xb0, 0x43, 0x83, 0xc2, 0xa0, 0x0e,
+	0x9e, 0x07, 0xaa, 0x17, 0xbe, 0x26, 0x6e, 0xd9, 0xf1, 0x42, 0xb9, 0x0f, 0x9d, 0x18, 0x88, 0x7f,
+	0x7f, 0xa5, 0x27, 0xf7, 0x6b, 0xb8, 0x1d, 0x6f, 0x6a, 0xa6, 0xb2, 0x03, 0x4d, 0x3a, 0xba, 0x22,
+	0x46, 0xe0, 0x60, 0xb5, 0x27, 0xf7, 0xab, 0xb8, 0x11, 0x6e, 0x68, 0xa6, 0xf2, 0x08, 0x60, 0xf1,
+	0x74, 0xa6, 0x7a, 0xe7, 0xf5, 0xee, 0x37, 0x85, 0xaa, 0x66, 0x2a, 0x6f, 0x43, 0x9b, 0x11, 0x6f,
+	0x6e, 0x19, 0x64, 0xc8, 0x6f, 0x5c, 0xa2, 0xd6, 0x7a, 0x52, 0xbf, 0x83, 0x5b, 0x62, 0xef, 0xf2,
+	0xc6, 0x25, 0xca, 0x01, 0x6c, 0x4e, 0xa9, 0xa1, 0x4f, 0x87, 0x6c, 0x36, 0x62, 0x86, 0x67, 0x8d,
+	0x88, 0xa7, 0xd6, 0x7b, 0x52, 0xbf, 0x71, 0x5c, 0xe5, 0xde, 0x8c, 0xe0, 0xbb, 0x81, 0xf4, 0x62,
+	0x21, 0x44, 0x8f, 0x41, 0xcd, 0xc7, 0x98, 0xb9, 0xd4, 0x61, 0x24, 0x0d, 0x42, 0x4a, 0x83, 0x40,
+	0x1e, 0xb4, 0x4f, 0x43, 0xcf, 0x4e, 0xe9, 0xcc, 0xe1, 0x19, 0x50, 0x52, 0x69, 0x50, 0x7b, 0xd0,
+	0x8e, 0xec, 0x02, 0x50, 0xfe, 0xab, 0x34, 0x8f, 0xeb, 0x26, 0x19, 0xeb, 0xb3, 0x29, 0xc7, 0x2d,
+	0x21, 0xf4, 0xd1, 0xa1, 0x9f, 0x25, 0xe8, 0x26, 0x2f, 0x3d, 0x23, 0x3e, 0x0c, 0xd7, 0x77, 0x3a,
+	0x17, 0x1c, 0xdf, 0xdf, 0x4c, 0x70, 0x54, 0xa8, 0xbb, 0x1e, 0x9d, 0x78, 0xba, 0xad, 0xca, 0x3d,
+	0xb9, 0x5f, 0xc7, 0xd1, 0x32, 0xe7, 0x44, 0x65, 0xb9, 0x13, 0x19, 0xa0, 0xd5, 0xb2, 0x40, 0xd1,
+	0xf7, 0xb1, 0xf3, 0x71, 0xac, 0x3f, 0xd1, 0x3d, 0xdd, 0x66, 0xb9, 0xe0, 0xc9, 0x25, 0x83, 0xb7,
+	0x0d, 0x0d, 0x8f, 0xf8, 0x10, 0x89, 0x19, 0x04, 0xae, 0x81, 0x17, 0x6b, 0xe5, 0x1e, 0xd4, 0x3c,
+	0x72, 0x45, 0x2d, 0x27, 0x40, 0xd3, 0xc0, 0x62, 0x95, 0x0b, 0x54, 0x35, 0x17, 0x28, 0xf4, 0x93,
+	0x04, 0xbb, 0x67, 0xc4, 0xf0, 0x88, 0x4d, 0x1c, 0x9e, 0x0c, 0x78, 0x71, 0xf9, 0xc9, 0xa5, 0xca,
+	0x2f, 0x8d, 0x51, 0x2e, 0x9d, 0x20, 0x0f, 0x60, 0x2b, 0xc4, 0x14, 0x16, 0x1c, 0xa7, 0xaf, 0x48,
+	0x08, 0xa9, 0x8a, 0x37, 0x13, 0x82, 0x4b, 0x7f, 0x1f, 0x7d, 0x23, 0xc1, 0xce, 0xb9, 0xce, 0x30,
+	0xa5, 0xf6, 0x33, 0xea, 0xe5, 0x79, 0x63, 0xd5, 0x2c, 0x91, 0xfe, 0x61, 0x96, 0xa0, 0x1f, 0x24,
+	0xd8, 0xd5, 0x9c, 0x35, 0x87, 0xf0, 0x73, 0x68, 0x9b, 0x71, 0xca, 0x33, 0x55, 0xee, 0x55, 0xfa,
+	0xad, 0xc3, 0xa3, 0xc1, 0x6d, 0x6d, 0x61, 0xb0, 0xa4, 0x68, 0x70, 0xea, 0x38, 0xf4, 0x02, 0xde,
+	0x5a, 0xe2, 0xb2, 0x20, 0x84, 0x7d, 0x50, 0x72, 0x4f, 0xc1, 0x54, 0xa9, 0x57, 0xe9, 0x57, 0xf1,
+	0x56, 0xf6, 0x2d, 0x18, 0xba, 0x82, 0x9d, 0xf8, 0x05, 0x4e, 0x4c, 0x93, 0x98, 0x2f, 0x28, 0xb7,
+	0xc6, 0x96, 0x11, 0x6c, 0x28, 0x1f, 0x01, 0xc4, 0x2e, 0x8a, 0x18, 0x3c, 0x58, 0x82, 0x25, 0xee,
+	0x44, 0x89, 0x37, 0x4d, 0x98, 0xa3, 0x3f, 0x25, 0xf8, 0x7f, 0x2c, 0x3a, 0xa5, 0xd3, 0x29, 0x31,
+	0x96, 0xf0, 0x42, 0x8e, 0x34, 0x9f, 0x80, 0x6a, 0xeb, 0xd7, 0x43, 0x8f, 0x18, 0xc4, 0x9a, 0x13,
+	0x33, 0x11, 0x38, 0x16, 0xa4, 0x40, 0x07, 0xdf, 0xb3, 0xf5, 0x6b, 0x2c, 0xc4, 0xf1, 0x2d, 0x2c,
+	0xcd, 0x90, 0x61, 0x4e, 0xc6, 0x34, 0xff, 0x19, 0xfc, 0xaf, 0xe0, 0x48, 0xb5, 0x1a, 0x3c, 0xda,
+	0x4a, 0x40, 0x15, 0x2f, 0x77, 0x37, 0xfa, 0x4e, 0x86, 0xcd, 0x1c, 0x8f, 0xec, 0x83, 0x92, 0xe8,
+	0x4d, 0x36, 0x61, 0x4c, 0x9f, 0x84, 0x90, 0x9b, 0x78, 0x2b, 0x96, 0x3c, 0x0f, 0x05, 0xca, 0x1e,
+	0xdc, 0x25, 0xd7, 0xae, 0xe5, 0x89, 0xe7, 0xb4, 0xec, 0x90, 0x7e, 0xab, 0xc7, 0xd2, 0x7b, 0x78,
+	0x23, 0x96, 0x5c, 0x5a, 0x36, 0x51, 0x30, 0x74, 0xc2, 0x3e, 0x3f, 0x74, 0x83, 0xbb, 0xd4, 0x49,
+	0x50, 0xc1, 0xfb, 0x19, 0x1c, 0xd1, 0x2c, 0xf0, 0x2c, 0xf8, 0x66, 0x1d, 0xc4, 0xed, 0x50, 0x2e,
+	0xdc, 0xfd, 0x02, 0x36, 0x22, 0xdc, 0xe2, 0x50, 0x2b, 0x38, 0xb4, 0x7c, 0x46, 0xe7, 0x2e, 0xe8,
+	0x08, 0xdd, 0x70, 0x89, 0xbe, 0x96, 0xfc, 0x9c, 0x8e, 0x59, 0xc0, 0xa6, 0xf3, 0xff, 0x30, 0x0b,
+	0x43, 0xce, 0xd5, 0x19, 0x75, 0x44, 0xde, 0x88, 0x15, 0xfa, 0x56, 0x82, 0xee, 0xc7, 0x16, 0x2b,
+	0x24, 0x82, 0x87, 0xd0, 0x14, 0x63, 0xc9, 0xed, 0x4c, 0xd0, 0x08, 0x35, 0x0b, 0x66, 0x01, 0xf9,
+	0xb5, 0x44, 0x56, 0x49, 0x11, 0x19, 0x32, 0x41, 0xcd, 0x7b, 0x23, 0x6a, 0xfc, 0x1c, 0xea, 0x02,
+	0x6e, 0x50, 0xd8, 0xad, 0xc3, 0xc1, 0x6a, 0xf4, 0x82, 0x23, 0x73, 0xf4, 0xbb, 0x04, 0x5d, 0x4c,
+	0xe6, 0xf4, 0x15, 0x59, 0xcf, 0xfc, 0xf6, 0x10, 0x9a, 0x5c, 0xf7, 0x26, 0x84, 0x97, 0xe8, 0x1f,
+	0x8d, 0x50, 0x53, 0x33, 0xcb, 0x8d, 0x6b, 0xd9, 0x9e, 0x5e, 0xb2, 0xff, 0xa2, 0xdf, 0x64, 0x78,
+	0xe3, 0x22, 0x95, 0xe7, 0x11, 0xc0, 0xf7, 0x61, 0x23, 0x02, 0x48, 0x02, 0xc3, 0x25, 0x30, 0x35,
+	0x21, 0xc6, 0x1d, 0x01, 0x33, 0x5c, 0x66, 0xc1, 0xca, 0xe5, 0xc0, 0x7e, 0x08, 0x35, 0x51, 0x48,
+	0x95, 0xc0, 0xe4, 0xf0, 0xf6, 0xb7, 0xcb, 0x55, 0x90, 0x38, 0x41, 0x39, 0x02, 0x10, 0x08, 0x9c,
+	0x31, 0x15, 0x73, 0xce, 0x76, 0xe6, 0xbc, 0x13, 0xc3, 0xf0, 0xdf, 0x5c, 0x73, 0xc6, 0x14, 0x37,
+	0x43, 0x00, 0xce, 0x98, 0x2a, 0x1f, 0x40, 0x2d, 0x74, 0x49, 0x0c, 0xb7, 0x7b, 0x19, 0xb3, 0xc2,
+	0xeb, 0x2f, 0x03, 0x0b, 0x2c, 0x2c, 0x91, 0x01, 0x9b, 0x8b, 0x31, 0xf5, 0xdf, 0x64, 0x4d, 0x8a,
+	0xa2, 0xe5, 0xcc, 0x10, 0xfb, 0x8b, 0x04, 0x5b, 0x89, 0x5b, 0x44, 0x09, 0x7c, 0x0a, 0x60, 0x2c,
+	0x1a, 0x88, 0xa8, 0x82, 0x47, 0xab, 0x44, 0x32, 0x6e, 0x3f, 0x38, 0x71, 0xd2, 0xb2, 0x86, 0x20,
+	0xaf, 0xa7, 0x21, 0xfc, 0x25, 0x83, 0x7a, 0x31, 0x9b, 0x4c, 0x08, 0x5b, 0xd3, 0xff, 0xa5, 0xec,
+	0xc0, 0x56, 0x76, 0x28, 0x4d, 0xa5, 0x6e, 0xa5, 0x6c, 0xea, 0x3e, 0x81, 0x96, 0xee, 0xba, 0x1e,
+	0x9d, 0xeb, 0x65, 0xe6, 0x6a, 0x88, 0x74, 0x35, 0xb3, 0xa0, 0xd4, 0xee, 0xac, 0x54, 0x6a, 0xe9,
+	0x44, 0xaf, 0xad, 0x90, 0xe8, 0xc8, 0x80, 0x1d, 0x11, 0xf2, 0xc2, 0x09, 0xe7, 0x0c, 0x80, 0x2d,
+	0xc4, 0x82, 0xdb, 0xdf, 0x59, 0x5e, 0x0b, 0xf1, 0x51, 0x38, 0x61, 0x87, 0xce, 0x41, 0x79, 0xe9,
+	0xb0, 0x35, 0xd4, 0x02, 0xfa, 0x51, 0x82, 0x37, 0x5f, 0xba, 0xa6, 0xce, 0xc9, 0xba, 0x26, 0xd2,
+	0xc2, 0xe1, 0x5c, 0x2e, 0x1e, 0xce, 0x33, 0x09, 0x55, 0x29, 0xcd, 0xb2, 0xbf, 0x4a, 0xd0, 0x0d,
+	0xdd, 0x5e, 0x3f, 0xcf, 0xe6, 0xda, 0x83, 0x5c, 0xd0, 0x1e, 0xd6, 0x48, 0xab, 0x7f, 0x07, 0x00,
+	0x00, 0xff, 0xff, 0x5e, 0x29, 0xd9, 0xa8, 0xff, 0x11, 0x00, 0x00,
 }

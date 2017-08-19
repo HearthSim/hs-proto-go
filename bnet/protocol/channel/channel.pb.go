@@ -47,9 +47,9 @@ package bnet_protocol_channel
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import bnet_protocol_attribute_468 "bnet/protocol/attribute_468"
-import bnet_protocol_channel_extracted "bnet/protocol/channel_extracted"
-import bnet_protocol "bnet/protocol"
+import bnet_protocol_attribute_468 "github.com/HearthSim/hs-proto-go/bnet/protocol/attribute_468"
+import bnet_protocol_channel_extracted "github.com/HearthSim/hs-proto-go/bnet/protocol/channel_extracted"
+import bnet_protocol "github.com/HearthSim/hs-proto-go/bnet/protocol"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -64,17 +64,20 @@ const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 // ref: bnet.protocol.channel.AddMemberRequest
 type AddMemberRequest struct {
-	AgentId        *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
-	MemberIdentity *bnet_protocol.Identity `protobuf:"bytes,2,opt,name=member_identity,json=memberIdentity" json:"member_identity,omitempty"`
-	MemberState    *MemberState            `protobuf:"bytes,3,opt,name=member_state,json=memberState" json:"member_state,omitempty"`
-	ObjectId       uint64                  `protobuf:"varint,4,opt,name=object_id,json=objectId" json:"object_id,omitempty"`
-	Subscribe      bool                    `protobuf:"varint,5,opt,name=subscribe" json:"subscribe,omitempty"`
+	AgentId          *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	MemberIdentity   *bnet_protocol.Identity `protobuf:"bytes,2,req,name=member_identity,json=memberIdentity" json:"member_identity,omitempty"`
+	MemberState      *MemberState            `protobuf:"bytes,3,req,name=member_state,json=memberState" json:"member_state,omitempty"`
+	ObjectId         *uint64                 `protobuf:"varint,4,req,name=object_id,json=objectId" json:"object_id,omitempty"`
+	Subscribe        *bool                   `protobuf:"varint,5,opt,name=subscribe,def=1" json:"subscribe,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *AddMemberRequest) Reset()                    { *m = AddMemberRequest{} }
 func (m *AddMemberRequest) String() string            { return proto.CompactTextString(m) }
 func (*AddMemberRequest) ProtoMessage()               {}
 func (*AddMemberRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+
+const Default_AddMemberRequest_Subscribe bool = true
 
 func (m *AddMemberRequest) GetAgentId() *bnet_protocol.EntityId {
 	if m != nil {
@@ -98,24 +101,25 @@ func (m *AddMemberRequest) GetMemberState() *MemberState {
 }
 
 func (m *AddMemberRequest) GetObjectId() uint64 {
-	if m != nil {
-		return m.ObjectId
+	if m != nil && m.ObjectId != nil {
+		return *m.ObjectId
 	}
 	return 0
 }
 
 func (m *AddMemberRequest) GetSubscribe() bool {
-	if m != nil {
-		return m.Subscribe
+	if m != nil && m.Subscribe != nil {
+		return *m.Subscribe
 	}
-	return false
+	return Default_AddMemberRequest_Subscribe
 }
 
 // ref: bnet.protocol.channel.AddNotification
 type AddNotification struct {
-	Self         *Member                                       `protobuf:"bytes,1,opt,name=self" json:"self,omitempty"`
-	Member       []*Member                                     `protobuf:"bytes,2,rep,name=member" json:"member,omitempty"`
-	ChannelState *bnet_protocol_channel_extracted.ChannelState `protobuf:"bytes,3,opt,name=channel_state,json=channelState" json:"channel_state,omitempty"`
+	Self             *Member                                       `protobuf:"bytes,1,opt,name=self" json:"self,omitempty"`
+	Member           []*Member                                     `protobuf:"bytes,2,rep,name=member" json:"member,omitempty"`
+	ChannelState     *bnet_protocol_channel_extracted.ChannelState `protobuf:"bytes,3,req,name=channel_state,json=channelState" json:"channel_state,omitempty"`
+	XXX_unrecognized []byte                                        `json:"-"`
 }
 
 func (m *AddNotification) Reset()                    { *m = AddNotification{} }
@@ -146,8 +150,9 @@ func (m *AddNotification) GetChannelState() *bnet_protocol_channel_extracted.Cha
 
 // ref: bnet.protocol.channel.ChannelInfo
 type ChannelInfo struct {
-	Description *bnet_protocol_channel_extracted.ChannelDescription `protobuf:"bytes,1,opt,name=description" json:"description,omitempty"`
-	Member      []*Member                                           `protobuf:"bytes,2,rep,name=member" json:"member,omitempty"`
+	Description      *bnet_protocol_channel_extracted.ChannelDescription `protobuf:"bytes,1,req,name=description" json:"description,omitempty"`
+	Member           []*Member                                           `protobuf:"bytes,2,rep,name=member" json:"member,omitempty"`
+	XXX_unrecognized []byte                                              `json:"-"`
 }
 
 func (m *ChannelInfo) Reset()                    { *m = ChannelInfo{} }
@@ -175,9 +180,10 @@ type CreateChannelRequest struct {
 	MemberState      *MemberState                                  `protobuf:"bytes,2,opt,name=member_state,json=memberState" json:"member_state,omitempty"`
 	ChannelState     *bnet_protocol_channel_extracted.ChannelState `protobuf:"bytes,3,opt,name=channel_state,json=channelState" json:"channel_state,omitempty"`
 	ChannelId        *bnet_protocol.EntityId                       `protobuf:"bytes,4,opt,name=channel_id,json=channelId" json:"channel_id,omitempty"`
-	ObjectId         uint64                                        `protobuf:"varint,5,opt,name=object_id,json=objectId" json:"object_id,omitempty"`
+	ObjectId         *uint64                                       `protobuf:"varint,5,opt,name=object_id,json=objectId" json:"object_id,omitempty"`
 	LocalAgent       *bnet_protocol.EntityId                       `protobuf:"bytes,6,opt,name=local_agent,json=localAgent" json:"local_agent,omitempty"`
 	LocalMemberState *MemberState                                  `protobuf:"bytes,7,opt,name=local_member_state,json=localMemberState" json:"local_member_state,omitempty"`
+	XXX_unrecognized []byte                                        `json:"-"`
 }
 
 func (m *CreateChannelRequest) Reset()                    { *m = CreateChannelRequest{} }
@@ -214,8 +220,8 @@ func (m *CreateChannelRequest) GetChannelId() *bnet_protocol.EntityId {
 }
 
 func (m *CreateChannelRequest) GetObjectId() uint64 {
-	if m != nil {
-		return m.ObjectId
+	if m != nil && m.ObjectId != nil {
+		return *m.ObjectId
 	}
 	return 0
 }
@@ -236,8 +242,9 @@ func (m *CreateChannelRequest) GetLocalMemberState() *MemberState {
 
 // ref: bnet.protocol.channel.CreateChannelResponse
 type CreateChannelResponse struct {
-	ObjectId  uint64                  `protobuf:"varint,1,opt,name=object_id,json=objectId" json:"object_id,omitempty"`
-	ChannelId *bnet_protocol.EntityId `protobuf:"bytes,2,opt,name=channel_id,json=channelId" json:"channel_id,omitempty"`
+	ObjectId         *uint64                 `protobuf:"varint,1,req,name=object_id,json=objectId" json:"object_id,omitempty"`
+	ChannelId        *bnet_protocol.EntityId `protobuf:"bytes,2,opt,name=channel_id,json=channelId" json:"channel_id,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *CreateChannelResponse) Reset()                    { *m = CreateChannelResponse{} }
@@ -246,8 +253,8 @@ func (*CreateChannelResponse) ProtoMessage()               {}
 func (*CreateChannelResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
 
 func (m *CreateChannelResponse) GetObjectId() uint64 {
-	if m != nil {
-		return m.ObjectId
+	if m != nil && m.ObjectId != nil {
+		return *m.ObjectId
 	}
 	return 0
 }
@@ -261,8 +268,9 @@ func (m *CreateChannelResponse) GetChannelId() *bnet_protocol.EntityId {
 
 // ref: bnet.protocol.channel.DissolveRequest
 type DissolveRequest struct {
-	AgentId *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
-	Reason  uint32                  `protobuf:"varint,2,opt,name=reason" json:"reason,omitempty"`
+	AgentId          *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	Reason           *uint32                 `protobuf:"varint,2,opt,name=reason" json:"reason,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *DissolveRequest) Reset()                    { *m = DissolveRequest{} }
@@ -278,22 +286,23 @@ func (m *DissolveRequest) GetAgentId() *bnet_protocol.EntityId {
 }
 
 func (m *DissolveRequest) GetReason() uint32 {
-	if m != nil {
-		return m.Reason
+	if m != nil && m.Reason != nil {
+		return *m.Reason
 	}
 	return 0
 }
 
 // ref: bnet.protocol.channel.FindChannelOptions
 type FindChannelOptions struct {
-	StartIndex      uint32                                       `protobuf:"varint,1,opt,name=start_index,json=startIndex" json:"start_index,omitempty"`
-	MaxResults      uint32                                       `protobuf:"varint,2,opt,name=max_results,json=maxResults" json:"max_results,omitempty"`
-	Name            string                                       `protobuf:"bytes,3,opt,name=name" json:"name,omitempty"`
-	Program         uint32                                       `protobuf:"fixed32,4,opt,name=program" json:"program,omitempty"`
-	Locale          uint32                                       `protobuf:"fixed32,5,opt,name=locale" json:"locale,omitempty"`
-	CapacityFull    uint32                                       `protobuf:"varint,6,opt,name=capacity_full,json=capacityFull" json:"capacity_full,omitempty"`
-	AttributeFilter *bnet_protocol_attribute_468.AttributeFilter `protobuf:"bytes,7,opt,name=attribute_filter,json=attributeFilter" json:"attribute_filter,omitempty"`
-	ChannelType     string                                       `protobuf:"bytes,8,opt,name=channel_type,json=channelType" json:"channel_type,omitempty"`
+	StartIndex       *uint32                                      `protobuf:"varint,1,opt,name=start_index,json=startIndex,def=0" json:"start_index,omitempty"`
+	MaxResults       *uint32                                      `protobuf:"varint,2,opt,name=max_results,json=maxResults,def=16" json:"max_results,omitempty"`
+	Name             *string                                      `protobuf:"bytes,3,opt,name=name" json:"name,omitempty"`
+	Program          *uint32                                      `protobuf:"fixed32,4,opt,name=program" json:"program,omitempty"`
+	Locale           *uint32                                      `protobuf:"fixed32,5,opt,name=locale" json:"locale,omitempty"`
+	CapacityFull     *uint32                                      `protobuf:"varint,6,opt,name=capacity_full,json=capacityFull" json:"capacity_full,omitempty"`
+	AttributeFilter  *bnet_protocol_attribute_468.AttributeFilter `protobuf:"bytes,7,req,name=attribute_filter,json=attributeFilter" json:"attribute_filter,omitempty"`
+	ChannelType      *string                                      `protobuf:"bytes,8,opt,name=channel_type,json=channelType" json:"channel_type,omitempty"`
+	XXX_unrecognized []byte                                       `json:"-"`
 }
 
 func (m *FindChannelOptions) Reset()                    { *m = FindChannelOptions{} }
@@ -301,44 +310,47 @@ func (m *FindChannelOptions) String() string            { return proto.CompactTe
 func (*FindChannelOptions) ProtoMessage()               {}
 func (*FindChannelOptions) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
 
+const Default_FindChannelOptions_StartIndex uint32 = 0
+const Default_FindChannelOptions_MaxResults uint32 = 16
+
 func (m *FindChannelOptions) GetStartIndex() uint32 {
-	if m != nil {
-		return m.StartIndex
+	if m != nil && m.StartIndex != nil {
+		return *m.StartIndex
 	}
-	return 0
+	return Default_FindChannelOptions_StartIndex
 }
 
 func (m *FindChannelOptions) GetMaxResults() uint32 {
-	if m != nil {
-		return m.MaxResults
+	if m != nil && m.MaxResults != nil {
+		return *m.MaxResults
 	}
-	return 0
+	return Default_FindChannelOptions_MaxResults
 }
 
 func (m *FindChannelOptions) GetName() string {
-	if m != nil {
-		return m.Name
+	if m != nil && m.Name != nil {
+		return *m.Name
 	}
 	return ""
 }
 
 func (m *FindChannelOptions) GetProgram() uint32 {
-	if m != nil {
-		return m.Program
+	if m != nil && m.Program != nil {
+		return *m.Program
 	}
 	return 0
 }
 
 func (m *FindChannelOptions) GetLocale() uint32 {
-	if m != nil {
-		return m.Locale
+	if m != nil && m.Locale != nil {
+		return *m.Locale
 	}
 	return 0
 }
 
 func (m *FindChannelOptions) GetCapacityFull() uint32 {
-	if m != nil {
-		return m.CapacityFull
+	if m != nil && m.CapacityFull != nil {
+		return *m.CapacityFull
 	}
 	return 0
 }
@@ -351,16 +363,17 @@ func (m *FindChannelOptions) GetAttributeFilter() *bnet_protocol_attribute_468.A
 }
 
 func (m *FindChannelOptions) GetChannelType() string {
-	if m != nil {
-		return m.ChannelType
+	if m != nil && m.ChannelType != nil {
+		return *m.ChannelType
 	}
 	return ""
 }
 
 // ref: bnet.protocol.channel.FindChannelRequest
 type FindChannelRequest struct {
-	AgentIdentity *bnet_protocol.Identity `protobuf:"bytes,1,opt,name=agent_identity,json=agentIdentity" json:"agent_identity,omitempty"`
-	Options       *FindChannelOptions     `protobuf:"bytes,2,opt,name=options" json:"options,omitempty"`
+	AgentIdentity    *bnet_protocol.Identity `protobuf:"bytes,1,opt,name=agent_identity,json=agentIdentity" json:"agent_identity,omitempty"`
+	Options          *FindChannelOptions     `protobuf:"bytes,2,req,name=options" json:"options,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *FindChannelRequest) Reset()                    { *m = FindChannelRequest{} }
@@ -384,7 +397,8 @@ func (m *FindChannelRequest) GetOptions() *FindChannelOptions {
 
 // ref: bnet.protocol.channel.FindChannelResponse
 type FindChannelResponse struct {
-	Channel []*bnet_protocol_channel_extracted.ChannelDescription `protobuf:"bytes,1,rep,name=channel" json:"channel,omitempty"`
+	Channel          []*bnet_protocol_channel_extracted.ChannelDescription `protobuf:"bytes,1,rep,name=channel" json:"channel,omitempty"`
+	XXX_unrecognized []byte                                                `json:"-"`
 }
 
 func (m *FindChannelResponse) Reset()                    { *m = FindChannelResponse{} }
@@ -401,6 +415,7 @@ func (m *FindChannelResponse) GetChannel() []*bnet_protocol_channel_extracted.Ch
 
 // ref: bnet.protocol.channel.GetChannelIdRequest
 type GetChannelIdRequest struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *GetChannelIdRequest) Reset()                    { *m = GetChannelIdRequest{} }
@@ -410,7 +425,8 @@ func (*GetChannelIdRequest) Descriptor() ([]byte, []int) { return fileDescriptor
 
 // ref: bnet.protocol.channel.GetChannelIdResponse
 type GetChannelIdResponse struct {
-	ChannelId *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=channel_id,json=channelId" json:"channel_id,omitempty"`
+	ChannelId        *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=channel_id,json=channelId" json:"channel_id,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *GetChannelIdResponse) Reset()                    { *m = GetChannelIdResponse{} }
@@ -427,16 +443,20 @@ func (m *GetChannelIdResponse) GetChannelId() *bnet_protocol.EntityId {
 
 // ref: bnet.protocol.channel.GetChannelInfoRequest
 type GetChannelInfoRequest struct {
-	AgentId      *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
-	ChannelId    *bnet_protocol.EntityId `protobuf:"bytes,2,opt,name=channel_id,json=channelId" json:"channel_id,omitempty"`
-	FetchState   bool                    `protobuf:"varint,3,opt,name=fetch_state,json=fetchState" json:"fetch_state,omitempty"`
-	FetchMembers bool                    `protobuf:"varint,4,opt,name=fetch_members,json=fetchMembers" json:"fetch_members,omitempty"`
+	AgentId          *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	ChannelId        *bnet_protocol.EntityId `protobuf:"bytes,2,req,name=channel_id,json=channelId" json:"channel_id,omitempty"`
+	FetchState       *bool                   `protobuf:"varint,3,opt,name=fetch_state,json=fetchState,def=0" json:"fetch_state,omitempty"`
+	FetchMembers     *bool                   `protobuf:"varint,4,opt,name=fetch_members,json=fetchMembers,def=0" json:"fetch_members,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *GetChannelInfoRequest) Reset()                    { *m = GetChannelInfoRequest{} }
 func (m *GetChannelInfoRequest) String() string            { return proto.CompactTextString(m) }
 func (*GetChannelInfoRequest) ProtoMessage()               {}
 func (*GetChannelInfoRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{11} }
+
+const Default_GetChannelInfoRequest_FetchState bool = false
+const Default_GetChannelInfoRequest_FetchMembers bool = false
 
 func (m *GetChannelInfoRequest) GetAgentId() *bnet_protocol.EntityId {
 	if m != nil {
@@ -453,22 +473,23 @@ func (m *GetChannelInfoRequest) GetChannelId() *bnet_protocol.EntityId {
 }
 
 func (m *GetChannelInfoRequest) GetFetchState() bool {
-	if m != nil {
-		return m.FetchState
+	if m != nil && m.FetchState != nil {
+		return *m.FetchState
 	}
-	return false
+	return Default_GetChannelInfoRequest_FetchState
 }
 
 func (m *GetChannelInfoRequest) GetFetchMembers() bool {
-	if m != nil {
-		return m.FetchMembers
+	if m != nil && m.FetchMembers != nil {
+		return *m.FetchMembers
 	}
-	return false
+	return Default_GetChannelInfoRequest_FetchMembers
 }
 
 // ref: bnet.protocol.channel.GetChannelInfoResponse
 type GetChannelInfoResponse struct {
-	ChannelInfo *ChannelInfo `protobuf:"bytes,1,opt,name=channel_info,json=channelInfo" json:"channel_info,omitempty"`
+	ChannelInfo      *ChannelInfo `protobuf:"bytes,1,opt,name=channel_info,json=channelInfo" json:"channel_info,omitempty"`
+	XXX_unrecognized []byte       `json:"-"`
 }
 
 func (m *GetChannelInfoResponse) Reset()                    { *m = GetChannelInfoResponse{} }
@@ -485,18 +506,21 @@ func (m *GetChannelInfoResponse) GetChannelInfo() *ChannelInfo {
 
 // ref: bnet.protocol.channel.JoinChannelRequest
 type JoinChannelRequest struct {
-	AgentIdentity   *bnet_protocol.Identity   `protobuf:"bytes,1,opt,name=agent_identity,json=agentIdentity" json:"agent_identity,omitempty"`
-	MemberState     *MemberState              `protobuf:"bytes,2,opt,name=member_state,json=memberState" json:"member_state,omitempty"`
-	ChannelId       *bnet_protocol.EntityId   `protobuf:"bytes,3,opt,name=channel_id,json=channelId" json:"channel_id,omitempty"`
-	ObjectId        uint64                    `protobuf:"varint,4,opt,name=object_id,json=objectId" json:"object_id,omitempty"`
-	FriendAccountId []*bnet_protocol.EntityId `protobuf:"bytes,5,rep,name=friend_account_id,json=friendAccountId" json:"friend_account_id,omitempty"`
-	LocalSubscriber bool                      `protobuf:"varint,6,opt,name=local_subscriber,json=localSubscriber" json:"local_subscriber,omitempty"`
+	AgentIdentity    *bnet_protocol.Identity   `protobuf:"bytes,1,opt,name=agent_identity,json=agentIdentity" json:"agent_identity,omitempty"`
+	MemberState      *MemberState              `protobuf:"bytes,2,opt,name=member_state,json=memberState" json:"member_state,omitempty"`
+	ChannelId        *bnet_protocol.EntityId   `protobuf:"bytes,3,req,name=channel_id,json=channelId" json:"channel_id,omitempty"`
+	ObjectId         *uint64                   `protobuf:"varint,4,req,name=object_id,json=objectId" json:"object_id,omitempty"`
+	FriendAccountId  []*bnet_protocol.EntityId `protobuf:"bytes,5,rep,name=friend_account_id,json=friendAccountId" json:"friend_account_id,omitempty"`
+	LocalSubscriber  *bool                     `protobuf:"varint,6,opt,name=local_subscriber,json=localSubscriber,def=1" json:"local_subscriber,omitempty"`
+	XXX_unrecognized []byte                    `json:"-"`
 }
 
 func (m *JoinChannelRequest) Reset()                    { *m = JoinChannelRequest{} }
 func (m *JoinChannelRequest) String() string            { return proto.CompactTextString(m) }
 func (*JoinChannelRequest) ProtoMessage()               {}
 func (*JoinChannelRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{13} }
+
+const Default_JoinChannelRequest_LocalSubscriber bool = true
 
 func (m *JoinChannelRequest) GetAgentIdentity() *bnet_protocol.Identity {
 	if m != nil {
@@ -520,8 +544,8 @@ func (m *JoinChannelRequest) GetChannelId() *bnet_protocol.EntityId {
 }
 
 func (m *JoinChannelRequest) GetObjectId() uint64 {
-	if m != nil {
-		return m.ObjectId
+	if m != nil && m.ObjectId != nil {
+		return *m.ObjectId
 	}
 	return 0
 }
@@ -534,17 +558,18 @@ func (m *JoinChannelRequest) GetFriendAccountId() []*bnet_protocol.EntityId {
 }
 
 func (m *JoinChannelRequest) GetLocalSubscriber() bool {
-	if m != nil {
-		return m.LocalSubscriber
+	if m != nil && m.LocalSubscriber != nil {
+		return *m.LocalSubscriber
 	}
-	return false
+	return Default_JoinChannelRequest_LocalSubscriber
 }
 
 // ref: bnet.protocol.channel.JoinChannelResponse
 type JoinChannelResponse struct {
-	ObjectId                uint64                    `protobuf:"varint,1,opt,name=object_id,json=objectId" json:"object_id,omitempty"`
-	RequireFriendValidation bool                      `protobuf:"varint,2,opt,name=require_friend_validation,json=requireFriendValidation" json:"require_friend_validation,omitempty"`
+	ObjectId                *uint64                   `protobuf:"varint,1,opt,name=object_id,json=objectId" json:"object_id,omitempty"`
+	RequireFriendValidation *bool                     `protobuf:"varint,2,opt,name=require_friend_validation,json=requireFriendValidation,def=0" json:"require_friend_validation,omitempty"`
 	PrivilegedAccount       []*bnet_protocol.EntityId `protobuf:"bytes,3,rep,name=privileged_account,json=privilegedAccount" json:"privileged_account,omitempty"`
+	XXX_unrecognized        []byte                    `json:"-"`
 }
 
 func (m *JoinChannelResponse) Reset()                    { *m = JoinChannelResponse{} }
@@ -552,18 +577,20 @@ func (m *JoinChannelResponse) String() string            { return proto.CompactT
 func (*JoinChannelResponse) ProtoMessage()               {}
 func (*JoinChannelResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{14} }
 
+const Default_JoinChannelResponse_RequireFriendValidation bool = false
+
 func (m *JoinChannelResponse) GetObjectId() uint64 {
-	if m != nil {
-		return m.ObjectId
+	if m != nil && m.ObjectId != nil {
+		return *m.ObjectId
 	}
 	return 0
 }
 
 func (m *JoinChannelResponse) GetRequireFriendValidation() bool {
-	if m != nil {
-		return m.RequireFriendValidation
+	if m != nil && m.RequireFriendValidation != nil {
+		return *m.RequireFriendValidation
 	}
-	return false
+	return Default_JoinChannelResponse_RequireFriendValidation
 }
 
 func (m *JoinChannelResponse) GetPrivilegedAccount() []*bnet_protocol.EntityId {
@@ -575,7 +602,8 @@ func (m *JoinChannelResponse) GetPrivilegedAccount() []*bnet_protocol.EntityId {
 
 // ref: bnet.protocol.channel.JoinNotification
 type JoinNotification struct {
-	Member *Member `protobuf:"bytes,1,opt,name=member" json:"member,omitempty"`
+	Member           *Member `protobuf:"bytes,1,req,name=member" json:"member,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *JoinNotification) Reset()                    { *m = JoinNotification{} }
@@ -592,9 +620,10 @@ func (m *JoinNotification) GetMember() *Member {
 
 // ref: bnet.protocol.channel.LeaveNotification
 type LeaveNotification struct {
-	AgentId  *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
-	MemberId *bnet_protocol.EntityId `protobuf:"bytes,2,opt,name=member_id,json=memberId" json:"member_id,omitempty"`
-	Reason   uint32                  `protobuf:"varint,3,opt,name=reason" json:"reason,omitempty"`
+	AgentId          *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	MemberId         *bnet_protocol.EntityId `protobuf:"bytes,2,req,name=member_id,json=memberId" json:"member_id,omitempty"`
+	Reason           *uint32                 `protobuf:"varint,3,opt,name=reason" json:"reason,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *LeaveNotification) Reset()                    { *m = LeaveNotification{} }
@@ -617,16 +646,17 @@ func (m *LeaveNotification) GetMemberId() *bnet_protocol.EntityId {
 }
 
 func (m *LeaveNotification) GetReason() uint32 {
-	if m != nil {
-		return m.Reason
+	if m != nil && m.Reason != nil {
+		return *m.Reason
 	}
 	return 0
 }
 
 // ref: bnet.protocol.channel.Member
 type Member struct {
-	Identity *bnet_protocol.Identity `protobuf:"bytes,1,opt,name=identity" json:"identity,omitempty"`
-	State    *MemberState            `protobuf:"bytes,2,opt,name=state" json:"state,omitempty"`
+	Identity         *bnet_protocol.Identity `protobuf:"bytes,1,req,name=identity" json:"identity,omitempty"`
+	State            *MemberState            `protobuf:"bytes,2,req,name=state" json:"state,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *Member) Reset()                    { *m = Member{} }
@@ -650,17 +680,21 @@ func (m *Member) GetState() *MemberState {
 
 // ref: bnet.protocol.channel.MemberState
 type MemberState struct {
-	Attribute  []*bnet_protocol.Attribute `protobuf:"bytes,1,rep,name=attribute" json:"attribute,omitempty"`
-	Role       []uint32                   `protobuf:"varint,2,rep,packed,name=role" json:"role,omitempty"`
-	Privileges uint64                     `protobuf:"varint,3,opt,name=privileges" json:"privileges,omitempty"`
-	Info       *bnet_protocol.AccountInfo `protobuf:"bytes,4,opt,name=info" json:"info,omitempty"`
-	Hidden     bool                       `protobuf:"varint,5,opt,name=hidden" json:"hidden,omitempty"`
+	Attribute        []*bnet_protocol.Attribute `protobuf:"bytes,1,rep,name=attribute" json:"attribute,omitempty"`
+	Role             []uint32                   `protobuf:"varint,2,rep,packed,name=role" json:"role,omitempty"`
+	Privileges       *uint64                    `protobuf:"varint,3,opt,name=privileges,def=0" json:"privileges,omitempty"`
+	Info             *bnet_protocol.AccountInfo `protobuf:"bytes,4,opt,name=info" json:"info,omitempty"`
+	Hidden           *bool                      `protobuf:"varint,5,opt,name=hidden,def=0" json:"hidden,omitempty"`
+	XXX_unrecognized []byte                     `json:"-"`
 }
 
 func (m *MemberState) Reset()                    { *m = MemberState{} }
 func (m *MemberState) String() string            { return proto.CompactTextString(m) }
 func (*MemberState) ProtoMessage()               {}
 func (*MemberState) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{18} }
+
+const Default_MemberState_Privileges uint64 = 0
+const Default_MemberState_Hidden bool = false
 
 func (m *MemberState) GetAttribute() []*bnet_protocol.Attribute {
 	if m != nil {
@@ -677,10 +711,10 @@ func (m *MemberState) GetRole() []uint32 {
 }
 
 func (m *MemberState) GetPrivileges() uint64 {
-	if m != nil {
-		return m.Privileges
+	if m != nil && m.Privileges != nil {
+		return *m.Privileges
 	}
-	return 0
+	return Default_MemberState_Privileges
 }
 
 func (m *MemberState) GetInfo() *bnet_protocol.AccountInfo {
@@ -691,16 +725,17 @@ func (m *MemberState) GetInfo() *bnet_protocol.AccountInfo {
 }
 
 func (m *MemberState) GetHidden() bool {
-	if m != nil {
-		return m.Hidden
+	if m != nil && m.Hidden != nil {
+		return *m.Hidden
 	}
-	return false
+	return Default_MemberState_Hidden
 }
 
 // ref: bnet.protocol.channel.Message
 type Message struct {
-	Attribute []*bnet_protocol.Attribute `protobuf:"bytes,1,rep,name=attribute" json:"attribute,omitempty"`
-	Role      uint32                     `protobuf:"varint,2,opt,name=role" json:"role,omitempty"`
+	Attribute        []*bnet_protocol.Attribute `protobuf:"bytes,1,rep,name=attribute" json:"attribute,omitempty"`
+	Role             *uint32                    `protobuf:"varint,2,opt,name=role" json:"role,omitempty"`
+	XXX_unrecognized []byte                     `json:"-"`
 }
 
 func (m *Message) Reset()                    { *m = Message{} }
@@ -716,17 +751,18 @@ func (m *Message) GetAttribute() []*bnet_protocol.Attribute {
 }
 
 func (m *Message) GetRole() uint32 {
-	if m != nil {
-		return m.Role
+	if m != nil && m.Role != nil {
+		return *m.Role
 	}
 	return 0
 }
 
 // ref: bnet.protocol.channel.RemoveMemberRequest
 type RemoveMemberRequest struct {
-	AgentId  *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
-	MemberId *bnet_protocol.EntityId `protobuf:"bytes,2,opt,name=member_id,json=memberId" json:"member_id,omitempty"`
-	Reason   uint32                  `protobuf:"varint,3,opt,name=reason" json:"reason,omitempty"`
+	AgentId          *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	MemberId         *bnet_protocol.EntityId `protobuf:"bytes,2,req,name=member_id,json=memberId" json:"member_id,omitempty"`
+	Reason           *uint32                 `protobuf:"varint,3,opt,name=reason" json:"reason,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *RemoveMemberRequest) Reset()                    { *m = RemoveMemberRequest{} }
@@ -749,17 +785,18 @@ func (m *RemoveMemberRequest) GetMemberId() *bnet_protocol.EntityId {
 }
 
 func (m *RemoveMemberRequest) GetReason() uint32 {
-	if m != nil {
-		return m.Reason
+	if m != nil && m.Reason != nil {
+		return *m.Reason
 	}
 	return 0
 }
 
 // ref: bnet.protocol.channel.RemoveNotification
 type RemoveNotification struct {
-	AgentId  *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
-	MemberId *bnet_protocol.EntityId `protobuf:"bytes,2,opt,name=member_id,json=memberId" json:"member_id,omitempty"`
-	Reason   uint32                  `protobuf:"varint,3,opt,name=reason" json:"reason,omitempty"`
+	AgentId          *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	MemberId         *bnet_protocol.EntityId `protobuf:"bytes,2,req,name=member_id,json=memberId" json:"member_id,omitempty"`
+	Reason           *uint32                 `protobuf:"varint,3,opt,name=reason" json:"reason,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *RemoveNotification) Reset()                    { *m = RemoveNotification{} }
@@ -782,8 +819,8 @@ func (m *RemoveNotification) GetMemberId() *bnet_protocol.EntityId {
 }
 
 func (m *RemoveNotification) GetReason() uint32 {
-	if m != nil {
-		return m.Reason
+	if m != nil && m.Reason != nil {
+		return *m.Reason
 	}
 	return 0
 }
@@ -791,14 +828,17 @@ func (m *RemoveNotification) GetReason() uint32 {
 // ref: bnet.protocol.channel.SendMessageNotification
 type SendMessageNotification struct {
 	AgentId            *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
-	Message            *Message                `protobuf:"bytes,2,opt,name=message" json:"message,omitempty"`
-	RequiredPrivileges uint64                  `protobuf:"varint,3,opt,name=required_privileges,json=requiredPrivileges" json:"required_privileges,omitempty"`
+	Message            *Message                `protobuf:"bytes,2,req,name=message" json:"message,omitempty"`
+	RequiredPrivileges *uint64                 `protobuf:"varint,3,opt,name=required_privileges,json=requiredPrivileges,def=0" json:"required_privileges,omitempty"`
+	XXX_unrecognized   []byte                  `json:"-"`
 }
 
 func (m *SendMessageNotification) Reset()                    { *m = SendMessageNotification{} }
 func (m *SendMessageNotification) String() string            { return proto.CompactTextString(m) }
 func (*SendMessageNotification) ProtoMessage()               {}
 func (*SendMessageNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{22} }
+
+const Default_SendMessageNotification_RequiredPrivileges uint64 = 0
 
 func (m *SendMessageNotification) GetAgentId() *bnet_protocol.EntityId {
 	if m != nil {
@@ -815,23 +855,26 @@ func (m *SendMessageNotification) GetMessage() *Message {
 }
 
 func (m *SendMessageNotification) GetRequiredPrivileges() uint64 {
-	if m != nil {
-		return m.RequiredPrivileges
+	if m != nil && m.RequiredPrivileges != nil {
+		return *m.RequiredPrivileges
 	}
-	return 0
+	return Default_SendMessageNotification_RequiredPrivileges
 }
 
 // ref: bnet.protocol.channel.SendMessageRequest
 type SendMessageRequest struct {
 	AgentId            *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
-	Message            *Message                `protobuf:"bytes,2,opt,name=message" json:"message,omitempty"`
-	RequiredPrivileges uint64                  `protobuf:"varint,3,opt,name=required_privileges,json=requiredPrivileges" json:"required_privileges,omitempty"`
+	Message            *Message                `protobuf:"bytes,2,req,name=message" json:"message,omitempty"`
+	RequiredPrivileges *uint64                 `protobuf:"varint,3,opt,name=required_privileges,json=requiredPrivileges,def=0" json:"required_privileges,omitempty"`
+	XXX_unrecognized   []byte                  `json:"-"`
 }
 
 func (m *SendMessageRequest) Reset()                    { *m = SendMessageRequest{} }
 func (m *SendMessageRequest) String() string            { return proto.CompactTextString(m) }
 func (*SendMessageRequest) ProtoMessage()               {}
 func (*SendMessageRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{23} }
+
+const Default_SendMessageRequest_RequiredPrivileges uint64 = 0
 
 func (m *SendMessageRequest) GetAgentId() *bnet_protocol.EntityId {
 	if m != nil {
@@ -848,17 +891,18 @@ func (m *SendMessageRequest) GetMessage() *Message {
 }
 
 func (m *SendMessageRequest) GetRequiredPrivileges() uint64 {
-	if m != nil {
-		return m.RequiredPrivileges
+	if m != nil && m.RequiredPrivileges != nil {
+		return *m.RequiredPrivileges
 	}
-	return 0
+	return Default_SendMessageRequest_RequiredPrivileges
 }
 
 // ref: bnet.protocol.channel.SetRolesRequest
 type SetRolesRequest struct {
-	AgentId  *bnet_protocol.EntityId   `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
-	Role     []uint32                  `protobuf:"varint,2,rep,packed,name=role" json:"role,omitempty"`
-	MemberId []*bnet_protocol.EntityId `protobuf:"bytes,3,rep,name=member_id,json=memberId" json:"member_id,omitempty"`
+	AgentId          *bnet_protocol.EntityId   `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	Role             []uint32                  `protobuf:"varint,2,rep,packed,name=role" json:"role,omitempty"`
+	MemberId         []*bnet_protocol.EntityId `protobuf:"bytes,3,rep,name=member_id,json=memberId" json:"member_id,omitempty"`
+	XXX_unrecognized []byte                    `json:"-"`
 }
 
 func (m *SetRolesRequest) Reset()                    { *m = SetRolesRequest{} }
@@ -889,9 +933,10 @@ func (m *SetRolesRequest) GetMemberId() []*bnet_protocol.EntityId {
 
 // ref: bnet.protocol.channel.SubscribeChannelRequest
 type SubscribeChannelRequest struct {
-	AgentId   *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
-	ChannelId *bnet_protocol.EntityId `protobuf:"bytes,2,opt,name=channel_id,json=channelId" json:"channel_id,omitempty"`
-	ObjectId  uint64                  `protobuf:"varint,3,opt,name=object_id,json=objectId" json:"object_id,omitempty"`
+	AgentId          *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	ChannelId        *bnet_protocol.EntityId `protobuf:"bytes,2,req,name=channel_id,json=channelId" json:"channel_id,omitempty"`
+	ObjectId         *uint64                 `protobuf:"varint,3,req,name=object_id,json=objectId" json:"object_id,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *SubscribeChannelRequest) Reset()                    { *m = SubscribeChannelRequest{} }
@@ -914,15 +959,16 @@ func (m *SubscribeChannelRequest) GetChannelId() *bnet_protocol.EntityId {
 }
 
 func (m *SubscribeChannelRequest) GetObjectId() uint64 {
-	if m != nil {
-		return m.ObjectId
+	if m != nil && m.ObjectId != nil {
+		return *m.ObjectId
 	}
 	return 0
 }
 
 // ref: bnet.protocol.channel.SubscribeChannelResponse
 type SubscribeChannelResponse struct {
-	ObjectId uint64 `protobuf:"varint,1,opt,name=object_id,json=objectId" json:"object_id,omitempty"`
+	ObjectId         *uint64 `protobuf:"varint,1,opt,name=object_id,json=objectId" json:"object_id,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *SubscribeChannelResponse) Reset()                    { *m = SubscribeChannelResponse{} }
@@ -931,16 +977,17 @@ func (*SubscribeChannelResponse) ProtoMessage()               {}
 func (*SubscribeChannelResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{26} }
 
 func (m *SubscribeChannelResponse) GetObjectId() uint64 {
-	if m != nil {
-		return m.ObjectId
+	if m != nil && m.ObjectId != nil {
+		return *m.ObjectId
 	}
 	return 0
 }
 
 // ref: bnet.protocol.channel.UnsubscribeMemberRequest
 type UnsubscribeMemberRequest struct {
-	AgentId  *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
-	MemberId *bnet_protocol.EntityId `protobuf:"bytes,2,opt,name=member_id,json=memberId" json:"member_id,omitempty"`
+	AgentId          *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	MemberId         *bnet_protocol.EntityId `protobuf:"bytes,2,req,name=member_id,json=memberId" json:"member_id,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *UnsubscribeMemberRequest) Reset()                    { *m = UnsubscribeMemberRequest{} }
@@ -964,8 +1011,9 @@ func (m *UnsubscribeMemberRequest) GetMemberId() *bnet_protocol.EntityId {
 
 // ref: bnet.protocol.channel.UpdateChannelStateNotification
 type UpdateChannelStateNotification struct {
-	AgentId     *bnet_protocol.EntityId                       `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
-	StateChange *bnet_protocol_channel_extracted.ChannelState `protobuf:"bytes,2,opt,name=state_change,json=stateChange" json:"state_change,omitempty"`
+	AgentId          *bnet_protocol.EntityId                       `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	StateChange      *bnet_protocol_channel_extracted.ChannelState `protobuf:"bytes,2,req,name=state_change,json=stateChange" json:"state_change,omitempty"`
+	XXX_unrecognized []byte                                        `json:"-"`
 }
 
 func (m *UpdateChannelStateNotification) Reset()                    { *m = UpdateChannelStateNotification{} }
@@ -989,8 +1037,9 @@ func (m *UpdateChannelStateNotification) GetStateChange() *bnet_protocol_channel
 
 // ref: bnet.protocol.channel.UpdateChannelStateRequest
 type UpdateChannelStateRequest struct {
-	AgentId     *bnet_protocol.EntityId                       `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
-	StateChange *bnet_protocol_channel_extracted.ChannelState `protobuf:"bytes,2,opt,name=state_change,json=stateChange" json:"state_change,omitempty"`
+	AgentId          *bnet_protocol.EntityId                       `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	StateChange      *bnet_protocol_channel_extracted.ChannelState `protobuf:"bytes,2,req,name=state_change,json=stateChange" json:"state_change,omitempty"`
+	XXX_unrecognized []byte                                        `json:"-"`
 }
 
 func (m *UpdateChannelStateRequest) Reset()                    { *m = UpdateChannelStateRequest{} }
@@ -1014,9 +1063,10 @@ func (m *UpdateChannelStateRequest) GetStateChange() *bnet_protocol_channel_extr
 
 // ref: bnet.protocol.channel.UpdateMemberStateNotification
 type UpdateMemberStateNotification struct {
-	AgentId     *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
-	StateChange []*Member               `protobuf:"bytes,2,rep,name=state_change,json=stateChange" json:"state_change,omitempty"`
-	RemovedRole []uint32                `protobuf:"varint,3,rep,packed,name=removed_role,json=removedRole" json:"removed_role,omitempty"`
+	AgentId          *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	StateChange      []*Member               `protobuf:"bytes,2,rep,name=state_change,json=stateChange" json:"state_change,omitempty"`
+	RemovedRole      []uint32                `protobuf:"varint,3,rep,packed,name=removed_role,json=removedRole" json:"removed_role,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *UpdateMemberStateNotification) Reset()                    { *m = UpdateMemberStateNotification{} }
@@ -1047,9 +1097,10 @@ func (m *UpdateMemberStateNotification) GetRemovedRole() []uint32 {
 
 // ref: bnet.protocol.channel.UpdateMemberStateRequest
 type UpdateMemberStateRequest struct {
-	AgentId     *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
-	StateChange []*Member               `protobuf:"bytes,2,rep,name=state_change,json=stateChange" json:"state_change,omitempty"`
-	RemovedRole []uint32                `protobuf:"varint,3,rep,packed,name=removed_role,json=removedRole" json:"removed_role,omitempty"`
+	AgentId          *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=agent_id,json=agentId" json:"agent_id,omitempty"`
+	StateChange      []*Member               `protobuf:"bytes,2,rep,name=state_change,json=stateChange" json:"state_change,omitempty"`
+	RemovedRole      []uint32                `protobuf:"varint,3,rep,packed,name=removed_role,json=removedRole" json:"removed_role,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *UpdateMemberStateRequest) Reset()                    { *m = UpdateMemberStateRequest{} }
@@ -1116,89 +1167,92 @@ func init() {
 func init() { proto.RegisterFile("bnet/protocol/channel/channel.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
-	// 1340 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xcc, 0x58, 0xc1, 0x72, 0x1b, 0x45,
-	0x13, 0xfe, 0x47, 0x52, 0x2c, 0xa9, 0x65, 0x45, 0xce, 0x38, 0x4e, 0x36, 0xf9, 0x93, 0x60, 0x26,
-	0x97, 0xa4, 0x0a, 0xe4, 0x22, 0x09, 0x89, 0xc9, 0x81, 0xc2, 0x38, 0x71, 0x4a, 0x29, 0x12, 0xc2,
-	0x98, 0x40, 0x71, 0xa0, 0xb6, 0x56, 0x3b, 0x23, 0x7b, 0xa9, 0xd5, 0xae, 0xb2, 0x3b, 0x32, 0xf6,
-	0x9d, 0x13, 0x57, 0x0a, 0x28, 0x4e, 0x14, 0x1c, 0x78, 0x01, 0x0e, 0x50, 0x14, 0x1c, 0x39, 0x70,
-	0x85, 0x57, 0xe0, 0x41, 0xa8, 0xed, 0x99, 0x5d, 0xed, 0x4a, 0xb6, 0xa3, 0x58, 0x26, 0xe4, 0x64,
-	0x4d, 0x4f, 0x77, 0xcf, 0xd7, 0x3d, 0x5f, 0x77, 0xcf, 0x1a, 0x2e, 0x77, 0x03, 0xa9, 0x56, 0x06,
-	0x51, 0xa8, 0x42, 0x37, 0xf4, 0x57, 0xdc, 0x6d, 0x27, 0x08, 0x64, 0xf6, 0xb7, 0x8d, 0x1b, 0x74,
-	0x29, 0x51, 0x6a, 0xa7, 0x4a, 0x6d, 0xb3, 0x79, 0x7e, 0xa5, 0x68, 0xeb, 0x28, 0x15, 0x79, 0xdd,
-	0xa1, 0x92, 0xf6, 0x8d, 0x9b, 0xab, 0xc5, 0x95, 0xb6, 0x3d, 0x7f, 0x6b, 0xdf, 0xc3, 0x6c, 0xb9,
-	0xab, 0x22, 0xc7, 0x55, 0x52, 0x4c, 0x4a, 0x8c, 0xe1, 0x85, 0xa2, 0x61, 0x86, 0x04, 0x7f, 0xb0,
-	0xcf, 0x4b, 0xb0, 0xb0, 0x26, 0xc4, 0x03, 0xd9, 0xef, 0xca, 0x88, 0xcb, 0x27, 0x43, 0x19, 0x2b,
-	0x7a, 0x0d, 0x6a, 0xce, 0x96, 0x0c, 0x94, 0xed, 0x09, 0x8b, 0x2c, 0x93, 0x2b, 0x8d, 0x6b, 0x67,
-	0xdb, 0xc5, 0x30, 0xee, 0x06, 0xca, 0x53, 0x7b, 0x1d, 0xc1, 0xab, 0xa8, 0xd8, 0x11, 0xf4, 0x2d,
-	0x68, 0xf5, 0xd1, 0x89, 0xed, 0x09, 0x89, 0xbb, 0x56, 0x69, 0x5f, 0xd3, 0x8e, 0xd9, 0xe6, 0x27,
-	0xb5, 0x7e, 0xba, 0xa6, 0x77, 0x61, 0xde, 0x78, 0x88, 0x95, 0xa3, 0xa4, 0x55, 0x46, 0x73, 0xd6,
-	0xde, 0x37, 0x81, 0x6d, 0x8d, 0x78, 0x33, 0xd1, 0xe4, 0x8d, 0xfe, 0x68, 0x41, 0xff, 0x0f, 0xf5,
-	0xb0, 0xfb, 0x89, 0x74, 0x11, 0x7d, 0x65, 0x99, 0x5c, 0xa9, 0xf0, 0x9a, 0x16, 0x74, 0x04, 0xbd,
-	0x00, 0xf5, 0x78, 0xd8, 0x8d, 0xdd, 0xc8, 0xeb, 0x4a, 0xeb, 0xc4, 0x32, 0xb9, 0x52, 0xe3, 0x23,
-	0x01, 0xfb, 0x8b, 0x40, 0x6b, 0x4d, 0x88, 0x87, 0xa1, 0xf2, 0x7a, 0x9e, 0xeb, 0x28, 0x2f, 0x0c,
-	0xe8, 0x6b, 0x50, 0x89, 0xa5, 0xdf, 0x33, 0x79, 0xb8, 0x78, 0x28, 0x1a, 0x8e, 0xaa, 0xf4, 0x0d,
-	0x98, 0xd3, 0x80, 0xac, 0xd2, 0x72, 0xf9, 0xa9, 0x46, 0x6f, 0x97, 0x16, 0xfe, 0xc7, 0x8d, 0x01,
-	0xe5, 0xd0, 0x4c, 0xef, 0x31, 0x9f, 0x84, 0x57, 0xf7, 0xf7, 0x90, 0xbb, 0xeb, 0x75, 0x2d, 0xd1,
-	0xf9, 0x98, 0x77, 0x73, 0x2b, 0xf6, 0x2d, 0x81, 0x86, 0xd9, 0xee, 0x04, 0xbd, 0x90, 0x3e, 0x86,
-	0x86, 0x90, 0x49, 0xc4, 0x83, 0x24, 0x40, 0x13, 0xd8, 0xf5, 0x69, 0x4f, 0xb8, 0x33, 0x32, 0xe5,
-	0x79, 0x3f, 0x33, 0x44, 0xcd, 0xfe, 0x2c, 0xc3, 0xe9, 0xf5, 0x48, 0x3a, 0x4a, 0x9a, 0x43, 0x52,
-	0x22, 0xbe, 0x09, 0x27, 0x53, 0x22, 0x1a, 0x4e, 0x91, 0xc3, 0x39, 0xd5, 0x34, 0x74, 0x3c, 0x80,
-	0x52, 0xa5, 0xa3, 0x51, 0xea, 0x5f, 0xb8, 0x15, 0x7a, 0x13, 0x20, 0xd5, 0x37, 0x3c, 0x3d, 0xa4,
-	0xca, 0xea, 0x46, 0xb5, 0x23, 0x8a, 0xf4, 0x3e, 0x31, 0x46, 0xef, 0x55, 0x68, 0xf8, 0xa1, 0xeb,
-	0xf8, 0x36, 0xa6, 0xc1, 0x9a, 0x3b, 0xdc, 0x2b, 0xa0, 0xee, 0x5a, 0xa2, 0x4a, 0x1f, 0x01, 0xd5,
-	0x96, 0x85, 0x7c, 0x55, 0xa7, 0xce, 0xd7, 0x02, 0x5a, 0xe7, 0x24, 0xcc, 0x87, 0xa5, 0xb1, 0x3b,
-	0x8d, 0x07, 0x61, 0x10, 0x8f, 0x15, 0x28, 0x19, 0x8b, 0xa0, 0x98, 0x96, 0xd2, 0xb4, 0x69, 0x61,
-	0x1f, 0x43, 0xeb, 0x8e, 0x17, 0xc7, 0xa1, 0xbf, 0x23, 0x67, 0xe9, 0x62, 0x67, 0x60, 0x2e, 0x92,
-	0x4e, 0x1c, 0x06, 0x78, 0x74, 0x93, 0x9b, 0x15, 0xfb, 0xad, 0x04, 0x74, 0xc3, 0x0b, 0x84, 0x89,
-	0xe5, 0x5d, 0xa4, 0x7c, 0x4c, 0x5f, 0x82, 0x46, 0xac, 0x9c, 0x48, 0xd9, 0x5e, 0x20, 0xe4, 0x2e,
-	0x9e, 0xd2, 0xe4, 0x80, 0xa2, 0x4e, 0x22, 0x49, 0x14, 0xfa, 0xce, 0xae, 0x1d, 0xc9, 0x78, 0xe8,
-	0xab, 0xd8, 0x38, 0x85, 0xbe, 0xb3, 0xcb, 0xb5, 0x84, 0x52, 0xa8, 0x04, 0x4e, 0x5f, 0x33, 0xaa,
-	0xce, 0xf1, 0x37, 0xb5, 0xa0, 0x3a, 0x88, 0xc2, 0xad, 0xc8, 0xe9, 0x23, 0x2f, 0xaa, 0x3c, 0x5d,
-	0x26, 0xf0, 0x30, 0xcf, 0xba, 0x77, 0x55, 0xb9, 0x59, 0xd1, 0xcb, 0xd0, 0x74, 0x9d, 0x81, 0xe3,
-	0x7a, 0x6a, 0xcf, 0xee, 0x0d, 0x7d, 0x1f, 0x6f, 0xbe, 0xc9, 0xe7, 0x53, 0xe1, 0xc6, 0xd0, 0xf7,
-	0xe9, 0x87, 0xb0, 0x30, 0x1a, 0x2c, 0x3d, 0xcf, 0x57, 0x32, 0x32, 0x17, 0xfc, 0xca, 0x58, 0x5e,
-	0x8a, 0xf3, 0x67, 0x2d, 0x5d, 0x6d, 0xa0, 0x0d, 0x6f, 0x39, 0x45, 0x01, 0x7d, 0x19, 0x52, 0x6a,
-	0xdb, 0x6a, 0x6f, 0x20, 0xad, 0x1a, 0xc6, 0xd2, 0x30, 0xb2, 0xf7, 0xf7, 0x06, 0x92, 0x7d, 0x43,
-	0x0a, 0xf9, 0x3b, 0xae, 0xfa, 0x5e, 0x87, 0x6a, 0xa8, 0xaf, 0xc2, 0x50, 0xe5, 0xea, 0x01, 0x54,
-	0x9d, 0xbc, 0x3b, 0x9e, 0x5a, 0xb2, 0x6d, 0x58, 0x2c, 0x40, 0x33, 0x34, 0x7d, 0x0f, 0xaa, 0xc6,
-	0xda, 0x22, 0xd8, 0xd0, 0x8e, 0xd2, 0x22, 0xb1, 0xcd, 0xa5, 0x7e, 0xd8, 0x12, 0x2c, 0xde, 0x93,
-	0x2a, 0xed, 0xc5, 0xc2, 0x64, 0x81, 0x3d, 0x84, 0xd3, 0x45, 0xb1, 0x41, 0x50, 0xac, 0x05, 0x32,
-	0x75, 0x2d, 0xfc, 0x41, 0x60, 0x29, 0xe7, 0x30, 0xe8, 0x85, 0xb3, 0x94, 0xc4, 0x11, 0x2b, 0x32,
-	0xa1, 0x7e, 0x4f, 0x2a, 0x77, 0x3b, 0xd7, 0x32, 0x6b, 0x1c, 0x50, 0xa4, 0x3b, 0xe0, 0x65, 0x68,
-	0x6a, 0x05, 0xdd, 0x72, 0x62, 0x24, 0x7b, 0x8d, 0xcf, 0xa3, 0x50, 0x77, 0x92, 0x98, 0xd9, 0x70,
-	0x66, 0x3c, 0x14, 0x93, 0x9d, 0xbb, 0x23, 0xd6, 0x79, 0x41, 0x2f, 0x34, 0xf1, 0x1c, 0xd4, 0xab,
-	0xf2, 0x1e, 0x52, 0x66, 0x26, 0x0b, 0xf6, 0x77, 0x09, 0xe8, 0xfd, 0xd0, 0x0b, 0x5e, 0xcc, 0xc9,
-	0x53, 0x4c, 0x7e, 0xf9, 0x68, 0x53, 0x62, 0xfc, 0x11, 0x74, 0x0f, 0x4e, 0xf5, 0x22, 0x4f, 0x06,
-	0xc2, 0x76, 0x5c, 0x37, 0x1c, 0x06, 0x66, 0x94, 0x94, 0x0f, 0xf1, 0x8d, 0x3c, 0x6e, 0x69, 0xab,
-	0x35, 0x6d, 0xd4, 0x11, 0xf4, 0x2a, 0xe8, 0xb6, 0x6f, 0x67, 0x4f, 0xa8, 0x08, 0x3b, 0x4f, 0x8d,
-	0xb7, 0x50, 0xbe, 0x99, 0x89, 0xd9, 0x2f, 0x04, 0x16, 0x0b, 0x69, 0x9e, 0x66, 0x18, 0xdc, 0x86,
-	0x73, 0x91, 0x7c, 0x32, 0xf4, 0x22, 0x69, 0x1b, 0xc0, 0x3b, 0x8e, 0xef, 0x09, 0x7c, 0x98, 0x61,
-	0x46, 0x6b, 0xfc, 0xac, 0x51, 0xd8, 0xc0, 0xfd, 0x0f, 0xb2, 0x6d, 0x7a, 0x1f, 0xe8, 0x20, 0xf2,
-	0x76, 0x3c, 0x5f, 0x6e, 0xc9, 0x2c, 0x50, 0xab, 0xfc, 0xf4, 0x28, 0x4f, 0x8d, 0xcc, 0x4c, 0xa4,
-	0xac, 0x03, 0x0b, 0x09, 0xf6, 0xc2, 0xbb, 0xf0, 0xf5, 0xec, 0xb9, 0x33, 0xd5, 0xcb, 0x30, 0x7d,
-	0xea, 0x7c, 0x49, 0xe0, 0xd4, 0x3b, 0xd2, 0xd9, 0x91, 0x05, 0x67, 0x47, 0xa9, 0xcb, 0x1b, 0x50,
-	0xcf, 0x1e, 0xdc, 0x4f, 0x2b, 0xcb, 0x5a, 0xfa, 0xd4, 0xce, 0x0d, 0xb8, 0x72, 0x61, 0xc0, 0x7d,
-	0x0a, 0x73, 0x1a, 0x29, 0xbd, 0x0e, 0xb5, 0x69, 0x39, 0x9f, 0x29, 0xd2, 0x55, 0x38, 0xf1, 0xac,
-	0x3c, 0xd7, 0x06, 0xec, 0x77, 0x02, 0x8d, 0x9c, 0x98, 0xde, 0x86, 0x7a, 0x36, 0x5f, 0x4c, 0xe3,
-	0xb5, 0xc6, 0xbc, 0x65, 0x03, 0x09, 0xef, 0x6b, 0xa4, 0x9e, 0x0c, 0xd3, 0x28, 0xf4, 0x25, 0x3e,
-	0x40, 0x9b, 0x1c, 0x7f, 0xd3, 0x4b, 0x00, 0xd9, 0x85, 0xc6, 0x18, 0x74, 0x85, 0xe7, 0x24, 0xb4,
-	0x0d, 0x15, 0x6c, 0x1f, 0xfa, 0x05, 0x76, 0x7e, 0xfc, 0x28, 0xc3, 0xf5, 0xa4, 0x6d, 0xa0, 0x5e,
-	0x92, 0xc0, 0x6d, 0x4f, 0x08, 0x19, 0x98, 0xcf, 0x07, 0xb3, 0x62, 0x1f, 0x41, 0xf5, 0x81, 0x8c,
-	0x63, 0x67, 0xeb, 0xb8, 0x42, 0x20, 0x69, 0x08, 0xec, 0x6b, 0x02, 0x8b, 0x5c, 0xf6, 0xc3, 0x1d,
-	0x39, 0xfb, 0x67, 0xda, 0xf1, 0xb2, 0xe6, 0x2b, 0x02, 0x54, 0x23, 0x7b, 0xc1, 0xe8, 0xfc, 0x33,
-	0x81, 0xb3, 0x9b, 0x32, 0x10, 0xe6, 0x4a, 0x66, 0x46, 0xb7, 0x0a, 0xd5, 0xbe, 0x76, 0x65, 0xb0,
-	0x5d, 0x3a, 0x90, 0xe1, 0xa8, 0xc5, 0x53, 0x75, 0xba, 0x02, 0x8b, 0xa6, 0x45, 0x09, 0x7b, 0x82,
-	0x88, 0x34, 0xdd, 0x7a, 0x94, 0xed, 0xb0, 0x1f, 0x09, 0xd0, 0x1c, 0xf4, 0x59, 0x2e, 0xfb, 0x39,
-	0xa2, 0xfe, 0x82, 0x40, 0x6b, 0x53, 0x2a, 0x1e, 0xfa, 0x32, 0x9e, 0x05, 0xf2, 0x7e, 0x25, 0xbc,
-	0x9a, 0xa7, 0xc6, 0x14, 0x1d, 0x3c, 0xa3, 0x07, 0xfb, 0x3e, 0xa1, 0x41, 0x3a, 0x84, 0xc6, 0x26,
-	0xfc, 0xf3, 0x7c, 0x0b, 0x15, 0xa6, 0x5c, 0xb9, 0x38, 0xe5, 0xd8, 0x2d, 0xb0, 0x26, 0x31, 0x4e,
-	0x31, 0x1e, 0xd9, 0x67, 0x04, 0xac, 0xc7, 0x41, 0x36, 0x7b, 0xff, 0xa3, 0xe6, 0xc0, 0x7e, 0x20,
-	0x70, 0xe9, 0xf1, 0x40, 0x8c, 0xbe, 0xf4, 0xb0, 0x91, 0xcf, 0x5c, 0x72, 0x8f, 0x60, 0x1e, 0x27,
-	0x84, 0x9d, 0xa4, 0x31, 0x63, 0xf0, 0x33, 0x7e, 0x73, 0x37, 0xd0, 0xc5, 0x3a, 0x7a, 0x60, 0xdf,
-	0x11, 0x38, 0x37, 0x09, 0x74, 0x96, 0x84, 0x1d, 0x3f, 0xc6, 0x5f, 0x09, 0x5c, 0xd4, 0x18, 0x73,
-	0x43, 0x71, 0xe6, 0x5c, 0xde, 0x99, 0xc0, 0x39, 0xe5, 0x7f, 0x68, 0xf2, 0xd8, 0x92, 0xef, 0xbc,
-	0x08, 0x9b, 0xbd, 0xb0, 0xb1, 0x46, 0xcb, 0x58, 0xa3, 0x0d, 0x23, 0x4b, 0x4a, 0x9f, 0xfd, 0x94,
-	0x50, 0x72, 0x1c, 0xfe, 0x2c, 0x19, 0x7e, 0x5e, 0xc8, 0xbb, 0x73, 0xe8, 0xec, 0xfa, 0x3f, 0x01,
-	0x00, 0x00, 0xff, 0xff, 0x96, 0xaa, 0x45, 0xe9, 0xd5, 0x15, 0x00, 0x00,
+	// 1378 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xcc, 0x58, 0xdd, 0x6e, 0x1b, 0xc5,
+	0x17, 0xd7, 0xd8, 0x6e, 0xec, 0x1c, 0xc7, 0x75, 0x3a, 0x69, 0xda, 0x6d, 0xff, 0xff, 0x56, 0xe9,
+	0x54, 0xa0, 0x82, 0xc0, 0xa1, 0x1f, 0xb4, 0x51, 0x2e, 0x50, 0x43, 0xda, 0x20, 0x23, 0x52, 0xaa,
+	0x09, 0x81, 0x2b, 0xb4, 0x5a, 0xef, 0x8c, 0xd3, 0x45, 0xeb, 0x5d, 0x77, 0x77, 0x1c, 0x92, 0x7b,
+	0x1e, 0x00, 0x09, 0x01, 0x42, 0x5c, 0xc1, 0x05, 0x8f, 0x00, 0x17, 0xc0, 0x1d, 0xf7, 0x48, 0xdc,
+	0xf0, 0x06, 0x3c, 0x07, 0xda, 0x33, 0xb3, 0xeb, 0x5d, 0xc7, 0x71, 0xdd, 0xb8, 0x0a, 0xbd, 0x8a,
+	0xe7, 0xcc, 0x39, 0x67, 0xce, 0xc7, 0xef, 0x7c, 0x6c, 0xe0, 0x7a, 0x27, 0x90, 0x6a, 0xb5, 0x1f,
+	0x85, 0x2a, 0x74, 0x43, 0x7f, 0xd5, 0x7d, 0xe2, 0x04, 0x81, 0xcc, 0xfe, 0xb6, 0xf0, 0x82, 0x2e,
+	0x27, 0x4c, 0xad, 0x94, 0xa9, 0x65, 0x2e, 0x2f, 0xaf, 0x16, 0x65, 0x1d, 0xa5, 0x22, 0xaf, 0x33,
+	0x50, 0xd2, 0xbe, 0x73, 0x77, 0xad, 0x78, 0xd2, 0xb2, 0x97, 0xef, 0x8d, 0x7d, 0xcc, 0x96, 0x07,
+	0x2a, 0x72, 0x5c, 0x25, 0xc5, 0x51, 0x8a, 0x11, 0xfc, 0x7f, 0x51, 0x30, 0xb3, 0x04, 0x7f, 0xb0,
+	0x2f, 0x4b, 0xb0, 0xb8, 0x21, 0xc4, 0xb6, 0xec, 0x75, 0x64, 0xc4, 0xe5, 0xd3, 0x81, 0x8c, 0x15,
+	0xbd, 0x05, 0x35, 0x67, 0x4f, 0x06, 0xca, 0xf6, 0x84, 0x45, 0x56, 0xc8, 0x8d, 0xfa, 0xad, 0x8b,
+	0xad, 0xa2, 0x1b, 0x0f, 0x03, 0xe5, 0xa9, 0xc3, 0xb6, 0xe0, 0x55, 0x64, 0x6c, 0x0b, 0x7a, 0x1f,
+	0x9a, 0x3d, 0x54, 0x62, 0x7b, 0x42, 0xe2, 0xad, 0x55, 0x5a, 0x29, 0x8d, 0x11, 0x6d, 0x9b, 0x6b,
+	0x7e, 0x56, 0xf3, 0xa7, 0x67, 0xfa, 0x10, 0x16, 0x8c, 0x86, 0x58, 0x39, 0x4a, 0x5a, 0x65, 0x14,
+	0x67, 0xad, 0xb1, 0x01, 0x6c, 0x69, 0x8b, 0x77, 0x12, 0x4e, 0x5e, 0xef, 0x0d, 0x0f, 0xf4, 0x7f,
+	0x30, 0x1f, 0x76, 0x3e, 0x93, 0x2e, 0x5a, 0x5f, 0x59, 0x29, 0xdd, 0xa8, 0xf0, 0x9a, 0x26, 0xb4,
+	0x05, 0x65, 0x30, 0x1f, 0x0f, 0x3a, 0xb1, 0x1b, 0x79, 0x1d, 0x69, 0x9d, 0x59, 0x21, 0x37, 0x6a,
+	0xeb, 0x15, 0x15, 0x0d, 0x24, 0x1f, 0x92, 0xd9, 0x9f, 0x04, 0x9a, 0x1b, 0x42, 0x3c, 0x0a, 0x95,
+	0xd7, 0xf5, 0x5c, 0x47, 0x79, 0x61, 0x40, 0x6f, 0x42, 0x25, 0x96, 0x7e, 0xd7, 0x44, 0xe3, 0xca,
+	0x44, 0x9b, 0x38, 0xb2, 0xd2, 0xb7, 0x61, 0x4e, 0x9b, 0x65, 0x95, 0x56, 0xca, 0xcf, 0x16, 0x32,
+	0xcc, 0x94, 0x43, 0x23, 0xcd, 0x64, 0x3e, 0x0c, 0x6f, 0x8e, 0x97, 0xce, 0x65, 0x7b, 0x53, 0x53,
+	0x74, 0x44, 0x16, 0xdc, 0xdc, 0x89, 0x7d, 0x4f, 0xa0, 0x6e, 0xae, 0xdb, 0x41, 0x37, 0xa4, 0xbb,
+	0x50, 0x17, 0x32, 0xf1, 0xb6, 0x9f, 0x38, 0x67, 0x11, 0x7c, 0xe1, 0xf6, 0xb4, 0x2f, 0x3c, 0x18,
+	0x8a, 0xf2, 0xbc, 0x9e, 0x13, 0x7a, 0xcc, 0xfe, 0x2a, 0xc3, 0xf9, 0xcd, 0x48, 0x3a, 0x4a, 0x9a,
+	0x07, 0x52, 0x18, 0xbe, 0x03, 0x67, 0x53, 0x18, 0x1a, 0x44, 0x8d, 0x07, 0x63, 0x86, 0xa8, 0x86,
+	0x01, 0xe3, 0x31, 0x80, 0x2a, 0xa1, 0xf4, 0x73, 0x03, 0x6a, 0x4c, 0x46, 0xc8, 0x8c, 0x19, 0xa1,
+	0x77, 0x01, 0x52, 0x7e, 0x44, 0xe9, 0xc4, 0x1a, 0x9b, 0x37, 0xac, 0x6d, 0x51, 0x04, 0x77, 0x82,
+	0xdf, 0x3c, 0xb8, 0xd7, 0xa0, 0xee, 0x87, 0xae, 0xe3, 0xdb, 0x18, 0x06, 0x6b, 0x6e, 0xb2, 0x56,
+	0x40, 0xde, 0x8d, 0x84, 0x95, 0x3e, 0x06, 0xaa, 0x25, 0x0b, 0xf1, 0xaa, 0x4e, 0x1d, 0xaf, 0x45,
+	0x94, 0xce, 0x51, 0x98, 0x0f, 0xcb, 0x23, 0x39, 0x8d, 0xfb, 0x61, 0x10, 0x8f, 0x94, 0x27, 0x19,
+	0x29, 0xcf, 0x62, 0x58, 0x4a, 0xd3, 0x86, 0x85, 0x7d, 0x0a, 0xcd, 0x07, 0x5e, 0x1c, 0x87, 0xfe,
+	0xbe, 0x9c, 0xa5, 0x87, 0x5d, 0x80, 0xb9, 0x48, 0x3a, 0x71, 0x18, 0xe0, 0xd3, 0x0d, 0x6e, 0x4e,
+	0xec, 0x8f, 0x12, 0xd0, 0x2d, 0x2f, 0x10, 0xc6, 0x97, 0x0f, 0x11, 0xee, 0x31, 0x65, 0x50, 0x8f,
+	0x95, 0x13, 0x29, 0xdb, 0x0b, 0x84, 0x3c, 0xc0, 0x57, 0x1a, 0xeb, 0xe4, 0x2d, 0x0e, 0x48, 0x6d,
+	0x27, 0x44, 0x7a, 0x1d, 0xea, 0x3d, 0xe7, 0xc0, 0x8e, 0x64, 0x3c, 0xf0, 0x55, 0xac, 0xf5, 0xae,
+	0x97, 0x6e, 0xde, 0xe5, 0xd0, 0x73, 0x0e, 0xb8, 0xa6, 0x52, 0x0a, 0x95, 0xc0, 0xe9, 0x69, 0x60,
+	0xcd, 0x73, 0xfc, 0x4d, 0x2d, 0xa8, 0xf6, 0xa3, 0x70, 0x2f, 0x72, 0x7a, 0x08, 0x8f, 0x2a, 0x4f,
+	0x8f, 0x89, 0x95, 0x18, 0x6e, 0xdd, 0xc0, 0xaa, 0xdc, 0x9c, 0xe8, 0x75, 0x68, 0xb8, 0x4e, 0xdf,
+	0x71, 0x3d, 0x75, 0x68, 0x77, 0x07, 0xbe, 0x8f, 0x00, 0x68, 0xf0, 0x85, 0x94, 0xb8, 0x35, 0xf0,
+	0x7d, 0xfa, 0x09, 0x2c, 0x0e, 0xa7, 0x4b, 0xd7, 0xf3, 0x95, 0x8c, 0xac, 0x2a, 0xd6, 0xff, 0x1b,
+	0x23, 0xe1, 0x29, 0x0e, 0xa1, 0x8d, 0xf4, 0xb4, 0x85, 0x32, 0xbc, 0xe9, 0x14, 0x09, 0xf4, 0x1a,
+	0xa4, 0x08, 0xb7, 0xd5, 0x61, 0x5f, 0x5a, 0x35, 0xf4, 0xa5, 0x6e, 0x68, 0x1f, 0x1d, 0xf6, 0x25,
+	0xfb, 0x8e, 0x14, 0xc2, 0xf8, 0xa2, 0xca, 0x7c, 0x13, 0xaa, 0xa1, 0xce, 0x88, 0x99, 0x38, 0xaf,
+	0x1d, 0x83, 0xd8, 0xa3, 0x29, 0xe4, 0xa9, 0x24, 0x13, 0xb0, 0x54, 0x30, 0xcd, 0xa0, 0x75, 0x1b,
+	0xaa, 0x46, 0xda, 0x22, 0xd8, 0xd3, 0x4e, 0xd4, 0x25, 0x53, 0x1d, 0x6c, 0x19, 0x96, 0xde, 0x93,
+	0x2a, 0x6d, 0xc5, 0xc2, 0x44, 0x80, 0x3d, 0x82, 0xf3, 0x45, 0xb2, 0x79, 0xbd, 0x58, 0x0e, 0x64,
+	0xea, 0x72, 0xf8, 0x9b, 0xc0, 0x72, 0x4e, 0x61, 0xd0, 0x0d, 0x67, 0xa9, 0x8a, 0xd1, 0xa2, 0x2c,
+	0x4d, 0xd9, 0xab, 0x5e, 0x85, 0x7a, 0x57, 0x2a, 0xf7, 0x49, 0xae, 0x6b, 0xd6, 0xd6, 0xcf, 0x74,
+	0x1d, 0x3f, 0x96, 0x1c, 0xf0, 0x46, 0xf7, 0xc2, 0xd7, 0xa1, 0xa1, 0xf9, 0x74, 0xf3, 0x89, 0x11,
+	0xef, 0x19, 0xe7, 0x02, 0xde, 0xe9, 0xd6, 0x12, 0x33, 0x1b, 0x2e, 0x8c, 0x3a, 0x66, 0x62, 0xf5,
+	0x70, 0x88, 0x3f, 0x2f, 0xe8, 0x86, 0xc6, 0xbb, 0xe3, 0x9a, 0x57, 0x5e, 0x43, 0x8a, 0xd1, 0xe4,
+	0xc0, 0xfe, 0x29, 0x01, 0x7d, 0x3f, 0xf4, 0x82, 0x97, 0x73, 0x14, 0x15, 0x53, 0x51, 0x9e, 0x3a,
+	0x15, 0x13, 0x77, 0xa2, 0x4d, 0x38, 0xd7, 0x8d, 0x3c, 0x19, 0x08, 0xdb, 0x71, 0xdd, 0x70, 0x10,
+	0x98, 0xd9, 0x52, 0x9e, 0xa4, 0xbb, 0xa9, 0x25, 0x36, 0xb4, 0x40, 0x5b, 0xd0, 0x55, 0xd0, 0x33,
+	0xc0, 0xce, 0xf6, 0xa8, 0x08, 0xfb, 0x4f, 0xba, 0x5f, 0x35, 0xf1, 0x76, 0x27, 0xbb, 0x64, 0xbf,
+	0x13, 0x58, 0x2a, 0x04, 0x7a, 0xfc, 0x7c, 0x28, 0x4e, 0xb8, 0x0d, 0xb8, 0x14, 0xc9, 0xa7, 0x03,
+	0x2f, 0x92, 0xb6, 0x31, 0x79, 0xdf, 0xf1, 0x3d, 0x81, 0x3b, 0x1a, 0xc6, 0x34, 0x83, 0xcd, 0x45,
+	0xc3, 0xb7, 0x85, 0x6c, 0x1f, 0x67, 0x5c, 0x74, 0x0b, 0x68, 0x3f, 0xf2, 0xf6, 0x3d, 0x5f, 0xee,
+	0xc9, 0xcc, 0x63, 0xab, 0x3c, 0xd9, 0xdd, 0x73, 0x43, 0x11, 0xe3, 0x32, 0x6b, 0xc3, 0x62, 0x62,
+	0x7e, 0x61, 0x4b, 0x1c, 0x2e, 0x40, 0x7a, 0xa5, 0x9a, 0x72, 0x01, 0xfa, 0x9a, 0xc0, 0xb9, 0x0f,
+	0xa4, 0xb3, 0x2f, 0x0b, 0xca, 0x4e, 0x52, 0xaa, 0x77, 0x60, 0x3e, 0x5b, 0xc2, 0x9f, 0x55, 0xa9,
+	0xb5, 0x74, 0xfd, 0xce, 0x8d, 0xbd, 0x72, 0x61, 0xec, 0x7d, 0x0e, 0x73, 0xda, 0x52, 0x7a, 0x1b,
+	0x6a, 0x39, 0xe0, 0x4f, 0xdc, 0xea, 0x33, 0x46, 0xba, 0x06, 0x67, 0x52, 0xb0, 0x4f, 0xbb, 0xc8,
+	0x6b, 0x81, 0x64, 0x03, 0xaf, 0x6f, 0x17, 0x60, 0x3f, 0x9f, 0x8d, 0x1b, 0xd3, 0x87, 0xad, 0x11,
+	0x6d, 0xd9, 0x7c, 0xe2, 0x43, 0x56, 0x7a, 0x01, 0x2a, 0x51, 0xe8, 0x4b, 0x5c, 0x47, 0x1b, 0xef,
+	0x96, 0x16, 0x09, 0xc7, 0x33, 0xbd, 0x06, 0x90, 0x25, 0x34, 0x46, 0xa7, 0x2b, 0x38, 0xb7, 0x87,
+	0x44, 0xda, 0x82, 0x0a, 0xb6, 0x11, 0xbd, 0x9a, 0x5d, 0x1e, 0x7d, 0xcd, 0xe0, 0x3e, 0x69, 0x1f,
+	0xc8, 0x47, 0xaf, 0xc0, 0xdc, 0x13, 0x4f, 0x08, 0x19, 0x98, 0xaf, 0x0a, 0x03, 0x43, 0x43, 0x64,
+	0xbb, 0x50, 0xdd, 0x96, 0x71, 0xec, 0xec, 0x9d, 0xdc, 0x19, 0x9a, 0x39, 0x93, 0xe4, 0x08, 0x7f,
+	0xb3, 0x6f, 0x09, 0x2c, 0x71, 0xd9, 0x0b, 0xf7, 0xe5, 0xec, 0x1f, 0x70, 0x2f, 0x16, 0x3b, 0xdf,
+	0x10, 0xa0, 0xda, 0xb2, 0x97, 0x0c, 0xd4, 0xbf, 0x12, 0xb8, 0xb8, 0x23, 0x03, 0x61, 0xd2, 0x31,
+	0xb3, 0x75, 0x6b, 0x50, 0xed, 0x69, 0x55, 0xc6, 0xb6, 0xab, 0xc7, 0xe2, 0x1c, 0xb9, 0x78, 0xca,
+	0x4e, 0x6f, 0xc1, 0x92, 0x69, 0x52, 0xc2, 0x1e, 0x07, 0x47, 0x9a, 0xde, 0x3e, 0xce, 0x2e, 0xd9,
+	0xcf, 0x04, 0x68, 0xce, 0xfa, 0x59, 0xf2, 0x7d, 0xba, 0x86, 0x7f, 0x45, 0xa0, 0xb9, 0x23, 0x15,
+	0x0f, 0x7d, 0x19, 0xcf, 0xb6, 0xa2, 0x8f, 0x2f, 0xe9, 0x02, 0x48, 0x9e, 0xd1, 0xcd, 0x33, 0x90,
+	0xb0, 0x1f, 0x13, 0x30, 0xa4, 0x33, 0x69, 0x64, 0xe4, 0x9f, 0xe6, 0xaa, 0x54, 0x18, 0x7a, 0xe5,
+	0xe2, 0x7c, 0x66, 0xf7, 0xc0, 0x3a, 0x6a, 0xe3, 0x14, 0xd3, 0x92, 0x7d, 0x41, 0xc0, 0xda, 0x0d,
+	0xb2, 0x81, 0xfc, 0x1f, 0xb5, 0x08, 0xf6, 0x13, 0x81, 0xab, 0xbb, 0x7d, 0x31, 0xfc, 0x16, 0xc4,
+	0xa6, 0x3e, 0x73, 0xe1, 0x3d, 0x86, 0x05, 0x9c, 0x16, 0x76, 0x12, 0xc6, 0x0c, 0xc4, 0xcf, 0xf9,
+	0x55, 0x5e, 0x47, 0x15, 0x9b, 0xa8, 0x81, 0xfd, 0x40, 0xe0, 0xd2, 0x51, 0x43, 0x67, 0x09, 0xd8,
+	0x8b, 0xb7, 0xf1, 0x37, 0x02, 0x57, 0xb4, 0x8d, 0xb9, 0x01, 0x39, 0x73, 0x2c, 0xef, 0x1f, 0xb1,
+	0x73, 0x8a, 0xff, 0xdf, 0xe4, 0xed, 0xa2, 0xaf, 0xc0, 0x42, 0x84, 0xed, 0x5e, 0xd8, 0x58, 0x9f,
+	0xe5, 0xac, 0x3e, 0xeb, 0x86, 0x9e, 0x94, 0x3e, 0xfb, 0x25, 0x81, 0xe4, 0xa8, 0xf9, 0xb3, 0xfd,
+	0xdb, 0xf1, 0x74, 0x2c, 0xff, 0x37, 0x00, 0x00, 0xff, 0xff, 0x25, 0xe3, 0x70, 0x3b, 0xed, 0x15,
+	0x00, 0x00,
 }

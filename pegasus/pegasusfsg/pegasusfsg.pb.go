@@ -27,7 +27,7 @@ package pegasus_pegasusfsg
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import pegasus_pegasusshared "pegasus/pegasusshared"
+import pegasus_pegasusshared "github.com/HearthSim/hs-proto-go/pegasus/pegasusshared"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -44,24 +44,34 @@ const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 type CheckInToFSG_PacketID int32
 
 const (
-	CheckInToFSG_PACKETID_AUTO_INVALID CheckInToFSG_PacketID = 0
-	CheckInToFSG_system                CheckInToFSG_PacketID = 3
-	CheckInToFSG_ID                    CheckInToFSG_PacketID = 502
+	CheckInToFSG_system CheckInToFSG_PacketID = 3
+	CheckInToFSG_ID     CheckInToFSG_PacketID = 502
 )
 
 var CheckInToFSG_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	3:   "system",
 	502: "ID",
 }
 var CheckInToFSG_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
-	"system":                3,
-	"ID":                    502,
+	"system": 3,
+	"ID":     502,
 }
 
+func (x CheckInToFSG_PacketID) Enum() *CheckInToFSG_PacketID {
+	p := new(CheckInToFSG_PacketID)
+	*p = x
+	return p
+}
 func (x CheckInToFSG_PacketID) String() string {
 	return proto.EnumName(CheckInToFSG_PacketID_name, int32(x))
+}
+func (x *CheckInToFSG_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(CheckInToFSG_PacketID_value, data, "CheckInToFSG_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = CheckInToFSG_PacketID(value)
+	return nil
 }
 func (CheckInToFSG_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{0, 0} }
 
@@ -69,21 +79,31 @@ func (CheckInToFSG_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescr
 type CheckInToFSGResponse_PacketID int32
 
 const (
-	CheckInToFSGResponse_PACKETID_AUTO_INVALID CheckInToFSGResponse_PacketID = 0
-	CheckInToFSGResponse_ID                    CheckInToFSGResponse_PacketID = 505
+	CheckInToFSGResponse_ID CheckInToFSGResponse_PacketID = 505
 )
 
 var CheckInToFSGResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	505: "ID",
 }
 var CheckInToFSGResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 505,
 }
 
+func (x CheckInToFSGResponse_PacketID) Enum() *CheckInToFSGResponse_PacketID {
+	p := new(CheckInToFSGResponse_PacketID)
+	*p = x
+	return p
+}
 func (x CheckInToFSGResponse_PacketID) String() string {
 	return proto.EnumName(CheckInToFSGResponse_PacketID_name, int32(x))
+}
+func (x *CheckInToFSGResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(CheckInToFSGResponse_PacketID_value, data, "CheckInToFSGResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = CheckInToFSGResponse_PacketID(value)
+	return nil
 }
 func (CheckInToFSGResponse_PacketID) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{1, 0}
@@ -93,24 +113,34 @@ func (CheckInToFSGResponse_PacketID) EnumDescriptor() ([]byte, []int) {
 type CheckOutOfFSG_PacketID int32
 
 const (
-	CheckOutOfFSG_PACKETID_AUTO_INVALID CheckOutOfFSG_PacketID = 0
-	CheckOutOfFSG_system                CheckOutOfFSG_PacketID = 3
-	CheckOutOfFSG_ID                    CheckOutOfFSG_PacketID = 503
+	CheckOutOfFSG_system CheckOutOfFSG_PacketID = 3
+	CheckOutOfFSG_ID     CheckOutOfFSG_PacketID = 503
 )
 
 var CheckOutOfFSG_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	3:   "system",
 	503: "ID",
 }
 var CheckOutOfFSG_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
-	"system":                3,
-	"ID":                    503,
+	"system": 3,
+	"ID":     503,
 }
 
+func (x CheckOutOfFSG_PacketID) Enum() *CheckOutOfFSG_PacketID {
+	p := new(CheckOutOfFSG_PacketID)
+	*p = x
+	return p
+}
 func (x CheckOutOfFSG_PacketID) String() string {
 	return proto.EnumName(CheckOutOfFSG_PacketID_name, int32(x))
+}
+func (x *CheckOutOfFSG_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(CheckOutOfFSG_PacketID_value, data, "CheckOutOfFSG_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = CheckOutOfFSG_PacketID(value)
+	return nil
 }
 func (CheckOutOfFSG_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{2, 0} }
 
@@ -118,21 +148,31 @@ func (CheckOutOfFSG_PacketID) EnumDescriptor() ([]byte, []int) { return fileDesc
 type CheckOutOfFSGResponse_PacketID int32
 
 const (
-	CheckOutOfFSGResponse_PACKETID_AUTO_INVALID CheckOutOfFSGResponse_PacketID = 0
-	CheckOutOfFSGResponse_ID                    CheckOutOfFSGResponse_PacketID = 506
+	CheckOutOfFSGResponse_ID CheckOutOfFSGResponse_PacketID = 506
 )
 
 var CheckOutOfFSGResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	506: "ID",
 }
 var CheckOutOfFSGResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 506,
 }
 
+func (x CheckOutOfFSGResponse_PacketID) Enum() *CheckOutOfFSGResponse_PacketID {
+	p := new(CheckOutOfFSGResponse_PacketID)
+	*p = x
+	return p
+}
 func (x CheckOutOfFSGResponse_PacketID) String() string {
 	return proto.EnumName(CheckOutOfFSGResponse_PacketID_name, int32(x))
+}
+func (x *CheckOutOfFSGResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(CheckOutOfFSGResponse_PacketID_value, data, "CheckOutOfFSGResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = CheckOutOfFSGResponse_PacketID(value)
+	return nil
 }
 func (CheckOutOfFSGResponse_PacketID) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{3, 0}
@@ -142,21 +182,31 @@ func (CheckOutOfFSGResponse_PacketID) EnumDescriptor() ([]byte, []int) {
 type FSGFeatureConfig_PacketID int32
 
 const (
-	FSGFeatureConfig_PACKETID_AUTO_INVALID FSGFeatureConfig_PacketID = 0
-	FSGFeatureConfig_ID                    FSGFeatureConfig_PacketID = 511
+	FSGFeatureConfig_ID FSGFeatureConfig_PacketID = 511
 )
 
 var FSGFeatureConfig_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	511: "ID",
 }
 var FSGFeatureConfig_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 511,
 }
 
+func (x FSGFeatureConfig_PacketID) Enum() *FSGFeatureConfig_PacketID {
+	p := new(FSGFeatureConfig_PacketID)
+	*p = x
+	return p
+}
 func (x FSGFeatureConfig_PacketID) String() string {
 	return proto.EnumName(FSGFeatureConfig_PacketID_name, int32(x))
+}
+func (x *FSGFeatureConfig_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(FSGFeatureConfig_PacketID_value, data, "FSGFeatureConfig_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = FSGFeatureConfig_PacketID(value)
+	return nil
 }
 func (FSGFeatureConfig_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{4, 0} }
 
@@ -164,21 +214,31 @@ func (FSGFeatureConfig_PacketID) EnumDescriptor() ([]byte, []int) { return fileD
 type FSGPatronListUpdate_PacketID int32
 
 const (
-	FSGPatronListUpdate_PACKETID_AUTO_INVALID FSGPatronListUpdate_PacketID = 0
-	FSGPatronListUpdate_ID                    FSGPatronListUpdate_PacketID = 512
+	FSGPatronListUpdate_ID FSGPatronListUpdate_PacketID = 512
 )
 
 var FSGPatronListUpdate_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	512: "ID",
 }
 var FSGPatronListUpdate_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 512,
 }
 
+func (x FSGPatronListUpdate_PacketID) Enum() *FSGPatronListUpdate_PacketID {
+	p := new(FSGPatronListUpdate_PacketID)
+	*p = x
+	return p
+}
 func (x FSGPatronListUpdate_PacketID) String() string {
 	return proto.EnumName(FSGPatronListUpdate_PacketID_name, int32(x))
+}
+func (x *FSGPatronListUpdate_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(FSGPatronListUpdate_PacketID_value, data, "FSGPatronListUpdate_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = FSGPatronListUpdate_PacketID(value)
+	return nil
 }
 func (FSGPatronListUpdate_PacketID) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{5, 0}
@@ -188,24 +248,34 @@ func (FSGPatronListUpdate_PacketID) EnumDescriptor() ([]byte, []int) {
 type InnkeeperSetupGathering_PacketID int32
 
 const (
-	InnkeeperSetupGathering_PACKETID_AUTO_INVALID InnkeeperSetupGathering_PacketID = 0
-	InnkeeperSetupGathering_system                InnkeeperSetupGathering_PacketID = 3
-	InnkeeperSetupGathering_ID                    InnkeeperSetupGathering_PacketID = 507
+	InnkeeperSetupGathering_system InnkeeperSetupGathering_PacketID = 3
+	InnkeeperSetupGathering_ID     InnkeeperSetupGathering_PacketID = 507
 )
 
 var InnkeeperSetupGathering_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	3:   "system",
 	507: "ID",
 }
 var InnkeeperSetupGathering_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
-	"system":                3,
-	"ID":                    507,
+	"system": 3,
+	"ID":     507,
 }
 
+func (x InnkeeperSetupGathering_PacketID) Enum() *InnkeeperSetupGathering_PacketID {
+	p := new(InnkeeperSetupGathering_PacketID)
+	*p = x
+	return p
+}
 func (x InnkeeperSetupGathering_PacketID) String() string {
 	return proto.EnumName(InnkeeperSetupGathering_PacketID_name, int32(x))
+}
+func (x *InnkeeperSetupGathering_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(InnkeeperSetupGathering_PacketID_value, data, "InnkeeperSetupGathering_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = InnkeeperSetupGathering_PacketID(value)
+	return nil
 }
 func (InnkeeperSetupGathering_PacketID) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{6, 0}
@@ -215,21 +285,31 @@ func (InnkeeperSetupGathering_PacketID) EnumDescriptor() ([]byte, []int) {
 type InnkeeperSetupGatheringResponse_PacketID int32
 
 const (
-	InnkeeperSetupGatheringResponse_PACKETID_AUTO_INVALID InnkeeperSetupGatheringResponse_PacketID = 0
-	InnkeeperSetupGatheringResponse_ID                    InnkeeperSetupGatheringResponse_PacketID = 508
+	InnkeeperSetupGatheringResponse_ID InnkeeperSetupGatheringResponse_PacketID = 508
 )
 
 var InnkeeperSetupGatheringResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	508: "ID",
 }
 var InnkeeperSetupGatheringResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 508,
 }
 
+func (x InnkeeperSetupGatheringResponse_PacketID) Enum() *InnkeeperSetupGatheringResponse_PacketID {
+	p := new(InnkeeperSetupGatheringResponse_PacketID)
+	*p = x
+	return p
+}
 func (x InnkeeperSetupGatheringResponse_PacketID) String() string {
 	return proto.EnumName(InnkeeperSetupGatheringResponse_PacketID_name, int32(x))
+}
+func (x *InnkeeperSetupGatheringResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(InnkeeperSetupGatheringResponse_PacketID_value, data, "InnkeeperSetupGatheringResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = InnkeeperSetupGatheringResponse_PacketID(value)
+	return nil
 }
 func (InnkeeperSetupGatheringResponse_PacketID) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{7, 0}
@@ -239,24 +319,34 @@ func (InnkeeperSetupGatheringResponse_PacketID) EnumDescriptor() ([]byte, []int)
 type PatronCheckedInToFSG_PacketID int32
 
 const (
-	PatronCheckedInToFSG_PACKETID_AUTO_INVALID PatronCheckedInToFSG_PacketID = 0
-	PatronCheckedInToFSG_system                PatronCheckedInToFSG_PacketID = 3
-	PatronCheckedInToFSG_ID                    PatronCheckedInToFSG_PacketID = 509
+	PatronCheckedInToFSG_system PatronCheckedInToFSG_PacketID = 3
+	PatronCheckedInToFSG_ID     PatronCheckedInToFSG_PacketID = 509
 )
 
 var PatronCheckedInToFSG_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	3:   "system",
 	509: "ID",
 }
 var PatronCheckedInToFSG_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
-	"system":                3,
-	"ID":                    509,
+	"system": 3,
+	"ID":     509,
 }
 
+func (x PatronCheckedInToFSG_PacketID) Enum() *PatronCheckedInToFSG_PacketID {
+	p := new(PatronCheckedInToFSG_PacketID)
+	*p = x
+	return p
+}
 func (x PatronCheckedInToFSG_PacketID) String() string {
 	return proto.EnumName(PatronCheckedInToFSG_PacketID_name, int32(x))
+}
+func (x *PatronCheckedInToFSG_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(PatronCheckedInToFSG_PacketID_value, data, "PatronCheckedInToFSG_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = PatronCheckedInToFSG_PacketID(value)
+	return nil
 }
 func (PatronCheckedInToFSG_PacketID) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{8, 0}
@@ -266,24 +356,34 @@ func (PatronCheckedInToFSG_PacketID) EnumDescriptor() ([]byte, []int) {
 type PatronCheckedOutOfFSG_PacketID int32
 
 const (
-	PatronCheckedOutOfFSG_PACKETID_AUTO_INVALID PatronCheckedOutOfFSG_PacketID = 0
-	PatronCheckedOutOfFSG_system                PatronCheckedOutOfFSG_PacketID = 3
-	PatronCheckedOutOfFSG_ID                    PatronCheckedOutOfFSG_PacketID = 510
+	PatronCheckedOutOfFSG_system PatronCheckedOutOfFSG_PacketID = 3
+	PatronCheckedOutOfFSG_ID     PatronCheckedOutOfFSG_PacketID = 510
 )
 
 var PatronCheckedOutOfFSG_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	3:   "system",
 	510: "ID",
 }
 var PatronCheckedOutOfFSG_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
-	"system":                3,
-	"ID":                    510,
+	"system": 3,
+	"ID":     510,
 }
 
+func (x PatronCheckedOutOfFSG_PacketID) Enum() *PatronCheckedOutOfFSG_PacketID {
+	p := new(PatronCheckedOutOfFSG_PacketID)
+	*p = x
+	return p
+}
 func (x PatronCheckedOutOfFSG_PacketID) String() string {
 	return proto.EnumName(PatronCheckedOutOfFSG_PacketID_name, int32(x))
+}
+func (x *PatronCheckedOutOfFSG_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(PatronCheckedOutOfFSG_PacketID_value, data, "PatronCheckedOutOfFSG_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = PatronCheckedOutOfFSG_PacketID(value)
+	return nil
 }
 func (PatronCheckedOutOfFSG_PacketID) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{9, 0}
@@ -293,24 +393,34 @@ func (PatronCheckedOutOfFSG_PacketID) EnumDescriptor() ([]byte, []int) {
 type RequestNearbyFSGs_PacketID int32
 
 const (
-	RequestNearbyFSGs_PACKETID_AUTO_INVALID RequestNearbyFSGs_PacketID = 0
-	RequestNearbyFSGs_system                RequestNearbyFSGs_PacketID = 3
-	RequestNearbyFSGs_ID                    RequestNearbyFSGs_PacketID = 501
+	RequestNearbyFSGs_system RequestNearbyFSGs_PacketID = 3
+	RequestNearbyFSGs_ID     RequestNearbyFSGs_PacketID = 501
 )
 
 var RequestNearbyFSGs_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	3:   "system",
 	501: "ID",
 }
 var RequestNearbyFSGs_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
-	"system":                3,
-	"ID":                    501,
+	"system": 3,
+	"ID":     501,
 }
 
+func (x RequestNearbyFSGs_PacketID) Enum() *RequestNearbyFSGs_PacketID {
+	p := new(RequestNearbyFSGs_PacketID)
+	*p = x
+	return p
+}
 func (x RequestNearbyFSGs_PacketID) String() string {
 	return proto.EnumName(RequestNearbyFSGs_PacketID_name, int32(x))
+}
+func (x *RequestNearbyFSGs_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(RequestNearbyFSGs_PacketID_value, data, "RequestNearbyFSGs_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = RequestNearbyFSGs_PacketID(value)
+	return nil
 }
 func (RequestNearbyFSGs_PacketID) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{10, 0}
@@ -320,21 +430,31 @@ func (RequestNearbyFSGs_PacketID) EnumDescriptor() ([]byte, []int) {
 type RequestNearbyFSGsResponse_PacketID int32
 
 const (
-	RequestNearbyFSGsResponse_PACKETID_AUTO_INVALID RequestNearbyFSGsResponse_PacketID = 0
-	RequestNearbyFSGsResponse_ID                    RequestNearbyFSGsResponse_PacketID = 504
+	RequestNearbyFSGsResponse_ID RequestNearbyFSGsResponse_PacketID = 504
 )
 
 var RequestNearbyFSGsResponse_PacketID_name = map[int32]string{
-	0:   "PACKETID_AUTO_INVALID",
 	504: "ID",
 }
 var RequestNearbyFSGsResponse_PacketID_value = map[string]int32{
-	"PACKETID_AUTO_INVALID": 0,
 	"ID": 504,
 }
 
+func (x RequestNearbyFSGsResponse_PacketID) Enum() *RequestNearbyFSGsResponse_PacketID {
+	p := new(RequestNearbyFSGsResponse_PacketID)
+	*p = x
+	return p
+}
 func (x RequestNearbyFSGsResponse_PacketID) String() string {
 	return proto.EnumName(RequestNearbyFSGsResponse_PacketID_name, int32(x))
+}
+func (x *RequestNearbyFSGsResponse_PacketID) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(RequestNearbyFSGsResponse_PacketID_value, data, "RequestNearbyFSGsResponse_PacketID")
+	if err != nil {
+		return err
+	}
+	*x = RequestNearbyFSGsResponse_PacketID(value)
+	return nil
 }
 func (RequestNearbyFSGsResponse_PacketID) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{11, 0}
@@ -342,7 +462,10 @@ func (RequestNearbyFSGsResponse_PacketID) EnumDescriptor() ([]byte, []int) {
 
 // ref: PegasusFSG.CheckInToFSG
 type CheckInToFSG struct {
-	FsgId int64 `protobuf:"varint,1,opt,name=fsg_id,json=fsgId" json:"fsg_id,omitempty"`
+	FsgId            *int64                           `protobuf:"varint,1,req,name=fsg_id,json=fsgId" json:"fsg_id,omitempty"`
+	Location         *pegasus_pegasusshared.GPSCoords `protobuf:"bytes,2,opt,name=location" json:"location,omitempty"`
+	Bssids           []string                         `protobuf:"bytes,3,rep,name=bssids" json:"bssids,omitempty"`
+	XXX_unrecognized []byte                           `json:"-"`
 }
 
 func (m *CheckInToFSG) Reset()                    { *m = CheckInToFSG{} }
@@ -351,18 +474,34 @@ func (*CheckInToFSG) ProtoMessage()               {}
 func (*CheckInToFSG) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
 func (m *CheckInToFSG) GetFsgId() int64 {
-	if m != nil {
-		return m.FsgId
+	if m != nil && m.FsgId != nil {
+		return *m.FsgId
 	}
 	return 0
 }
 
+func (m *CheckInToFSG) GetLocation() *pegasus_pegasusshared.GPSCoords {
+	if m != nil {
+		return m.Location
+	}
+	return nil
+}
+
+func (m *CheckInToFSG) GetBssids() []string {
+	if m != nil {
+		return m.Bssids
+	}
+	return nil
+}
+
 // ref: PegasusFSG.CheckInToFSGResponse
 type CheckInToFSGResponse struct {
-	ErrorCode    pegasus_pegasusshared.ErrorCode                `protobuf:"varint,1,opt,name=error_code,json=errorCode,enum=pegasus.pegasusshared.ErrorCode" json:"error_code,omitempty"`
-	FsgId        int64                                          `protobuf:"varint,2,opt,name=fsg_id,json=fsgId" json:"fsg_id,omitempty"`
-	FsgAttendees []*pegasus_pegasusshared.FSGPatron             `protobuf:"bytes,3,rep,name=fsg_attendees,json=fsgAttendees" json:"fsg_attendees,omitempty"`
-	PlayerRecord *pegasus_pegasusshared.TavernBrawlPlayerRecord `protobuf:"bytes,4,opt,name=player_record,json=playerRecord" json:"player_record,omitempty"`
+	ErrorCode          *pegasus_pegasusshared.ErrorCode               `protobuf:"varint,1,req,name=error_code,json=errorCode,enum=pegasus.pegasusshared.ErrorCode" json:"error_code,omitempty"`
+	FsgId              *int64                                         `protobuf:"varint,2,req,name=fsg_id,json=fsgId" json:"fsg_id,omitempty"`
+	FsgAttendees       []*pegasus_pegasusshared.FSGPatron             `protobuf:"bytes,3,rep,name=fsg_attendees,json=fsgAttendees" json:"fsg_attendees,omitempty"`
+	PlayerRecord       *pegasus_pegasusshared.TavernBrawlPlayerRecord `protobuf:"bytes,4,opt,name=player_record,json=playerRecord" json:"player_record,omitempty"`
+	FsgSharedSecretKey []byte                                         `protobuf:"bytes,5,opt,name=fsg_shared_secret_key,json=fsgSharedSecretKey" json:"fsg_shared_secret_key,omitempty"`
+	XXX_unrecognized   []byte                                         `json:"-"`
 }
 
 func (m *CheckInToFSGResponse) Reset()                    { *m = CheckInToFSGResponse{} }
@@ -371,15 +510,15 @@ func (*CheckInToFSGResponse) ProtoMessage()               {}
 func (*CheckInToFSGResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
 func (m *CheckInToFSGResponse) GetErrorCode() pegasus_pegasusshared.ErrorCode {
-	if m != nil {
-		return m.ErrorCode
+	if m != nil && m.ErrorCode != nil {
+		return *m.ErrorCode
 	}
 	return pegasus_pegasusshared.ErrorCode_ERROR_OK
 }
 
 func (m *CheckInToFSGResponse) GetFsgId() int64 {
-	if m != nil {
-		return m.FsgId
+	if m != nil && m.FsgId != nil {
+		return *m.FsgId
 	}
 	return 0
 }
@@ -398,9 +537,17 @@ func (m *CheckInToFSGResponse) GetPlayerRecord() *pegasus_pegasusshared.TavernBr
 	return nil
 }
 
+func (m *CheckInToFSGResponse) GetFsgSharedSecretKey() []byte {
+	if m != nil {
+		return m.FsgSharedSecretKey
+	}
+	return nil
+}
+
 // ref: PegasusFSG.CheckOutOfFSG
 type CheckOutOfFSG struct {
-	FsgId int64 `protobuf:"varint,1,opt,name=fsg_id,json=fsgId" json:"fsg_id,omitempty"`
+	FsgId            *int64 `protobuf:"varint,1,req,name=fsg_id,json=fsgId" json:"fsg_id,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *CheckOutOfFSG) Reset()                    { *m = CheckOutOfFSG{} }
@@ -409,16 +556,17 @@ func (*CheckOutOfFSG) ProtoMessage()               {}
 func (*CheckOutOfFSG) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
 
 func (m *CheckOutOfFSG) GetFsgId() int64 {
-	if m != nil {
-		return m.FsgId
+	if m != nil && m.FsgId != nil {
+		return *m.FsgId
 	}
 	return 0
 }
 
 // ref: PegasusFSG.CheckOutOfFSGResponse
 type CheckOutOfFSGResponse struct {
-	ErrorCode pegasus_pegasusshared.ErrorCode `protobuf:"varint,1,opt,name=error_code,json=errorCode,enum=pegasus.pegasusshared.ErrorCode" json:"error_code,omitempty"`
-	FsgId     int64                           `protobuf:"varint,2,opt,name=fsg_id,json=fsgId" json:"fsg_id,omitempty"`
+	ErrorCode        *pegasus_pegasusshared.ErrorCode `protobuf:"varint,1,req,name=error_code,json=errorCode,enum=pegasus.pegasusshared.ErrorCode" json:"error_code,omitempty"`
+	FsgId            *int64                           `protobuf:"varint,2,req,name=fsg_id,json=fsgId" json:"fsg_id,omitempty"`
+	XXX_unrecognized []byte                           `json:"-"`
 }
 
 func (m *CheckOutOfFSGResponse) Reset()                    { *m = CheckOutOfFSGResponse{} }
@@ -427,24 +575,26 @@ func (*CheckOutOfFSGResponse) ProtoMessage()               {}
 func (*CheckOutOfFSGResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
 
 func (m *CheckOutOfFSGResponse) GetErrorCode() pegasus_pegasusshared.ErrorCode {
-	if m != nil {
-		return m.ErrorCode
+	if m != nil && m.ErrorCode != nil {
+		return *m.ErrorCode
 	}
 	return pegasus_pegasusshared.ErrorCode_ERROR_OK
 }
 
 func (m *CheckOutOfFSGResponse) GetFsgId() int64 {
-	if m != nil {
-		return m.FsgId
+	if m != nil && m.FsgId != nil {
+		return *m.FsgId
 	}
 	return 0
 }
 
 // ref: PegasusFSG.FSGFeatureConfig
 type FSGFeatureConfig struct {
-	Gps         bool `protobuf:"varint,1,opt,name=gps" json:"gps,omitempty"`
-	Wifi        bool `protobuf:"varint,2,opt,name=wifi" json:"wifi,omitempty"`
-	AutoCheckin bool `protobuf:"varint,3,opt,name=auto_checkin,json=autoCheckin" json:"auto_checkin,omitempty"`
+	Gps              *bool  `protobuf:"varint,1,opt,name=gps,def=1" json:"gps,omitempty"`
+	Wifi             *bool  `protobuf:"varint,2,opt,name=wifi,def=1" json:"wifi,omitempty"`
+	AutoCheckin      *bool  `protobuf:"varint,3,opt,name=auto_checkin,json=autoCheckin,def=1" json:"auto_checkin,omitempty"`
+	MaxAccuracy      *int64 `protobuf:"varint,4,opt,name=max_accuracy,json=maxAccuracy,def=200" json:"max_accuracy,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *FSGFeatureConfig) Reset()                    { *m = FSGFeatureConfig{} }
@@ -452,31 +602,44 @@ func (m *FSGFeatureConfig) String() string            { return proto.CompactText
 func (*FSGFeatureConfig) ProtoMessage()               {}
 func (*FSGFeatureConfig) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
 
+const Default_FSGFeatureConfig_Gps bool = true
+const Default_FSGFeatureConfig_Wifi bool = true
+const Default_FSGFeatureConfig_AutoCheckin bool = true
+const Default_FSGFeatureConfig_MaxAccuracy int64 = 200
+
 func (m *FSGFeatureConfig) GetGps() bool {
-	if m != nil {
-		return m.Gps
+	if m != nil && m.Gps != nil {
+		return *m.Gps
 	}
-	return false
+	return Default_FSGFeatureConfig_Gps
 }
 
 func (m *FSGFeatureConfig) GetWifi() bool {
-	if m != nil {
-		return m.Wifi
+	if m != nil && m.Wifi != nil {
+		return *m.Wifi
 	}
-	return false
+	return Default_FSGFeatureConfig_Wifi
 }
 
 func (m *FSGFeatureConfig) GetAutoCheckin() bool {
-	if m != nil {
-		return m.AutoCheckin
+	if m != nil && m.AutoCheckin != nil {
+		return *m.AutoCheckin
 	}
-	return false
+	return Default_FSGFeatureConfig_AutoCheckin
+}
+
+func (m *FSGFeatureConfig) GetMaxAccuracy() int64 {
+	if m != nil && m.MaxAccuracy != nil {
+		return *m.MaxAccuracy
+	}
+	return Default_FSGFeatureConfig_MaxAccuracy
 }
 
 // ref: PegasusFSG.FSGPatronListUpdate
 type FSGPatronListUpdate struct {
-	AddedPatrons   []*pegasus_pegasusshared.FSGPatron `protobuf:"bytes,1,rep,name=added_patrons,json=addedPatrons" json:"added_patrons,omitempty"`
-	RemovedPatrons []*pegasus_pegasusshared.FSGPatron `protobuf:"bytes,2,rep,name=removed_patrons,json=removedPatrons" json:"removed_patrons,omitempty"`
+	AddedPatrons     []*pegasus_pegasusshared.FSGPatron `protobuf:"bytes,1,rep,name=added_patrons,json=addedPatrons" json:"added_patrons,omitempty"`
+	RemovedPatrons   []*pegasus_pegasusshared.FSGPatron `protobuf:"bytes,2,rep,name=removed_patrons,json=removedPatrons" json:"removed_patrons,omitempty"`
+	XXX_unrecognized []byte                             `json:"-"`
 }
 
 func (m *FSGPatronListUpdate) Reset()                    { *m = FSGPatronListUpdate{} }
@@ -500,9 +663,10 @@ func (m *FSGPatronListUpdate) GetRemovedPatrons() []*pegasus_pegasusshared.FSGPa
 
 // ref: PegasusFSG.InnkeeperSetupGathering
 type InnkeeperSetupGathering struct {
-	Location *pegasus_pegasusshared.GPSCoords `protobuf:"bytes,1,opt,name=location" json:"location,omitempty"`
-	Bssids   []string                         `protobuf:"bytes,2,rep,name=bssids" json:"bssids,omitempty"`
-	FsgId    int64                            `protobuf:"varint,3,opt,name=fsg_id,json=fsgId" json:"fsg_id,omitempty"`
+	Location         *pegasus_pegasusshared.GPSCoords `protobuf:"bytes,1,opt,name=location" json:"location,omitempty"`
+	Bssids           []string                         `protobuf:"bytes,2,rep,name=bssids" json:"bssids,omitempty"`
+	FsgId            *int64                           `protobuf:"varint,3,req,name=fsg_id,json=fsgId" json:"fsg_id,omitempty"`
+	XXX_unrecognized []byte                           `json:"-"`
 }
 
 func (m *InnkeeperSetupGathering) Reset()                    { *m = InnkeeperSetupGathering{} }
@@ -525,16 +689,17 @@ func (m *InnkeeperSetupGathering) GetBssids() []string {
 }
 
 func (m *InnkeeperSetupGathering) GetFsgId() int64 {
-	if m != nil {
-		return m.FsgId
+	if m != nil && m.FsgId != nil {
+		return *m.FsgId
 	}
 	return 0
 }
 
 // ref: PegasusFSG.InnkeeperSetupGatheringResponse
 type InnkeeperSetupGatheringResponse struct {
-	ErrorCode pegasus_pegasusshared.ErrorCode `protobuf:"varint,1,opt,name=error_code,json=errorCode,enum=pegasus.pegasusshared.ErrorCode" json:"error_code,omitempty"`
-	FsgId     int64                           `protobuf:"varint,2,opt,name=fsg_id,json=fsgId" json:"fsg_id,omitempty"`
+	ErrorCode        *pegasus_pegasusshared.ErrorCode `protobuf:"varint,1,req,name=error_code,json=errorCode,enum=pegasus.pegasusshared.ErrorCode" json:"error_code,omitempty"`
+	FsgId            *int64                           `protobuf:"varint,2,req,name=fsg_id,json=fsgId" json:"fsg_id,omitempty"`
+	XXX_unrecognized []byte                           `json:"-"`
 }
 
 func (m *InnkeeperSetupGatheringResponse) Reset()                    { *m = InnkeeperSetupGatheringResponse{} }
@@ -543,22 +708,23 @@ func (*InnkeeperSetupGatheringResponse) ProtoMessage()               {}
 func (*InnkeeperSetupGatheringResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{7} }
 
 func (m *InnkeeperSetupGatheringResponse) GetErrorCode() pegasus_pegasusshared.ErrorCode {
-	if m != nil {
-		return m.ErrorCode
+	if m != nil && m.ErrorCode != nil {
+		return *m.ErrorCode
 	}
 	return pegasus_pegasusshared.ErrorCode_ERROR_OK
 }
 
 func (m *InnkeeperSetupGatheringResponse) GetFsgId() int64 {
-	if m != nil {
-		return m.FsgId
+	if m != nil && m.FsgId != nil {
+		return *m.FsgId
 	}
 	return 0
 }
 
 // ref: PegasusFSG.PatronCheckedInToFSG
 type PatronCheckedInToFSG struct {
-	Patron *pegasus_pegasusshared.FSGPatron `protobuf:"bytes,1,opt,name=patron" json:"patron,omitempty"`
+	Patron           *pegasus_pegasusshared.FSGPatron `protobuf:"bytes,1,req,name=patron" json:"patron,omitempty"`
+	XXX_unrecognized []byte                           `json:"-"`
 }
 
 func (m *PatronCheckedInToFSG) Reset()                    { *m = PatronCheckedInToFSG{} }
@@ -575,7 +741,8 @@ func (m *PatronCheckedInToFSG) GetPatron() *pegasus_pegasusshared.FSGPatron {
 
 // ref: PegasusFSG.PatronCheckedOutOfFSG
 type PatronCheckedOutOfFSG struct {
-	Patron *pegasus_pegasusshared.FSGPatron `protobuf:"bytes,1,opt,name=patron" json:"patron,omitempty"`
+	Patron           *pegasus_pegasusshared.FSGPatron `protobuf:"bytes,1,req,name=patron" json:"patron,omitempty"`
+	XXX_unrecognized []byte                           `json:"-"`
 }
 
 func (m *PatronCheckedOutOfFSG) Reset()                    { *m = PatronCheckedOutOfFSG{} }
@@ -592,8 +759,9 @@ func (m *PatronCheckedOutOfFSG) GetPatron() *pegasus_pegasusshared.FSGPatron {
 
 // ref: PegasusFSG.RequestNearbyFSGs
 type RequestNearbyFSGs struct {
-	Location *pegasus_pegasusshared.GPSCoords `protobuf:"bytes,1,opt,name=location" json:"location,omitempty"`
-	Bssids   []string                         `protobuf:"bytes,2,rep,name=bssids" json:"bssids,omitempty"`
+	Location         *pegasus_pegasusshared.GPSCoords `protobuf:"bytes,1,opt,name=location" json:"location,omitempty"`
+	Bssids           []string                         `protobuf:"bytes,2,rep,name=bssids" json:"bssids,omitempty"`
+	XXX_unrecognized []byte                           `json:"-"`
 }
 
 func (m *RequestNearbyFSGs) Reset()                    { *m = RequestNearbyFSGs{} }
@@ -617,10 +785,12 @@ func (m *RequestNearbyFSGs) GetBssids() []string {
 
 // ref: PegasusFSG.RequestNearbyFSGsResponse
 type RequestNearbyFSGsResponse struct {
-	ErrorCode      pegasus_pegasusshared.ErrorCode    `protobuf:"varint,1,opt,name=error_code,json=errorCode,enum=pegasus.pegasusshared.ErrorCode" json:"error_code,omitempty"`
-	Fsgs           []*pegasus_pegasusshared.FSGConfig `protobuf:"bytes,2,rep,name=fsgs" json:"fsgs,omitempty"`
-	CheckedInFsgId int64                              `protobuf:"varint,3,opt,name=checked_in_fsg_id,json=checkedInFsgId" json:"checked_in_fsg_id,omitempty"`
-	FsgAttendees   []*pegasus_pegasusshared.FSGPatron `protobuf:"bytes,4,rep,name=fsg_attendees,json=fsgAttendees" json:"fsg_attendees,omitempty"`
+	ErrorCode          *pegasus_pegasusshared.ErrorCode   `protobuf:"varint,1,req,name=error_code,json=errorCode,enum=pegasus.pegasusshared.ErrorCode" json:"error_code,omitempty"`
+	Fsgs               []*pegasus_pegasusshared.FSGConfig `protobuf:"bytes,2,rep,name=fsgs" json:"fsgs,omitempty"`
+	CheckedInFsgId     *int64                             `protobuf:"varint,3,opt,name=checked_in_fsg_id,json=checkedInFsgId" json:"checked_in_fsg_id,omitempty"`
+	FsgAttendees       []*pegasus_pegasusshared.FSGPatron `protobuf:"bytes,4,rep,name=fsg_attendees,json=fsgAttendees" json:"fsg_attendees,omitempty"`
+	FsgSharedSecretKey []byte                             `protobuf:"bytes,5,opt,name=fsg_shared_secret_key,json=fsgSharedSecretKey" json:"fsg_shared_secret_key,omitempty"`
+	XXX_unrecognized   []byte                             `json:"-"`
 }
 
 func (m *RequestNearbyFSGsResponse) Reset()                    { *m = RequestNearbyFSGsResponse{} }
@@ -629,8 +799,8 @@ func (*RequestNearbyFSGsResponse) ProtoMessage()               {}
 func (*RequestNearbyFSGsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{11} }
 
 func (m *RequestNearbyFSGsResponse) GetErrorCode() pegasus_pegasusshared.ErrorCode {
-	if m != nil {
-		return m.ErrorCode
+	if m != nil && m.ErrorCode != nil {
+		return *m.ErrorCode
 	}
 	return pegasus_pegasusshared.ErrorCode_ERROR_OK
 }
@@ -643,8 +813,8 @@ func (m *RequestNearbyFSGsResponse) GetFsgs() []*pegasus_pegasusshared.FSGConfig
 }
 
 func (m *RequestNearbyFSGsResponse) GetCheckedInFsgId() int64 {
-	if m != nil {
-		return m.CheckedInFsgId
+	if m != nil && m.CheckedInFsgId != nil {
+		return *m.CheckedInFsgId
 	}
 	return 0
 }
@@ -652,6 +822,13 @@ func (m *RequestNearbyFSGsResponse) GetCheckedInFsgId() int64 {
 func (m *RequestNearbyFSGsResponse) GetFsgAttendees() []*pegasus_pegasusshared.FSGPatron {
 	if m != nil {
 		return m.FsgAttendees
+	}
+	return nil
+}
+
+func (m *RequestNearbyFSGsResponse) GetFsgSharedSecretKey() []byte {
+	if m != nil {
+		return m.FsgSharedSecretKey
 	}
 	return nil
 }
@@ -686,48 +863,51 @@ func init() {
 func init() { proto.RegisterFile("pegasus/pegasusfsg/pegasusfsg.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
-	// 686 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xcc, 0x56, 0x4f, 0x4f, 0xdb, 0x4a,
-	0x10, 0xc7, 0xd9, 0xbc, 0xbc, 0x30, 0x04, 0x5e, 0xd8, 0x47, 0xf4, 0x02, 0x97, 0x97, 0xba, 0x17,
-	0xb8, 0xa4, 0x12, 0xbd, 0xa0, 0xaa, 0x52, 0x15, 0x12, 0x12, 0x59, 0xa5, 0x10, 0x39, 0xa1, 0x57,
-	0x6b, 0x63, 0x8f, 0x8d, 0x05, 0x78, 0xdd, 0xdd, 0x0d, 0x88, 0x5b, 0xef, 0x6d, 0x3f, 0x43, 0xcf,
-	0xfd, 0x0e, 0x55, 0x8f, 0xfd, 0x1a, 0xfd, 0x14, 0xfd, 0xff, 0x57, 0x59, 0x27, 0x69, 0x42, 0x1b,
-	0x95, 0x20, 0x50, 0x7b, 0xca, 0x78, 0xd6, 0xbf, 0x99, 0xdf, 0xcc, 0xfc, 0x3c, 0x1b, 0xb8, 0x1e,
-	0x63, 0xc0, 0x64, 0x57, 0xde, 0xe8, 0xff, 0xfa, 0x32, 0x18, 0x31, 0xcb, 0xb1, 0xe0, 0x8a, 0x53,
-	0xda, 0xf7, 0x94, 0xbf, 0x9f, 0xac, 0xac, 0x9d, 0x01, 0xca, 0x7d, 0x26, 0xd0, 0x1b, 0x7f, 0x4a,
-	0xe0, 0x26, 0x83, 0x5c, 0x75, 0x1f, 0xdd, 0x03, 0x2b, 0x6a, 0xf3, 0x7a, 0xab, 0x41, 0x0b, 0x90,
-	0xf1, 0x65, 0xe0, 0x84, 0x5e, 0xd1, 0x28, 0x19, 0xab, 0xc4, 0xfe, 0xcb, 0x97, 0x81, 0xe5, 0x99,
-	0xb7, 0x20, 0xdb, 0x64, 0xee, 0x01, 0x2a, 0xab, 0x46, 0x97, 0xa1, 0xd0, 0xac, 0x54, 0xef, 0x6e,
-	0xb5, 0xad, 0x9a, 0x53, 0xd9, 0x6b, 0xef, 0x3a, 0xd6, 0xce, 0xfd, 0xca, 0xb6, 0x55, 0xcb, 0xcf,
-	0x50, 0x80, 0x8c, 0x3c, 0x95, 0x0a, 0x8f, 0xf2, 0x84, 0xfe, 0x0d, 0x29, 0xab, 0x96, 0x7f, 0x43,
-	0xcc, 0x17, 0x29, 0x58, 0x1a, 0xcd, 0x61, 0xa3, 0x8c, 0x79, 0x24, 0x91, 0xde, 0x01, 0x40, 0x21,
-	0xb8, 0x70, 0x5c, 0xee, 0xa1, 0xce, 0xb7, 0xb0, 0x5e, 0x2a, 0x9f, 0xa9, 0xa7, 0xcf, 0x76, 0xab,
-	0xf7, 0x62, 0x95, 0x7b, 0x68, 0xcf, 0xe2, 0xc0, 0x1c, 0x21, 0x9b, 0x1a, 0x21, 0x4b, 0x2d, 0x98,
-	0xef, 0xb9, 0x99, 0x52, 0x18, 0x79, 0x88, 0xb2, 0x48, 0x4a, 0x64, 0x75, 0x6e, 0x62, 0xe8, 0x7a,
-	0xab, 0xd1, 0x64, 0x4a, 0xf0, 0x68, 0x33, 0x95, 0x9f, 0xb1, 0x73, 0xbe, 0x0c, 0x2a, 0x03, 0x24,
-	0x6d, 0xc1, 0x7c, 0x7c, 0xc8, 0x4e, 0x51, 0x38, 0x02, 0x5d, 0x2e, 0xbc, 0x62, 0xba, 0x64, 0xac,
-	0xce, 0xad, 0x97, 0x27, 0x84, 0x6a, 0xb3, 0x63, 0x14, 0xd1, 0xa6, 0x60, 0x27, 0x87, 0x4d, 0x0d,
-	0xb3, 0x35, 0xca, 0xce, 0xc5, 0x23, 0x4f, 0x66, 0xf9, 0x7c, 0xcd, 0x4c, 0x1a, 0xf8, 0x9e, 0x98,
-	0x1d, 0x98, 0xd7, 0xfd, 0xdb, 0xed, 0xaa, 0x5d, 0xff, 0x2a, 0x86, 0xf4, 0x96, 0x98, 0x4f, 0x0d,
-	0x28, 0x8c, 0x25, 0xb9, 0xea, 0x29, 0x4d, 0xd7, 0x85, 0x0f, 0xc4, 0x7c, 0x64, 0x40, 0xbe, 0xde,
-	0x6a, 0xd4, 0x91, 0xa9, 0xae, 0xc0, 0x2a, 0x8f, 0xfc, 0x30, 0xa0, 0x79, 0x20, 0x41, 0x2c, 0x35,
-	0xab, 0xac, 0xdd, 0x33, 0x29, 0x85, 0xf4, 0x49, 0xe8, 0x87, 0x3a, 0x57, 0xd6, 0xd6, 0x36, 0xbd,
-	0x06, 0x39, 0xd6, 0x55, 0xdc, 0x71, 0x7b, 0x05, 0x86, 0x51, 0x91, 0xe8, 0xb3, 0xb9, 0x9e, 0xaf,
-	0x9a, 0xb8, 0xa6, 0x63, 0xf3, 0x95, 0x98, 0xaf, 0x0c, 0xf8, 0x77, 0x28, 0x9c, 0xed, 0x50, 0xaa,
-	0xbd, 0xd8, 0x63, 0x0a, 0x7b, 0xda, 0x63, 0x9e, 0x87, 0x9e, 0x13, 0xeb, 0x93, 0x1e, 0xb5, 0x29,
-	0xb4, 0xa7, 0xa1, 0x89, 0x43, 0xd2, 0x7b, 0xf0, 0x8f, 0xc0, 0x23, 0x7e, 0x3c, 0x12, 0x2c, 0x35,
-	0x45, 0xb0, 0x85, 0x3e, 0xb8, 0x1f, 0x6e, 0xba, 0x0a, 0x1f, 0xa6, 0xcd, 0x97, 0x06, 0xfc, 0x67,
-	0x45, 0xd1, 0x01, 0x62, 0x8c, 0xa2, 0x85, 0xaa, 0x1b, 0x37, 0x98, 0xda, 0x47, 0x11, 0x46, 0x01,
-	0xbd, 0x0d, 0xd9, 0x43, 0xee, 0x32, 0x15, 0xf2, 0x48, 0xf7, 0x7e, 0x32, 0xa7, 0x46, 0xb3, 0x55,
-	0xe5, 0x5c, 0x78, 0xd2, 0x1e, 0x22, 0xe8, 0x0a, 0x64, 0x3a, 0x52, 0x86, 0x5e, 0x52, 0xcf, 0xac,
-	0x66, 0xdb, 0xf7, 0x8c, 0x88, 0x85, 0x5c, 0x8a, 0xb4, 0x3f, 0x12, 0xf3, 0x99, 0x01, 0xff, 0x4f,
-	0x28, 0xe4, 0xcf, 0x12, 0xf9, 0x27, 0x62, 0x3e, 0x36, 0x60, 0x29, 0x19, 0x98, 0x16, 0x26, 0x7a,
-	0x83, 0xbd, 0xbc, 0x01, 0x99, 0x44, 0x04, 0xbf, 0xe8, 0xf7, 0x50, 0x03, 0x76, 0xff, 0xfd, 0x8b,
-	0xb7, 0xee, 0x33, 0x31, 0x9f, 0x18, 0x50, 0x18, 0xa3, 0x33, 0x5c, 0x41, 0xbf, 0x81, 0xcf, 0x17,
-	0x3d, 0xca, 0x45, 0x1b, 0x1f, 0x74, 0x51, 0xaa, 0x1d, 0x64, 0xa2, 0x73, 0x5a, 0x6f, 0x35, 0xe4,
-	0xd5, 0xa9, 0xf1, 0xe2, 0x5c, 0x5f, 0x13, 0xf3, 0x79, 0x0a, 0x96, 0x7f, 0xe0, 0x7a, 0x79, 0x82,
-	0xdb, 0x80, 0xb4, 0x2f, 0x83, 0x73, 0xac, 0x84, 0x64, 0x53, 0xea, 0xb2, 0x34, 0x82, 0xae, 0xc1,
-	0xa2, 0x9b, 0x4c, 0xd3, 0x09, 0x23, 0x67, 0xec, 0x6b, 0x5b, 0x70, 0x07, 0xaa, 0xab, 0xff, 0xfc,
-	0x26, 0x4d, 0x5f, 0xf4, 0x26, 0x9d, 0xee, 0x4b, 0x78, 0x47, 0x3a, 0x19, 0xfd, 0xff, 0xe4, 0xe6,
-	0xb7, 0x00, 0x00, 0x00, 0xff, 0xff, 0xcd, 0xc9, 0x2f, 0x0b, 0x05, 0x09, 0x00, 0x00,
+	// 729 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xc4, 0x55, 0xcd, 0x4e, 0xeb, 0x46,
+	0x14, 0x96, 0x3d, 0x21, 0x85, 0x43, 0xa0, 0x30, 0x10, 0xea, 0x76, 0x43, 0xe4, 0x4a, 0x6d, 0xd8,
+	0xa4, 0x14, 0x75, 0x51, 0xa1, 0x4a, 0x15, 0x0d, 0x24, 0x8a, 0x5a, 0x95, 0xc8, 0xa6, 0x6b, 0x6b,
+	0xb0, 0x8f, 0x8d, 0x15, 0xe2, 0x31, 0x33, 0x63, 0x20, 0xbb, 0x2e, 0xba, 0xea, 0xa2, 0x4f, 0xd0,
+	0x7d, 0xa5, 0x3e, 0x43, 0x1f, 0xa1, 0xab, 0xbe, 0x4b, 0xff, 0xef, 0x9f, 0xfc, 0x93, 0x5c, 0x87,
+	0x9b, 0x88, 0xe8, 0x5e, 0xd0, 0x5d, 0xd9, 0x73, 0xce, 0x7c, 0x67, 0xbe, 0x73, 0xce, 0x37, 0x67,
+	0xe0, 0xc3, 0x18, 0x03, 0x26, 0x13, 0xf9, 0x49, 0xf1, 0xf5, 0x65, 0x50, 0xfa, 0x6d, 0xc5, 0x82,
+	0x2b, 0x4e, 0x69, 0x61, 0x69, 0xbd, 0xf4, 0x7c, 0xb0, 0x77, 0x07, 0x28, 0x2f, 0x98, 0x40, 0x6f,
+	0x7a, 0x95, 0xc3, 0xcd, 0x9f, 0x35, 0xa8, 0xb5, 0x2f, 0xd0, 0x1d, 0xf4, 0xa2, 0x33, 0xde, 0xb1,
+	0xbb, 0xb4, 0x0e, 0x55, 0x5f, 0x06, 0x4e, 0xe8, 0x19, 0x5a, 0x43, 0x6f, 0x12, 0x6b, 0xc9, 0x97,
+	0x41, 0xcf, 0xa3, 0x5f, 0xc0, 0xf2, 0x25, 0x77, 0x99, 0x0a, 0x79, 0x64, 0xe8, 0x0d, 0xad, 0xb9,
+	0x7a, 0xd0, 0x68, 0xdd, 0x39, 0xb9, 0x88, 0xdb, 0xed, 0xdb, 0x6d, 0xce, 0x85, 0x27, 0xad, 0x09,
+	0x82, 0xee, 0x40, 0xf5, 0x5c, 0xca, 0xd0, 0x93, 0x06, 0x69, 0x90, 0xe6, 0x8a, 0x55, 0xac, 0xcc,
+	0x5d, 0x58, 0xee, 0x33, 0x77, 0x80, 0xaa, 0x77, 0x4c, 0x01, 0xaa, 0x72, 0x24, 0x15, 0x0e, 0x37,
+	0x08, 0x7d, 0x07, 0xf4, 0xde, 0xf1, 0xc6, 0x5f, 0xc4, 0xfc, 0x43, 0x87, 0xed, 0x32, 0x3d, 0x0b,
+	0x65, 0xcc, 0x23, 0x89, 0xf4, 0x4b, 0x00, 0x14, 0x82, 0x0b, 0xc7, 0xe5, 0x1e, 0x66, 0x54, 0xd7,
+	0xe7, 0x32, 0x3a, 0x49, 0x37, 0xb6, 0xb9, 0x87, 0xd6, 0x0a, 0x8e, 0x7f, 0x4b, 0x79, 0xea, 0xe5,
+	0x3c, 0x4f, 0x60, 0x2d, 0x35, 0x33, 0xa5, 0x30, 0xf2, 0x10, 0x73, 0xc2, 0xf3, 0x93, 0xed, 0xd8,
+	0xdd, 0x3e, 0x53, 0x82, 0x47, 0x56, 0xcd, 0x97, 0xc1, 0xd1, 0x18, 0x45, 0x6d, 0x58, 0x8b, 0x2f,
+	0xd9, 0x08, 0x85, 0x23, 0xd0, 0xe5, 0xc2, 0x33, 0x2a, 0x59, 0xcd, 0x5a, 0x73, 0xc2, 0x9c, 0xb1,
+	0x6b, 0x14, 0xd1, 0x57, 0x82, 0xdd, 0x5c, 0xf6, 0x33, 0x98, 0x95, 0xa1, 0xac, 0x5a, 0x5c, 0x5a,
+	0xd1, 0x4f, 0xa1, 0x9e, 0x72, 0xcb, 0x31, 0x8e, 0x44, 0x57, 0xa0, 0x72, 0x06, 0x38, 0x32, 0x96,
+	0x1a, 0x5a, 0xb3, 0x66, 0x51, 0x5f, 0x06, 0x76, 0xe6, 0xb3, 0x33, 0xd7, 0xd7, 0x38, 0x32, 0xb7,
+	0x4a, 0x05, 0xce, 0x8b, 0xfa, 0x2f, 0x31, 0xbb, 0xb0, 0x96, 0xd5, 0xf4, 0x34, 0x51, 0xa7, 0xfe,
+	0xfc, 0x9e, 0xdf, 0xd3, 0x9d, 0xbf, 0x89, 0xf9, 0x83, 0x06, 0xf5, 0xa9, 0x48, 0x8f, 0xdd, 0x9e,
+	0x19, 0xf9, 0xfc, 0x47, 0xcc, 0x5f, 0x35, 0xd8, 0xe8, 0xd8, 0xdd, 0x0e, 0x32, 0x95, 0x08, 0x6c,
+	0xf3, 0xc8, 0x0f, 0x03, 0xba, 0x03, 0x24, 0x88, 0xa5, 0xa1, 0x35, 0xb4, 0xe6, 0xf2, 0x61, 0x45,
+	0x89, 0x04, 0xad, 0xd4, 0x40, 0x0d, 0xa8, 0xdc, 0x84, 0x7e, 0x98, 0x89, 0x78, 0xec, 0xc8, 0x2c,
+	0xf4, 0x63, 0xa8, 0xb1, 0x44, 0x71, 0xc7, 0x4d, 0x33, 0x0a, 0x23, 0x83, 0x94, 0x76, 0xac, 0xa6,
+	0x9e, 0x76, 0xee, 0xa0, 0x1f, 0x41, 0x6d, 0xc8, 0x6e, 0x1d, 0xe6, 0xba, 0x89, 0x60, 0xee, 0x28,
+	0xeb, 0x2d, 0x39, 0x24, 0x07, 0xfb, 0xfb, 0xd6, 0xea, 0x90, 0xdd, 0x1e, 0x15, 0xf6, 0x19, 0x64,
+	0x9f, 0x13, 0xf3, 0x37, 0x0d, 0xb6, 0x26, 0xaa, 0xf9, 0x26, 0x94, 0xea, 0xbb, 0xd8, 0x63, 0x0a,
+	0x53, 0xe1, 0x31, 0xcf, 0x43, 0xcf, 0x89, 0x33, 0x4f, 0xca, 0x7c, 0x41, 0xe1, 0x65, 0xb0, 0x7c,
+	0x21, 0x69, 0x0f, 0xde, 0x15, 0x38, 0xe4, 0xd7, 0xa5, 0x40, 0xfa, 0x82, 0x81, 0xd6, 0x0b, 0x60,
+	0x11, 0x6a, 0x06, 0xfd, 0xef, 0x2b, 0xe6, 0x2f, 0x1a, 0xbc, 0xd7, 0x8b, 0xa2, 0x01, 0x62, 0x8c,
+	0xc2, 0x46, 0x95, 0xc4, 0x5d, 0xa6, 0x2e, 0x50, 0x84, 0x51, 0x30, 0x35, 0x23, 0xb4, 0x37, 0x98,
+	0x11, 0x7a, 0x79, 0x46, 0x94, 0x94, 0x40, 0x16, 0x17, 0xe7, 0xff, 0xc4, 0xfc, 0x49, 0x83, 0xdd,
+	0x39, 0x4c, 0xdf, 0x82, 0x4c, 0x9f, 0x10, 0xf3, 0x0a, 0xb6, 0xf3, 0xd2, 0x66, 0x3a, 0x42, 0x6f,
+	0x3c, 0x71, 0x3f, 0x87, 0x6a, 0xde, 0xaa, 0x8c, 0xc0, 0x22, 0x9d, 0x2a, 0xf6, 0xdf, 0x53, 0x83,
+	0xa7, 0xc4, 0x14, 0x50, 0x9f, 0x3a, 0x72, 0x72, 0xe3, 0x1f, 0xeb, 0xcc, 0x67, 0xc4, 0xfc, 0x51,
+	0x83, 0x4d, 0x0b, 0xaf, 0x12, 0x94, 0xea, 0x5b, 0x64, 0xe2, 0x7c, 0xd4, 0xb1, 0xbb, 0xf2, 0x71,
+	0xb4, 0x71, 0x0f, 0x99, 0x3f, 0x89, 0xf9, 0xbb, 0x0e, 0xef, 0xbf, 0x42, 0xe6, 0xe1, 0xda, 0xff,
+	0x19, 0x54, 0x7c, 0x19, 0x2c, 0x70, 0xc5, 0xf2, 0xa1, 0x64, 0x65, 0xbb, 0xe9, 0x1e, 0x6c, 0xba,
+	0x79, 0x3f, 0x9c, 0x30, 0x72, 0x26, 0xe2, 0xd6, 0x9a, 0xc4, 0x5a, 0x77, 0xc7, 0xda, 0xe8, 0xcc,
+	0x7e, 0x8e, 0x2a, 0xaf, 0xf5, 0x1c, 0x3d, 0xc8, 0xcb, 0xf1, 0x0f, 0x79, 0x11, 0x00, 0x00, 0xff,
+	0xff, 0xbb, 0xf8, 0xfa, 0x81, 0x92, 0x08, 0x00, 0x00,
 }

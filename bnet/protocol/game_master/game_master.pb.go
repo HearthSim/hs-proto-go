@@ -44,9 +44,9 @@ package bnet_protocol_game_master
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import bnet_protocol_attribute_468 "bnet/protocol/attribute_468"
-import bnet_protocol "bnet/protocol"
-import bnet_protocol_server_pool "bnet/protocol/server_pool"
+import bnet_protocol_attribute_468 "github.com/HearthSim/hs-proto-go/bnet/protocol/attribute_468"
+import bnet_protocol "github.com/HearthSim/hs-proto-go/bnet/protocol"
+import bnet_protocol_server_pool "github.com/HearthSim/hs-proto-go/bnet/protocol/server_pool"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -63,27 +63,37 @@ const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 type FactoryUpdateNotification_Operation int32
 
 const (
-	FactoryUpdateNotification_OPERATION_AUTO_INVALID FactoryUpdateNotification_Operation = 0
-	FactoryUpdateNotification_ADD                    FactoryUpdateNotification_Operation = 1
-	FactoryUpdateNotification_REMOVE                 FactoryUpdateNotification_Operation = 2
-	FactoryUpdateNotification_CHANGE                 FactoryUpdateNotification_Operation = 3
+	FactoryUpdateNotification_ADD    FactoryUpdateNotification_Operation = 1
+	FactoryUpdateNotification_REMOVE FactoryUpdateNotification_Operation = 2
+	FactoryUpdateNotification_CHANGE FactoryUpdateNotification_Operation = 3
 )
 
 var FactoryUpdateNotification_Operation_name = map[int32]string{
-	0: "OPERATION_AUTO_INVALID",
 	1: "ADD",
 	2: "REMOVE",
 	3: "CHANGE",
 }
 var FactoryUpdateNotification_Operation_value = map[string]int32{
-	"OPERATION_AUTO_INVALID": 0,
 	"ADD":    1,
 	"REMOVE": 2,
 	"CHANGE": 3,
 }
 
+func (x FactoryUpdateNotification_Operation) Enum() *FactoryUpdateNotification_Operation {
+	p := new(FactoryUpdateNotification_Operation)
+	*p = x
+	return p
+}
 func (x FactoryUpdateNotification_Operation) String() string {
 	return proto.EnumName(FactoryUpdateNotification_Operation_name, int32(x))
+}
+func (x *FactoryUpdateNotification_Operation) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(FactoryUpdateNotification_Operation_value, data, "FactoryUpdateNotification_Operation")
+	if err != nil {
+		return err
+	}
+	*x = FactoryUpdateNotification_Operation(value)
+	return nil
 }
 func (FactoryUpdateNotification_Operation) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor0, []int{3, 0}
@@ -91,9 +101,10 @@ func (FactoryUpdateNotification_Operation) EnumDescriptor() ([]byte, []int) {
 
 // ref: bnet.protocol.game_master.CancelGameEntryRequest
 type CancelGameEntryRequest struct {
-	RequestId uint64    `protobuf:"fixed64,1,opt,name=request_id,json=requestId" json:"request_id,omitempty"`
-	FactoryId uint64    `protobuf:"fixed64,2,opt,name=factory_id,json=factoryId" json:"factory_id,omitempty"`
-	Player    []*Player `protobuf:"bytes,3,rep,name=player" json:"player,omitempty"`
+	RequestId        *uint64   `protobuf:"fixed64,1,req,name=request_id,json=requestId" json:"request_id,omitempty"`
+	FactoryId        *uint64   `protobuf:"fixed64,2,opt,name=factory_id,json=factoryId" json:"factory_id,omitempty"`
+	Player           []*Player `protobuf:"bytes,3,rep,name=player" json:"player,omitempty"`
+	XXX_unrecognized []byte    `json:"-"`
 }
 
 func (m *CancelGameEntryRequest) Reset()                    { *m = CancelGameEntryRequest{} }
@@ -102,15 +113,15 @@ func (*CancelGameEntryRequest) ProtoMessage()               {}
 func (*CancelGameEntryRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
 func (m *CancelGameEntryRequest) GetRequestId() uint64 {
-	if m != nil {
-		return m.RequestId
+	if m != nil && m.RequestId != nil {
+		return *m.RequestId
 	}
 	return 0
 }
 
 func (m *CancelGameEntryRequest) GetFactoryId() uint64 {
-	if m != nil {
-		return m.FactoryId
+	if m != nil && m.FactoryId != nil {
+		return *m.FactoryId
 	}
 	return 0
 }
@@ -124,16 +135,19 @@ func (m *CancelGameEntryRequest) GetPlayer() []*Player {
 
 // ref: bnet.protocol.game_master.ChangeGameRequest
 type ChangeGameRequest struct {
-	GameHandle *GameHandle                `protobuf:"bytes,1,opt,name=game_handle,json=gameHandle" json:"game_handle,omitempty"`
-	Open       bool                       `protobuf:"varint,2,opt,name=open" json:"open,omitempty"`
-	Attribute  []*bnet_protocol.Attribute `protobuf:"bytes,3,rep,name=attribute" json:"attribute,omitempty"`
-	Replace    bool                       `protobuf:"varint,4,opt,name=replace" json:"replace,omitempty"`
+	GameHandle       *GameHandle                `protobuf:"bytes,1,req,name=game_handle,json=gameHandle" json:"game_handle,omitempty"`
+	Open             *bool                      `protobuf:"varint,2,opt,name=open" json:"open,omitempty"`
+	Attribute        []*bnet_protocol.Attribute `protobuf:"bytes,3,rep,name=attribute" json:"attribute,omitempty"`
+	Replace          *bool                      `protobuf:"varint,4,opt,name=replace,def=0" json:"replace,omitempty"`
+	XXX_unrecognized []byte                     `json:"-"`
 }
 
 func (m *ChangeGameRequest) Reset()                    { *m = ChangeGameRequest{} }
 func (m *ChangeGameRequest) String() string            { return proto.CompactTextString(m) }
 func (*ChangeGameRequest) ProtoMessage()               {}
 func (*ChangeGameRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+
+const Default_ChangeGameRequest_Replace bool = false
 
 func (m *ChangeGameRequest) GetGameHandle() *GameHandle {
 	if m != nil {
@@ -143,8 +157,8 @@ func (m *ChangeGameRequest) GetGameHandle() *GameHandle {
 }
 
 func (m *ChangeGameRequest) GetOpen() bool {
-	if m != nil {
-		return m.Open
+	if m != nil && m.Open != nil {
+		return *m.Open
 	}
 	return false
 }
@@ -157,19 +171,20 @@ func (m *ChangeGameRequest) GetAttribute() []*bnet_protocol.Attribute {
 }
 
 func (m *ChangeGameRequest) GetReplace() bool {
-	if m != nil {
-		return m.Replace
+	if m != nil && m.Replace != nil {
+		return *m.Replace
 	}
-	return false
+	return Default_ChangeGameRequest_Replace
 }
 
 // ref: bnet.protocol.game_master.ConnectInfo
 type ConnectInfo struct {
-	MemberId  *bnet_protocol.EntityId    `protobuf:"bytes,1,opt,name=member_id,json=memberId" json:"member_id,omitempty"`
-	Host      string                     `protobuf:"bytes,2,opt,name=host" json:"host,omitempty"`
-	Port      int32                      `protobuf:"varint,3,opt,name=port" json:"port,omitempty"`
-	Token     []byte                     `protobuf:"bytes,4,opt,name=token,proto3" json:"token,omitempty"`
-	Attribute []*bnet_protocol.Attribute `protobuf:"bytes,5,rep,name=attribute" json:"attribute,omitempty"`
+	MemberId         *bnet_protocol.EntityId    `protobuf:"bytes,1,req,name=member_id,json=memberId" json:"member_id,omitempty"`
+	Host             *string                    `protobuf:"bytes,2,req,name=host" json:"host,omitempty"`
+	Port             *int32                     `protobuf:"varint,3,req,name=port" json:"port,omitempty"`
+	Token            []byte                     `protobuf:"bytes,4,opt,name=token" json:"token,omitempty"`
+	Attribute        []*bnet_protocol.Attribute `protobuf:"bytes,5,rep,name=attribute" json:"attribute,omitempty"`
+	XXX_unrecognized []byte                     `json:"-"`
 }
 
 func (m *ConnectInfo) Reset()                    { *m = ConnectInfo{} }
@@ -185,15 +200,15 @@ func (m *ConnectInfo) GetMemberId() *bnet_protocol.EntityId {
 }
 
 func (m *ConnectInfo) GetHost() string {
-	if m != nil {
-		return m.Host
+	if m != nil && m.Host != nil {
+		return *m.Host
 	}
 	return ""
 }
 
 func (m *ConnectInfo) GetPort() int32 {
-	if m != nil {
-		return m.Port
+	if m != nil && m.Port != nil {
+		return *m.Port
 	}
 	return 0
 }
@@ -214,9 +229,10 @@ func (m *ConnectInfo) GetAttribute() []*bnet_protocol.Attribute {
 
 // ref: bnet.protocol.game_master.FactoryUpdateNotification
 type FactoryUpdateNotification struct {
-	Op          FactoryUpdateNotification_Operation `protobuf:"varint,1,opt,name=op,enum=bnet.protocol.game_master.FactoryUpdateNotification_Operation" json:"op,omitempty"`
-	Description *GameFactoryDescription             `protobuf:"bytes,2,opt,name=description" json:"description,omitempty"`
-	ProgramId   uint32                              `protobuf:"fixed32,3,opt,name=program_id,json=programId" json:"program_id,omitempty"`
+	Op               *FactoryUpdateNotification_Operation `protobuf:"varint,1,req,name=op,enum=bnet.protocol.game_master.FactoryUpdateNotification_Operation" json:"op,omitempty"`
+	Description      *GameFactoryDescription              `protobuf:"bytes,2,req,name=description" json:"description,omitempty"`
+	ProgramId        *uint32                              `protobuf:"fixed32,3,opt,name=program_id,json=programId" json:"program_id,omitempty"`
+	XXX_unrecognized []byte                               `json:"-"`
 }
 
 func (m *FactoryUpdateNotification) Reset()                    { *m = FactoryUpdateNotification{} }
@@ -225,10 +241,10 @@ func (*FactoryUpdateNotification) ProtoMessage()               {}
 func (*FactoryUpdateNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
 
 func (m *FactoryUpdateNotification) GetOp() FactoryUpdateNotification_Operation {
-	if m != nil {
-		return m.Op
+	if m != nil && m.Op != nil {
+		return *m.Op
 	}
-	return FactoryUpdateNotification_OPERATION_AUTO_INVALID
+	return FactoryUpdateNotification_ADD
 }
 
 func (m *FactoryUpdateNotification) GetDescription() *GameFactoryDescription {
@@ -239,8 +255,8 @@ func (m *FactoryUpdateNotification) GetDescription() *GameFactoryDescription {
 }
 
 func (m *FactoryUpdateNotification) GetProgramId() uint32 {
-	if m != nil {
-		return m.ProgramId
+	if m != nil && m.ProgramId != nil {
+		return *m.ProgramId
 	}
 	return 0
 }
@@ -248,17 +264,20 @@ func (m *FactoryUpdateNotification) GetProgramId() uint32 {
 // ref: bnet.protocol.game_master.FindGameRequest
 type FindGameRequest struct {
 	Player               []*Player       `protobuf:"bytes,1,rep,name=player" json:"player,omitempty"`
-	FactoryId            uint64          `protobuf:"fixed64,2,opt,name=factory_id,json=factoryId" json:"factory_id,omitempty"`
+	FactoryId            *uint64         `protobuf:"fixed64,2,opt,name=factory_id,json=factoryId" json:"factory_id,omitempty"`
 	Properties           *GameProperties `protobuf:"bytes,3,opt,name=properties" json:"properties,omitempty"`
-	ObjectId             uint64          `protobuf:"varint,4,opt,name=object_id,json=objectId" json:"object_id,omitempty"`
-	RequestId            uint64          `protobuf:"fixed64,5,opt,name=request_id,json=requestId" json:"request_id,omitempty"`
-	AdvancedNotification bool            `protobuf:"varint,6,opt,name=advanced_notification,json=advancedNotification" json:"advanced_notification,omitempty"`
+	ObjectId             *uint64         `protobuf:"varint,4,opt,name=object_id,json=objectId" json:"object_id,omitempty"`
+	RequestId            *uint64         `protobuf:"fixed64,5,opt,name=request_id,json=requestId" json:"request_id,omitempty"`
+	AdvancedNotification *bool           `protobuf:"varint,6,opt,name=advanced_notification,json=advancedNotification,def=0" json:"advanced_notification,omitempty"`
+	XXX_unrecognized     []byte          `json:"-"`
 }
 
 func (m *FindGameRequest) Reset()                    { *m = FindGameRequest{} }
 func (m *FindGameRequest) String() string            { return proto.CompactTextString(m) }
 func (*FindGameRequest) ProtoMessage()               {}
 func (*FindGameRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
+
+const Default_FindGameRequest_AdvancedNotification bool = false
 
 func (m *FindGameRequest) GetPlayer() []*Player {
 	if m != nil {
@@ -268,8 +287,8 @@ func (m *FindGameRequest) GetPlayer() []*Player {
 }
 
 func (m *FindGameRequest) GetFactoryId() uint64 {
-	if m != nil {
-		return m.FactoryId
+	if m != nil && m.FactoryId != nil {
+		return *m.FactoryId
 	}
 	return 0
 }
@@ -282,31 +301,32 @@ func (m *FindGameRequest) GetProperties() *GameProperties {
 }
 
 func (m *FindGameRequest) GetObjectId() uint64 {
-	if m != nil {
-		return m.ObjectId
+	if m != nil && m.ObjectId != nil {
+		return *m.ObjectId
 	}
 	return 0
 }
 
 func (m *FindGameRequest) GetRequestId() uint64 {
-	if m != nil {
-		return m.RequestId
+	if m != nil && m.RequestId != nil {
+		return *m.RequestId
 	}
 	return 0
 }
 
 func (m *FindGameRequest) GetAdvancedNotification() bool {
-	if m != nil {
-		return m.AdvancedNotification
+	if m != nil && m.AdvancedNotification != nil {
+		return *m.AdvancedNotification
 	}
-	return false
+	return Default_FindGameRequest_AdvancedNotification
 }
 
 // ref: bnet.protocol.game_master.FindGameResponse
 type FindGameResponse struct {
-	RequestId uint64 `protobuf:"fixed64,1,opt,name=request_id,json=requestId" json:"request_id,omitempty"`
-	FactoryId uint64 `protobuf:"fixed64,2,opt,name=factory_id,json=factoryId" json:"factory_id,omitempty"`
-	Queued    bool   `protobuf:"varint,3,opt,name=queued" json:"queued,omitempty"`
+	RequestId        *uint64 `protobuf:"fixed64,1,opt,name=request_id,json=requestId" json:"request_id,omitempty"`
+	FactoryId        *uint64 `protobuf:"fixed64,2,opt,name=factory_id,json=factoryId" json:"factory_id,omitempty"`
+	Queued           *bool   `protobuf:"varint,3,opt,name=queued,def=0" json:"queued,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *FindGameResponse) Reset()                    { *m = FindGameResponse{} }
@@ -314,37 +334,42 @@ func (m *FindGameResponse) String() string            { return proto.CompactText
 func (*FindGameResponse) ProtoMessage()               {}
 func (*FindGameResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
 
+const Default_FindGameResponse_Queued bool = false
+
 func (m *FindGameResponse) GetRequestId() uint64 {
-	if m != nil {
-		return m.RequestId
+	if m != nil && m.RequestId != nil {
+		return *m.RequestId
 	}
 	return 0
 }
 
 func (m *FindGameResponse) GetFactoryId() uint64 {
-	if m != nil {
-		return m.FactoryId
+	if m != nil && m.FactoryId != nil {
+		return *m.FactoryId
 	}
 	return 0
 }
 
 func (m *FindGameResponse) GetQueued() bool {
-	if m != nil {
-		return m.Queued
+	if m != nil && m.Queued != nil {
+		return *m.Queued
 	}
-	return false
+	return Default_FindGameResponse_Queued
 }
 
 // ref: bnet.protocol.game_master.GameEndedNotification
 type GameEndedNotification struct {
-	GameHandle *GameHandle `protobuf:"bytes,1,opt,name=game_handle,json=gameHandle" json:"game_handle,omitempty"`
-	Reason     uint32      `protobuf:"varint,2,opt,name=reason" json:"reason,omitempty"`
+	GameHandle       *GameHandle `protobuf:"bytes,1,req,name=game_handle,json=gameHandle" json:"game_handle,omitempty"`
+	Reason           *uint32     `protobuf:"varint,2,opt,name=reason,def=0" json:"reason,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
 }
 
 func (m *GameEndedNotification) Reset()                    { *m = GameEndedNotification{} }
 func (m *GameEndedNotification) String() string            { return proto.CompactTextString(m) }
 func (*GameEndedNotification) ProtoMessage()               {}
 func (*GameEndedNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
+
+const Default_GameEndedNotification_Reason uint32 = 0
 
 func (m *GameEndedNotification) GetGameHandle() *GameHandle {
 	if m != nil {
@@ -354,20 +379,21 @@ func (m *GameEndedNotification) GetGameHandle() *GameHandle {
 }
 
 func (m *GameEndedNotification) GetReason() uint32 {
-	if m != nil {
-		return m.Reason
+	if m != nil && m.Reason != nil {
+		return *m.Reason
 	}
-	return 0
+	return Default_GameEndedNotification_Reason
 }
 
 // ref: bnet.protocol.game_master.GameFactoryDescription
 type GameFactoryDescription struct {
-	Id            uint64                     `protobuf:"fixed64,1,opt,name=id" json:"id,omitempty"`
-	Name          string                     `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
-	Attribute     []*bnet_protocol.Attribute `protobuf:"bytes,3,rep,name=attribute" json:"attribute,omitempty"`
-	StatsBucket   []*GameStatsBucket         `protobuf:"bytes,4,rep,name=stats_bucket,json=statsBucket" json:"stats_bucket,omitempty"`
-	UnseededId    uint64                     `protobuf:"fixed64,5,opt,name=unseeded_id,json=unseededId" json:"unseeded_id,omitempty"`
-	AllowQueueing bool                       `protobuf:"varint,6,opt,name=allow_queueing,json=allowQueueing" json:"allow_queueing,omitempty"`
+	Id               *uint64                    `protobuf:"fixed64,1,req,name=id" json:"id,omitempty"`
+	Name             *string                    `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
+	Attribute        []*bnet_protocol.Attribute `protobuf:"bytes,3,rep,name=attribute" json:"attribute,omitempty"`
+	StatsBucket      []*GameStatsBucket         `protobuf:"bytes,4,rep,name=stats_bucket,json=statsBucket" json:"stats_bucket,omitempty"`
+	UnseededId       *uint64                    `protobuf:"fixed64,5,opt,name=unseeded_id,json=unseededId,def=0" json:"unseeded_id,omitempty"`
+	AllowQueueing    *bool                      `protobuf:"varint,6,opt,name=allow_queueing,json=allowQueueing,def=1" json:"allow_queueing,omitempty"`
+	XXX_unrecognized []byte                     `json:"-"`
 }
 
 func (m *GameFactoryDescription) Reset()                    { *m = GameFactoryDescription{} }
@@ -375,16 +401,19 @@ func (m *GameFactoryDescription) String() string            { return proto.Compa
 func (*GameFactoryDescription) ProtoMessage()               {}
 func (*GameFactoryDescription) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{7} }
 
+const Default_GameFactoryDescription_UnseededId uint64 = 0
+const Default_GameFactoryDescription_AllowQueueing bool = true
+
 func (m *GameFactoryDescription) GetId() uint64 {
-	if m != nil {
-		return m.Id
+	if m != nil && m.Id != nil {
+		return *m.Id
 	}
 	return 0
 }
 
 func (m *GameFactoryDescription) GetName() string {
-	if m != nil {
-		return m.Name
+	if m != nil && m.Name != nil {
+		return *m.Name
 	}
 	return ""
 }
@@ -404,25 +433,26 @@ func (m *GameFactoryDescription) GetStatsBucket() []*GameStatsBucket {
 }
 
 func (m *GameFactoryDescription) GetUnseededId() uint64 {
-	if m != nil {
-		return m.UnseededId
+	if m != nil && m.UnseededId != nil {
+		return *m.UnseededId
 	}
-	return 0
+	return Default_GameFactoryDescription_UnseededId
 }
 
 func (m *GameFactoryDescription) GetAllowQueueing() bool {
-	if m != nil {
-		return m.AllowQueueing
+	if m != nil && m.AllowQueueing != nil {
+		return *m.AllowQueueing
 	}
-	return false
+	return Default_GameFactoryDescription_AllowQueueing
 }
 
 // ref: bnet.protocol.game_master.GameFoundNotification
 type GameFoundNotification struct {
-	RequestId   uint64         `protobuf:"fixed64,1,opt,name=request_id,json=requestId" json:"request_id,omitempty"`
-	ErrorCode   uint32         `protobuf:"varint,2,opt,name=error_code,json=errorCode" json:"error_code,omitempty"`
-	GameHandle  *GameHandle    `protobuf:"bytes,3,opt,name=game_handle,json=gameHandle" json:"game_handle,omitempty"`
-	ConnectInfo []*ConnectInfo `protobuf:"bytes,4,rep,name=connect_info,json=connectInfo" json:"connect_info,omitempty"`
+	RequestId        *uint64        `protobuf:"fixed64,1,req,name=request_id,json=requestId" json:"request_id,omitempty"`
+	ErrorCode        *uint32        `protobuf:"varint,2,opt,name=error_code,json=errorCode,def=0" json:"error_code,omitempty"`
+	GameHandle       *GameHandle    `protobuf:"bytes,3,opt,name=game_handle,json=gameHandle" json:"game_handle,omitempty"`
+	ConnectInfo      []*ConnectInfo `protobuf:"bytes,4,rep,name=connect_info,json=connectInfo" json:"connect_info,omitempty"`
+	XXX_unrecognized []byte         `json:"-"`
 }
 
 func (m *GameFoundNotification) Reset()                    { *m = GameFoundNotification{} }
@@ -430,18 +460,20 @@ func (m *GameFoundNotification) String() string            { return proto.Compac
 func (*GameFoundNotification) ProtoMessage()               {}
 func (*GameFoundNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{8} }
 
+const Default_GameFoundNotification_ErrorCode uint32 = 0
+
 func (m *GameFoundNotification) GetRequestId() uint64 {
-	if m != nil {
-		return m.RequestId
+	if m != nil && m.RequestId != nil {
+		return *m.RequestId
 	}
 	return 0
 }
 
 func (m *GameFoundNotification) GetErrorCode() uint32 {
-	if m != nil {
-		return m.ErrorCode
+	if m != nil && m.ErrorCode != nil {
+		return *m.ErrorCode
 	}
-	return 0
+	return Default_GameFoundNotification_ErrorCode
 }
 
 func (m *GameFoundNotification) GetGameHandle() *GameHandle {
@@ -460,8 +492,9 @@ func (m *GameFoundNotification) GetConnectInfo() []*ConnectInfo {
 
 // ref: bnet.protocol.game_master.GameHandle
 type GameHandle struct {
-	FactoryId uint64                  `protobuf:"fixed64,1,opt,name=factory_id,json=factoryId" json:"factory_id,omitempty"`
-	GameId    *bnet_protocol.EntityId `protobuf:"bytes,2,opt,name=game_id,json=gameId" json:"game_id,omitempty"`
+	FactoryId        *uint64                 `protobuf:"fixed64,1,req,name=factory_id,json=factoryId" json:"factory_id,omitempty"`
+	GameId           *bnet_protocol.EntityId `protobuf:"bytes,2,req,name=game_id,json=gameId" json:"game_id,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *GameHandle) Reset()                    { *m = GameHandle{} }
@@ -470,8 +503,8 @@ func (*GameHandle) ProtoMessage()               {}
 func (*GameHandle) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9} }
 
 func (m *GameHandle) GetFactoryId() uint64 {
-	if m != nil {
-		return m.FactoryId
+	if m != nil && m.FactoryId != nil {
+		return *m.FactoryId
 	}
 	return 0
 }
@@ -487,15 +520,19 @@ func (m *GameHandle) GetGameId() *bnet_protocol.EntityId {
 type GameProperties struct {
 	CreationAttributes []*bnet_protocol.Attribute                   `protobuf:"bytes,1,rep,name=creation_attributes,json=creationAttributes" json:"creation_attributes,omitempty"`
 	Filter             *bnet_protocol_attribute_468.AttributeFilter `protobuf:"bytes,2,opt,name=filter" json:"filter,omitempty"`
-	Create             bool                                         `protobuf:"varint,3,opt,name=create" json:"create,omitempty"`
-	Open               bool                                         `protobuf:"varint,4,opt,name=open" json:"open,omitempty"`
-	ProgramId          uint32                                       `protobuf:"fixed32,5,opt,name=program_id,json=programId" json:"program_id,omitempty"`
+	Create             *bool                                        `protobuf:"varint,3,opt,name=create,def=0" json:"create,omitempty"`
+	Open               *bool                                        `protobuf:"varint,4,opt,name=open,def=1" json:"open,omitempty"`
+	ProgramId          *uint32                                      `protobuf:"fixed32,5,opt,name=program_id,json=programId" json:"program_id,omitempty"`
+	XXX_unrecognized   []byte                                       `json:"-"`
 }
 
 func (m *GameProperties) Reset()                    { *m = GameProperties{} }
 func (m *GameProperties) String() string            { return proto.CompactTextString(m) }
 func (*GameProperties) ProtoMessage()               {}
 func (*GameProperties) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{10} }
+
+const Default_GameProperties_Create bool = false
+const Default_GameProperties_Open bool = true
 
 func (m *GameProperties) GetCreationAttributes() []*bnet_protocol.Attribute {
 	if m != nil {
@@ -512,40 +549,41 @@ func (m *GameProperties) GetFilter() *bnet_protocol_attribute_468.AttributeFilte
 }
 
 func (m *GameProperties) GetCreate() bool {
-	if m != nil {
-		return m.Create
+	if m != nil && m.Create != nil {
+		return *m.Create
 	}
-	return false
+	return Default_GameProperties_Create
 }
 
 func (m *GameProperties) GetOpen() bool {
-	if m != nil {
-		return m.Open
+	if m != nil && m.Open != nil {
+		return *m.Open
 	}
-	return false
+	return Default_GameProperties_Open
 }
 
 func (m *GameProperties) GetProgramId() uint32 {
-	if m != nil {
-		return m.ProgramId
+	if m != nil && m.ProgramId != nil {
+		return *m.ProgramId
 	}
 	return 0
 }
 
 // ref: bnet.protocol.game_master.GameStatsBucket
 type GameStatsBucket struct {
-	BucketMin                  float32 `protobuf:"fixed32,1,opt,name=bucket_min,json=bucketMin" json:"bucket_min,omitempty"`
-	BucketMax                  float32 `protobuf:"fixed32,2,opt,name=bucket_max,json=bucketMax" json:"bucket_max,omitempty"`
-	WaitMilliseconds           uint32  `protobuf:"varint,3,opt,name=wait_milliseconds,json=waitMilliseconds" json:"wait_milliseconds,omitempty"`
-	GamesPerHour               uint32  `protobuf:"varint,4,opt,name=games_per_hour,json=gamesPerHour" json:"games_per_hour,omitempty"`
-	ActiveGames                uint32  `protobuf:"varint,5,opt,name=active_games,json=activeGames" json:"active_games,omitempty"`
-	ActivePlayers              uint32  `protobuf:"varint,6,opt,name=active_players,json=activePlayers" json:"active_players,omitempty"`
-	FormingGames               uint32  `protobuf:"varint,7,opt,name=forming_games,json=formingGames" json:"forming_games,omitempty"`
-	WaitingPlayers             uint32  `protobuf:"varint,8,opt,name=waiting_players,json=waitingPlayers" json:"waiting_players,omitempty"`
-	OpenJoinableGames          uint32  `protobuf:"varint,9,opt,name=open_joinable_games,json=openJoinableGames" json:"open_joinable_games,omitempty"`
-	PlayersInOpenJoinableGames uint32  `protobuf:"varint,10,opt,name=players_in_open_joinable_games,json=playersInOpenJoinableGames" json:"players_in_open_joinable_games,omitempty"`
-	OpenGamesTotal             uint32  `protobuf:"varint,11,opt,name=open_games_total,json=openGamesTotal" json:"open_games_total,omitempty"`
-	PlayersInOpenGamesTotal    uint32  `protobuf:"varint,12,opt,name=players_in_open_games_total,json=playersInOpenGamesTotal" json:"players_in_open_games_total,omitempty"`
+	BucketMin                  *float32 `protobuf:"fixed32,1,opt,name=bucket_min,json=bucketMin,def=0" json:"bucket_min,omitempty"`
+	BucketMax                  *float32 `protobuf:"fixed32,2,opt,name=bucket_max,json=bucketMax,def=4.294967e+009" json:"bucket_max,omitempty"`
+	WaitMilliseconds           *uint32  `protobuf:"varint,3,opt,name=wait_milliseconds,json=waitMilliseconds,def=0" json:"wait_milliseconds,omitempty"`
+	GamesPerHour               *uint32  `protobuf:"varint,4,opt,name=games_per_hour,json=gamesPerHour,def=0" json:"games_per_hour,omitempty"`
+	ActiveGames                *uint32  `protobuf:"varint,5,opt,name=active_games,json=activeGames,def=0" json:"active_games,omitempty"`
+	ActivePlayers              *uint32  `protobuf:"varint,6,opt,name=active_players,json=activePlayers,def=0" json:"active_players,omitempty"`
+	FormingGames               *uint32  `protobuf:"varint,7,opt,name=forming_games,json=formingGames,def=0" json:"forming_games,omitempty"`
+	WaitingPlayers             *uint32  `protobuf:"varint,8,opt,name=waiting_players,json=waitingPlayers,def=0" json:"waiting_players,omitempty"`
+	OpenJoinableGames          *uint32  `protobuf:"varint,9,opt,name=open_joinable_games,json=openJoinableGames,def=0" json:"open_joinable_games,omitempty"`
+	PlayersInOpenJoinableGames *uint32  `protobuf:"varint,10,opt,name=players_in_open_joinable_games,json=playersInOpenJoinableGames,def=0" json:"players_in_open_joinable_games,omitempty"`
+	OpenGamesTotal             *uint32  `protobuf:"varint,11,opt,name=open_games_total,json=openGamesTotal,def=0" json:"open_games_total,omitempty"`
+	PlayersInOpenGamesTotal    *uint32  `protobuf:"varint,12,opt,name=players_in_open_games_total,json=playersInOpenGamesTotal,def=0" json:"players_in_open_games_total,omitempty"`
+	XXX_unrecognized           []byte   `json:"-"`
 }
 
 func (m *GameStatsBucket) Reset()                    { *m = GameStatsBucket{} }
@@ -553,93 +591,107 @@ func (m *GameStatsBucket) String() string            { return proto.CompactTextS
 func (*GameStatsBucket) ProtoMessage()               {}
 func (*GameStatsBucket) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{11} }
 
+const Default_GameStatsBucket_BucketMin float32 = 0
+const Default_GameStatsBucket_BucketMax float32 = 4.294967e+009
+const Default_GameStatsBucket_WaitMilliseconds uint32 = 0
+const Default_GameStatsBucket_GamesPerHour uint32 = 0
+const Default_GameStatsBucket_ActiveGames uint32 = 0
+const Default_GameStatsBucket_ActivePlayers uint32 = 0
+const Default_GameStatsBucket_FormingGames uint32 = 0
+const Default_GameStatsBucket_WaitingPlayers uint32 = 0
+const Default_GameStatsBucket_OpenJoinableGames uint32 = 0
+const Default_GameStatsBucket_PlayersInOpenJoinableGames uint32 = 0
+const Default_GameStatsBucket_OpenGamesTotal uint32 = 0
+const Default_GameStatsBucket_PlayersInOpenGamesTotal uint32 = 0
+
 func (m *GameStatsBucket) GetBucketMin() float32 {
-	if m != nil {
-		return m.BucketMin
+	if m != nil && m.BucketMin != nil {
+		return *m.BucketMin
 	}
-	return 0
+	return Default_GameStatsBucket_BucketMin
 }
 
 func (m *GameStatsBucket) GetBucketMax() float32 {
-	if m != nil {
-		return m.BucketMax
+	if m != nil && m.BucketMax != nil {
+		return *m.BucketMax
 	}
-	return 0
+	return Default_GameStatsBucket_BucketMax
 }
 
 func (m *GameStatsBucket) GetWaitMilliseconds() uint32 {
-	if m != nil {
-		return m.WaitMilliseconds
+	if m != nil && m.WaitMilliseconds != nil {
+		return *m.WaitMilliseconds
 	}
-	return 0
+	return Default_GameStatsBucket_WaitMilliseconds
 }
 
 func (m *GameStatsBucket) GetGamesPerHour() uint32 {
-	if m != nil {
-		return m.GamesPerHour
+	if m != nil && m.GamesPerHour != nil {
+		return *m.GamesPerHour
 	}
-	return 0
+	return Default_GameStatsBucket_GamesPerHour
 }
 
 func (m *GameStatsBucket) GetActiveGames() uint32 {
-	if m != nil {
-		return m.ActiveGames
+	if m != nil && m.ActiveGames != nil {
+		return *m.ActiveGames
 	}
-	return 0
+	return Default_GameStatsBucket_ActiveGames
 }
 
 func (m *GameStatsBucket) GetActivePlayers() uint32 {
-	if m != nil {
-		return m.ActivePlayers
+	if m != nil && m.ActivePlayers != nil {
+		return *m.ActivePlayers
 	}
-	return 0
+	return Default_GameStatsBucket_ActivePlayers
 }
 
 func (m *GameStatsBucket) GetFormingGames() uint32 {
-	if m != nil {
-		return m.FormingGames
+	if m != nil && m.FormingGames != nil {
+		return *m.FormingGames
 	}
-	return 0
+	return Default_GameStatsBucket_FormingGames
 }
 
 func (m *GameStatsBucket) GetWaitingPlayers() uint32 {
-	if m != nil {
-		return m.WaitingPlayers
+	if m != nil && m.WaitingPlayers != nil {
+		return *m.WaitingPlayers
 	}
-	return 0
+	return Default_GameStatsBucket_WaitingPlayers
 }
 
 func (m *GameStatsBucket) GetOpenJoinableGames() uint32 {
-	if m != nil {
-		return m.OpenJoinableGames
+	if m != nil && m.OpenJoinableGames != nil {
+		return *m.OpenJoinableGames
 	}
-	return 0
+	return Default_GameStatsBucket_OpenJoinableGames
 }
 
 func (m *GameStatsBucket) GetPlayersInOpenJoinableGames() uint32 {
-	if m != nil {
-		return m.PlayersInOpenJoinableGames
+	if m != nil && m.PlayersInOpenJoinableGames != nil {
+		return *m.PlayersInOpenJoinableGames
 	}
-	return 0
+	return Default_GameStatsBucket_PlayersInOpenJoinableGames
 }
 
 func (m *GameStatsBucket) GetOpenGamesTotal() uint32 {
-	if m != nil {
-		return m.OpenGamesTotal
+	if m != nil && m.OpenGamesTotal != nil {
+		return *m.OpenGamesTotal
 	}
-	return 0
+	return Default_GameStatsBucket_OpenGamesTotal
 }
 
 func (m *GameStatsBucket) GetPlayersInOpenGamesTotal() uint32 {
-	if m != nil {
-		return m.PlayersInOpenGamesTotal
+	if m != nil && m.PlayersInOpenGamesTotal != nil {
+		return *m.PlayersInOpenGamesTotal
 	}
-	return 0
+	return Default_GameStatsBucket_PlayersInOpenGamesTotal
 }
 
 // ref: bnet.protocol.game_master.GetFactoryInfoRequest
 type GetFactoryInfoRequest struct {
-	FactoryId uint64 `protobuf:"fixed64,1,opt,name=factory_id,json=factoryId" json:"factory_id,omitempty"`
+	FactoryId        *uint64 `protobuf:"fixed64,1,req,name=factory_id,json=factoryId" json:"factory_id,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *GetFactoryInfoRequest) Reset()                    { *m = GetFactoryInfoRequest{} }
@@ -648,16 +700,17 @@ func (*GetFactoryInfoRequest) ProtoMessage()               {}
 func (*GetFactoryInfoRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{12} }
 
 func (m *GetFactoryInfoRequest) GetFactoryId() uint64 {
-	if m != nil {
-		return m.FactoryId
+	if m != nil && m.FactoryId != nil {
+		return *m.FactoryId
 	}
 	return 0
 }
 
 // ref: bnet.protocol.game_master.GetFactoryInfoResponse
 type GetFactoryInfoResponse struct {
-	Attribute   []*bnet_protocol.Attribute `protobuf:"bytes,1,rep,name=attribute" json:"attribute,omitempty"`
-	StatsBucket []*GameStatsBucket         `protobuf:"bytes,2,rep,name=stats_bucket,json=statsBucket" json:"stats_bucket,omitempty"`
+	Attribute        []*bnet_protocol.Attribute `protobuf:"bytes,1,rep,name=attribute" json:"attribute,omitempty"`
+	StatsBucket      []*GameStatsBucket         `protobuf:"bytes,2,rep,name=stats_bucket,json=statsBucket" json:"stats_bucket,omitempty"`
+	XXX_unrecognized []byte                     `json:"-"`
 }
 
 func (m *GetFactoryInfoResponse) Reset()                    { *m = GetFactoryInfoResponse{} }
@@ -681,8 +734,9 @@ func (m *GetFactoryInfoResponse) GetStatsBucket() []*GameStatsBucket {
 
 // ref: bnet.protocol.game_master.GetGameStatsRequest
 type GetGameStatsRequest struct {
-	FactoryId uint64                                       `protobuf:"fixed64,1,opt,name=factory_id,json=factoryId" json:"factory_id,omitempty"`
-	Filter    *bnet_protocol_attribute_468.AttributeFilter `protobuf:"bytes,2,opt,name=filter" json:"filter,omitempty"`
+	FactoryId        *uint64                                      `protobuf:"fixed64,1,req,name=factory_id,json=factoryId" json:"factory_id,omitempty"`
+	Filter           *bnet_protocol_attribute_468.AttributeFilter `protobuf:"bytes,2,req,name=filter" json:"filter,omitempty"`
+	XXX_unrecognized []byte                                       `json:"-"`
 }
 
 func (m *GetGameStatsRequest) Reset()                    { *m = GetGameStatsRequest{} }
@@ -691,8 +745,8 @@ func (*GetGameStatsRequest) ProtoMessage()               {}
 func (*GetGameStatsRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{14} }
 
 func (m *GetGameStatsRequest) GetFactoryId() uint64 {
-	if m != nil {
-		return m.FactoryId
+	if m != nil && m.FactoryId != nil {
+		return *m.FactoryId
 	}
 	return 0
 }
@@ -706,7 +760,8 @@ func (m *GetGameStatsRequest) GetFilter() *bnet_protocol_attribute_468.Attribute
 
 // ref: bnet.protocol.game_master.GetGameStatsResponse
 type GetGameStatsResponse struct {
-	StatsBucket []*GameStatsBucket `protobuf:"bytes,1,rep,name=stats_bucket,json=statsBucket" json:"stats_bucket,omitempty"`
+	StatsBucket      []*GameStatsBucket `protobuf:"bytes,1,rep,name=stats_bucket,json=statsBucket" json:"stats_bucket,omitempty"`
+	XXX_unrecognized []byte             `json:"-"`
 }
 
 func (m *GetGameStatsResponse) Reset()                    { *m = GetGameStatsResponse{} }
@@ -723,15 +778,18 @@ func (m *GetGameStatsResponse) GetStatsBucket() []*GameStatsBucket {
 
 // ref: bnet.protocol.game_master.JoinGameRequest
 type JoinGameRequest struct {
-	GameHandle           *GameHandle `protobuf:"bytes,1,opt,name=game_handle,json=gameHandle" json:"game_handle,omitempty"`
+	GameHandle           *GameHandle `protobuf:"bytes,1,req,name=game_handle,json=gameHandle" json:"game_handle,omitempty"`
 	Player               []*Player   `protobuf:"bytes,2,rep,name=player" json:"player,omitempty"`
-	AdvancedNotification bool        `protobuf:"varint,3,opt,name=advanced_notification,json=advancedNotification" json:"advanced_notification,omitempty"`
+	AdvancedNotification *bool       `protobuf:"varint,3,opt,name=advanced_notification,json=advancedNotification,def=0" json:"advanced_notification,omitempty"`
+	XXX_unrecognized     []byte      `json:"-"`
 }
 
 func (m *JoinGameRequest) Reset()                    { *m = JoinGameRequest{} }
 func (m *JoinGameRequest) String() string            { return proto.CompactTextString(m) }
 func (*JoinGameRequest) ProtoMessage()               {}
 func (*JoinGameRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{16} }
+
+const Default_JoinGameRequest_AdvancedNotification bool = false
 
 func (m *JoinGameRequest) GetGameHandle() *GameHandle {
 	if m != nil {
@@ -748,17 +806,18 @@ func (m *JoinGameRequest) GetPlayer() []*Player {
 }
 
 func (m *JoinGameRequest) GetAdvancedNotification() bool {
-	if m != nil {
-		return m.AdvancedNotification
+	if m != nil && m.AdvancedNotification != nil {
+		return *m.AdvancedNotification
 	}
-	return false
+	return Default_JoinGameRequest_AdvancedNotification
 }
 
 // ref: bnet.protocol.game_master.JoinGameResponse
 type JoinGameResponse struct {
-	RequestId   uint64         `protobuf:"fixed64,1,opt,name=request_id,json=requestId" json:"request_id,omitempty"`
-	Queued      bool           `protobuf:"varint,2,opt,name=queued" json:"queued,omitempty"`
-	ConnectInfo []*ConnectInfo `protobuf:"bytes,3,rep,name=connect_info,json=connectInfo" json:"connect_info,omitempty"`
+	RequestId        *uint64        `protobuf:"fixed64,1,opt,name=request_id,json=requestId" json:"request_id,omitempty"`
+	Queued           *bool          `protobuf:"varint,2,opt,name=queued,def=0" json:"queued,omitempty"`
+	ConnectInfo      []*ConnectInfo `protobuf:"bytes,3,rep,name=connect_info,json=connectInfo" json:"connect_info,omitempty"`
+	XXX_unrecognized []byte         `json:"-"`
 }
 
 func (m *JoinGameResponse) Reset()                    { *m = JoinGameResponse{} }
@@ -766,18 +825,20 @@ func (m *JoinGameResponse) String() string            { return proto.CompactText
 func (*JoinGameResponse) ProtoMessage()               {}
 func (*JoinGameResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{17} }
 
+const Default_JoinGameResponse_Queued bool = false
+
 func (m *JoinGameResponse) GetRequestId() uint64 {
-	if m != nil {
-		return m.RequestId
+	if m != nil && m.RequestId != nil {
+		return *m.RequestId
 	}
 	return 0
 }
 
 func (m *JoinGameResponse) GetQueued() bool {
-	if m != nil {
-		return m.Queued
+	if m != nil && m.Queued != nil {
+		return *m.Queued
 	}
-	return false
+	return Default_JoinGameResponse_Queued
 }
 
 func (m *JoinGameResponse) GetConnectInfo() []*ConnectInfo {
@@ -789,15 +850,19 @@ func (m *JoinGameResponse) GetConnectInfo() []*ConnectInfo {
 
 // ref: bnet.protocol.game_master.ListFactoriesRequest
 type ListFactoriesRequest struct {
-	Filter     *bnet_protocol_attribute_468.AttributeFilter `protobuf:"bytes,1,opt,name=filter" json:"filter,omitempty"`
-	StartIndex uint32                                       `protobuf:"varint,2,opt,name=start_index,json=startIndex" json:"start_index,omitempty"`
-	MaxResults uint32                                       `protobuf:"varint,3,opt,name=max_results,json=maxResults" json:"max_results,omitempty"`
+	Filter           *bnet_protocol_attribute_468.AttributeFilter `protobuf:"bytes,1,req,name=filter" json:"filter,omitempty"`
+	StartIndex       *uint32                                      `protobuf:"varint,2,opt,name=start_index,json=startIndex,def=0" json:"start_index,omitempty"`
+	MaxResults       *uint32                                      `protobuf:"varint,3,opt,name=max_results,json=maxResults,def=100" json:"max_results,omitempty"`
+	XXX_unrecognized []byte                                       `json:"-"`
 }
 
 func (m *ListFactoriesRequest) Reset()                    { *m = ListFactoriesRequest{} }
 func (m *ListFactoriesRequest) String() string            { return proto.CompactTextString(m) }
 func (*ListFactoriesRequest) ProtoMessage()               {}
 func (*ListFactoriesRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{18} }
+
+const Default_ListFactoriesRequest_StartIndex uint32 = 0
+const Default_ListFactoriesRequest_MaxResults uint32 = 100
 
 func (m *ListFactoriesRequest) GetFilter() *bnet_protocol_attribute_468.AttributeFilter {
 	if m != nil {
@@ -807,23 +872,24 @@ func (m *ListFactoriesRequest) GetFilter() *bnet_protocol_attribute_468.Attribut
 }
 
 func (m *ListFactoriesRequest) GetStartIndex() uint32 {
-	if m != nil {
-		return m.StartIndex
+	if m != nil && m.StartIndex != nil {
+		return *m.StartIndex
 	}
-	return 0
+	return Default_ListFactoriesRequest_StartIndex
 }
 
 func (m *ListFactoriesRequest) GetMaxResults() uint32 {
-	if m != nil {
-		return m.MaxResults
+	if m != nil && m.MaxResults != nil {
+		return *m.MaxResults
 	}
-	return 0
+	return Default_ListFactoriesRequest_MaxResults
 }
 
 // ref: bnet.protocol.game_master.ListFactoriesResponse
 type ListFactoriesResponse struct {
-	Description  []*GameFactoryDescription `protobuf:"bytes,1,rep,name=description" json:"description,omitempty"`
-	TotalResults uint32                    `protobuf:"varint,2,opt,name=total_results,json=totalResults" json:"total_results,omitempty"`
+	Description      []*GameFactoryDescription `protobuf:"bytes,1,rep,name=description" json:"description,omitempty"`
+	TotalResults     *uint32                   `protobuf:"varint,2,opt,name=total_results,json=totalResults" json:"total_results,omitempty"`
+	XXX_unrecognized []byte                    `json:"-"`
 }
 
 func (m *ListFactoriesResponse) Reset()                    { *m = ListFactoriesResponse{} }
@@ -839,16 +905,17 @@ func (m *ListFactoriesResponse) GetDescription() []*GameFactoryDescription {
 }
 
 func (m *ListFactoriesResponse) GetTotalResults() uint32 {
-	if m != nil {
-		return m.TotalResults
+	if m != nil && m.TotalResults != nil {
+		return *m.TotalResults
 	}
 	return 0
 }
 
 // ref: bnet.protocol.game_master.Player
 type Player struct {
-	Identity  *bnet_protocol.Identity    `protobuf:"bytes,1,opt,name=identity" json:"identity,omitempty"`
-	Attribute []*bnet_protocol.Attribute `protobuf:"bytes,2,rep,name=attribute" json:"attribute,omitempty"`
+	Identity         *bnet_protocol.Identity    `protobuf:"bytes,1,opt,name=identity" json:"identity,omitempty"`
+	Attribute        []*bnet_protocol.Attribute `protobuf:"bytes,2,rep,name=attribute" json:"attribute,omitempty"`
+	XXX_unrecognized []byte                     `json:"-"`
 }
 
 func (m *Player) Reset()                    { *m = Player{} }
@@ -872,15 +939,18 @@ func (m *Player) GetAttribute() []*bnet_protocol.Attribute {
 
 // ref: bnet.protocol.game_master.PlayerLeftNotification
 type PlayerLeftNotification struct {
-	GameHandle *GameHandle             `protobuf:"bytes,1,opt,name=game_handle,json=gameHandle" json:"game_handle,omitempty"`
-	MemberId   *bnet_protocol.EntityId `protobuf:"bytes,2,opt,name=member_id,json=memberId" json:"member_id,omitempty"`
-	Reason     uint32                  `protobuf:"varint,3,opt,name=reason" json:"reason,omitempty"`
+	GameHandle       *GameHandle             `protobuf:"bytes,1,req,name=game_handle,json=gameHandle" json:"game_handle,omitempty"`
+	MemberId         *bnet_protocol.EntityId `protobuf:"bytes,2,req,name=member_id,json=memberId" json:"member_id,omitempty"`
+	Reason           *uint32                 `protobuf:"varint,3,opt,name=reason,def=1" json:"reason,omitempty"`
+	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *PlayerLeftNotification) Reset()                    { *m = PlayerLeftNotification{} }
 func (m *PlayerLeftNotification) String() string            { return proto.CompactTextString(m) }
 func (*PlayerLeftNotification) ProtoMessage()               {}
 func (*PlayerLeftNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{21} }
+
+const Default_PlayerLeftNotification_Reason uint32 = 1
 
 func (m *PlayerLeftNotification) GetGameHandle() *GameHandle {
 	if m != nil {
@@ -897,17 +967,18 @@ func (m *PlayerLeftNotification) GetMemberId() *bnet_protocol.EntityId {
 }
 
 func (m *PlayerLeftNotification) GetReason() uint32 {
-	if m != nil {
-		return m.Reason
+	if m != nil && m.Reason != nil {
+		return *m.Reason
 	}
-	return 0
+	return Default_PlayerLeftNotification_Reason
 }
 
 // ref: bnet.protocol.game_master.RegisterServerRequest
 type RegisterServerRequest struct {
-	Attribute []*bnet_protocol.Attribute             `protobuf:"bytes,1,rep,name=attribute" json:"attribute,omitempty"`
-	State     *bnet_protocol_server_pool.ServerState `protobuf:"bytes,2,opt,name=state" json:"state,omitempty"`
-	ProgramId uint32                                 `protobuf:"fixed32,3,opt,name=program_id,json=programId" json:"program_id,omitempty"`
+	Attribute        []*bnet_protocol.Attribute             `protobuf:"bytes,1,rep,name=attribute" json:"attribute,omitempty"`
+	State            *bnet_protocol_server_pool.ServerState `protobuf:"bytes,2,opt,name=state" json:"state,omitempty"`
+	ProgramId        *uint32                                `protobuf:"fixed32,3,req,name=program_id,json=programId" json:"program_id,omitempty"`
+	XXX_unrecognized []byte                                 `json:"-"`
 }
 
 func (m *RegisterServerRequest) Reset()                    { *m = RegisterServerRequest{} }
@@ -930,17 +1001,18 @@ func (m *RegisterServerRequest) GetState() *bnet_protocol_server_pool.ServerStat
 }
 
 func (m *RegisterServerRequest) GetProgramId() uint32 {
-	if m != nil {
-		return m.ProgramId
+	if m != nil && m.ProgramId != nil {
+		return *m.ProgramId
 	}
 	return 0
 }
 
 // ref: bnet.protocol.game_master.RegisterUtilitiesRequest
 type RegisterUtilitiesRequest struct {
-	Attribute []*bnet_protocol.Attribute             `protobuf:"bytes,1,rep,name=attribute" json:"attribute,omitempty"`
-	State     *bnet_protocol_server_pool.ServerState `protobuf:"bytes,2,opt,name=state" json:"state,omitempty"`
-	ProgramId uint32                                 `protobuf:"fixed32,3,opt,name=program_id,json=programId" json:"program_id,omitempty"`
+	Attribute        []*bnet_protocol.Attribute             `protobuf:"bytes,1,rep,name=attribute" json:"attribute,omitempty"`
+	State            *bnet_protocol_server_pool.ServerState `protobuf:"bytes,2,opt,name=state" json:"state,omitempty"`
+	ProgramId        *uint32                                `protobuf:"fixed32,3,req,name=program_id,json=programId" json:"program_id,omitempty"`
+	XXX_unrecognized []byte                                 `json:"-"`
 }
 
 func (m *RegisterUtilitiesRequest) Reset()                    { *m = RegisterUtilitiesRequest{} }
@@ -963,15 +1035,16 @@ func (m *RegisterUtilitiesRequest) GetState() *bnet_protocol_server_pool.ServerS
 }
 
 func (m *RegisterUtilitiesRequest) GetProgramId() uint32 {
-	if m != nil {
-		return m.ProgramId
+	if m != nil && m.ProgramId != nil {
+		return *m.ProgramId
 	}
 	return 0
 }
 
 // ref: bnet.protocol.game_master.SubscribeRequest
 type SubscribeRequest struct {
-	ObjectId uint64 `protobuf:"varint,1,opt,name=object_id,json=objectId" json:"object_id,omitempty"`
+	ObjectId         *uint64 `protobuf:"varint,1,req,name=object_id,json=objectId" json:"object_id,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *SubscribeRequest) Reset()                    { *m = SubscribeRequest{} }
@@ -980,15 +1053,16 @@ func (*SubscribeRequest) ProtoMessage()               {}
 func (*SubscribeRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{24} }
 
 func (m *SubscribeRequest) GetObjectId() uint64 {
-	if m != nil {
-		return m.ObjectId
+	if m != nil && m.ObjectId != nil {
+		return *m.ObjectId
 	}
 	return 0
 }
 
 // ref: bnet.protocol.game_master.SubscribeResponse
 type SubscribeResponse struct {
-	SubscriptionId uint64 `protobuf:"varint,1,opt,name=subscription_id,json=subscriptionId" json:"subscription_id,omitempty"`
+	SubscriptionId   *uint64 `protobuf:"varint,1,opt,name=subscription_id,json=subscriptionId" json:"subscription_id,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *SubscribeResponse) Reset()                    { *m = SubscribeResponse{} }
@@ -997,14 +1071,15 @@ func (*SubscribeResponse) ProtoMessage()               {}
 func (*SubscribeResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{25} }
 
 func (m *SubscribeResponse) GetSubscriptionId() uint64 {
-	if m != nil {
-		return m.SubscriptionId
+	if m != nil && m.SubscriptionId != nil {
+		return *m.SubscriptionId
 	}
 	return 0
 }
 
 // ref: bnet.protocol.game_master.UnregisterServerRequest
 type UnregisterServerRequest struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *UnregisterServerRequest) Reset()                    { *m = UnregisterServerRequest{} }
@@ -1014,6 +1089,7 @@ func (*UnregisterServerRequest) Descriptor() ([]byte, []int) { return fileDescri
 
 // ref: bnet.protocol.game_master.UnregisterUtilitiesRequest
 type UnregisterUtilitiesRequest struct {
+	XXX_unrecognized []byte `json:"-"`
 }
 
 func (m *UnregisterUtilitiesRequest) Reset()                    { *m = UnregisterUtilitiesRequest{} }
@@ -1023,7 +1099,8 @@ func (*UnregisterUtilitiesRequest) Descriptor() ([]byte, []int) { return fileDes
 
 // ref: bnet.protocol.game_master.UnsubscribeRequest
 type UnsubscribeRequest struct {
-	SubscriptionId uint64 `protobuf:"varint,1,opt,name=subscription_id,json=subscriptionId" json:"subscription_id,omitempty"`
+	SubscriptionId   *uint64 `protobuf:"varint,1,req,name=subscription_id,json=subscriptionId" json:"subscription_id,omitempty"`
+	XXX_unrecognized []byte  `json:"-"`
 }
 
 func (m *UnsubscribeRequest) Reset()                    { *m = UnsubscribeRequest{} }
@@ -1032,8 +1109,8 @@ func (*UnsubscribeRequest) ProtoMessage()               {}
 func (*UnsubscribeRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{28} }
 
 func (m *UnsubscribeRequest) GetSubscriptionId() uint64 {
-	if m != nil {
-		return m.SubscriptionId
+	if m != nil && m.SubscriptionId != nil {
+		return *m.SubscriptionId
 	}
 	return 0
 }
@@ -1074,100 +1151,103 @@ func init() {
 func init() { proto.RegisterFile("bnet/protocol/game_master/game_master.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
-	// 1510 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xcc, 0x58, 0x4b, 0x6f, 0x14, 0xc7,
-	0x16, 0xa6, 0x7b, 0xec, 0xb1, 0xe7, 0x8c, 0xc7, 0x1e, 0x37, 0xb6, 0x19, 0x0c, 0xf7, 0x02, 0xcd,
-	0xe5, 0xe2, 0x84, 0xc8, 0x4e, 0x0c, 0x42, 0x51, 0x04, 0x91, 0x8c, 0x9f, 0x1d, 0xe1, 0x07, 0x65,
-	0x4c, 0x56, 0x51, 0xab, 0xa7, 0xbb, 0x6c, 0x37, 0xcc, 0x54, 0x35, 0xd5, 0x35, 0x60, 0xe7, 0x6f,
-	0x44, 0x89, 0xb2, 0xca, 0x36, 0x8a, 0x22, 0x45, 0x91, 0xb2, 0xce, 0x32, 0xcb, 0xfc, 0x93, 0x2c,
-	0xf2, 0x13, 0xa2, 0x7a, 0xf4, 0x13, 0x3c, 0x36, 0x0c, 0x48, 0xd9, 0x55, 0x7f, 0x75, 0xce, 0xa9,
-	0xf3, 0xae, 0x53, 0x0d, 0xb7, 0xda, 0x04, 0xf3, 0x85, 0x88, 0x51, 0x4e, 0x7d, 0xda, 0x59, 0x38,
-	0xf0, 0xba, 0xd8, 0xed, 0x7a, 0x31, 0xc7, 0x2c, 0xbf, 0x9e, 0x97, 0x04, 0xd6, 0x45, 0x41, 0x3c,
-	0x9f, 0x10, 0xcf, 0xe7, 0x08, 0x66, 0x17, 0x8a, 0x72, 0x3c, 0xce, 0x59, 0xd8, 0xee, 0x71, 0xec,
-	0xde, 0xb9, 0xfb, 0x69, 0xf1, 0x4b, 0xf1, 0xcf, 0x5e, 0x2e, 0x32, 0xa4, 0x42, 0xd5, 0x6e, 0x49,
-	0xad, 0x18, 0xb3, 0x17, 0x98, 0xb9, 0x11, 0x2d, 0xae, 0x15, 0xb1, 0xfd, 0xad, 0x01, 0x33, 0xcb,
-	0x1e, 0xf1, 0x71, 0x67, 0xdd, 0xeb, 0xe2, 0x55, 0xc2, 0xd9, 0x31, 0xc2, 0xcf, 0x7b, 0x38, 0xe6,
-	0xd6, 0x7f, 0x00, 0x98, 0x5a, 0xba, 0x61, 0xd0, 0x32, 0xae, 0x1a, 0x73, 0x55, 0x54, 0xd3, 0x88,
-	0x13, 0x88, 0xed, 0x7d, 0xcf, 0xe7, 0x94, 0x1d, 0x8b, 0x6d, 0x53, 0x6d, 0x6b, 0xc4, 0x09, 0xac,
-	0xfb, 0x50, 0x8d, 0x3a, 0xde, 0x31, 0x66, 0xad, 0xca, 0xd5, 0xca, 0x5c, 0x7d, 0xf1, 0xda, 0xfc,
-	0x89, 0x0e, 0x98, 0xdf, 0x91, 0x84, 0x0f, 0xcc, 0xe6, 0x39, 0xa4, 0x99, 0xec, 0x3f, 0x0c, 0x98,
-	0x5c, 0x3e, 0xf4, 0xc8, 0x01, 0x16, 0x7a, 0x25, 0x2a, 0xad, 0x41, 0x5d, 0xf2, 0x1d, 0x7a, 0x24,
-	0xe8, 0x60, 0xa9, 0x53, 0x7d, 0xf1, 0x46, 0x1f, 0xc9, 0x82, 0x79, 0x43, 0x12, 0x23, 0x38, 0x48,
-	0xd7, 0x96, 0x05, 0x43, 0x34, 0xc2, 0x44, 0x6a, 0x3d, 0x8a, 0xe4, 0xda, 0xfa, 0x0c, 0x6a, 0xa9,
-	0xaf, 0xb5, 0xce, 0xad, 0x92, 0xe4, 0xa5, 0x64, 0x5f, 0xaa, 0x9a, 0x91, 0x5b, 0x2d, 0x18, 0x61,
-	0x38, 0xea, 0x78, 0x3e, 0x6e, 0x0d, 0x49, 0x91, 0xc9, 0xa7, 0xfd, 0xbb, 0x01, 0xf5, 0x65, 0x4a,
-	0x08, 0xf6, 0xb9, 0x43, 0xf6, 0xa9, 0x75, 0x07, 0x6a, 0x5d, 0xdc, 0x6d, 0x63, 0x96, 0xf8, 0xb4,
-	0xbe, 0x78, 0xa1, 0x74, 0xca, 0x2a, 0xe1, 0x21, 0x3f, 0x76, 0x02, 0x34, 0xaa, 0x28, 0x9d, 0x40,
-	0xe8, 0x7b, 0x48, 0x63, 0x2e, 0xf5, 0xad, 0x21, 0xb9, 0x16, 0x58, 0x44, 0x19, 0x6f, 0x55, 0xae,
-	0x1a, 0x73, 0xc3, 0x48, 0xae, 0xad, 0x29, 0x18, 0xe6, 0xf4, 0x19, 0x26, 0x52, 0x8b, 0x31, 0xa4,
-	0x3e, 0x8a, 0x96, 0x0d, 0xbf, 0x91, 0x65, 0xf6, 0x4f, 0x26, 0x5c, 0x5c, 0x53, 0x41, 0xdd, 0x8b,
-	0x02, 0x8f, 0xe3, 0x2d, 0xca, 0xc3, 0xfd, 0xd0, 0xf7, 0x78, 0x48, 0x89, 0xb5, 0x05, 0x26, 0x8d,
-	0xa4, 0x19, 0xe3, 0x8b, 0x9f, 0xf7, 0x09, 0xc3, 0x89, 0x12, 0xe6, 0xb7, 0x23, 0xcc, 0xe4, 0x0a,
-	0x99, 0x34, 0xb2, 0x76, 0xa1, 0x1e, 0xe0, 0xd8, 0x67, 0x61, 0x24, 0x20, 0x69, 0x6e, 0x7d, 0xf1,
-	0x93, 0x53, 0xe2, 0xab, 0x85, 0xaf, 0x64, 0x8c, 0x28, 0x2f, 0x45, 0x24, 0x6a, 0xc4, 0xe8, 0x01,
-	0xf3, 0xba, 0xc2, 0xe7, 0xc2, 0x5d, 0x23, 0xa8, 0xa6, 0x11, 0x27, 0xb0, 0x37, 0xa0, 0x96, 0x2a,
-	0x61, 0xcd, 0xc2, 0xcc, 0xf6, 0xce, 0x2a, 0x5a, 0x7a, 0xec, 0x6c, 0x6f, 0xb9, 0x4b, 0x7b, 0x8f,
-	0xb7, 0x5d, 0x67, 0xeb, 0xc9, 0xd2, 0x43, 0x67, 0xa5, 0x79, 0xce, 0x1a, 0x81, 0xca, 0xd2, 0xca,
-	0x4a, 0xd3, 0xb0, 0x00, 0xaa, 0x68, 0x75, 0x73, 0xfb, 0xc9, 0x6a, 0xd3, 0x14, 0xeb, 0xe5, 0x8d,
-	0xa5, 0xad, 0xf5, 0xd5, 0x66, 0xc5, 0xfe, 0xd9, 0x84, 0x89, 0xb5, 0x90, 0x04, 0xf9, 0x8c, 0xcd,
-	0xca, 0xc0, 0x78, 0x8b, 0x32, 0x38, 0xad, 0xc8, 0x1c, 0x69, 0x5a, 0x84, 0x19, 0x0f, 0x71, 0x2c,
-	0x4d, 0xab, 0x2f, 0x7e, 0x70, 0x8a, 0xbb, 0x76, 0x52, 0x06, 0x94, 0x63, 0xb6, 0x2e, 0x41, 0x8d,
-	0xb6, 0x9f, 0x62, 0x5f, 0x16, 0xbb, 0x48, 0x9f, 0x21, 0x34, 0xaa, 0x00, 0x55, 0xeb, 0xb9, 0x56,
-	0x30, 0x5c, 0x6e, 0x05, 0xb7, 0x61, 0xda, 0x0b, 0x5e, 0x88, 0x2e, 0x12, 0xb8, 0x24, 0x17, 0xdd,
-	0x56, 0x55, 0x16, 0xc3, 0x54, 0xb2, 0x99, 0x8f, 0xbc, 0x7d, 0x08, 0xcd, 0xcc, 0x59, 0x71, 0x44,
-	0x49, 0x8c, 0x07, 0x6c, 0x39, 0x33, 0x50, 0x7d, 0xde, 0xc3, 0x3d, 0xac, 0x82, 0x3c, 0x8a, 0xf4,
-	0x97, 0xfd, 0x12, 0xa6, 0x55, 0x73, 0x0b, 0x8a, 0x2a, 0xbc, 0xb3, 0x76, 0x32, 0x03, 0x55, 0x86,
-	0xbd, 0x58, 0x67, 0x6c, 0x03, 0xe9, 0x2f, 0xfb, 0x1b, 0x13, 0x66, 0x5e, 0x9f, 0xa1, 0xd6, 0x38,
-	0x98, 0xa9, 0x85, 0x66, 0x28, 0x2b, 0x9c, 0x78, 0x5d, 0x9c, 0x54, 0xb8, 0x58, 0x0f, 0xd4, 0x91,
-	0x1e, 0xc1, 0x58, 0xcc, 0x3d, 0x1e, 0xbb, 0xed, 0x9e, 0xff, 0x0c, 0xf3, 0xd6, 0x90, 0x64, 0xff,
-	0xf0, 0x14, 0xdb, 0x76, 0x05, 0xcb, 0x03, 0xc9, 0x21, 0x05, 0xd6, 0xe3, 0x0c, 0xb0, 0xae, 0x40,
-	0xbd, 0x47, 0x62, 0x8c, 0x03, 0x1c, 0x64, 0x59, 0x00, 0x09, 0xe4, 0x04, 0xd6, 0x0d, 0x18, 0xf7,
-	0x3a, 0x1d, 0xfa, 0xd2, 0x95, 0x7e, 0x0f, 0xc9, 0x81, 0x8e, 0x7f, 0x43, 0xa2, 0x8f, 0x34, 0x68,
-	0xff, 0x65, 0xa8, 0x78, 0xac, 0xd1, 0x1e, 0x29, 0xc6, 0xe3, 0xf4, 0xf0, 0x63, 0xc6, 0x28, 0x73,
-	0x7d, 0x1a, 0x60, 0xed, 0xea, 0x9a, 0x44, 0x96, 0x69, 0x80, 0xcb, 0xd1, 0xac, 0xbc, 0x6d, 0x34,
-	0x37, 0x61, 0xcc, 0x57, 0x1d, 0xdb, 0x0d, 0xc9, 0x3e, 0xd5, 0xae, 0xfb, 0x7f, 0x1f, 0x41, 0xb9,
-	0x06, 0xaf, 0xdc, 0xe6, 0x67, 0x80, 0xfd, 0x15, 0x40, 0x76, 0x50, 0x29, 0x85, 0x8d, 0x72, 0x0a,
-	0x7f, 0x0c, 0x23, 0x52, 0xb0, 0x4e, 0xef, 0x3e, 0x97, 0x43, 0x55, 0xd0, 0x39, 0x81, 0xfd, 0xb7,
-	0x01, 0xe3, 0xc5, 0xb2, 0xb6, 0x36, 0xe1, 0xbc, 0xcf, 0xb0, 0x74, 0xa9, 0x9b, 0x66, 0x44, 0xac,
-	0x1b, 0x50, 0xff, 0x0c, 0xb2, 0x12, 0xc6, 0x14, 0x8e, 0xad, 0x15, 0xa8, 0xee, 0x87, 0x1d, 0x8e,
-	0x99, 0x56, 0xe9, 0xa3, 0x92, 0x84, 0xe2, 0x84, 0x92, 0x32, 0xae, 0x49, 0x1e, 0xa4, 0x79, 0x45,
-	0x8d, 0x48, 0xd9, 0x38, 0x29, 0x4e, 0xf5, 0x95, 0x5e, 0xc5, 0x43, 0xb9, 0xab, 0xb8, 0xd8, 0xb1,
-	0x87, 0xcb, 0x1d, 0xfb, 0xbb, 0x21, 0x98, 0x28, 0x65, 0xab, 0x60, 0x51, 0x99, 0xee, 0x76, 0x43,
-	0x22, 0xfd, 0x6a, 0xa2, 0x9a, 0x42, 0x36, 0x43, 0x92, 0xdf, 0xf6, 0x8e, 0xa4, 0x1d, 0xd9, 0xb6,
-	0x77, 0x64, 0xdd, 0x82, 0xc9, 0x97, 0x5e, 0x28, 0x78, 0x3b, 0x9d, 0x30, 0xc6, 0x3e, 0x25, 0x81,
-	0x6a, 0xa7, 0x0d, 0xd4, 0x14, 0x1b, 0x9b, 0x39, 0xdc, 0xfa, 0x1f, 0x8c, 0x0b, 0xdf, 0xc7, 0x6e,
-	0x84, 0x99, 0x7b, 0x48, 0x7b, 0x4c, 0xea, 0xde, 0x40, 0x63, 0x12, 0xdd, 0xc1, 0x6c, 0x83, 0xf6,
-	0x98, 0x75, 0x0d, 0xc6, 0x3c, 0x9f, 0x87, 0x2f, 0xb0, 0x2b, 0x61, 0x69, 0x45, 0x03, 0xd5, 0x15,
-	0x26, 0xb4, 0x8f, 0x65, 0xbd, 0x28, 0x12, 0xd5, 0xed, 0x63, 0x59, 0x2f, 0x0d, 0xd4, 0x50, 0xa8,
-	0xba, 0x0e, 0x62, 0xeb, 0x3a, 0x34, 0xf6, 0x29, 0xeb, 0x86, 0xe4, 0x40, 0x8b, 0x1a, 0x51, 0xc7,
-	0x69, 0x50, 0xc9, 0xba, 0x09, 0x13, 0x42, 0x51, 0x41, 0x94, 0x08, 0x1b, 0x95, 0x64, 0xe3, 0x1a,
-	0x4e, 0xa4, 0xcd, 0xc3, 0x79, 0xe1, 0x63, 0xf7, 0x29, 0x0d, 0x89, 0xd7, 0xee, 0x24, 0xea, 0xd5,
-	0x24, 0xf1, 0xa4, 0xd8, 0xfa, 0x42, 0xef, 0x28, 0xc1, 0x0f, 0xe0, 0xbf, 0x5a, 0xa0, 0x1b, 0x12,
-	0xf7, 0x75, 0xac, 0x20, 0x59, 0x67, 0x35, 0x95, 0x43, 0xb6, 0x5f, 0x91, 0x31, 0x07, 0x4d, 0xc9,
-	0xa8, 0xdc, 0xc6, 0x29, 0xf7, 0x3a, 0xad, 0xba, 0xd2, 0x4e, 0xe0, 0x92, 0xe8, 0xb1, 0x40, 0xad,
-	0x7b, 0x70, 0xa9, 0x7c, 0x5a, 0x9e, 0x69, 0x4c, 0x32, 0x5d, 0x28, 0x1c, 0x95, 0x71, 0xdb, 0x77,
-	0x61, 0x7a, 0x1d, 0x73, 0xdd, 0x6d, 0x45, 0xf1, 0xe5, 0x46, 0xd9, 0x3e, 0x55, 0x67, 0xff, 0x68,
-	0xc0, 0x4c, 0x99, 0x51, 0xdf, 0x48, 0x85, 0x1e, 0x6c, 0x0c, 0xd6, 0x83, 0xcd, 0x81, 0x7b, 0xb0,
-	0xfd, 0x35, 0x9c, 0x5f, 0xc7, 0x3c, 0x25, 0x3b, 0x9b, 0x7d, 0xef, 0xa6, 0x82, 0xed, 0x10, 0xa6,
-	0x8a, 0x67, 0x6b, 0x17, 0x95, 0xcd, 0x34, 0x06, 0x37, 0xf3, 0x4f, 0x03, 0x26, 0x44, 0x0a, 0xbd,
-	0x8f, 0xd9, 0x3f, 0x9b, 0xc8, 0xcc, 0xb7, 0x99, 0xc8, 0x4e, 0x9c, 0x75, 0x2a, 0x7d, 0x66, 0x9d,
-	0xef, 0x0d, 0x68, 0x66, 0xf6, 0x9c, 0x6d, 0xd8, 0xc9, 0xa6, 0x19, 0x33, 0x3f, 0xcd, 0xbc, 0x72,
-	0x3d, 0x55, 0x06, 0xbb, 0x9e, 0x7e, 0x30, 0x60, 0xea, 0x61, 0x18, 0xeb, 0xe4, 0x17, 0x53, 0xa1,
-	0xf6, 0x77, 0x96, 0x34, 0xc6, 0x00, 0x6d, 0xff, 0x0a, 0x88, 0xc0, 0x32, 0xa1, 0x6b, 0x80, 0x8f,
-	0xf4, 0xa5, 0x0d, 0x12, 0x72, 0x04, 0x22, 0x08, 0xba, 0xde, 0x91, 0xcb, 0x70, 0xdc, 0xeb, 0xf0,
-	0xa4, 0xe9, 0x42, 0xd7, 0x3b, 0x42, 0x0a, 0x11, 0x2f, 0xd4, 0xe9, 0x92, 0x82, 0xda, 0x81, 0x5f,
-	0x16, 0x5f, 0x0b, 0x2a, 0xef, 0xde, 0xfc, 0xb5, 0xa0, 0x7c, 0x92, 0x7f, 0x31, 0x5c, 0x87, 0x86,
-	0xec, 0x37, 0xa9, 0x56, 0x4a, 0xed, 0x31, 0x09, 0x26, 0x7a, 0x1d, 0x43, 0x75, 0x27, 0x49, 0x89,
-	0xd1, 0x30, 0xc0, 0xf2, 0x62, 0x3e, 0xe1, 0x49, 0xe7, 0xe8, 0x6d, 0x94, 0x12, 0x16, 0x1b, 0x8b,
-	0xf9, 0x66, 0x8f, 0xb2, 0x5f, 0x0c, 0x98, 0x51, 0x67, 0x3f, 0xc4, 0xfb, 0xfc, 0xbd, 0x8c, 0xb4,
-	0x85, 0x77, 0xaa, 0x79, 0xd6, 0x77, 0x6a, 0x36, 0x08, 0x57, 0x0a, 0x83, 0xf0, 0xaf, 0x06, 0x4c,
-	0x23, 0x7c, 0x10, 0x8a, 0x13, 0x77, 0xe5, 0x3f, 0x88, 0x24, 0xcb, 0x06, 0xe9, 0xaf, 0xf7, 0x60,
-	0x58, 0x34, 0x0d, 0xac, 0xf5, 0x2b, 0x97, 0x40, 0xfe, 0x67, 0x87, 0x3a, 0x54, 0xf4, 0x1c, 0x8c,
-	0x14, 0xd3, 0x69, 0xcf, 0xc2, 0xdf, 0x0c, 0x68, 0x25, 0x2a, 0xef, 0xf1, 0xb0, 0x13, 0xf2, 0x5c,
-	0x6d, 0xfc, 0x6b, 0xb5, 0x5e, 0x80, 0xe6, 0x6e, 0xaf, 0x2d, 0x32, 0xb9, 0x9d, 0x36, 0xce, 0xc2,
-	0xcb, 0xce, 0x28, 0xbe, 0xec, 0xec, 0x7b, 0x30, 0x99, 0x63, 0xd0, 0x85, 0x75, 0x13, 0x26, 0x62,
-	0x05, 0xca, 0x7a, 0xc8, 0xf8, 0xc6, 0xf3, 0xb0, 0x13, 0xd8, 0x17, 0xe1, 0xc2, 0x1e, 0x61, 0xaf,
-	0x0b, 0xac, 0x7d, 0x19, 0x66, 0xb3, 0xad, 0xb2, 0x03, 0xed, 0xfb, 0x60, 0xed, 0x91, 0xb8, 0xac,
-	0xe9, 0x59, 0xcf, 0x6d, 0x57, 0xa5, 0xbb, 0x6e, 0xff, 0x13, 0x00, 0x00, 0xff, 0xff, 0x43, 0xe5,
-	0x4a, 0x26, 0x82, 0x13, 0x00, 0x00,
+	// 1559 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xcc, 0x58, 0x4b, 0x6f, 0x1b, 0x47,
+	0x12, 0xc6, 0x0c, 0x29, 0x4a, 0x2c, 0x4a, 0x14, 0xd5, 0x96, 0x64, 0x4a, 0xb6, 0x77, 0xb5, 0xb3,
+	0x5e, 0x5b, 0x6b, 0x19, 0x94, 0xc4, 0x15, 0xb4, 0x2b, 0xc1, 0x9b, 0xc0, 0xd1, 0xcb, 0x0c, 0x2c,
+	0xdb, 0x69, 0x45, 0xb9, 0x05, 0x83, 0x21, 0xa7, 0x29, 0x8d, 0x4d, 0x4e, 0x8f, 0x7b, 0x9a, 0xb6,
+	0xe4, 0xff, 0x90, 0x43, 0x80, 0xdc, 0x72, 0xc8, 0x2d, 0xa7, 0x20, 0x41, 0x8e, 0xf9, 0x03, 0x41,
+	0x8e, 0xf9, 0x1f, 0xf9, 0x05, 0xb9, 0x05, 0xfd, 0x98, 0xa7, 0x9e, 0x96, 0x63, 0x20, 0xb7, 0x9e,
+	0x7a, 0x75, 0x55, 0xf5, 0x57, 0xd5, 0xd5, 0x03, 0x0b, 0x6d, 0x9f, 0xf0, 0xc5, 0x80, 0x51, 0x4e,
+	0x3b, 0xb4, 0xb7, 0x78, 0xe0, 0xf4, 0x89, 0xdd, 0x77, 0x42, 0x4e, 0x58, 0x7a, 0xdd, 0x90, 0x02,
+	0x68, 0x46, 0x08, 0x37, 0x22, 0xe1, 0x46, 0x4a, 0x60, 0x76, 0x31, 0x6b, 0xc7, 0xe1, 0x9c, 0x79,
+	0xed, 0x01, 0x27, 0xf6, 0xca, 0xea, 0xff, 0xb2, 0x5f, 0x4a, 0x7f, 0xf6, 0x66, 0x56, 0x21, 0x36,
+	0xaa, 0xb8, 0x39, 0xb7, 0x42, 0xc2, 0x5e, 0x11, 0x66, 0x07, 0x34, 0xbb, 0x56, 0xc2, 0xd6, 0x97,
+	0x06, 0x4c, 0x6f, 0x38, 0x7e, 0x87, 0xf4, 0x76, 0x9c, 0x3e, 0xd9, 0xf2, 0x39, 0x3b, 0xc6, 0xe4,
+	0xe5, 0x80, 0x84, 0x1c, 0xdd, 0x02, 0x60, 0x6a, 0x69, 0x7b, 0x6e, 0xdd, 0x98, 0x33, 0xe7, 0x4b,
+	0xb8, 0xac, 0x29, 0x2d, 0x57, 0xb0, 0xbb, 0x4e, 0x87, 0x53, 0x76, 0x2c, 0xd8, 0xe6, 0x9c, 0x21,
+	0xd8, 0x9a, 0xd2, 0x72, 0xd1, 0x1a, 0x94, 0x82, 0x9e, 0x73, 0x4c, 0x58, 0xbd, 0x30, 0x57, 0x98,
+	0xaf, 0x34, 0xff, 0xd1, 0x38, 0x33, 0x01, 0x8d, 0x67, 0x52, 0x10, 0x6b, 0x05, 0xeb, 0x17, 0x03,
+	0x26, 0x36, 0x0e, 0x1d, 0xff, 0x80, 0x08, 0x9f, 0x22, 0x77, 0xb6, 0xa1, 0x22, 0x75, 0x0e, 0x1d,
+	0xdf, 0xed, 0x11, 0xe9, 0x4f, 0xa5, 0xf9, 0xaf, 0x73, 0xac, 0x0a, 0xe5, 0x47, 0x52, 0x18, 0xc3,
+	0x41, 0xbc, 0x46, 0x08, 0x8a, 0x34, 0x20, 0xbe, 0xf4, 0x78, 0x04, 0xcb, 0x35, 0x5a, 0x85, 0x72,
+	0x9c, 0x67, 0xed, 0x6f, 0x3d, 0x67, 0xf9, 0x61, 0xc4, 0xc7, 0x89, 0x28, 0xfa, 0x3b, 0x0c, 0x33,
+	0x12, 0xf4, 0x9c, 0x0e, 0xa9, 0x17, 0x85, 0xb9, 0xf5, 0xa1, 0xae, 0xd3, 0x0b, 0x09, 0x8e, 0xa8,
+	0xd6, 0x4f, 0x06, 0x54, 0x36, 0xa8, 0xef, 0x93, 0x0e, 0x6f, 0xf9, 0x5d, 0x8a, 0x56, 0xa0, 0xdc,
+	0x27, 0xfd, 0x36, 0x61, 0x51, 0x4a, 0x2b, 0xcd, 0xeb, 0xb9, 0x8d, 0xb6, 0x7c, 0xee, 0xf1, 0xe3,
+	0x96, 0x8b, 0x47, 0x94, 0x64, 0xcb, 0x15, 0x2e, 0x1f, 0xd2, 0x90, 0xd7, 0xcd, 0x39, 0x73, 0xbe,
+	0x8c, 0xe5, 0x5a, 0xd0, 0x02, 0xca, 0x78, 0xbd, 0x30, 0x67, 0xce, 0x0f, 0x61, 0xb9, 0x46, 0x93,
+	0x30, 0xc4, 0xe9, 0x0b, 0xe2, 0x4b, 0x67, 0x46, 0xb1, 0xfa, 0xc8, 0x06, 0x37, 0x74, 0xe9, 0xe0,
+	0xac, 0x2f, 0x4c, 0x98, 0xd9, 0x56, 0xe7, 0xb9, 0x1f, 0xb8, 0x0e, 0x27, 0x4f, 0x28, 0xf7, 0xba,
+	0x5e, 0xc7, 0xe1, 0x1e, 0xf5, 0xd1, 0x13, 0x30, 0x69, 0x20, 0x43, 0xa8, 0x36, 0x3f, 0x38, 0xe7,
+	0x14, 0xce, 0xb4, 0xd0, 0x78, 0x1a, 0x10, 0x26, 0x57, 0xd8, 0xa4, 0x01, 0xda, 0x83, 0x8a, 0x4b,
+	0xc2, 0x0e, 0xf3, 0x02, 0x41, 0x92, 0xa1, 0x56, 0x9a, 0xcb, 0x17, 0x1c, 0xaf, 0x36, 0xbe, 0x99,
+	0x28, 0xe2, 0xb4, 0x15, 0x81, 0xd1, 0x80, 0xd1, 0x03, 0xe6, 0xf4, 0x45, 0xbe, 0x0b, 0x73, 0xc6,
+	0xfc, 0x30, 0x2e, 0x6b, 0x4a, 0xcb, 0xb5, 0xee, 0x43, 0x39, 0x76, 0x02, 0x0d, 0x43, 0xe1, 0xe1,
+	0xe6, 0x66, 0xcd, 0x40, 0x00, 0x25, 0xbc, 0xb5, 0xfb, 0xf4, 0xb3, 0xad, 0x9a, 0x29, 0xd6, 0x1b,
+	0x8f, 0x1e, 0x3e, 0xd9, 0xd9, 0xaa, 0x15, 0xac, 0xef, 0x4d, 0x18, 0xdf, 0xf6, 0x7c, 0x37, 0x0d,
+	0xca, 0x04, 0xe5, 0xc6, 0x5b, 0xa2, 0xfc, 0xa2, 0xfa, 0x69, 0x49, 0xd7, 0x03, 0xc2, 0xb8, 0x47,
+	0x42, 0xe9, 0x7a, 0xa5, 0xf9, 0xef, 0x0b, 0xd2, 0xf1, 0x2c, 0x56, 0xc0, 0x29, 0x65, 0x74, 0x03,
+	0xca, 0xb4, 0xfd, 0x9c, 0x74, 0x64, 0x1d, 0x0b, 0x68, 0x14, 0xf1, 0x88, 0x22, 0xa8, 0x32, 0x4e,
+	0x55, 0xf9, 0x90, 0x72, 0x23, 0xa9, 0xf2, 0x75, 0x98, 0x72, 0xdc, 0x57, 0xa2, 0x41, 0xb8, 0xb6,
+	0x9f, 0x3a, 0xbd, 0x7a, 0x29, 0x8d, 0xf7, 0xc9, 0x48, 0x26, 0x7d, 0xc0, 0x16, 0x85, 0x5a, 0x92,
+	0xaf, 0x30, 0xa0, 0x7e, 0x48, 0x4e, 0x34, 0x15, 0xe3, 0xad, 0x9a, 0xca, 0x2d, 0x28, 0xbd, 0x1c,
+	0x90, 0x01, 0x51, 0x67, 0x19, 0x6f, 0xaf, 0x89, 0xd6, 0x1b, 0x98, 0x52, 0x5d, 0xcc, 0xcd, 0x7a,
+	0xf2, 0xa7, 0xf5, 0x8e, 0x19, 0x28, 0x31, 0xe2, 0x84, 0x54, 0x75, 0x8f, 0xb1, 0x75, 0x63, 0x09,
+	0x6b, 0x82, 0xf5, 0x95, 0x09, 0xd3, 0xa7, 0x43, 0x12, 0x55, 0xc1, 0x8c, 0x1b, 0xa8, 0xe9, 0xc9,
+	0x72, 0xf6, 0x9d, 0x3e, 0x91, 0x36, 0xca, 0x58, 0xae, 0xaf, 0xdc, 0x81, 0x76, 0x61, 0x34, 0xe4,
+	0x0e, 0x0f, 0xed, 0xf6, 0xa0, 0xf3, 0x82, 0xf0, 0x7a, 0x51, 0xaa, 0xde, 0xbb, 0x20, 0xb4, 0x3d,
+	0xa1, 0xf2, 0x91, 0xd4, 0xc0, 0x95, 0x30, 0xf9, 0x40, 0x16, 0x54, 0x06, 0x7e, 0x48, 0x88, 0x4b,
+	0xdc, 0x18, 0x0e, 0x22, 0x4a, 0x88, 0xa8, 0x2d, 0x17, 0x2d, 0x40, 0xd5, 0xe9, 0xf5, 0xe8, 0x6b,
+	0x5b, 0x66, 0xdd, 0xf3, 0x0f, 0x34, 0x16, 0x8a, 0x9c, 0x0d, 0x08, 0x1e, 0x93, 0xbc, 0x4f, 0x34,
+	0xcb, 0xfa, 0xcd, 0x50, 0x67, 0xb2, 0x4d, 0x07, 0x7e, 0xf6, 0x4c, 0x2e, 0xb8, 0x5e, 0xe6, 0x00,
+	0x08, 0x63, 0x94, 0xd9, 0x1d, 0xea, 0x92, 0x24, 0xdd, 0x65, 0x49, 0xdc, 0xa0, 0x2e, 0xc9, 0x1f,
+	0xaa, 0x2a, 0x91, 0x2b, 0x1c, 0x6a, 0x0b, 0x46, 0x3b, 0xaa, 0x45, 0xdb, 0x9e, 0xdf, 0xa5, 0x3a,
+	0x85, 0x77, 0xce, 0x31, 0x94, 0xea, 0xe8, 0xb8, 0xd2, 0x49, 0x3e, 0xac, 0xcf, 0x01, 0x92, 0x4d,
+	0x72, 0x60, 0xd6, 0x11, 0x26, 0x60, 0x5e, 0x82, 0x61, 0x69, 0x54, 0x02, 0xfd, 0xdc, 0x9b, 0xa0,
+	0x24, 0xe4, 0x5a, 0xae, 0xf5, 0xbb, 0x01, 0xd5, 0x6c, 0x9d, 0xa3, 0x16, 0x5c, 0xeb, 0x30, 0x22,
+	0x33, 0x6a, 0xc7, 0xa8, 0x08, 0x75, 0x37, 0x3a, 0x1b, 0x41, 0x28, 0x52, 0x8a, 0x49, 0x21, 0xda,
+	0x84, 0x52, 0xd7, 0xeb, 0x71, 0xc2, 0x64, 0xb6, 0x2b, 0xcd, 0xfb, 0x39, 0xed, 0xec, 0x24, 0x12,
+	0x2b, 0x6e, 0x4b, 0x1d, 0xac, 0x75, 0x45, 0x89, 0x4a, 0xdb, 0x24, 0x57, 0xa2, 0x8a, 0x88, 0xea,
+	0xfa, 0xf6, 0x2d, 0xa6, 0x20, 0xa3, 0xee, 0xe0, 0x6c, 0xaf, 0x1e, 0xca, 0xf7, 0xea, 0x9f, 0x8b,
+	0x30, 0x9e, 0x83, 0xae, 0xc0, 0x88, 0x82, 0xbd, 0xdd, 0xf7, 0x7c, 0xd9, 0x4c, 0x4c, 0x89, 0x11,
+	0x45, 0xdc, 0xf5, 0x7c, 0x74, 0x3f, 0x91, 0x70, 0x8e, 0x64, 0x5c, 0xe6, 0xfa, 0xd8, 0x4a, 0xa3,
+	0xb9, 0xb6, 0xb2, 0xb6, 0xfa, 0x5f, 0xb2, 0xb0, 0xb4, 0xb4, 0x16, 0x4b, 0x3b, 0x47, 0xa8, 0x01,
+	0x13, 0xaf, 0x1d, 0x4f, 0x58, 0xeb, 0xf5, 0xbc, 0x90, 0x74, 0xa8, 0xef, 0xaa, 0xd6, 0x2b, 0xa1,
+	0x57, 0x13, 0xbc, 0xdd, 0x14, 0x0b, 0xdd, 0x85, 0xaa, 0x38, 0x99, 0xd0, 0x0e, 0x08, 0xb3, 0x0f,
+	0xe9, 0x80, 0xc9, 0xb0, 0xa4, 0xf0, 0xa8, 0x64, 0x3c, 0x23, 0xec, 0x11, 0x1d, 0x30, 0x74, 0x1b,
+	0x46, 0x9d, 0x0e, 0xf7, 0x5e, 0x11, 0x5b, 0x92, 0x65, 0x74, 0x52, 0xac, 0xa2, 0xc8, 0x22, 0xb0,
+	0x10, 0xcd, 0x43, 0x55, 0x4b, 0xa9, 0x2b, 0x22, 0x94, 0x85, 0x25, 0xe5, 0xc6, 0x14, 0x43, 0x5d,
+	0x21, 0x21, 0xba, 0x03, 0x63, 0x5d, 0xca, 0xfa, 0x9e, 0x7f, 0xa0, 0x0d, 0x0e, 0xc7, 0xfb, 0x6a,
+	0xba, 0xb2, 0x78, 0x0f, 0xc6, 0x85, 0xd3, 0x42, 0x2e, 0x32, 0x39, 0x12, 0x49, 0x56, 0x35, 0x27,
+	0xb2, 0xb9, 0x0c, 0xd7, 0xc4, 0x39, 0xd8, 0xcf, 0xa9, 0xe7, 0x3b, 0xed, 0x5e, 0xe4, 0x6a, 0x39,
+	0x92, 0x9f, 0x10, 0xdc, 0x8f, 0x35, 0x53, 0x99, 0xdf, 0x82, 0xbf, 0x69, 0xb3, 0xb6, 0xe7, 0xdb,
+	0xa7, 0x69, 0x43, 0xa4, 0x3d, 0xab, 0x05, 0x5b, 0xfe, 0xd3, 0x13, 0x66, 0x16, 0xa0, 0x26, 0x75,
+	0x55, 0x2e, 0x39, 0xe5, 0x4e, 0xaf, 0x5e, 0x89, 0xdd, 0x14, 0x2c, 0x29, 0xf7, 0xa9, 0x60, 0xa0,
+	0x0f, 0xe1, 0x46, 0x7e, 0xcf, 0xb4, 0xde, 0x68, 0xa4, 0x77, 0x3d, 0xb3, 0x61, 0x62, 0xc0, 0x5a,
+	0x85, 0xa9, 0x1d, 0xc2, 0x75, 0x9b, 0x96, 0x25, 0x9c, 0xcc, 0xbb, 0xe7, 0x94, 0xab, 0xf5, 0x8d,
+	0x01, 0xd3, 0x79, 0x45, 0x7d, 0xa9, 0x65, 0x9a, 0xb7, 0x71, 0xf5, 0xe6, 0x6d, 0xbe, 0x53, 0xf3,
+	0xb6, 0xde, 0xc0, 0xb5, 0x1d, 0xc2, 0x63, 0x91, 0xcb, 0xc5, 0x95, 0x29, 0x7b, 0xf3, 0xaa, 0x65,
+	0x6f, 0x11, 0x98, 0xcc, 0xee, 0xad, 0x53, 0x93, 0x0f, 0xd1, 0x78, 0xb7, 0x10, 0x7f, 0x35, 0x60,
+	0x5c, 0x80, 0xe7, 0x7d, 0x3c, 0x0c, 0x92, 0x59, 0xce, 0x7c, 0xdb, 0x59, 0xee, 0xcc, 0x29, 0xa9,
+	0x70, 0xf1, 0x94, 0xf4, 0xb5, 0x01, 0xb5, 0x24, 0xa4, 0xcb, 0x8e, 0x49, 0xd1, 0x1c, 0x64, 0x9e,
+	0x32, 0x07, 0x9d, 0xb8, 0xd1, 0x0a, 0x57, 0xbf, 0xd1, 0xbe, 0x35, 0x60, 0xf2, 0xb1, 0x17, 0x6a,
+	0xd8, 0x8b, 0xc9, 0x52, 0x67, 0x3d, 0x81, 0x8d, 0x71, 0x75, 0xd8, 0x88, 0x79, 0x23, 0xe4, 0x0e,
+	0x13, 0x7e, 0xba, 0xe4, 0x28, 0xb9, 0xe6, 0x41, 0x52, 0x5b, 0x82, 0x88, 0x6e, 0x43, 0xa5, 0xef,
+	0x1c, 0xd9, 0x8c, 0x84, 0x83, 0x1e, 0x8f, 0xfa, 0x71, 0x61, 0x79, 0x69, 0x09, 0x43, 0xdf, 0x39,
+	0xc2, 0x8a, 0x2c, 0x1e, 0xb2, 0x53, 0x39, 0x47, 0x75, 0x2e, 0x73, 0x2f, 0x0b, 0x85, 0xc0, 0x77,
+	0x7d, 0x59, 0xfc, 0x13, 0xc6, 0x64, 0xc3, 0x89, 0xdd, 0x92, 0xae, 0xe3, 0x51, 0x49, 0x8c, 0x7c,
+	0x1a, 0x40, 0x49, 0x01, 0x05, 0xfd, 0x07, 0x46, 0x3c, 0x97, 0xc8, 0xfb, 0x5c, 0x9e, 0xe6, 0xc9,
+	0xcb, 0xbe, 0xa5, 0xd9, 0x38, 0x16, 0xcc, 0xb6, 0x15, 0xf3, 0xf2, 0x0f, 0xb7, 0x1f, 0x0d, 0x98,
+	0x56, 0xfb, 0x3e, 0x26, 0x5d, 0xfe, 0x5e, 0x06, 0xe1, 0xcc, 0x3b, 0xd6, 0xbc, 0xec, 0x3b, 0x36,
+	0x19, 0x9f, 0xf5, 0xa5, 0xba, 0x1c, 0x8f, 0xcf, 0xdf, 0x19, 0x30, 0x85, 0xc9, 0x81, 0x27, 0x36,
+	0xdd, 0x93, 0x7f, 0x29, 0x22, 0xa0, 0x5d, 0xb5, 0xb9, 0x3e, 0x80, 0x21, 0xd1, 0x39, 0x88, 0x9e,
+	0x66, 0xf2, 0xe8, 0x4f, 0xff, 0x0a, 0x51, 0x1b, 0x8a, 0xa6, 0x43, 0xb0, 0x52, 0x3a, 0xf1, 0x72,
+	0x34, 0xb3, 0xd3, 0xc8, 0x0f, 0x06, 0xd4, 0x23, 0x77, 0xf7, 0xb9, 0xd7, 0xf3, 0x78, 0xaa, 0x34,
+	0xfe, 0x92, 0x1e, 0x2f, 0x42, 0x6d, 0x6f, 0xd0, 0x16, 0x00, 0x6e, 0xc7, 0x9d, 0x33, 0xf3, 0x30,
+	0x14, 0x58, 0x48, 0x3d, 0x0c, 0xad, 0x07, 0x30, 0x91, 0x52, 0xd0, 0xb5, 0x74, 0x17, 0xc6, 0x43,
+	0x45, 0x94, 0x65, 0x10, 0x35, 0xa7, 0x22, 0xae, 0xa6, 0xc9, 0x2d, 0xd7, 0x9a, 0x81, 0xeb, 0xfb,
+	0x3e, 0x3b, 0xed, 0x40, 0xad, 0x9b, 0x30, 0x9b, 0xb0, 0xf2, 0xc9, 0xb3, 0xfe, 0x0f, 0x68, 0xdf,
+	0x0f, 0xf3, 0x9e, 0x9e, 0xba, 0xaf, 0x79, 0x72, 0xdf, 0x3f, 0x02, 0x00, 0x00, 0xff, 0xff, 0x14,
+	0xca, 0xbc, 0x6e, 0x94, 0x13, 0x00, 0x00,
 }
