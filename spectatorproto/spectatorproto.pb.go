@@ -2,36 +2,17 @@
 // source: spectatorproto/spectatorproto.proto
 // DO NOT EDIT!
 
-/*
-Package spectatorproto is a generated protocol buffer package.
-
-It is generated from these files:
-	spectatorproto/spectatorproto.proto
-
-It has these top-level messages:
-	Invite
-	JoinInfo
-	PartyQuestInfo
-	PartyServerInfo
-	SecretJoinInfo
-*/
 package spectatorproto
 
 import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
+import json "encoding/json"
 import math "math"
-import pegasus_pegasusshared "github.com/HearthSim/hs-proto-go/pegasus/pegasusshared"
+import pegasusshared "github.com/HearthSim/hs-proto-go/pegasusshared"
 
-// Reference imports to suppress errors if they are not otherwise used.
+// Reference proto, json, and math imports to suppress error if they are not otherwise used.
 var _ = proto.Marshal
-var _ = fmt.Errorf
+var _ = &json.SyntaxError{}
 var _ = math.Inf
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 // ref: SpectatorProto.SecretSource
 type SecretSource int32
@@ -58,6 +39,9 @@ func (x SecretSource) Enum() *SecretSource {
 func (x SecretSource) String() string {
 	return proto.EnumName(SecretSource_name, int32(x))
 }
+func (x SecretSource) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *SecretSource) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(SecretSource_value, data, "SecretSource")
 	if err != nil {
@@ -66,21 +50,19 @@ func (x *SecretSource) UnmarshalJSON(data []byte) error {
 	*x = SecretSource(value)
 	return nil
 }
-func (SecretSource) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
 // ref: SpectatorProto.Invite
 type Invite struct {
-	InviterGameAccountId *pegasus_pegasusshared.BnetId `protobuf:"bytes,1,req,name=inviter_game_account_id,json=inviterGameAccountId" json:"inviter_game_account_id,omitempty"`
-	JoinInfo             *JoinInfo                     `protobuf:"bytes,2,req,name=join_info,json=joinInfo" json:"join_info,omitempty"`
-	XXX_unrecognized     []byte                        `json:"-"`
+	InviterGameAccountId *pegasusshared.BnetId `protobuf:"bytes,1,req,name=inviter_game_account_id" json:"inviter_game_account_id,omitempty"`
+	JoinInfo             *JoinInfo             `protobuf:"bytes,2,req,name=join_info" json:"join_info,omitempty"`
+	XXX_unrecognized     []byte                `json:"-"`
 }
 
-func (m *Invite) Reset()                    { *m = Invite{} }
-func (m *Invite) String() string            { return proto.CompactTextString(m) }
-func (*Invite) ProtoMessage()               {}
-func (*Invite) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *Invite) Reset()         { *m = Invite{} }
+func (m *Invite) String() string { return proto.CompactTextString(m) }
+func (*Invite) ProtoMessage()    {}
 
-func (m *Invite) GetInviterGameAccountId() *pegasus_pegasusshared.BnetId {
+func (m *Invite) GetInviterGameAccountId() *pegasusshared.BnetId {
 	if m != nil {
 		return m.InviterGameAccountId
 	}
@@ -96,28 +78,27 @@ func (m *Invite) GetJoinInfo() *JoinInfo {
 
 // ref: SpectatorProto.JoinInfo
 type JoinInfo struct {
-	ServerIpAddress      *string                           `protobuf:"bytes,1,opt,name=server_ip_address,json=serverIpAddress" json:"server_ip_address,omitempty"`
-	ServerPort           *uint32                           `protobuf:"varint,2,opt,name=server_port,json=serverPort" json:"server_port,omitempty"`
-	GameHandle           *int32                            `protobuf:"varint,3,opt,name=game_handle,json=gameHandle" json:"game_handle,omitempty"`
-	SecretKey            *string                           `protobuf:"bytes,4,opt,name=secret_key,json=secretKey" json:"secret_key,omitempty"`
-	IsJoinable           *bool                             `protobuf:"varint,5,opt,name=is_joinable,json=isJoinable" json:"is_joinable,omitempty"`
-	CurrentNumSpectators *int32                            `protobuf:"varint,6,opt,name=current_num_spectators,json=currentNumSpectators" json:"current_num_spectators,omitempty"`
-	MaxNumSpectators     *int32                            `protobuf:"varint,7,opt,name=max_num_spectators,json=maxNumSpectators" json:"max_num_spectators,omitempty"`
-	GameType             *pegasus_pegasusshared.GameType   `protobuf:"varint,8,opt,name=game_type,json=gameType,enum=pegasus.pegasusshared.GameType,def=0" json:"game_type,omitempty"`
-	MissionId            *int32                            `protobuf:"varint,9,opt,name=mission_id,json=missionId" json:"mission_id,omitempty"`
-	SpectatedPlayers     []*pegasus_pegasusshared.BnetId   `protobuf:"bytes,10,rep,name=spectated_players,json=spectatedPlayers" json:"spectated_players,omitempty"`
-	PartyId              *pegasus_pegasusshared.BnetId     `protobuf:"bytes,11,opt,name=party_id,json=partyId" json:"party_id,omitempty"`
-	FormatType           *pegasus_pegasusshared.FormatType `protobuf:"varint,12,opt,name=format_type,json=formatType,enum=pegasus.pegasusshared.FormatType,def=0" json:"format_type,omitempty"`
-	XXX_unrecognized     []byte                            `json:"-"`
+	ServerIpAddress      *string                   `protobuf:"bytes,1,opt,name=server_ip_address" json:"server_ip_address,omitempty"`
+	ServerPort           *uint32                   `protobuf:"varint,2,opt,name=server_port" json:"server_port,omitempty"`
+	GameHandle           *int32                    `protobuf:"varint,3,opt,name=game_handle" json:"game_handle,omitempty"`
+	SecretKey            *string                   `protobuf:"bytes,4,opt,name=secret_key" json:"secret_key,omitempty"`
+	IsJoinable           *bool                     `protobuf:"varint,5,opt,name=is_joinable" json:"is_joinable,omitempty"`
+	CurrentNumSpectators *int32                    `protobuf:"varint,6,opt,name=current_num_spectators" json:"current_num_spectators,omitempty"`
+	MaxNumSpectators     *int32                    `protobuf:"varint,7,opt,name=max_num_spectators" json:"max_num_spectators,omitempty"`
+	GameType             *pegasusshared.GameType   `protobuf:"varint,8,opt,name=game_type,enum=pegasusshared.GameType,def=0" json:"game_type,omitempty"`
+	MissionId            *int32                    `protobuf:"varint,9,opt,name=mission_id" json:"mission_id,omitempty"`
+	SpectatedPlayers     []*pegasusshared.BnetId   `protobuf:"bytes,10,rep,name=spectated_players" json:"spectated_players,omitempty"`
+	PartyId              *pegasusshared.BnetId     `protobuf:"bytes,11,opt,name=party_id" json:"party_id,omitempty"`
+	FormatType           *pegasusshared.FormatType `protobuf:"varint,12,opt,name=format_type,enum=pegasusshared.FormatType,def=0" json:"format_type,omitempty"`
+	XXX_unrecognized     []byte                    `json:"-"`
 }
 
-func (m *JoinInfo) Reset()                    { *m = JoinInfo{} }
-func (m *JoinInfo) String() string            { return proto.CompactTextString(m) }
-func (*JoinInfo) ProtoMessage()               {}
-func (*JoinInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+func (m *JoinInfo) Reset()         { *m = JoinInfo{} }
+func (m *JoinInfo) String() string { return proto.CompactTextString(m) }
+func (*JoinInfo) ProtoMessage()    {}
 
-const Default_JoinInfo_GameType pegasus_pegasusshared.GameType = pegasus_pegasusshared.GameType_GT_UNKNOWN
-const Default_JoinInfo_FormatType pegasus_pegasusshared.FormatType = pegasus_pegasusshared.FormatType_FT_UNKNOWN
+const Default_JoinInfo_GameType pegasusshared.GameType = pegasusshared.GameType_GT_UNKNOWN
+const Default_JoinInfo_FormatType pegasusshared.FormatType = pegasusshared.FormatType_FT_UNKNOWN
 
 func (m *JoinInfo) GetServerIpAddress() string {
 	if m != nil && m.ServerIpAddress != nil {
@@ -168,7 +149,7 @@ func (m *JoinInfo) GetMaxNumSpectators() int32 {
 	return 0
 }
 
-func (m *JoinInfo) GetGameType() pegasus_pegasusshared.GameType {
+func (m *JoinInfo) GetGameType() pegasusshared.GameType {
 	if m != nil && m.GameType != nil {
 		return *m.GameType
 	}
@@ -182,21 +163,21 @@ func (m *JoinInfo) GetMissionId() int32 {
 	return 0
 }
 
-func (m *JoinInfo) GetSpectatedPlayers() []*pegasus_pegasusshared.BnetId {
+func (m *JoinInfo) GetSpectatedPlayers() []*pegasusshared.BnetId {
 	if m != nil {
 		return m.SpectatedPlayers
 	}
 	return nil
 }
 
-func (m *JoinInfo) GetPartyId() *pegasus_pegasusshared.BnetId {
+func (m *JoinInfo) GetPartyId() *pegasusshared.BnetId {
 	if m != nil {
 		return m.PartyId
 	}
 	return nil
 }
 
-func (m *JoinInfo) GetFormatType() pegasus_pegasusshared.FormatType {
+func (m *JoinInfo) GetFormatType() pegasusshared.FormatType {
 	if m != nil && m.FormatType != nil {
 		return *m.FormatType
 	}
@@ -205,14 +186,13 @@ func (m *JoinInfo) GetFormatType() pegasus_pegasusshared.FormatType {
 
 // ref: SpectatorProto.PartyQuestInfo
 type PartyQuestInfo struct {
-	QuestIds         []int32 `protobuf:"varint,1,rep,name=quest_ids,json=questIds" json:"quest_ids,omitempty"`
+	QuestIds         []int32 `protobuf:"varint,1,rep,name=quest_ids" json:"quest_ids,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *PartyQuestInfo) Reset()                    { *m = PartyQuestInfo{} }
-func (m *PartyQuestInfo) String() string            { return proto.CompactTextString(m) }
-func (*PartyQuestInfo) ProtoMessage()               {}
-func (*PartyQuestInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
+func (m *PartyQuestInfo) Reset()         { *m = PartyQuestInfo{} }
+func (m *PartyQuestInfo) String() string { return proto.CompactTextString(m) }
+func (*PartyQuestInfo) ProtoMessage()    {}
 
 func (m *PartyQuestInfo) GetQuestIds() []int32 {
 	if m != nil {
@@ -223,23 +203,22 @@ func (m *PartyQuestInfo) GetQuestIds() []int32 {
 
 // ref: SpectatorProto.PartyServerInfo
 type PartyServerInfo struct {
-	ServerIpAddress  *string                           `protobuf:"bytes,1,opt,name=server_ip_address,json=serverIpAddress" json:"server_ip_address,omitempty"`
-	ServerPort       *uint32                           `protobuf:"varint,2,opt,name=server_port,json=serverPort" json:"server_port,omitempty"`
-	GameHandle       *int32                            `protobuf:"varint,3,opt,name=game_handle,json=gameHandle" json:"game_handle,omitempty"`
-	SecretKey        *string                           `protobuf:"bytes,4,opt,name=secret_key,json=secretKey" json:"secret_key,omitempty"`
-	GameType         *pegasus_pegasusshared.GameType   `protobuf:"varint,5,opt,name=game_type,json=gameType,enum=pegasus.pegasusshared.GameType,def=0" json:"game_type,omitempty"`
-	MissionId        *int32                            `protobuf:"varint,6,opt,name=mission_id,json=missionId" json:"mission_id,omitempty"`
-	FormatType       *pegasus_pegasusshared.FormatType `protobuf:"varint,7,opt,name=format_type,json=formatType,enum=pegasus.pegasusshared.FormatType,def=0" json:"format_type,omitempty"`
-	XXX_unrecognized []byte                            `json:"-"`
+	ServerIpAddress  *string                   `protobuf:"bytes,1,opt,name=server_ip_address" json:"server_ip_address,omitempty"`
+	ServerPort       *uint32                   `protobuf:"varint,2,opt,name=server_port" json:"server_port,omitempty"`
+	GameHandle       *int32                    `protobuf:"varint,3,opt,name=game_handle" json:"game_handle,omitempty"`
+	SecretKey        *string                   `protobuf:"bytes,4,opt,name=secret_key" json:"secret_key,omitempty"`
+	GameType         *pegasusshared.GameType   `protobuf:"varint,5,opt,name=game_type,enum=pegasusshared.GameType,def=0" json:"game_type,omitempty"`
+	MissionId        *int32                    `protobuf:"varint,6,opt,name=mission_id" json:"mission_id,omitempty"`
+	FormatType       *pegasusshared.FormatType `protobuf:"varint,7,opt,name=format_type,enum=pegasusshared.FormatType,def=0" json:"format_type,omitempty"`
+	XXX_unrecognized []byte                    `json:"-"`
 }
 
-func (m *PartyServerInfo) Reset()                    { *m = PartyServerInfo{} }
-func (m *PartyServerInfo) String() string            { return proto.CompactTextString(m) }
-func (*PartyServerInfo) ProtoMessage()               {}
-func (*PartyServerInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
+func (m *PartyServerInfo) Reset()         { *m = PartyServerInfo{} }
+func (m *PartyServerInfo) String() string { return proto.CompactTextString(m) }
+func (*PartyServerInfo) ProtoMessage()    {}
 
-const Default_PartyServerInfo_GameType pegasus_pegasusshared.GameType = pegasus_pegasusshared.GameType_GT_UNKNOWN
-const Default_PartyServerInfo_FormatType pegasus_pegasusshared.FormatType = pegasus_pegasusshared.FormatType_FT_UNKNOWN
+const Default_PartyServerInfo_GameType pegasusshared.GameType = pegasusshared.GameType_GT_UNKNOWN
+const Default_PartyServerInfo_FormatType pegasusshared.FormatType = pegasusshared.FormatType_FT_UNKNOWN
 
 func (m *PartyServerInfo) GetServerIpAddress() string {
 	if m != nil && m.ServerIpAddress != nil {
@@ -269,7 +248,7 @@ func (m *PartyServerInfo) GetSecretKey() string {
 	return ""
 }
 
-func (m *PartyServerInfo) GetGameType() pegasus_pegasusshared.GameType {
+func (m *PartyServerInfo) GetGameType() pegasusshared.GameType {
 	if m != nil && m.GameType != nil {
 		return *m.GameType
 	}
@@ -283,7 +262,7 @@ func (m *PartyServerInfo) GetMissionId() int32 {
 	return 0
 }
 
-func (m *PartyServerInfo) GetFormatType() pegasus_pegasusshared.FormatType {
+func (m *PartyServerInfo) GetFormatType() pegasusshared.FormatType {
 	if m != nil && m.FormatType != nil {
 		return *m.FormatType
 	}
@@ -293,21 +272,20 @@ func (m *PartyServerInfo) GetFormatType() pegasus_pegasusshared.FormatType {
 // ref: SpectatorProto.SecretJoinInfo
 type SecretJoinInfo struct {
 	Source                 *SecretSource `protobuf:"varint,1,req,name=source,enum=spectatorproto.SecretSource" json:"source,omitempty"`
-	SpecificSourceIdentity *int64        `protobuf:"varint,2,opt,name=specific_source_identity,json=specificSourceIdentity" json:"specific_source_identity,omitempty"`
-	EncryptedMessage       []byte        `protobuf:"bytes,3,req,name=encrypted_message,json=encryptedMessage" json:"encrypted_message,omitempty"`
+	SpecificSourceIdentity *int64        `protobuf:"varint,2,opt,name=specific_source_identity" json:"specific_source_identity,omitempty"`
+	EncryptedMessage       []byte        `protobuf:"bytes,3,req,name=encrypted_message" json:"encrypted_message,omitempty"`
 	XXX_unrecognized       []byte        `json:"-"`
 }
 
-func (m *SecretJoinInfo) Reset()                    { *m = SecretJoinInfo{} }
-func (m *SecretJoinInfo) String() string            { return proto.CompactTextString(m) }
-func (*SecretJoinInfo) ProtoMessage()               {}
-func (*SecretJoinInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
+func (m *SecretJoinInfo) Reset()         { *m = SecretJoinInfo{} }
+func (m *SecretJoinInfo) String() string { return proto.CompactTextString(m) }
+func (*SecretJoinInfo) ProtoMessage()    {}
 
 func (m *SecretJoinInfo) GetSource() SecretSource {
 	if m != nil && m.Source != nil {
 		return *m.Source
 	}
-	return SecretSource_SECRET_SOURCE_UNKNOWN
+	return 0
 }
 
 func (m *SecretJoinInfo) GetSpecificSourceIdentity() int64 {
@@ -325,58 +303,5 @@ func (m *SecretJoinInfo) GetEncryptedMessage() []byte {
 }
 
 func init() {
-	proto.RegisterType((*Invite)(nil), "spectatorproto.Invite")
-	proto.RegisterType((*JoinInfo)(nil), "spectatorproto.JoinInfo")
-	proto.RegisterType((*PartyQuestInfo)(nil), "spectatorproto.PartyQuestInfo")
-	proto.RegisterType((*PartyServerInfo)(nil), "spectatorproto.PartyServerInfo")
-	proto.RegisterType((*SecretJoinInfo)(nil), "spectatorproto.SecretJoinInfo")
 	proto.RegisterEnum("spectatorproto.SecretSource", SecretSource_name, SecretSource_value)
-}
-
-func init() { proto.RegisterFile("spectatorproto/spectatorproto.proto", fileDescriptor0) }
-
-var fileDescriptor0 = []byte{
-	// 659 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xcc, 0x54, 0x5f, 0x4f, 0x13, 0x4f,
-	0x14, 0xfd, 0x6d, 0x4b, 0x4b, 0x7b, 0xcb, 0xaf, 0x94, 0x09, 0xe2, 0xfa, 0x87, 0xb0, 0x56, 0x1f,
-	0x56, 0xd4, 0x92, 0x10, 0x4c, 0x88, 0x6f, 0x88, 0xa5, 0x2c, 0xc4, 0x82, 0xd3, 0x12, 0x1f, 0x27,
-	0xe3, 0xee, 0xb4, 0x0c, 0xb2, 0x7f, 0x9c, 0x99, 0x12, 0xf6, 0x83, 0xf8, 0x31, 0xfc, 0x3c, 0x3e,
-	0xf8, 0x65, 0xcc, 0xcc, 0x2c, 0xd5, 0x36, 0x21, 0x3c, 0xe8, 0x83, 0x2f, 0xed, 0xce, 0xb9, 0xe7,
-	0xdc, 0xbb, 0xa7, 0xf7, 0x74, 0xe0, 0xa9, 0xcc, 0x58, 0xa8, 0xa8, 0x4a, 0x45, 0x26, 0x52, 0x95,
-	0x6e, 0xcd, 0x1e, 0x3b, 0xe6, 0x13, 0x35, 0x67, 0xd1, 0x87, 0xcf, 0x33, 0x36, 0xa6, 0x72, 0x22,
-	0xb7, 0x8a, 0x6f, 0x79, 0x4e, 0x05, 0x8b, 0x66, 0x4f, 0x56, 0xda, 0xfe, 0xea, 0x40, 0x35, 0x48,
-	0xae, 0xb8, 0x62, 0x68, 0x08, 0xf7, 0xb9, 0x79, 0x12, 0x64, 0x4c, 0x63, 0x46, 0x68, 0x18, 0xa6,
-	0x93, 0x44, 0x11, 0x1e, 0xb9, 0x8e, 0x57, 0xf2, 0x1b, 0xdb, 0xeb, 0x9d, 0xa2, 0x43, 0x67, 0xb6,
-	0xd3, 0xdb, 0x84, 0xa9, 0x20, 0xc2, 0xab, 0x85, 0xba, 0x47, 0x63, 0xb6, 0x67, 0xb5, 0x41, 0x84,
-	0x5e, 0x43, 0xfd, 0x22, 0xe5, 0x09, 0xe1, 0xc9, 0x28, 0x75, 0x4b, 0xa6, 0x8f, 0xdb, 0x99, 0x73,
-	0x71, 0x94, 0xf2, 0x24, 0x48, 0x46, 0x29, 0xae, 0x5d, 0x14, 0x4f, 0xed, 0x1f, 0x0b, 0x50, 0xbb,
-	0x81, 0xd1, 0x26, 0xac, 0x48, 0x26, 0xae, 0x98, 0x20, 0x3c, 0x23, 0x34, 0x8a, 0x04, 0x93, 0xd2,
-	0x75, 0x3c, 0xc7, 0xaf, 0xe3, 0x65, 0x5b, 0x08, 0xb2, 0x3d, 0x0b, 0xa3, 0x0d, 0x68, 0x14, 0xdc,
-	0x2c, 0x15, 0xca, 0x2d, 0x79, 0x8e, 0xff, 0x3f, 0x06, 0x0b, 0x9d, 0xa6, 0x42, 0x69, 0x82, 0xb1,
-	0x77, 0x4e, 0x93, 0xe8, 0x92, 0xb9, 0x65, 0xcf, 0xf1, 0x2b, 0x18, 0x34, 0x74, 0x68, 0x10, 0xb4,
-	0x0e, 0x20, 0x59, 0x28, 0x98, 0x22, 0x9f, 0x59, 0xee, 0x2e, 0x98, 0x31, 0x75, 0x8b, 0x1c, 0xb3,
-	0x5c, 0xeb, 0xb9, 0x24, 0xfa, 0x45, 0xe9, 0xa7, 0x4b, 0xe6, 0x56, 0x3c, 0xc7, 0xaf, 0x61, 0xe0,
-	0xf2, 0xa8, 0x40, 0xd0, 0x0e, 0xac, 0x85, 0x13, 0x21, 0x58, 0xa2, 0x48, 0x32, 0x89, 0xc9, 0xd4,
-	0xab, 0x74, 0xab, 0x66, 0xd6, 0x6a, 0x51, 0xed, 0x4f, 0xe2, 0xc1, 0xb4, 0x86, 0x5e, 0x02, 0x8a,
-	0xe9, 0xf5, 0xbc, 0x62, 0xd1, 0x28, 0x5a, 0x31, 0xbd, 0x9e, 0x65, 0x1f, 0x42, 0xdd, 0x98, 0x50,
-	0x79, 0xc6, 0xdc, 0x9a, 0xe7, 0xf8, 0xcd, 0xed, 0x8d, 0x5b, 0xb6, 0xa3, 0xd7, 0x31, 0xcc, 0x33,
-	0xf6, 0x06, 0x7a, 0x43, 0x72, 0xd6, 0x3f, 0xee, 0x9f, 0x7c, 0xec, 0xe3, 0xda, 0xb8, 0x40, 0xb5,
-	0xdb, 0x98, 0x4b, 0xc9, 0xd3, 0x44, 0x2f, 0xba, 0x6e, 0xe6, 0xd5, 0x0b, 0x24, 0x88, 0xd0, 0x11,
-	0xac, 0x14, 0xaf, 0xc3, 0x22, 0x92, 0x5d, 0xd2, 0x9c, 0x09, 0xe9, 0x82, 0x57, 0xbe, 0x3b, 0x0e,
-	0xad, 0xa9, 0xee, 0xd4, 0xca, 0xd0, 0x2e, 0xd4, 0x32, 0x2a, 0x54, 0xae, 0x07, 0x35, 0x3c, 0xe7,
-	0xee, 0x16, 0x8b, 0x86, 0x1e, 0x44, 0xa8, 0x0f, 0x8d, 0x51, 0x2a, 0x62, 0xaa, 0xac, 0xe1, 0x25,
-	0x63, 0xf8, 0xc9, 0x2d, 0xe2, 0x03, 0xc3, 0xb4, 0x96, 0x0f, 0x7e, 0x59, 0x86, 0xd1, 0x14, 0x6f,
-	0xbf, 0x82, 0xe6, 0xa9, 0x6e, 0xfd, 0x61, 0xc2, 0xa4, 0x32, 0x11, 0x7b, 0x04, 0xf5, 0x2f, 0xfa,
-	0x40, 0x78, 0xa4, 0xa3, 0x55, 0xf6, 0x2b, 0xb8, 0x66, 0x80, 0x20, 0x92, 0xed, 0xef, 0x25, 0x58,
-	0x36, 0xfc, 0x81, 0x0d, 0xdb, 0x3f, 0x97, 0xc9, 0x99, 0x38, 0x54, 0xfe, 0x5e, 0x1c, 0xaa, 0xf3,
-	0x71, 0x98, 0x5b, 0xc4, 0xe2, 0x9f, 0x2e, 0xe2, 0x9b, 0x03, 0xcd, 0x81, 0xb1, 0x31, 0xfd, 0xb3,
-	0xef, 0x40, 0x55, 0xa6, 0x13, 0x11, 0x32, 0x73, 0xeb, 0x34, 0xb7, 0x1f, 0xcf, 0xdf, 0x16, 0x96,
-	0x3f, 0x30, 0x1c, 0x5c, 0x70, 0xd1, 0x2e, 0xb8, 0x9a, 0xc6, 0x47, 0x3c, 0x24, 0x16, 0x22, 0x3c,
-	0x62, 0x89, 0xe2, 0x2a, 0x37, 0xbf, 0x77, 0x19, 0xaf, 0xdd, 0xd4, 0xad, 0x32, 0x28, 0xaa, 0xe8,
-	0x05, 0xac, 0xb0, 0x24, 0x14, 0x79, 0xa6, 0x13, 0x1e, 0x33, 0x29, 0xe9, 0x58, 0x6f, 0xa0, 0xe4,
-	0x2f, 0xe1, 0xd6, 0xb4, 0xf0, 0xde, 0xe2, 0x9b, 0x27, 0xb0, 0xf4, 0xfb, 0x78, 0xf4, 0x00, 0xee,
-	0x0d, 0xba, 0xfb, 0xb8, 0x3b, 0x24, 0x83, 0x93, 0x33, 0xbc, 0xdf, 0xbd, 0x31, 0xd9, 0xfa, 0x0f,
-	0x3d, 0x03, 0x6f, 0xb6, 0x74, 0x10, 0xe0, 0xee, 0x20, 0x78, 0xd7, 0x25, 0xbd, 0xbd, 0xe1, 0x61,
-	0x17, 0x07, 0xfd, 0x5e, 0xcb, 0xf9, 0x19, 0x00, 0x00, 0xff, 0xff, 0xea, 0x7e, 0x47, 0x8b, 0xe0,
-	0x05, 0x00, 0x00,
 }

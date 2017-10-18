@@ -2,37 +2,16 @@
 // source: wtcg/bi/bi.proto
 // DO NOT EDIT!
 
-/*
-Package wtcg_bi is a generated protocol buffer package.
-
-It is generated from these files:
-	wtcg/bi/bi.proto
-
-It has these top-level messages:
-	BnetId
-	CopiedDeckInfo
-	DataOnlyPatching
-	FSGInfo
-	PlayerIdentity
-	PresenceChange
-	Telemetry
-*/
 package wtcg_bi
 
 import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
+import json "encoding/json"
 import math "math"
 
-// Reference imports to suppress errors if they are not otherwise used.
+// Reference proto, json, and math imports to suppress error if they are not otherwise used.
 var _ = proto.Marshal
-var _ = fmt.Errorf
+var _ = &json.SyntaxError{}
 var _ = math.Inf
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 // ref: WTCG.BI.DataOnlyPatching/BnetRegion
 type DataOnlyPatching_BnetRegion int32
@@ -83,6 +62,9 @@ func (x DataOnlyPatching_BnetRegion) Enum() *DataOnlyPatching_BnetRegion {
 func (x DataOnlyPatching_BnetRegion) String() string {
 	return proto.EnumName(DataOnlyPatching_BnetRegion_name, int32(x))
 }
+func (x DataOnlyPatching_BnetRegion) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *DataOnlyPatching_BnetRegion) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(DataOnlyPatching_BnetRegion_value, data, "DataOnlyPatching_BnetRegion")
 	if err != nil {
@@ -90,9 +72,6 @@ func (x *DataOnlyPatching_BnetRegion) UnmarshalJSON(data []byte) error {
 	}
 	*x = DataOnlyPatching_BnetRegion(value)
 	return nil
-}
-func (DataOnlyPatching_BnetRegion) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{2, 0}
 }
 
 // ref: WTCG.BI.DataOnlyPatching/Locale
@@ -162,6 +141,9 @@ func (x DataOnlyPatching_Locale) Enum() *DataOnlyPatching_Locale {
 func (x DataOnlyPatching_Locale) String() string {
 	return proto.EnumName(DataOnlyPatching_Locale_name, int32(x))
 }
+func (x DataOnlyPatching_Locale) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *DataOnlyPatching_Locale) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(DataOnlyPatching_Locale_value, data, "DataOnlyPatching_Locale")
 	if err != nil {
@@ -170,7 +152,6 @@ func (x *DataOnlyPatching_Locale) UnmarshalJSON(data []byte) error {
 	*x = DataOnlyPatching_Locale(value)
 	return nil
 }
-func (DataOnlyPatching_Locale) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{2, 1} }
 
 // ref: WTCG.BI.DataOnlyPatching/Platform
 type DataOnlyPatching_Platform int32
@@ -212,6 +193,9 @@ func (x DataOnlyPatching_Platform) Enum() *DataOnlyPatching_Platform {
 func (x DataOnlyPatching_Platform) String() string {
 	return proto.EnumName(DataOnlyPatching_Platform_name, int32(x))
 }
+func (x DataOnlyPatching_Platform) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *DataOnlyPatching_Platform) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(DataOnlyPatching_Platform_value, data, "DataOnlyPatching_Platform")
 	if err != nil {
@@ -220,7 +204,6 @@ func (x *DataOnlyPatching_Platform) UnmarshalJSON(data []byte) error {
 	*x = DataOnlyPatching_Platform(value)
 	return nil
 }
-func (DataOnlyPatching_Platform) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{2, 2} }
 
 // ref: WTCG.BI.DataOnlyPatching/Status
 type DataOnlyPatching_Status int32
@@ -268,6 +251,9 @@ func (x DataOnlyPatching_Status) Enum() *DataOnlyPatching_Status {
 func (x DataOnlyPatching_Status) String() string {
 	return proto.EnumName(DataOnlyPatching_Status_name, int32(x))
 }
+func (x DataOnlyPatching_Status) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *DataOnlyPatching_Status) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(DataOnlyPatching_Status_value, data, "DataOnlyPatching_Status")
 	if err != nil {
@@ -276,7 +262,6 @@ func (x *DataOnlyPatching_Status) UnmarshalJSON(data []byte) error {
 	*x = DataOnlyPatching_Status(value)
 	return nil
 }
-func (DataOnlyPatching_Status) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{2, 3} }
 
 // ref: WTCG.BI.Telemetry/BnetRegion
 type Telemetry_BnetRegion int32
@@ -330,6 +315,9 @@ func (x Telemetry_BnetRegion) Enum() *Telemetry_BnetRegion {
 func (x Telemetry_BnetRegion) String() string {
 	return proto.EnumName(Telemetry_BnetRegion_name, int32(x))
 }
+func (x Telemetry_BnetRegion) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *Telemetry_BnetRegion) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(Telemetry_BnetRegion_value, data, "Telemetry_BnetRegion")
 	if err != nil {
@@ -338,7 +326,6 @@ func (x *Telemetry_BnetRegion) UnmarshalJSON(data []byte) error {
 	*x = Telemetry_BnetRegion(value)
 	return nil
 }
-func (Telemetry_BnetRegion) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{6, 0} }
 
 // ref: WTCG.BI.Telemetry/Level
 type Telemetry_Level int32
@@ -371,6 +358,9 @@ func (x Telemetry_Level) Enum() *Telemetry_Level {
 func (x Telemetry_Level) String() string {
 	return proto.EnumName(Telemetry_Level_name, int32(x))
 }
+func (x Telemetry_Level) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *Telemetry_Level) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(Telemetry_Level_value, data, "Telemetry_Level")
 	if err != nil {
@@ -379,7 +369,6 @@ func (x *Telemetry_Level) UnmarshalJSON(data []byte) error {
 	*x = Telemetry_Level(value)
 	return nil
 }
-func (Telemetry_Level) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{6, 1} }
 
 // ref: WTCG.BI.Telemetry/Locale
 type Telemetry_Locale int32
@@ -448,6 +437,9 @@ func (x Telemetry_Locale) Enum() *Telemetry_Locale {
 func (x Telemetry_Locale) String() string {
 	return proto.EnumName(Telemetry_Locale_name, int32(x))
 }
+func (x Telemetry_Locale) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *Telemetry_Locale) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(Telemetry_Locale_value, data, "Telemetry_Locale")
 	if err != nil {
@@ -456,7 +448,6 @@ func (x *Telemetry_Locale) UnmarshalJSON(data []byte) error {
 	*x = Telemetry_Locale(value)
 	return nil
 }
-func (Telemetry_Locale) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{6, 2} }
 
 // ref: WTCG.BI.Telemetry/Platform
 type Telemetry_Platform int32
@@ -492,6 +483,9 @@ func (x Telemetry_Platform) Enum() *Telemetry_Platform {
 func (x Telemetry_Platform) String() string {
 	return proto.EnumName(Telemetry_Platform_name, int32(x))
 }
+func (x Telemetry_Platform) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *Telemetry_Platform) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(Telemetry_Platform_value, data, "Telemetry_Platform")
 	if err != nil {
@@ -500,7 +494,6 @@ func (x *Telemetry_Platform) UnmarshalJSON(data []byte) error {
 	*x = Telemetry_Platform(value)
 	return nil
 }
-func (Telemetry_Platform) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{6, 3} }
 
 // ref: WTCG.BI.Telemetry/ScreenUI
 type Telemetry_ScreenUI int32
@@ -533,6 +526,9 @@ func (x Telemetry_ScreenUI) Enum() *Telemetry_ScreenUI {
 func (x Telemetry_ScreenUI) String() string {
 	return proto.EnumName(Telemetry_ScreenUI_name, int32(x))
 }
+func (x Telemetry_ScreenUI) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *Telemetry_ScreenUI) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(Telemetry_ScreenUI_value, data, "Telemetry_ScreenUI")
 	if err != nil {
@@ -541,7 +537,6 @@ func (x *Telemetry_ScreenUI) UnmarshalJSON(data []byte) error {
 	*x = Telemetry_ScreenUI(value)
 	return nil
 }
-func (Telemetry_ScreenUI) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{6, 4} }
 
 // ref: WTCG.BI.Telemetry/Store
 type Telemetry_Store int32
@@ -574,6 +569,9 @@ func (x Telemetry_Store) Enum() *Telemetry_Store {
 func (x Telemetry_Store) String() string {
 	return proto.EnumName(Telemetry_Store_name, int32(x))
 }
+func (x Telemetry_Store) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *Telemetry_Store) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(Telemetry_Store_value, data, "Telemetry_Store")
 	if err != nil {
@@ -582,7 +580,6 @@ func (x *Telemetry_Store) UnmarshalJSON(data []byte) error {
 	*x = Telemetry_Store(value)
 	return nil
 }
-func (Telemetry_Store) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{6, 5} }
 
 // ref: WTCG.BI.BnetId
 type BnetId struct {
@@ -591,10 +588,9 @@ type BnetId struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *BnetId) Reset()                    { *m = BnetId{} }
-func (m *BnetId) String() string            { return proto.CompactTextString(m) }
-func (*BnetId) ProtoMessage()               {}
-func (*BnetId) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *BnetId) Reset()         { *m = BnetId{} }
+func (m *BnetId) String() string { return proto.CompactTextString(m) }
+func (*BnetId) ProtoMessage()    {}
 
 func (m *BnetId) GetHi() uint64 {
 	if m != nil && m.Hi != nil {
@@ -612,15 +608,14 @@ func (m *BnetId) GetLo() uint64 {
 
 // ref: WTCG.BI.CopiedDeckInfo
 type CopiedDeckInfo struct {
-	DeckId           *int64  `protobuf:"varint,1,req,name=deck_id,json=deckId" json:"deck_id,omitempty"`
-	DeckHash         *string `protobuf:"bytes,2,req,name=deck_hash,json=deckHash" json:"deck_hash,omitempty"`
+	DeckId           *int64  `protobuf:"varint,1,req,name=deck_id" json:"deck_id,omitempty"`
+	DeckHash         *string `protobuf:"bytes,2,req,name=deck_hash" json:"deck_hash,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CopiedDeckInfo) Reset()                    { *m = CopiedDeckInfo{} }
-func (m *CopiedDeckInfo) String() string            { return proto.CompactTextString(m) }
-func (*CopiedDeckInfo) ProtoMessage()               {}
-func (*CopiedDeckInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+func (m *CopiedDeckInfo) Reset()         { *m = CopiedDeckInfo{} }
+func (m *CopiedDeckInfo) String() string { return proto.CompactTextString(m) }
+func (*CopiedDeckInfo) ProtoMessage()    {}
 
 func (m *CopiedDeckInfo) GetDeckId() int64 {
 	if m != nil && m.DeckId != nil {
@@ -641,46 +636,45 @@ type DataOnlyPatching struct {
 	Status                 *DataOnlyPatching_Status     `protobuf:"varint,1,req,name=status,enum=wtcg.bi.DataOnlyPatching_Status" json:"status,omitempty"`
 	Locale                 *DataOnlyPatching_Locale     `protobuf:"varint,2,req,name=locale,enum=wtcg.bi.DataOnlyPatching_Locale" json:"locale,omitempty"`
 	Platform               *DataOnlyPatching_Platform   `protobuf:"varint,3,req,name=platform,enum=wtcg.bi.DataOnlyPatching_Platform" json:"platform,omitempty"`
-	BnetRegion             *DataOnlyPatching_BnetRegion `protobuf:"varint,4,req,name=bnet_region,json=bnetRegion,enum=wtcg.bi.DataOnlyPatching_BnetRegion" json:"bnet_region,omitempty"`
-	GameAccountId          *uint64                      `protobuf:"varint,5,req,name=game_account_id,json=gameAccountId" json:"game_account_id,omitempty"`
-	CurrentBuild           *int32                       `protobuf:"varint,6,opt,name=current_build,json=currentBuild" json:"current_build,omitempty"`
-	NewBuild               *int32                       `protobuf:"varint,7,opt,name=new_build,json=newBuild" json:"new_build,omitempty"`
-	SessionId              *string                      `protobuf:"bytes,8,req,name=session_id,json=sessionId" json:"session_id,omitempty"`
-	DeviceUniqueIdentifier *string                      `protobuf:"bytes,9,req,name=device_unique_identifier,json=deviceUniqueIdentifier" json:"device_unique_identifier,omitempty"`
+	BnetRegion             *DataOnlyPatching_BnetRegion `protobuf:"varint,4,req,name=bnet_region,enum=wtcg.bi.DataOnlyPatching_BnetRegion" json:"bnet_region,omitempty"`
+	GameAccountId          *uint64                      `protobuf:"varint,5,req,name=game_account_id" json:"game_account_id,omitempty"`
+	CurrentBuild           *int32                       `protobuf:"varint,6,opt,name=current_build" json:"current_build,omitempty"`
+	NewBuild               *int32                       `protobuf:"varint,7,opt,name=new_build" json:"new_build,omitempty"`
+	SessionId              *string                      `protobuf:"bytes,8,req,name=session_id" json:"session_id,omitempty"`
+	DeviceUniqueIdentifier *string                      `protobuf:"bytes,9,req,name=device_unique_identifier" json:"device_unique_identifier,omitempty"`
 	XXX_unrecognized       []byte                       `json:"-"`
 }
 
-func (m *DataOnlyPatching) Reset()                    { *m = DataOnlyPatching{} }
-func (m *DataOnlyPatching) String() string            { return proto.CompactTextString(m) }
-func (*DataOnlyPatching) ProtoMessage()               {}
-func (*DataOnlyPatching) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
+func (m *DataOnlyPatching) Reset()         { *m = DataOnlyPatching{} }
+func (m *DataOnlyPatching) String() string { return proto.CompactTextString(m) }
+func (*DataOnlyPatching) ProtoMessage()    {}
 
 func (m *DataOnlyPatching) GetStatus() DataOnlyPatching_Status {
 	if m != nil && m.Status != nil {
 		return *m.Status
 	}
-	return DataOnlyPatching_SUCCEED
+	return 0
 }
 
 func (m *DataOnlyPatching) GetLocale() DataOnlyPatching_Locale {
 	if m != nil && m.Locale != nil {
 		return *m.Locale
 	}
-	return DataOnlyPatching_unknown_locale
+	return 0
 }
 
 func (m *DataOnlyPatching) GetPlatform() DataOnlyPatching_Platform {
 	if m != nil && m.Platform != nil {
 		return *m.Platform
 	}
-	return DataOnlyPatching_unknown_platform
+	return 0
 }
 
 func (m *DataOnlyPatching) GetBnetRegion() DataOnlyPatching_BnetRegion {
 	if m != nil && m.BnetRegion != nil {
 		return *m.BnetRegion
 	}
-	return DataOnlyPatching_REGION_UNINITIALIZED
+	return 0
 }
 
 func (m *DataOnlyPatching) GetGameAccountId() uint64 {
@@ -720,14 +714,13 @@ func (m *DataOnlyPatching) GetDeviceUniqueIdentifier() string {
 
 // ref: WTCG.BI.FSGInfo
 type FSGInfo struct {
-	FsgId            *int64 `protobuf:"varint,1,opt,name=fsg_id,json=fsgId" json:"fsg_id,omitempty"`
+	FsgId            *int64 `protobuf:"varint,1,opt,name=fsg_id" json:"fsg_id,omitempty"`
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *FSGInfo) Reset()                    { *m = FSGInfo{} }
-func (m *FSGInfo) String() string            { return proto.CompactTextString(m) }
-func (*FSGInfo) ProtoMessage()               {}
-func (*FSGInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
+func (m *FSGInfo) Reset()         { *m = FSGInfo{} }
+func (m *FSGInfo) String() string { return proto.CompactTextString(m) }
+func (*FSGInfo) ProtoMessage()    {}
 
 func (m *FSGInfo) GetFsgId() int64 {
 	if m != nil && m.FsgId != nil {
@@ -738,16 +731,15 @@ func (m *FSGInfo) GetFsgId() int64 {
 
 // ref: WTCG.BI.PlayerIdentity
 type PlayerIdentity struct {
-	PlayerId         *int64  `protobuf:"varint,1,opt,name=player_id,json=playerId" json:"player_id,omitempty"`
-	GameAccount      *BnetId `protobuf:"bytes,2,opt,name=game_account,json=gameAccount" json:"game_account,omitempty"`
+	PlayerId         *int64  `protobuf:"varint,1,opt,name=player_id" json:"player_id,omitempty"`
+	GameAccount      *BnetId `protobuf:"bytes,2,opt,name=game_account" json:"game_account,omitempty"`
 	Account          *BnetId `protobuf:"bytes,3,opt,name=account" json:"account,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *PlayerIdentity) Reset()                    { *m = PlayerIdentity{} }
-func (m *PlayerIdentity) String() string            { return proto.CompactTextString(m) }
-func (*PlayerIdentity) ProtoMessage()               {}
-func (*PlayerIdentity) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
+func (m *PlayerIdentity) Reset()         { *m = PlayerIdentity{} }
+func (m *PlayerIdentity) String() string { return proto.CompactTextString(m) }
+func (*PlayerIdentity) ProtoMessage()    {}
 
 func (m *PlayerIdentity) GetPlayerId() int64 {
 	if m != nil && m.PlayerId != nil {
@@ -772,18 +764,17 @@ func (m *PlayerIdentity) GetAccount() *BnetId {
 
 // ref: WTCG.BI.PresenceChange
 type PresenceChange struct {
-	NewStatus                       *int32  `protobuf:"varint,1,req,name=new_status,json=newStatus" json:"new_status,omitempty"`
-	NewStatusParameters             []int32 `protobuf:"varint,2,rep,name=new_status_parameters,json=newStatusParameters" json:"new_status_parameters,omitempty"`
-	MillisecondsSincePreviousStatus *int64  `protobuf:"varint,3,opt,name=milliseconds_since_previous_status,json=millisecondsSincePreviousStatus" json:"milliseconds_since_previous_status,omitempty"`
-	PreviousStatus                  *int32  `protobuf:"varint,4,opt,name=previous_status,json=previousStatus" json:"previous_status,omitempty"`
-	PreviousStatusParameters        []int32 `protobuf:"varint,5,rep,name=previous_status_parameters,json=previousStatusParameters" json:"previous_status_parameters,omitempty"`
+	NewStatus                       *int32  `protobuf:"varint,1,req,name=new_status" json:"new_status,omitempty"`
+	NewStatusParameters             []int32 `protobuf:"varint,2,rep,name=new_status_parameters" json:"new_status_parameters,omitempty"`
+	MillisecondsSincePreviousStatus *int64  `protobuf:"varint,3,opt,name=milliseconds_since_previous_status" json:"milliseconds_since_previous_status,omitempty"`
+	PreviousStatus                  *int32  `protobuf:"varint,4,opt,name=previous_status" json:"previous_status,omitempty"`
+	PreviousStatusParameters        []int32 `protobuf:"varint,5,rep,name=previous_status_parameters" json:"previous_status_parameters,omitempty"`
 	XXX_unrecognized                []byte  `json:"-"`
 }
 
-func (m *PresenceChange) Reset()                    { *m = PresenceChange{} }
-func (m *PresenceChange) String() string            { return proto.CompactTextString(m) }
-func (*PresenceChange) ProtoMessage()               {}
-func (*PresenceChange) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
+func (m *PresenceChange) Reset()         { *m = PresenceChange{} }
+func (m *PresenceChange) String() string { return proto.CompactTextString(m) }
+func (*PresenceChange) ProtoMessage()    {}
 
 func (m *PresenceChange) GetNewStatus() int32 {
 	if m != nil && m.NewStatus != nil {
@@ -828,26 +819,25 @@ type Telemetry struct {
 	Version                *string               `protobuf:"bytes,4,req,name=version" json:"version,omitempty"`
 	Platform               *Telemetry_Platform   `protobuf:"varint,5,req,name=platform,enum=wtcg.bi.Telemetry_Platform" json:"platform,omitempty"`
 	Os                     *string               `protobuf:"bytes,6,req,name=os" json:"os,omitempty"`
-	ScreenUi               *Telemetry_ScreenUI   `protobuf:"varint,7,req,name=screen_ui,json=screenUi,enum=wtcg.bi.Telemetry_ScreenUI" json:"screen_ui,omitempty"`
+	ScreenUi               *Telemetry_ScreenUI   `protobuf:"varint,7,req,name=screen_ui,enum=wtcg.bi.Telemetry_ScreenUI" json:"screen_ui,omitempty"`
 	Store                  *Telemetry_Store      `protobuf:"varint,8,req,name=store,enum=wtcg.bi.Telemetry_Store" json:"store,omitempty"`
-	SessionId              *string               `protobuf:"bytes,9,req,name=session_id,json=sessionId" json:"session_id,omitempty"`
-	DeviceUniqueIdentifier *string               `protobuf:"bytes,10,req,name=device_unique_identifier,json=deviceUniqueIdentifier" json:"device_unique_identifier,omitempty"`
+	SessionId              *string               `protobuf:"bytes,9,req,name=session_id" json:"session_id,omitempty"`
+	DeviceUniqueIdentifier *string               `protobuf:"bytes,10,req,name=device_unique_identifier" json:"device_unique_identifier,omitempty"`
 	Event                  *uint64               `protobuf:"varint,11,req,name=event" json:"event,omitempty"`
-	BnetRegion             *Telemetry_BnetRegion `protobuf:"varint,12,opt,name=bnet_region,json=bnetRegion,enum=wtcg.bi.Telemetry_BnetRegion,def=-1" json:"bnet_region,omitempty"`
-	GameAccountId          *uint64               `protobuf:"varint,13,opt,name=game_account_id,json=gameAccountId" json:"game_account_id,omitempty"`
-	ErrorCode              *int64                `protobuf:"varint,14,opt,name=error_code,json=errorCode" json:"error_code,omitempty"`
+	BnetRegion             *Telemetry_BnetRegion `protobuf:"varint,12,opt,name=bnet_region,enum=wtcg.bi.Telemetry_BnetRegion,def=-1" json:"bnet_region,omitempty"`
+	GameAccountId          *uint64               `protobuf:"varint,13,opt,name=game_account_id" json:"game_account_id,omitempty"`
+	ErrorCode              *int64                `protobuf:"varint,14,opt,name=error_code" json:"error_code,omitempty"`
 	Message                *string               `protobuf:"bytes,15,opt,name=message" json:"message,omitempty"`
-	PlayerIdentity         *PlayerIdentity       `protobuf:"bytes,16,opt,name=player_identity,json=playerIdentity" json:"player_identity,omitempty"`
-	PresenceChange         *PresenceChange       `protobuf:"bytes,17,opt,name=presence_change,json=presenceChange" json:"presence_change,omitempty"`
-	FsgInfo                *FSGInfo              `protobuf:"bytes,18,opt,name=fsg_info,json=fsgInfo" json:"fsg_info,omitempty"`
-	CopiedDeckInfo         *CopiedDeckInfo       `protobuf:"bytes,19,opt,name=copied_deck_info,json=copiedDeckInfo" json:"copied_deck_info,omitempty"`
+	PlayerIdentity         *PlayerIdentity       `protobuf:"bytes,16,opt,name=player_identity" json:"player_identity,omitempty"`
+	PresenceChange         *PresenceChange       `protobuf:"bytes,17,opt,name=presence_change" json:"presence_change,omitempty"`
+	FsgInfo                *FSGInfo              `protobuf:"bytes,18,opt,name=fsg_info" json:"fsg_info,omitempty"`
+	CopiedDeckInfo         *CopiedDeckInfo       `protobuf:"bytes,19,opt,name=copied_deck_info" json:"copied_deck_info,omitempty"`
 	XXX_unrecognized       []byte                `json:"-"`
 }
 
-func (m *Telemetry) Reset()                    { *m = Telemetry{} }
-func (m *Telemetry) String() string            { return proto.CompactTextString(m) }
-func (*Telemetry) ProtoMessage()               {}
-func (*Telemetry) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
+func (m *Telemetry) Reset()         { *m = Telemetry{} }
+func (m *Telemetry) String() string { return proto.CompactTextString(m) }
+func (*Telemetry) ProtoMessage()    {}
 
 const Default_Telemetry_BnetRegion Telemetry_BnetRegion = Telemetry_REGION_UNINITIALIZED
 
@@ -862,14 +852,14 @@ func (m *Telemetry) GetLevel() Telemetry_Level {
 	if m != nil && m.Level != nil {
 		return *m.Level
 	}
-	return Telemetry_LEVEL_NONE
+	return 0
 }
 
 func (m *Telemetry) GetLocale() Telemetry_Locale {
 	if m != nil && m.Locale != nil {
 		return *m.Locale
 	}
-	return Telemetry_LOCALE_UNKNOWN
+	return 0
 }
 
 func (m *Telemetry) GetVersion() string {
@@ -883,7 +873,7 @@ func (m *Telemetry) GetPlatform() Telemetry_Platform {
 	if m != nil && m.Platform != nil {
 		return *m.Platform
 	}
-	return Telemetry_PLATFORM_UNKNOWN
+	return 0
 }
 
 func (m *Telemetry) GetOs() string {
@@ -897,14 +887,14 @@ func (m *Telemetry) GetScreenUi() Telemetry_ScreenUI {
 	if m != nil && m.ScreenUi != nil {
 		return *m.ScreenUi
 	}
-	return Telemetry_SCREENUI_UNKNOWN
+	return 0
 }
 
 func (m *Telemetry) GetStore() Telemetry_Store {
 	if m != nil && m.Store != nil {
 		return *m.Store
 	}
-	return Telemetry_STORE_BLIZZARD
+	return 0
 }
 
 func (m *Telemetry) GetSessionId() string {
@@ -985,13 +975,6 @@ func (m *Telemetry) GetCopiedDeckInfo() *CopiedDeckInfo {
 }
 
 func init() {
-	proto.RegisterType((*BnetId)(nil), "wtcg.bi.BnetId")
-	proto.RegisterType((*CopiedDeckInfo)(nil), "wtcg.bi.CopiedDeckInfo")
-	proto.RegisterType((*DataOnlyPatching)(nil), "wtcg.bi.DataOnlyPatching")
-	proto.RegisterType((*FSGInfo)(nil), "wtcg.bi.FSGInfo")
-	proto.RegisterType((*PlayerIdentity)(nil), "wtcg.bi.PlayerIdentity")
-	proto.RegisterType((*PresenceChange)(nil), "wtcg.bi.PresenceChange")
-	proto.RegisterType((*Telemetry)(nil), "wtcg.bi.Telemetry")
 	proto.RegisterEnum("wtcg.bi.DataOnlyPatching_BnetRegion", DataOnlyPatching_BnetRegion_name, DataOnlyPatching_BnetRegion_value)
 	proto.RegisterEnum("wtcg.bi.DataOnlyPatching_Locale", DataOnlyPatching_Locale_name, DataOnlyPatching_Locale_value)
 	proto.RegisterEnum("wtcg.bi.DataOnlyPatching_Platform", DataOnlyPatching_Platform_name, DataOnlyPatching_Platform_value)
@@ -1002,109 +985,4 @@ func init() {
 	proto.RegisterEnum("wtcg.bi.Telemetry_Platform", Telemetry_Platform_name, Telemetry_Platform_value)
 	proto.RegisterEnum("wtcg.bi.Telemetry_ScreenUI", Telemetry_ScreenUI_name, Telemetry_ScreenUI_value)
 	proto.RegisterEnum("wtcg.bi.Telemetry_Store", Telemetry_Store_name, Telemetry_Store_value)
-}
-
-func init() { proto.RegisterFile("wtcg/bi/bi.proto", fileDescriptor0) }
-
-var fileDescriptor0 = []byte{
-	// 1581 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xdc, 0x56, 0x5d, 0x6f, 0xf3, 0x48,
-	0x15, 0xae, 0x93, 0x3a, 0x1f, 0xd3, 0x36, 0x3d, 0xcc, 0xfb, 0xe5, 0xdd, 0xe5, 0x15, 0xc1, 0x20,
-	0xe8, 0x0a, 0xa9, 0xab, 0xad, 0xb4, 0xb0, 0x42, 0x2b, 0xb4, 0xae, 0x3d, 0x6d, 0xad, 0xba, 0x76,
-	0x34, 0x71, 0x5a, 0xe8, 0xcd, 0xc8, 0xb1, 0xa7, 0x89, 0xd5, 0xc4, 0x0e, 0xb6, 0xd3, 0xf2, 0xf2,
-	0x1b, 0xb8, 0xe7, 0x8f, 0xf0, 0x1f, 0xb8, 0xe0, 0x06, 0xf1, 0x0b, 0xf8, 0x27, 0xa0, 0x19, 0x3b,
-	0xae, 0x53, 0xfa, 0xbe, 0x88, 0x5b, 0x7c, 0x75, 0xce, 0x73, 0x9e, 0x73, 0xe6, 0xc3, 0x33, 0xcf,
-	0x19, 0x04, 0x8f, 0x45, 0x38, 0xfb, 0x6a, 0x1a, 0x7f, 0x35, 0x8d, 0x8f, 0x57, 0x59, 0x5a, 0xa4,
-	0xb8, 0x2b, 0x90, 0xe3, 0x69, 0xac, 0x1f, 0xa1, 0xce, 0x69, 0xc2, 0x0b, 0x3b, 0xc2, 0x03, 0xd4,
-	0x9a, 0xc7, 0x9a, 0x32, 0x6c, 0x1d, 0xed, 0xd2, 0xd6, 0x3c, 0x16, 0xfe, 0x22, 0xd5, 0x5a, 0xa5,
-	0xbf, 0x48, 0xf5, 0x33, 0x34, 0x30, 0xd3, 0x55, 0xcc, 0x23, 0x8b, 0x87, 0xf7, 0x76, 0x72, 0x97,
-	0xe2, 0x77, 0xa8, 0x1b, 0xf1, 0xf0, 0x9e, 0xc5, 0x91, 0x4c, 0x6b, 0xd3, 0x8e, 0x70, 0xed, 0x08,
-	0x7f, 0x81, 0xfa, 0x32, 0x30, 0x0f, 0xf2, 0xb9, 0xac, 0xd0, 0xa7, 0x3d, 0x01, 0x5c, 0x04, 0xf9,
-	0x5c, 0xff, 0x4b, 0x1f, 0x81, 0x15, 0x14, 0x81, 0x97, 0x2c, 0x3e, 0x8c, 0x82, 0x22, 0x9c, 0xc7,
-	0xc9, 0x0c, 0x7f, 0x8b, 0x3a, 0x79, 0x11, 0x14, 0xeb, 0x5c, 0x56, 0x1a, 0x9c, 0x0c, 0x8f, 0xab,
-	0x09, 0x1e, 0x3f, 0xa7, 0x1e, 0x8f, 0x25, 0x8f, 0x56, 0x7c, 0x91, 0xb9, 0x48, 0xc3, 0x60, 0xc1,
-	0xe5, 0x40, 0x9f, 0xcc, 0x74, 0x24, 0x8f, 0x56, 0x7c, 0xfc, 0x1b, 0xd4, 0x5b, 0x2d, 0x82, 0xe2,
-	0x2e, 0xcd, 0x96, 0x5a, 0x5b, 0xe6, 0xea, 0x1f, 0xcf, 0x1d, 0x55, 0x4c, 0x5a, 0xe7, 0x60, 0x82,
-	0xf6, 0xa6, 0x09, 0x2f, 0x58, 0xc6, 0x67, 0x71, 0x9a, 0x68, 0xbb, 0xb2, 0xc4, 0x4f, 0x3f, 0x5e,
-	0x42, 0xec, 0x33, 0x95, 0x5c, 0x8a, 0xa6, 0xb5, 0x8d, 0x7f, 0x86, 0x0e, 0x67, 0xc1, 0x92, 0xb3,
-	0x20, 0x0c, 0xd3, 0x75, 0x52, 0x88, 0xdd, 0x54, 0xe5, 0xa6, 0x1f, 0x08, 0xd8, 0x28, 0x51, 0x3b,
-	0xc2, 0x3f, 0x41, 0x07, 0xe1, 0x3a, 0xcb, 0x78, 0x52, 0xb0, 0xe9, 0x3a, 0x5e, 0x44, 0x5a, 0x67,
-	0xa8, 0x1c, 0xa9, 0x74, 0xbf, 0x02, 0x4f, 0x05, 0x26, 0x76, 0x3e, 0xe1, 0x8f, 0x15, 0xa1, 0x2b,
-	0x09, 0xbd, 0x84, 0x3f, 0x96, 0xc1, 0xf7, 0x08, 0xe5, 0x3c, 0xcf, 0xe3, 0x34, 0x11, 0x83, 0xf4,
-	0xe4, 0x7f, 0xe9, 0x57, 0x88, 0x1d, 0xe1, 0x6f, 0x91, 0x16, 0xf1, 0x87, 0x38, 0xe4, 0x6c, 0x9d,
-	0xc4, 0xbf, 0x5f, 0x73, 0x16, 0x47, 0x3c, 0x29, 0xe2, 0xbb, 0x98, 0x67, 0x5a, 0x5f, 0x92, 0xdf,
-	0x96, 0xf1, 0x89, 0x0c, 0xdb, 0x75, 0x54, 0xff, 0xbb, 0x82, 0xd0, 0xd3, 0xea, 0xf0, 0x8f, 0xd1,
-	0x6b, 0x4a, 0xce, 0x6d, 0xcf, 0x65, 0x13, 0xd7, 0x76, 0x6d, 0xdf, 0x36, 0x1c, 0xfb, 0x96, 0x58,
-	0xf0, 0xaf, 0xcd, 0xa7, 0x60, 0x8c, 0x06, 0x35, 0xe5, 0xd2, 0xf5, 0x6e, 0x5c, 0xd8, 0xc1, 0x07,
-	0xa8, 0xbf, 0xc1, 0xc6, 0xa0, 0x34, 0x5c, 0x32, 0x81, 0x56, 0xc3, 0xbd, 0xa4, 0xd0, 0x6e, 0xb8,
-	0xfe, 0x0d, 0xec, 0x36, 0x5c, 0xd3, 0x05, 0x15, 0xff, 0x10, 0x69, 0x95, 0xeb, 0xd8, 0xd7, 0x84,
-	0x5d, 0x13, 0x6a, 0x9f, 0xd9, 0xa6, 0xe1, 0xdb, 0x9e, 0x0b, 0x47, 0x8d, 0xc1, 0x47, 0x3e, 0x65,
-	0x8e, 0x67, 0xc2, 0x97, 0x78, 0x80, 0x50, 0x85, 0x59, 0xe4, 0x1a, 0xbe, 0xd3, 0xff, 0xaa, 0xa0,
-	0x4e, 0x79, 0x5e, 0x04, 0x7d, 0x9d, 0xdc, 0x27, 0xe9, 0x63, 0xc2, 0xca, 0x93, 0x03, 0x3b, 0xb8,
-	0x8f, 0x54, 0x9e, 0xb0, 0x75, 0x0e, 0x4a, 0x65, 0xce, 0xa6, 0xd0, 0x12, 0xe6, 0x5d, 0xc6, 0xee,
-	0x32, 0x68, 0x0b, 0x33, 0xe2, 0x2c, 0xe2, 0xb0, 0x2b, 0xcc, 0xfb, 0x94, 0xdd, 0x67, 0xa0, 0x4a,
-	0x6e, 0xce, 0x78, 0x0e, 0x9d, 0xca, 0x5c, 0xfe, 0x01, 0xba, 0xc2, 0xcc, 0xd6, 0x2c, 0x5b, 0x43,
-	0x4f, 0x98, 0x7f, 0x9c, 0xb3, 0xe2, 0x11, 0xfa, 0x95, 0x19, 0x26, 0x80, 0x84, 0x19, 0x17, 0x2c,
-	0x2e, 0x60, 0x4f, 0x98, 0xab, 0x82, 0x4d, 0x33, 0xd8, 0x97, 0xe6, 0x82, 0xad, 0x16, 0x70, 0x80,
-	0xf7, 0x51, 0xaf, 0x9c, 0xda, 0xd7, 0xdf, 0xc0, 0x61, 0xc3, 0xfb, 0x25, 0x80, 0xfe, 0x88, 0x7a,
-	0x9b, 0xc3, 0x8b, 0x5f, 0x23, 0xd8, 0x2c, 0x65, 0x73, 0x8c, 0x61, 0x07, 0xef, 0xa1, 0xee, 0x63,
-	0x9c, 0x44, 0xe9, 0xa3, 0x58, 0x4e, 0x17, 0xb5, 0x97, 0x41, 0x58, 0x2e, 0x26, 0x66, 0xab, 0x20,
-	0x82, 0xb6, 0x20, 0xc4, 0x6c, 0x35, 0x4f, 0x13, 0xb1, 0x9c, 0x57, 0xe8, 0x30, 0x48, 0xa2, 0x2c,
-	0x8d, 0x23, 0xc6, 0x8a, 0x60, 0xba, 0xe0, 0x05, 0xa8, 0x62, 0x8f, 0x6a, 0xb0, 0x24, 0x76, 0xf4,
-	0xbf, 0x29, 0xa8, 0x53, 0x5e, 0x56, 0x51, 0x60, 0x3c, 0x31, 0x4d, 0x42, 0x2c, 0xd8, 0xc1, 0x6f,
-	0x11, 0xae, 0x1c, 0x76, 0x63, 0xfb, 0x17, 0xcc, 0x34, 0xcc, 0x0b, 0x02, 0x0a, 0xfe, 0x0c, 0xbd,
-	0xd9, 0xc2, 0x7d, 0xfb, 0x8a, 0x78, 0xd7, 0x84, 0x42, 0x4b, 0x94, 0x3f, 0x33, 0x6c, 0x87, 0x58,
-	0xec, 0x9c, 0xb8, 0x84, 0xda, 0x26, 0xb4, 0x45, 0x99, 0x0a, 0xb3, 0xbc, 0x1b, 0xd7, 0xf1, 0x0c,
-	0xcb, 0x76, 0xcf, 0xcb, 0xf9, 0x55, 0xf8, 0xa9, 0x61, 0x31, 0xcb, 0xf0, 0x0d, 0x50, 0xf1, 0x3b,
-	0xf4, 0xaa, 0x02, 0xaf, 0xac, 0x6f, 0xd8, 0x95, 0x3d, 0xbe, 0x32, 0x7c, 0xf3, 0x02, 0x3a, 0xf8,
-	0x73, 0xf4, 0xb6, 0xc1, 0x36, 0xc6, 0x63, 0xe2, 0x9f, 0x4e, 0x5c, 0xcb, 0x21, 0xd0, 0x95, 0xb3,
-	0xf6, 0x0d, 0xea, 0x13, 0x0b, 0x7a, 0xfa, 0x10, 0x75, 0xcf, 0xc6, 0xe7, 0x52, 0xf7, 0xde, 0xa0,
-	0xce, 0x5d, 0x3e, 0x2b, 0x65, 0x4f, 0x39, 0x6a, 0x53, 0xf5, 0x2e, 0x9f, 0xd9, 0x91, 0xfe, 0x27,
-	0x05, 0x0d, 0x46, 0x8b, 0xe0, 0x03, 0xcf, 0xca, 0xab, 0x51, 0x7c, 0x10, 0xd7, 0x71, 0x25, 0x91,
-	0x27, 0x72, 0x6f, 0x55, 0x51, 0xf0, 0x09, 0xda, 0x6f, 0x5e, 0x7c, 0xad, 0x35, 0x54, 0x8e, 0xf6,
-	0x4e, 0x0e, 0x6b, 0x01, 0x29, 0x75, 0x99, 0xee, 0x35, 0x64, 0x00, 0x7f, 0x89, 0xba, 0x1b, 0x7a,
-	0xfb, 0x65, 0xfa, 0x26, 0xae, 0xff, 0xb9, 0x85, 0x06, 0xa3, 0x8c, 0xe7, 0x3c, 0x09, 0xb9, 0x39,
-	0x0f, 0x92, 0x19, 0x17, 0x02, 0x20, 0xd4, 0xa1, 0xa1, 0xb4, 0x2a, 0x15, 0x7a, 0x51, 0xfd, 0xa5,
-	0x13, 0xf4, 0xe6, 0x29, 0xcc, 0x56, 0x41, 0x16, 0x2c, 0x79, 0xc1, 0xb3, 0x5c, 0x6b, 0x0d, 0xdb,
-	0x47, 0x2a, 0x7d, 0x55, 0x33, 0x47, 0x75, 0x08, 0x5f, 0x22, 0x7d, 0x19, 0x2f, 0x16, 0x71, 0xce,
-	0xc3, 0x34, 0x89, 0x72, 0x96, 0xc7, 0x49, 0xc8, 0xd9, 0x2a, 0xe3, 0x0f, 0x71, 0xba, 0xce, 0x37,
-	0x43, 0xb5, 0xe5, 0xd2, 0x7f, 0xd4, 0x64, 0x8e, 0x05, 0x71, 0x54, 0xf1, 0xaa, 0x09, 0xfc, 0x1c,
-	0x1d, 0x3e, 0xcf, 0xdc, 0x95, 0x1a, 0x36, 0x58, 0x6d, 0x13, 0xbf, 0x43, 0x9f, 0x3f, 0x23, 0x36,
-	0xa7, 0xab, 0xca, 0xe9, 0x6a, 0xdb, 0x39, 0x4f, 0x73, 0xd6, 0xff, 0x71, 0x80, 0xfa, 0x3e, 0x5f,
-	0xf0, 0x25, 0x2f, 0xb2, 0x0f, 0x18, 0xa3, 0xdd, 0x22, 0x5e, 0xf2, 0xaa, 0x85, 0x49, 0x1b, 0x1f,
-	0x23, 0x75, 0xc1, 0x1f, 0xf8, 0xa2, 0xea, 0x29, 0x5a, 0xbd, 0xc9, 0x75, 0xda, 0xb1, 0x23, 0xe2,
-	0xb4, 0xa4, 0xe1, 0xaf, 0xeb, 0x26, 0x54, 0x36, 0x92, 0xcf, 0x5e, 0x4a, 0xd8, 0xee, 0x3e, 0x1a,
-	0xea, 0x3e, 0xf0, 0x2c, 0xdf, 0x74, 0x8e, 0x3e, 0xdd, 0xb8, 0xf8, 0x57, 0x8d, 0xbe, 0xa4, 0xca,
-	0x72, 0x5f, 0xbc, 0x50, 0xee, 0x85, 0x86, 0x34, 0x40, 0xad, 0x34, 0xd7, 0x3a, 0xb2, 0x5a, 0x2b,
-	0x15, 0xad, 0xb1, 0x9f, 0x87, 0x19, 0x17, 0x42, 0x15, 0x6b, 0xdd, 0x8f, 0x56, 0x1a, 0x4b, 0xce,
-	0xc4, 0xa6, 0xbd, 0x92, 0x3d, 0x89, 0xc5, 0xfa, 0xf3, 0x22, 0xcd, 0xb8, 0x6c, 0x12, 0x2f, 0xaf,
-	0x7f, 0x2c, 0xe2, 0xb4, 0xa4, 0x3d, 0xeb, 0x2c, 0xfd, 0xff, 0xa5, 0xb3, 0xa0, 0x4f, 0x75, 0x16,
-	0xfc, 0x1a, 0xa9, 0xfc, 0x81, 0x27, 0x85, 0xb6, 0x27, 0x5b, 0x62, 0xe9, 0x60, 0x7f, 0xbb, 0xf3,
-	0xee, 0x0f, 0x95, 0xa3, 0xc1, 0xc9, 0xfb, 0x17, 0x26, 0xf9, 0xd4, 0x94, 0x7e, 0xfd, 0x62, 0x4b,
-	0xfa, 0x6f, 0x8d, 0xf8, 0x60, 0xa8, 0xfc, 0x67, 0x23, 0x7e, 0x8f, 0x10, 0xcf, 0xb2, 0x34, 0x63,
-	0x61, 0x1a, 0x71, 0x6d, 0x20, 0x8f, 0x76, 0x5f, 0x22, 0x66, 0x1a, 0xc9, 0x1f, 0xbb, 0xe4, 0x79,
-	0x1e, 0xcc, 0xb8, 0x76, 0x38, 0x54, 0xc4, 0x8f, 0xad, 0x5c, 0xfc, 0x3d, 0x3a, 0xac, 0xd5, 0xa0,
-	0x14, 0x08, 0x0d, 0xe4, 0x25, 0x7e, 0x57, 0x4f, 0x7d, 0x5b, 0x3f, 0xe8, 0x60, 0xb5, 0xad, 0x27,
-	0xdf, 0xcb, 0x0b, 0x22, 0xaf, 0x34, 0x0b, 0xe5, 0x9d, 0xd6, 0x7e, 0xf0, 0xbc, 0xc2, 0xd6, 0x95,
-	0x97, 0x37, 0xa7, 0x29, 0x01, 0xbf, 0x40, 0x3d, 0xa9, 0x5d, 0xc9, 0x5d, 0xaa, 0x61, 0x99, 0x0a,
-	0x75, 0x6a, 0xa5, 0x6f, 0xb4, 0x2b, 0xf4, 0x4c, 0x08, 0x9d, 0x81, 0x20, 0x94, 0x4f, 0x3e, 0x56,
-	0xbe, 0xf3, 0x44, 0xd2, 0xab, 0x67, 0xe3, 0x6d, 0xbf, 0x09, 0xe9, 0x20, 0xdc, 0xf2, 0xf5, 0x7f,
-	0xfe, 0xdf, 0x3d, 0x0d, 0x1a, 0xfe, 0xc8, 0xa7, 0x30, 0xd5, 0x2f, 0x90, 0x2a, 0xc5, 0x40, 0x04,
-	0x1c, 0x72, 0x4d, 0x1c, 0xe6, 0x7a, 0x2e, 0x81, 0x9d, 0x27, 0xdf, 0x76, 0xcf, 0x3c, 0x50, 0x9e,
-	0xfc, 0x1b, 0x83, 0xba, 0xd0, 0xc2, 0x87, 0x68, 0xaf, 0xf4, 0x09, 0xa5, 0x1e, 0x85, 0xb6, 0x90,
-	0xec, 0xc6, 0xa3, 0xc3, 0xf1, 0x4c, 0xc3, 0x21, 0x8d, 0x5d, 0x10, 0xfc, 0x12, 0x23, 0xae, 0xdc,
-	0x87, 0x26, 0x70, 0x7e, 0x5a, 0x55, 0x2c, 0x81, 0x33, 0x7a, 0x26, 0xf6, 0xe2, 0x09, 0xb0, 0x88,
-	0x45, 0x60, 0xb7, 0x01, 0x5c, 0x7a, 0x97, 0x14, 0xd4, 0x66, 0x8d, 0x31, 0x19, 0x43, 0x67, 0x0b,
-	0xb8, 0xfa, 0x2d, 0x74, 0x1b, 0x00, 0x9d, 0xd0, 0x09, 0xf4, 0x1a, 0xc0, 0xed, 0x85, 0x7f, 0x03,
-	0xfd, 0x2d, 0xc0, 0x74, 0x01, 0x35, 0x00, 0xdb, 0xb7, 0x7d, 0xd8, 0x6b, 0x00, 0x23, 0xff, 0x94,
-	0xc2, 0x7e, 0x13, 0x70, 0x46, 0x0e, 0x1c, 0x88, 0xdf, 0x54, 0x01, 0xf2, 0x0d, 0xd3, 0x70, 0xc5,
-	0x23, 0xe6, 0x7e, 0xfb, 0x11, 0x33, 0x72, 0x0c, 0xff, 0xcc, 0xa3, 0x57, 0xdb, 0x9b, 0x53, 0xa3,
-	0x23, 0x13, 0x14, 0x0c, 0x68, 0xbf, 0x06, 0xae, 0x0c, 0x13, 0x5a, 0x5b, 0x88, 0xed, 0x8d, 0xa1,
-	0xbd, 0x55, 0xca, 0x70, 0x2d, 0xea, 0xd9, 0x16, 0xec, 0xea, 0x0c, 0xf5, 0x36, 0x9a, 0x28, 0x18,
-	0x63, 0x93, 0x12, 0xe2, 0x4e, 0xec, 0xc6, 0x60, 0x4d, 0xd4, 0x22, 0xe3, 0x4b, 0xdf, 0x1b, 0x81,
-	0x22, 0x5e, 0x1e, 0x35, 0xea, 0x1b, 0xa7, 0x0e, 0xf1, 0xcb, 0xa7, 0x4b, 0x0d, 0x8e, 0x2e, 0xc4,
-	0xc1, 0x68, 0xeb, 0x14, 0xa9, 0x52, 0x3e, 0x65, 0xd0, 0xf7, 0x28, 0x61, 0xa7, 0x8e, 0x7d, 0x7b,
-	0x6b, 0x50, 0xab, 0x3c, 0xeb, 0x25, 0x26, 0xa6, 0xa8, 0xc8, 0xa1, 0xa4, 0x7b, 0xee, 0x79, 0xe7,
-	0x0e, 0x19, 0x39, 0xc6, 0xef, 0xca, 0xa5, 0x94, 0xa8, 0x71, 0x65, 0xdc, 0x7a, 0x2e, 0xb4, 0xff,
-	0x1d, 0x00, 0x00, 0xff, 0xff, 0xde, 0x67, 0x65, 0xe3, 0xe4, 0x0d, 0x00, 0x00,
 }

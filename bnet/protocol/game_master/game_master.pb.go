@@ -2,62 +2,19 @@
 // source: bnet/protocol/game_master/game_master.proto
 // DO NOT EDIT!
 
-/*
-Package bnet_protocol_game_master is a generated protocol buffer package.
-
-It is generated from these files:
-	bnet/protocol/game_master/game_master.proto
-
-It has these top-level messages:
-	CancelGameEntryRequest
-	ChangeGameRequest
-	ConnectInfo
-	FactoryUpdateNotification
-	FindGameRequest
-	FindGameResponse
-	GameEndedNotification
-	GameFactoryDescription
-	GameFoundNotification
-	GameHandle
-	GameProperties
-	GameStatsBucket
-	GetFactoryInfoRequest
-	GetFactoryInfoResponse
-	GetGameStatsRequest
-	GetGameStatsResponse
-	JoinGameRequest
-	JoinGameResponse
-	ListFactoriesRequest
-	ListFactoriesResponse
-	Player
-	PlayerLeftNotification
-	RegisterServerRequest
-	RegisterUtilitiesRequest
-	SubscribeRequest
-	SubscribeResponse
-	UnregisterServerRequest
-	UnregisterUtilitiesRequest
-	UnsubscribeRequest
-*/
 package bnet_protocol_game_master
 
 import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
+import json "encoding/json"
 import math "math"
 import bnet_protocol_attribute_468 "github.com/HearthSim/hs-proto-go/bnet/protocol/attribute_468"
 import bnet_protocol "github.com/HearthSim/hs-proto-go/bnet/protocol"
 import bnet_protocol_server_pool "github.com/HearthSim/hs-proto-go/bnet/protocol/server_pool"
 
-// Reference imports to suppress errors if they are not otherwise used.
+// Reference proto, json, and math imports to suppress error if they are not otherwise used.
 var _ = proto.Marshal
-var _ = fmt.Errorf
+var _ = &json.SyntaxError{}
 var _ = math.Inf
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 // ref: bnet.protocol.game_master.FactoryUpdateNotification/Types/Operation
 type FactoryUpdateNotification_Operation int32
@@ -87,6 +44,9 @@ func (x FactoryUpdateNotification_Operation) Enum() *FactoryUpdateNotification_O
 func (x FactoryUpdateNotification_Operation) String() string {
 	return proto.EnumName(FactoryUpdateNotification_Operation_name, int32(x))
 }
+func (x FactoryUpdateNotification_Operation) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *FactoryUpdateNotification_Operation) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(FactoryUpdateNotification_Operation_value, data, "FactoryUpdateNotification_Operation")
 	if err != nil {
@@ -95,22 +55,18 @@ func (x *FactoryUpdateNotification_Operation) UnmarshalJSON(data []byte) error {
 	*x = FactoryUpdateNotification_Operation(value)
 	return nil
 }
-func (FactoryUpdateNotification_Operation) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{3, 0}
-}
 
 // ref: bnet.protocol.game_master.CancelGameEntryRequest
 type CancelGameEntryRequest struct {
-	RequestId        *uint64   `protobuf:"fixed64,1,req,name=request_id,json=requestId" json:"request_id,omitempty"`
-	FactoryId        *uint64   `protobuf:"fixed64,2,opt,name=factory_id,json=factoryId" json:"factory_id,omitempty"`
+	RequestId        *uint64   `protobuf:"fixed64,1,req,name=request_id" json:"request_id,omitempty"`
+	FactoryId        *uint64   `protobuf:"fixed64,2,opt,name=factory_id" json:"factory_id,omitempty"`
 	Player           []*Player `protobuf:"bytes,3,rep,name=player" json:"player,omitempty"`
 	XXX_unrecognized []byte    `json:"-"`
 }
 
-func (m *CancelGameEntryRequest) Reset()                    { *m = CancelGameEntryRequest{} }
-func (m *CancelGameEntryRequest) String() string            { return proto.CompactTextString(m) }
-func (*CancelGameEntryRequest) ProtoMessage()               {}
-func (*CancelGameEntryRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *CancelGameEntryRequest) Reset()         { *m = CancelGameEntryRequest{} }
+func (m *CancelGameEntryRequest) String() string { return proto.CompactTextString(m) }
+func (*CancelGameEntryRequest) ProtoMessage()    {}
 
 func (m *CancelGameEntryRequest) GetRequestId() uint64 {
 	if m != nil && m.RequestId != nil {
@@ -135,17 +91,16 @@ func (m *CancelGameEntryRequest) GetPlayer() []*Player {
 
 // ref: bnet.protocol.game_master.ChangeGameRequest
 type ChangeGameRequest struct {
-	GameHandle       *GameHandle                `protobuf:"bytes,1,req,name=game_handle,json=gameHandle" json:"game_handle,omitempty"`
+	GameHandle       *GameHandle                `protobuf:"bytes,1,req,name=game_handle" json:"game_handle,omitempty"`
 	Open             *bool                      `protobuf:"varint,2,opt,name=open" json:"open,omitempty"`
 	Attribute        []*bnet_protocol.Attribute `protobuf:"bytes,3,rep,name=attribute" json:"attribute,omitempty"`
 	Replace          *bool                      `protobuf:"varint,4,opt,name=replace,def=0" json:"replace,omitempty"`
 	XXX_unrecognized []byte                     `json:"-"`
 }
 
-func (m *ChangeGameRequest) Reset()                    { *m = ChangeGameRequest{} }
-func (m *ChangeGameRequest) String() string            { return proto.CompactTextString(m) }
-func (*ChangeGameRequest) ProtoMessage()               {}
-func (*ChangeGameRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+func (m *ChangeGameRequest) Reset()         { *m = ChangeGameRequest{} }
+func (m *ChangeGameRequest) String() string { return proto.CompactTextString(m) }
+func (*ChangeGameRequest) ProtoMessage()    {}
 
 const Default_ChangeGameRequest_Replace bool = false
 
@@ -179,7 +134,7 @@ func (m *ChangeGameRequest) GetReplace() bool {
 
 // ref: bnet.protocol.game_master.ConnectInfo
 type ConnectInfo struct {
-	MemberId         *bnet_protocol.EntityId    `protobuf:"bytes,1,req,name=member_id,json=memberId" json:"member_id,omitempty"`
+	MemberId         *bnet_protocol.EntityId    `protobuf:"bytes,1,req,name=member_id" json:"member_id,omitempty"`
 	Host             *string                    `protobuf:"bytes,2,req,name=host" json:"host,omitempty"`
 	Port             *int32                     `protobuf:"varint,3,req,name=port" json:"port,omitempty"`
 	Token            []byte                     `protobuf:"bytes,4,opt,name=token" json:"token,omitempty"`
@@ -187,10 +142,9 @@ type ConnectInfo struct {
 	XXX_unrecognized []byte                     `json:"-"`
 }
 
-func (m *ConnectInfo) Reset()                    { *m = ConnectInfo{} }
-func (m *ConnectInfo) String() string            { return proto.CompactTextString(m) }
-func (*ConnectInfo) ProtoMessage()               {}
-func (*ConnectInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
+func (m *ConnectInfo) Reset()         { *m = ConnectInfo{} }
+func (m *ConnectInfo) String() string { return proto.CompactTextString(m) }
+func (*ConnectInfo) ProtoMessage()    {}
 
 func (m *ConnectInfo) GetMemberId() *bnet_protocol.EntityId {
 	if m != nil {
@@ -231,20 +185,19 @@ func (m *ConnectInfo) GetAttribute() []*bnet_protocol.Attribute {
 type FactoryUpdateNotification struct {
 	Op               *FactoryUpdateNotification_Operation `protobuf:"varint,1,req,name=op,enum=bnet.protocol.game_master.FactoryUpdateNotification_Operation" json:"op,omitempty"`
 	Description      *GameFactoryDescription              `protobuf:"bytes,2,req,name=description" json:"description,omitempty"`
-	ProgramId        *uint32                              `protobuf:"fixed32,3,opt,name=program_id,json=programId" json:"program_id,omitempty"`
+	ProgramId        *uint32                              `protobuf:"fixed32,3,opt,name=program_id" json:"program_id,omitempty"`
 	XXX_unrecognized []byte                               `json:"-"`
 }
 
-func (m *FactoryUpdateNotification) Reset()                    { *m = FactoryUpdateNotification{} }
-func (m *FactoryUpdateNotification) String() string            { return proto.CompactTextString(m) }
-func (*FactoryUpdateNotification) ProtoMessage()               {}
-func (*FactoryUpdateNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
+func (m *FactoryUpdateNotification) Reset()         { *m = FactoryUpdateNotification{} }
+func (m *FactoryUpdateNotification) String() string { return proto.CompactTextString(m) }
+func (*FactoryUpdateNotification) ProtoMessage()    {}
 
 func (m *FactoryUpdateNotification) GetOp() FactoryUpdateNotification_Operation {
 	if m != nil && m.Op != nil {
 		return *m.Op
 	}
-	return FactoryUpdateNotification_ADD
+	return 0
 }
 
 func (m *FactoryUpdateNotification) GetDescription() *GameFactoryDescription {
@@ -264,18 +217,17 @@ func (m *FactoryUpdateNotification) GetProgramId() uint32 {
 // ref: bnet.protocol.game_master.FindGameRequest
 type FindGameRequest struct {
 	Player               []*Player       `protobuf:"bytes,1,rep,name=player" json:"player,omitempty"`
-	FactoryId            *uint64         `protobuf:"fixed64,2,opt,name=factory_id,json=factoryId" json:"factory_id,omitempty"`
+	FactoryId            *uint64         `protobuf:"fixed64,2,opt,name=factory_id" json:"factory_id,omitempty"`
 	Properties           *GameProperties `protobuf:"bytes,3,opt,name=properties" json:"properties,omitempty"`
-	ObjectId             *uint64         `protobuf:"varint,4,opt,name=object_id,json=objectId" json:"object_id,omitempty"`
-	RequestId            *uint64         `protobuf:"fixed64,5,opt,name=request_id,json=requestId" json:"request_id,omitempty"`
-	AdvancedNotification *bool           `protobuf:"varint,6,opt,name=advanced_notification,json=advancedNotification,def=0" json:"advanced_notification,omitempty"`
+	ObjectId             *uint64         `protobuf:"varint,4,opt,name=object_id" json:"object_id,omitempty"`
+	RequestId            *uint64         `protobuf:"fixed64,5,opt,name=request_id" json:"request_id,omitempty"`
+	AdvancedNotification *bool           `protobuf:"varint,6,opt,name=advanced_notification,def=0" json:"advanced_notification,omitempty"`
 	XXX_unrecognized     []byte          `json:"-"`
 }
 
-func (m *FindGameRequest) Reset()                    { *m = FindGameRequest{} }
-func (m *FindGameRequest) String() string            { return proto.CompactTextString(m) }
-func (*FindGameRequest) ProtoMessage()               {}
-func (*FindGameRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
+func (m *FindGameRequest) Reset()         { *m = FindGameRequest{} }
+func (m *FindGameRequest) String() string { return proto.CompactTextString(m) }
+func (*FindGameRequest) ProtoMessage()    {}
 
 const Default_FindGameRequest_AdvancedNotification bool = false
 
@@ -323,16 +275,15 @@ func (m *FindGameRequest) GetAdvancedNotification() bool {
 
 // ref: bnet.protocol.game_master.FindGameResponse
 type FindGameResponse struct {
-	RequestId        *uint64 `protobuf:"fixed64,1,opt,name=request_id,json=requestId" json:"request_id,omitempty"`
-	FactoryId        *uint64 `protobuf:"fixed64,2,opt,name=factory_id,json=factoryId" json:"factory_id,omitempty"`
+	RequestId        *uint64 `protobuf:"fixed64,1,opt,name=request_id" json:"request_id,omitempty"`
+	FactoryId        *uint64 `protobuf:"fixed64,2,opt,name=factory_id" json:"factory_id,omitempty"`
 	Queued           *bool   `protobuf:"varint,3,opt,name=queued,def=0" json:"queued,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *FindGameResponse) Reset()                    { *m = FindGameResponse{} }
-func (m *FindGameResponse) String() string            { return proto.CompactTextString(m) }
-func (*FindGameResponse) ProtoMessage()               {}
-func (*FindGameResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
+func (m *FindGameResponse) Reset()         { *m = FindGameResponse{} }
+func (m *FindGameResponse) String() string { return proto.CompactTextString(m) }
+func (*FindGameResponse) ProtoMessage()    {}
 
 const Default_FindGameResponse_Queued bool = false
 
@@ -359,15 +310,14 @@ func (m *FindGameResponse) GetQueued() bool {
 
 // ref: bnet.protocol.game_master.GameEndedNotification
 type GameEndedNotification struct {
-	GameHandle       *GameHandle `protobuf:"bytes,1,req,name=game_handle,json=gameHandle" json:"game_handle,omitempty"`
+	GameHandle       *GameHandle `protobuf:"bytes,1,req,name=game_handle" json:"game_handle,omitempty"`
 	Reason           *uint32     `protobuf:"varint,2,opt,name=reason,def=0" json:"reason,omitempty"`
 	XXX_unrecognized []byte      `json:"-"`
 }
 
-func (m *GameEndedNotification) Reset()                    { *m = GameEndedNotification{} }
-func (m *GameEndedNotification) String() string            { return proto.CompactTextString(m) }
-func (*GameEndedNotification) ProtoMessage()               {}
-func (*GameEndedNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
+func (m *GameEndedNotification) Reset()         { *m = GameEndedNotification{} }
+func (m *GameEndedNotification) String() string { return proto.CompactTextString(m) }
+func (*GameEndedNotification) ProtoMessage()    {}
 
 const Default_GameEndedNotification_Reason uint32 = 0
 
@@ -390,16 +340,15 @@ type GameFactoryDescription struct {
 	Id               *uint64                    `protobuf:"fixed64,1,req,name=id" json:"id,omitempty"`
 	Name             *string                    `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
 	Attribute        []*bnet_protocol.Attribute `protobuf:"bytes,3,rep,name=attribute" json:"attribute,omitempty"`
-	StatsBucket      []*GameStatsBucket         `protobuf:"bytes,4,rep,name=stats_bucket,json=statsBucket" json:"stats_bucket,omitempty"`
-	UnseededId       *uint64                    `protobuf:"fixed64,5,opt,name=unseeded_id,json=unseededId,def=0" json:"unseeded_id,omitempty"`
-	AllowQueueing    *bool                      `protobuf:"varint,6,opt,name=allow_queueing,json=allowQueueing,def=1" json:"allow_queueing,omitempty"`
+	StatsBucket      []*GameStatsBucket         `protobuf:"bytes,4,rep,name=stats_bucket" json:"stats_bucket,omitempty"`
+	UnseededId       *uint64                    `protobuf:"fixed64,5,opt,name=unseeded_id,def=0" json:"unseeded_id,omitempty"`
+	AllowQueueing    *bool                      `protobuf:"varint,6,opt,name=allow_queueing,def=1" json:"allow_queueing,omitempty"`
 	XXX_unrecognized []byte                     `json:"-"`
 }
 
-func (m *GameFactoryDescription) Reset()                    { *m = GameFactoryDescription{} }
-func (m *GameFactoryDescription) String() string            { return proto.CompactTextString(m) }
-func (*GameFactoryDescription) ProtoMessage()               {}
-func (*GameFactoryDescription) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{7} }
+func (m *GameFactoryDescription) Reset()         { *m = GameFactoryDescription{} }
+func (m *GameFactoryDescription) String() string { return proto.CompactTextString(m) }
+func (*GameFactoryDescription) ProtoMessage()    {}
 
 const Default_GameFactoryDescription_UnseededId uint64 = 0
 const Default_GameFactoryDescription_AllowQueueing bool = true
@@ -448,17 +397,16 @@ func (m *GameFactoryDescription) GetAllowQueueing() bool {
 
 // ref: bnet.protocol.game_master.GameFoundNotification
 type GameFoundNotification struct {
-	RequestId        *uint64        `protobuf:"fixed64,1,req,name=request_id,json=requestId" json:"request_id,omitempty"`
-	ErrorCode        *uint32        `protobuf:"varint,2,opt,name=error_code,json=errorCode,def=0" json:"error_code,omitempty"`
-	GameHandle       *GameHandle    `protobuf:"bytes,3,opt,name=game_handle,json=gameHandle" json:"game_handle,omitempty"`
-	ConnectInfo      []*ConnectInfo `protobuf:"bytes,4,rep,name=connect_info,json=connectInfo" json:"connect_info,omitempty"`
+	RequestId        *uint64        `protobuf:"fixed64,1,req,name=request_id" json:"request_id,omitempty"`
+	ErrorCode        *uint32        `protobuf:"varint,2,opt,name=error_code,def=0" json:"error_code,omitempty"`
+	GameHandle       *GameHandle    `protobuf:"bytes,3,opt,name=game_handle" json:"game_handle,omitempty"`
+	ConnectInfo      []*ConnectInfo `protobuf:"bytes,4,rep,name=connect_info" json:"connect_info,omitempty"`
 	XXX_unrecognized []byte         `json:"-"`
 }
 
-func (m *GameFoundNotification) Reset()                    { *m = GameFoundNotification{} }
-func (m *GameFoundNotification) String() string            { return proto.CompactTextString(m) }
-func (*GameFoundNotification) ProtoMessage()               {}
-func (*GameFoundNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{8} }
+func (m *GameFoundNotification) Reset()         { *m = GameFoundNotification{} }
+func (m *GameFoundNotification) String() string { return proto.CompactTextString(m) }
+func (*GameFoundNotification) ProtoMessage()    {}
 
 const Default_GameFoundNotification_ErrorCode uint32 = 0
 
@@ -492,15 +440,14 @@ func (m *GameFoundNotification) GetConnectInfo() []*ConnectInfo {
 
 // ref: bnet.protocol.game_master.GameHandle
 type GameHandle struct {
-	FactoryId        *uint64                 `protobuf:"fixed64,1,req,name=factory_id,json=factoryId" json:"factory_id,omitempty"`
-	GameId           *bnet_protocol.EntityId `protobuf:"bytes,2,req,name=game_id,json=gameId" json:"game_id,omitempty"`
+	FactoryId        *uint64                 `protobuf:"fixed64,1,req,name=factory_id" json:"factory_id,omitempty"`
+	GameId           *bnet_protocol.EntityId `protobuf:"bytes,2,req,name=game_id" json:"game_id,omitempty"`
 	XXX_unrecognized []byte                  `json:"-"`
 }
 
-func (m *GameHandle) Reset()                    { *m = GameHandle{} }
-func (m *GameHandle) String() string            { return proto.CompactTextString(m) }
-func (*GameHandle) ProtoMessage()               {}
-func (*GameHandle) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9} }
+func (m *GameHandle) Reset()         { *m = GameHandle{} }
+func (m *GameHandle) String() string { return proto.CompactTextString(m) }
+func (*GameHandle) ProtoMessage()    {}
 
 func (m *GameHandle) GetFactoryId() uint64 {
 	if m != nil && m.FactoryId != nil {
@@ -518,18 +465,17 @@ func (m *GameHandle) GetGameId() *bnet_protocol.EntityId {
 
 // ref: bnet.protocol.game_master.GameProperties
 type GameProperties struct {
-	CreationAttributes []*bnet_protocol.Attribute                   `protobuf:"bytes,1,rep,name=creation_attributes,json=creationAttributes" json:"creation_attributes,omitempty"`
+	CreationAttributes []*bnet_protocol.Attribute                   `protobuf:"bytes,1,rep,name=creation_attributes" json:"creation_attributes,omitempty"`
 	Filter             *bnet_protocol_attribute_468.AttributeFilter `protobuf:"bytes,2,opt,name=filter" json:"filter,omitempty"`
 	Create             *bool                                        `protobuf:"varint,3,opt,name=create,def=0" json:"create,omitempty"`
 	Open               *bool                                        `protobuf:"varint,4,opt,name=open,def=1" json:"open,omitempty"`
-	ProgramId          *uint32                                      `protobuf:"fixed32,5,opt,name=program_id,json=programId" json:"program_id,omitempty"`
+	ProgramId          *uint32                                      `protobuf:"fixed32,5,opt,name=program_id" json:"program_id,omitempty"`
 	XXX_unrecognized   []byte                                       `json:"-"`
 }
 
-func (m *GameProperties) Reset()                    { *m = GameProperties{} }
-func (m *GameProperties) String() string            { return proto.CompactTextString(m) }
-func (*GameProperties) ProtoMessage()               {}
-func (*GameProperties) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{10} }
+func (m *GameProperties) Reset()         { *m = GameProperties{} }
+func (m *GameProperties) String() string { return proto.CompactTextString(m) }
+func (*GameProperties) ProtoMessage()    {}
 
 const Default_GameProperties_Create bool = false
 const Default_GameProperties_Open bool = true
@@ -571,28 +517,27 @@ func (m *GameProperties) GetProgramId() uint32 {
 
 // ref: bnet.protocol.game_master.GameStatsBucket
 type GameStatsBucket struct {
-	BucketMin                  *float32 `protobuf:"fixed32,1,opt,name=bucket_min,json=bucketMin,def=0" json:"bucket_min,omitempty"`
-	BucketMax                  *float32 `protobuf:"fixed32,2,opt,name=bucket_max,json=bucketMax,def=4.294967e+009" json:"bucket_max,omitempty"`
-	WaitMilliseconds           *uint32  `protobuf:"varint,3,opt,name=wait_milliseconds,json=waitMilliseconds,def=0" json:"wait_milliseconds,omitempty"`
-	GamesPerHour               *uint32  `protobuf:"varint,4,opt,name=games_per_hour,json=gamesPerHour,def=0" json:"games_per_hour,omitempty"`
-	ActiveGames                *uint32  `protobuf:"varint,5,opt,name=active_games,json=activeGames,def=0" json:"active_games,omitempty"`
-	ActivePlayers              *uint32  `protobuf:"varint,6,opt,name=active_players,json=activePlayers,def=0" json:"active_players,omitempty"`
-	FormingGames               *uint32  `protobuf:"varint,7,opt,name=forming_games,json=formingGames,def=0" json:"forming_games,omitempty"`
-	WaitingPlayers             *uint32  `protobuf:"varint,8,opt,name=waiting_players,json=waitingPlayers,def=0" json:"waiting_players,omitempty"`
-	OpenJoinableGames          *uint32  `protobuf:"varint,9,opt,name=open_joinable_games,json=openJoinableGames,def=0" json:"open_joinable_games,omitempty"`
-	PlayersInOpenJoinableGames *uint32  `protobuf:"varint,10,opt,name=players_in_open_joinable_games,json=playersInOpenJoinableGames,def=0" json:"players_in_open_joinable_games,omitempty"`
-	OpenGamesTotal             *uint32  `protobuf:"varint,11,opt,name=open_games_total,json=openGamesTotal,def=0" json:"open_games_total,omitempty"`
-	PlayersInOpenGamesTotal    *uint32  `protobuf:"varint,12,opt,name=players_in_open_games_total,json=playersInOpenGamesTotal,def=0" json:"players_in_open_games_total,omitempty"`
+	BucketMin                  *float32 `protobuf:"fixed32,1,opt,name=bucket_min,def=0" json:"bucket_min,omitempty"`
+	BucketMax                  *float32 `protobuf:"fixed32,2,opt,name=bucket_max,def=4.294967e+09" json:"bucket_max,omitempty"`
+	WaitMilliseconds           *uint32  `protobuf:"varint,3,opt,name=wait_milliseconds,def=0" json:"wait_milliseconds,omitempty"`
+	GamesPerHour               *uint32  `protobuf:"varint,4,opt,name=games_per_hour,def=0" json:"games_per_hour,omitempty"`
+	ActiveGames                *uint32  `protobuf:"varint,5,opt,name=active_games,def=0" json:"active_games,omitempty"`
+	ActivePlayers              *uint32  `protobuf:"varint,6,opt,name=active_players,def=0" json:"active_players,omitempty"`
+	FormingGames               *uint32  `protobuf:"varint,7,opt,name=forming_games,def=0" json:"forming_games,omitempty"`
+	WaitingPlayers             *uint32  `protobuf:"varint,8,opt,name=waiting_players,def=0" json:"waiting_players,omitempty"`
+	OpenJoinableGames          *uint32  `protobuf:"varint,9,opt,name=open_joinable_games,def=0" json:"open_joinable_games,omitempty"`
+	PlayersInOpenJoinableGames *uint32  `protobuf:"varint,10,opt,name=players_in_open_joinable_games,def=0" json:"players_in_open_joinable_games,omitempty"`
+	OpenGamesTotal             *uint32  `protobuf:"varint,11,opt,name=open_games_total,def=0" json:"open_games_total,omitempty"`
+	PlayersInOpenGamesTotal    *uint32  `protobuf:"varint,12,opt,name=players_in_open_games_total,def=0" json:"players_in_open_games_total,omitempty"`
 	XXX_unrecognized           []byte   `json:"-"`
 }
 
-func (m *GameStatsBucket) Reset()                    { *m = GameStatsBucket{} }
-func (m *GameStatsBucket) String() string            { return proto.CompactTextString(m) }
-func (*GameStatsBucket) ProtoMessage()               {}
-func (*GameStatsBucket) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{11} }
+func (m *GameStatsBucket) Reset()         { *m = GameStatsBucket{} }
+func (m *GameStatsBucket) String() string { return proto.CompactTextString(m) }
+func (*GameStatsBucket) ProtoMessage()    {}
 
 const Default_GameStatsBucket_BucketMin float32 = 0
-const Default_GameStatsBucket_BucketMax float32 = 4.294967e+009
+const Default_GameStatsBucket_BucketMax float32 = 4.294967e+09
 const Default_GameStatsBucket_WaitMilliseconds uint32 = 0
 const Default_GameStatsBucket_GamesPerHour uint32 = 0
 const Default_GameStatsBucket_ActiveGames uint32 = 0
@@ -690,14 +635,13 @@ func (m *GameStatsBucket) GetPlayersInOpenGamesTotal() uint32 {
 
 // ref: bnet.protocol.game_master.GetFactoryInfoRequest
 type GetFactoryInfoRequest struct {
-	FactoryId        *uint64 `protobuf:"fixed64,1,req,name=factory_id,json=factoryId" json:"factory_id,omitempty"`
+	FactoryId        *uint64 `protobuf:"fixed64,1,req,name=factory_id" json:"factory_id,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *GetFactoryInfoRequest) Reset()                    { *m = GetFactoryInfoRequest{} }
-func (m *GetFactoryInfoRequest) String() string            { return proto.CompactTextString(m) }
-func (*GetFactoryInfoRequest) ProtoMessage()               {}
-func (*GetFactoryInfoRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{12} }
+func (m *GetFactoryInfoRequest) Reset()         { *m = GetFactoryInfoRequest{} }
+func (m *GetFactoryInfoRequest) String() string { return proto.CompactTextString(m) }
+func (*GetFactoryInfoRequest) ProtoMessage()    {}
 
 func (m *GetFactoryInfoRequest) GetFactoryId() uint64 {
 	if m != nil && m.FactoryId != nil {
@@ -709,14 +653,13 @@ func (m *GetFactoryInfoRequest) GetFactoryId() uint64 {
 // ref: bnet.protocol.game_master.GetFactoryInfoResponse
 type GetFactoryInfoResponse struct {
 	Attribute        []*bnet_protocol.Attribute `protobuf:"bytes,1,rep,name=attribute" json:"attribute,omitempty"`
-	StatsBucket      []*GameStatsBucket         `protobuf:"bytes,2,rep,name=stats_bucket,json=statsBucket" json:"stats_bucket,omitempty"`
+	StatsBucket      []*GameStatsBucket         `protobuf:"bytes,2,rep,name=stats_bucket" json:"stats_bucket,omitempty"`
 	XXX_unrecognized []byte                     `json:"-"`
 }
 
-func (m *GetFactoryInfoResponse) Reset()                    { *m = GetFactoryInfoResponse{} }
-func (m *GetFactoryInfoResponse) String() string            { return proto.CompactTextString(m) }
-func (*GetFactoryInfoResponse) ProtoMessage()               {}
-func (*GetFactoryInfoResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{13} }
+func (m *GetFactoryInfoResponse) Reset()         { *m = GetFactoryInfoResponse{} }
+func (m *GetFactoryInfoResponse) String() string { return proto.CompactTextString(m) }
+func (*GetFactoryInfoResponse) ProtoMessage()    {}
 
 func (m *GetFactoryInfoResponse) GetAttribute() []*bnet_protocol.Attribute {
 	if m != nil {
@@ -734,15 +677,14 @@ func (m *GetFactoryInfoResponse) GetStatsBucket() []*GameStatsBucket {
 
 // ref: bnet.protocol.game_master.GetGameStatsRequest
 type GetGameStatsRequest struct {
-	FactoryId        *uint64                                      `protobuf:"fixed64,1,req,name=factory_id,json=factoryId" json:"factory_id,omitempty"`
+	FactoryId        *uint64                                      `protobuf:"fixed64,1,req,name=factory_id" json:"factory_id,omitempty"`
 	Filter           *bnet_protocol_attribute_468.AttributeFilter `protobuf:"bytes,2,req,name=filter" json:"filter,omitempty"`
 	XXX_unrecognized []byte                                       `json:"-"`
 }
 
-func (m *GetGameStatsRequest) Reset()                    { *m = GetGameStatsRequest{} }
-func (m *GetGameStatsRequest) String() string            { return proto.CompactTextString(m) }
-func (*GetGameStatsRequest) ProtoMessage()               {}
-func (*GetGameStatsRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{14} }
+func (m *GetGameStatsRequest) Reset()         { *m = GetGameStatsRequest{} }
+func (m *GetGameStatsRequest) String() string { return proto.CompactTextString(m) }
+func (*GetGameStatsRequest) ProtoMessage()    {}
 
 func (m *GetGameStatsRequest) GetFactoryId() uint64 {
 	if m != nil && m.FactoryId != nil {
@@ -760,14 +702,13 @@ func (m *GetGameStatsRequest) GetFilter() *bnet_protocol_attribute_468.Attribute
 
 // ref: bnet.protocol.game_master.GetGameStatsResponse
 type GetGameStatsResponse struct {
-	StatsBucket      []*GameStatsBucket `protobuf:"bytes,1,rep,name=stats_bucket,json=statsBucket" json:"stats_bucket,omitempty"`
+	StatsBucket      []*GameStatsBucket `protobuf:"bytes,1,rep,name=stats_bucket" json:"stats_bucket,omitempty"`
 	XXX_unrecognized []byte             `json:"-"`
 }
 
-func (m *GetGameStatsResponse) Reset()                    { *m = GetGameStatsResponse{} }
-func (m *GetGameStatsResponse) String() string            { return proto.CompactTextString(m) }
-func (*GetGameStatsResponse) ProtoMessage()               {}
-func (*GetGameStatsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{15} }
+func (m *GetGameStatsResponse) Reset()         { *m = GetGameStatsResponse{} }
+func (m *GetGameStatsResponse) String() string { return proto.CompactTextString(m) }
+func (*GetGameStatsResponse) ProtoMessage()    {}
 
 func (m *GetGameStatsResponse) GetStatsBucket() []*GameStatsBucket {
 	if m != nil {
@@ -778,16 +719,15 @@ func (m *GetGameStatsResponse) GetStatsBucket() []*GameStatsBucket {
 
 // ref: bnet.protocol.game_master.JoinGameRequest
 type JoinGameRequest struct {
-	GameHandle           *GameHandle `protobuf:"bytes,1,req,name=game_handle,json=gameHandle" json:"game_handle,omitempty"`
+	GameHandle           *GameHandle `protobuf:"bytes,1,req,name=game_handle" json:"game_handle,omitempty"`
 	Player               []*Player   `protobuf:"bytes,2,rep,name=player" json:"player,omitempty"`
-	AdvancedNotification *bool       `protobuf:"varint,3,opt,name=advanced_notification,json=advancedNotification,def=0" json:"advanced_notification,omitempty"`
+	AdvancedNotification *bool       `protobuf:"varint,3,opt,name=advanced_notification,def=0" json:"advanced_notification,omitempty"`
 	XXX_unrecognized     []byte      `json:"-"`
 }
 
-func (m *JoinGameRequest) Reset()                    { *m = JoinGameRequest{} }
-func (m *JoinGameRequest) String() string            { return proto.CompactTextString(m) }
-func (*JoinGameRequest) ProtoMessage()               {}
-func (*JoinGameRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{16} }
+func (m *JoinGameRequest) Reset()         { *m = JoinGameRequest{} }
+func (m *JoinGameRequest) String() string { return proto.CompactTextString(m) }
+func (*JoinGameRequest) ProtoMessage()    {}
 
 const Default_JoinGameRequest_AdvancedNotification bool = false
 
@@ -814,16 +754,15 @@ func (m *JoinGameRequest) GetAdvancedNotification() bool {
 
 // ref: bnet.protocol.game_master.JoinGameResponse
 type JoinGameResponse struct {
-	RequestId        *uint64        `protobuf:"fixed64,1,opt,name=request_id,json=requestId" json:"request_id,omitempty"`
+	RequestId        *uint64        `protobuf:"fixed64,1,opt,name=request_id" json:"request_id,omitempty"`
 	Queued           *bool          `protobuf:"varint,2,opt,name=queued,def=0" json:"queued,omitempty"`
-	ConnectInfo      []*ConnectInfo `protobuf:"bytes,3,rep,name=connect_info,json=connectInfo" json:"connect_info,omitempty"`
+	ConnectInfo      []*ConnectInfo `protobuf:"bytes,3,rep,name=connect_info" json:"connect_info,omitempty"`
 	XXX_unrecognized []byte         `json:"-"`
 }
 
-func (m *JoinGameResponse) Reset()                    { *m = JoinGameResponse{} }
-func (m *JoinGameResponse) String() string            { return proto.CompactTextString(m) }
-func (*JoinGameResponse) ProtoMessage()               {}
-func (*JoinGameResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{17} }
+func (m *JoinGameResponse) Reset()         { *m = JoinGameResponse{} }
+func (m *JoinGameResponse) String() string { return proto.CompactTextString(m) }
+func (*JoinGameResponse) ProtoMessage()    {}
 
 const Default_JoinGameResponse_Queued bool = false
 
@@ -851,15 +790,14 @@ func (m *JoinGameResponse) GetConnectInfo() []*ConnectInfo {
 // ref: bnet.protocol.game_master.ListFactoriesRequest
 type ListFactoriesRequest struct {
 	Filter           *bnet_protocol_attribute_468.AttributeFilter `protobuf:"bytes,1,req,name=filter" json:"filter,omitempty"`
-	StartIndex       *uint32                                      `protobuf:"varint,2,opt,name=start_index,json=startIndex,def=0" json:"start_index,omitempty"`
-	MaxResults       *uint32                                      `protobuf:"varint,3,opt,name=max_results,json=maxResults,def=100" json:"max_results,omitempty"`
+	StartIndex       *uint32                                      `protobuf:"varint,2,opt,name=start_index,def=0" json:"start_index,omitempty"`
+	MaxResults       *uint32                                      `protobuf:"varint,3,opt,name=max_results,def=100" json:"max_results,omitempty"`
 	XXX_unrecognized []byte                                       `json:"-"`
 }
 
-func (m *ListFactoriesRequest) Reset()                    { *m = ListFactoriesRequest{} }
-func (m *ListFactoriesRequest) String() string            { return proto.CompactTextString(m) }
-func (*ListFactoriesRequest) ProtoMessage()               {}
-func (*ListFactoriesRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{18} }
+func (m *ListFactoriesRequest) Reset()         { *m = ListFactoriesRequest{} }
+func (m *ListFactoriesRequest) String() string { return proto.CompactTextString(m) }
+func (*ListFactoriesRequest) ProtoMessage()    {}
 
 const Default_ListFactoriesRequest_StartIndex uint32 = 0
 const Default_ListFactoriesRequest_MaxResults uint32 = 100
@@ -888,14 +826,13 @@ func (m *ListFactoriesRequest) GetMaxResults() uint32 {
 // ref: bnet.protocol.game_master.ListFactoriesResponse
 type ListFactoriesResponse struct {
 	Description      []*GameFactoryDescription `protobuf:"bytes,1,rep,name=description" json:"description,omitempty"`
-	TotalResults     *uint32                   `protobuf:"varint,2,opt,name=total_results,json=totalResults" json:"total_results,omitempty"`
+	TotalResults     *uint32                   `protobuf:"varint,2,opt,name=total_results" json:"total_results,omitempty"`
 	XXX_unrecognized []byte                    `json:"-"`
 }
 
-func (m *ListFactoriesResponse) Reset()                    { *m = ListFactoriesResponse{} }
-func (m *ListFactoriesResponse) String() string            { return proto.CompactTextString(m) }
-func (*ListFactoriesResponse) ProtoMessage()               {}
-func (*ListFactoriesResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{19} }
+func (m *ListFactoriesResponse) Reset()         { *m = ListFactoriesResponse{} }
+func (m *ListFactoriesResponse) String() string { return proto.CompactTextString(m) }
+func (*ListFactoriesResponse) ProtoMessage()    {}
 
 func (m *ListFactoriesResponse) GetDescription() []*GameFactoryDescription {
 	if m != nil {
@@ -918,10 +855,9 @@ type Player struct {
 	XXX_unrecognized []byte                     `json:"-"`
 }
 
-func (m *Player) Reset()                    { *m = Player{} }
-func (m *Player) String() string            { return proto.CompactTextString(m) }
-func (*Player) ProtoMessage()               {}
-func (*Player) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{20} }
+func (m *Player) Reset()         { *m = Player{} }
+func (m *Player) String() string { return proto.CompactTextString(m) }
+func (*Player) ProtoMessage()    {}
 
 func (m *Player) GetIdentity() *bnet_protocol.Identity {
 	if m != nil {
@@ -939,16 +875,15 @@ func (m *Player) GetAttribute() []*bnet_protocol.Attribute {
 
 // ref: bnet.protocol.game_master.PlayerLeftNotification
 type PlayerLeftNotification struct {
-	GameHandle       *GameHandle             `protobuf:"bytes,1,req,name=game_handle,json=gameHandle" json:"game_handle,omitempty"`
-	MemberId         *bnet_protocol.EntityId `protobuf:"bytes,2,req,name=member_id,json=memberId" json:"member_id,omitempty"`
+	GameHandle       *GameHandle             `protobuf:"bytes,1,req,name=game_handle" json:"game_handle,omitempty"`
+	MemberId         *bnet_protocol.EntityId `protobuf:"bytes,2,req,name=member_id" json:"member_id,omitempty"`
 	Reason           *uint32                 `protobuf:"varint,3,opt,name=reason,def=1" json:"reason,omitempty"`
 	XXX_unrecognized []byte                  `json:"-"`
 }
 
-func (m *PlayerLeftNotification) Reset()                    { *m = PlayerLeftNotification{} }
-func (m *PlayerLeftNotification) String() string            { return proto.CompactTextString(m) }
-func (*PlayerLeftNotification) ProtoMessage()               {}
-func (*PlayerLeftNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{21} }
+func (m *PlayerLeftNotification) Reset()         { *m = PlayerLeftNotification{} }
+func (m *PlayerLeftNotification) String() string { return proto.CompactTextString(m) }
+func (*PlayerLeftNotification) ProtoMessage()    {}
 
 const Default_PlayerLeftNotification_Reason uint32 = 1
 
@@ -977,14 +912,13 @@ func (m *PlayerLeftNotification) GetReason() uint32 {
 type RegisterServerRequest struct {
 	Attribute        []*bnet_protocol.Attribute             `protobuf:"bytes,1,rep,name=attribute" json:"attribute,omitempty"`
 	State            *bnet_protocol_server_pool.ServerState `protobuf:"bytes,2,opt,name=state" json:"state,omitempty"`
-	ProgramId        *uint32                                `protobuf:"fixed32,3,req,name=program_id,json=programId" json:"program_id,omitempty"`
+	ProgramId        *uint32                                `protobuf:"fixed32,3,req,name=program_id" json:"program_id,omitempty"`
 	XXX_unrecognized []byte                                 `json:"-"`
 }
 
-func (m *RegisterServerRequest) Reset()                    { *m = RegisterServerRequest{} }
-func (m *RegisterServerRequest) String() string            { return proto.CompactTextString(m) }
-func (*RegisterServerRequest) ProtoMessage()               {}
-func (*RegisterServerRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{22} }
+func (m *RegisterServerRequest) Reset()         { *m = RegisterServerRequest{} }
+func (m *RegisterServerRequest) String() string { return proto.CompactTextString(m) }
+func (*RegisterServerRequest) ProtoMessage()    {}
 
 func (m *RegisterServerRequest) GetAttribute() []*bnet_protocol.Attribute {
 	if m != nil {
@@ -1011,14 +945,13 @@ func (m *RegisterServerRequest) GetProgramId() uint32 {
 type RegisterUtilitiesRequest struct {
 	Attribute        []*bnet_protocol.Attribute             `protobuf:"bytes,1,rep,name=attribute" json:"attribute,omitempty"`
 	State            *bnet_protocol_server_pool.ServerState `protobuf:"bytes,2,opt,name=state" json:"state,omitempty"`
-	ProgramId        *uint32                                `protobuf:"fixed32,3,req,name=program_id,json=programId" json:"program_id,omitempty"`
+	ProgramId        *uint32                                `protobuf:"fixed32,3,req,name=program_id" json:"program_id,omitempty"`
 	XXX_unrecognized []byte                                 `json:"-"`
 }
 
-func (m *RegisterUtilitiesRequest) Reset()                    { *m = RegisterUtilitiesRequest{} }
-func (m *RegisterUtilitiesRequest) String() string            { return proto.CompactTextString(m) }
-func (*RegisterUtilitiesRequest) ProtoMessage()               {}
-func (*RegisterUtilitiesRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{23} }
+func (m *RegisterUtilitiesRequest) Reset()         { *m = RegisterUtilitiesRequest{} }
+func (m *RegisterUtilitiesRequest) String() string { return proto.CompactTextString(m) }
+func (*RegisterUtilitiesRequest) ProtoMessage()    {}
 
 func (m *RegisterUtilitiesRequest) GetAttribute() []*bnet_protocol.Attribute {
 	if m != nil {
@@ -1043,14 +976,13 @@ func (m *RegisterUtilitiesRequest) GetProgramId() uint32 {
 
 // ref: bnet.protocol.game_master.SubscribeRequest
 type SubscribeRequest struct {
-	ObjectId         *uint64 `protobuf:"varint,1,req,name=object_id,json=objectId" json:"object_id,omitempty"`
+	ObjectId         *uint64 `protobuf:"varint,1,req,name=object_id" json:"object_id,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *SubscribeRequest) Reset()                    { *m = SubscribeRequest{} }
-func (m *SubscribeRequest) String() string            { return proto.CompactTextString(m) }
-func (*SubscribeRequest) ProtoMessage()               {}
-func (*SubscribeRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{24} }
+func (m *SubscribeRequest) Reset()         { *m = SubscribeRequest{} }
+func (m *SubscribeRequest) String() string { return proto.CompactTextString(m) }
+func (*SubscribeRequest) ProtoMessage()    {}
 
 func (m *SubscribeRequest) GetObjectId() uint64 {
 	if m != nil && m.ObjectId != nil {
@@ -1061,14 +993,13 @@ func (m *SubscribeRequest) GetObjectId() uint64 {
 
 // ref: bnet.protocol.game_master.SubscribeResponse
 type SubscribeResponse struct {
-	SubscriptionId   *uint64 `protobuf:"varint,1,opt,name=subscription_id,json=subscriptionId" json:"subscription_id,omitempty"`
+	SubscriptionId   *uint64 `protobuf:"varint,1,opt,name=subscription_id" json:"subscription_id,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *SubscribeResponse) Reset()                    { *m = SubscribeResponse{} }
-func (m *SubscribeResponse) String() string            { return proto.CompactTextString(m) }
-func (*SubscribeResponse) ProtoMessage()               {}
-func (*SubscribeResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{25} }
+func (m *SubscribeResponse) Reset()         { *m = SubscribeResponse{} }
+func (m *SubscribeResponse) String() string { return proto.CompactTextString(m) }
+func (*SubscribeResponse) ProtoMessage()    {}
 
 func (m *SubscribeResponse) GetSubscriptionId() uint64 {
 	if m != nil && m.SubscriptionId != nil {
@@ -1082,31 +1013,28 @@ type UnregisterServerRequest struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *UnregisterServerRequest) Reset()                    { *m = UnregisterServerRequest{} }
-func (m *UnregisterServerRequest) String() string            { return proto.CompactTextString(m) }
-func (*UnregisterServerRequest) ProtoMessage()               {}
-func (*UnregisterServerRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{26} }
+func (m *UnregisterServerRequest) Reset()         { *m = UnregisterServerRequest{} }
+func (m *UnregisterServerRequest) String() string { return proto.CompactTextString(m) }
+func (*UnregisterServerRequest) ProtoMessage()    {}
 
 // ref: bnet.protocol.game_master.UnregisterUtilitiesRequest
 type UnregisterUtilitiesRequest struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *UnregisterUtilitiesRequest) Reset()                    { *m = UnregisterUtilitiesRequest{} }
-func (m *UnregisterUtilitiesRequest) String() string            { return proto.CompactTextString(m) }
-func (*UnregisterUtilitiesRequest) ProtoMessage()               {}
-func (*UnregisterUtilitiesRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{27} }
+func (m *UnregisterUtilitiesRequest) Reset()         { *m = UnregisterUtilitiesRequest{} }
+func (m *UnregisterUtilitiesRequest) String() string { return proto.CompactTextString(m) }
+func (*UnregisterUtilitiesRequest) ProtoMessage()    {}
 
 // ref: bnet.protocol.game_master.UnsubscribeRequest
 type UnsubscribeRequest struct {
-	SubscriptionId   *uint64 `protobuf:"varint,1,req,name=subscription_id,json=subscriptionId" json:"subscription_id,omitempty"`
+	SubscriptionId   *uint64 `protobuf:"varint,1,req,name=subscription_id" json:"subscription_id,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *UnsubscribeRequest) Reset()                    { *m = UnsubscribeRequest{} }
-func (m *UnsubscribeRequest) String() string            { return proto.CompactTextString(m) }
-func (*UnsubscribeRequest) ProtoMessage()               {}
-func (*UnsubscribeRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{28} }
+func (m *UnsubscribeRequest) Reset()         { *m = UnsubscribeRequest{} }
+func (m *UnsubscribeRequest) String() string { return proto.CompactTextString(m) }
+func (*UnsubscribeRequest) ProtoMessage()    {}
 
 func (m *UnsubscribeRequest) GetSubscriptionId() uint64 {
 	if m != nil && m.SubscriptionId != nil {
@@ -1116,138 +1044,5 @@ func (m *UnsubscribeRequest) GetSubscriptionId() uint64 {
 }
 
 func init() {
-	proto.RegisterType((*CancelGameEntryRequest)(nil), "bnet.protocol.game_master.CancelGameEntryRequest")
-	proto.RegisterType((*ChangeGameRequest)(nil), "bnet.protocol.game_master.ChangeGameRequest")
-	proto.RegisterType((*ConnectInfo)(nil), "bnet.protocol.game_master.ConnectInfo")
-	proto.RegisterType((*FactoryUpdateNotification)(nil), "bnet.protocol.game_master.FactoryUpdateNotification")
-	proto.RegisterType((*FindGameRequest)(nil), "bnet.protocol.game_master.FindGameRequest")
-	proto.RegisterType((*FindGameResponse)(nil), "bnet.protocol.game_master.FindGameResponse")
-	proto.RegisterType((*GameEndedNotification)(nil), "bnet.protocol.game_master.GameEndedNotification")
-	proto.RegisterType((*GameFactoryDescription)(nil), "bnet.protocol.game_master.GameFactoryDescription")
-	proto.RegisterType((*GameFoundNotification)(nil), "bnet.protocol.game_master.GameFoundNotification")
-	proto.RegisterType((*GameHandle)(nil), "bnet.protocol.game_master.GameHandle")
-	proto.RegisterType((*GameProperties)(nil), "bnet.protocol.game_master.GameProperties")
-	proto.RegisterType((*GameStatsBucket)(nil), "bnet.protocol.game_master.GameStatsBucket")
-	proto.RegisterType((*GetFactoryInfoRequest)(nil), "bnet.protocol.game_master.GetFactoryInfoRequest")
-	proto.RegisterType((*GetFactoryInfoResponse)(nil), "bnet.protocol.game_master.GetFactoryInfoResponse")
-	proto.RegisterType((*GetGameStatsRequest)(nil), "bnet.protocol.game_master.GetGameStatsRequest")
-	proto.RegisterType((*GetGameStatsResponse)(nil), "bnet.protocol.game_master.GetGameStatsResponse")
-	proto.RegisterType((*JoinGameRequest)(nil), "bnet.protocol.game_master.JoinGameRequest")
-	proto.RegisterType((*JoinGameResponse)(nil), "bnet.protocol.game_master.JoinGameResponse")
-	proto.RegisterType((*ListFactoriesRequest)(nil), "bnet.protocol.game_master.ListFactoriesRequest")
-	proto.RegisterType((*ListFactoriesResponse)(nil), "bnet.protocol.game_master.ListFactoriesResponse")
-	proto.RegisterType((*Player)(nil), "bnet.protocol.game_master.Player")
-	proto.RegisterType((*PlayerLeftNotification)(nil), "bnet.protocol.game_master.PlayerLeftNotification")
-	proto.RegisterType((*RegisterServerRequest)(nil), "bnet.protocol.game_master.RegisterServerRequest")
-	proto.RegisterType((*RegisterUtilitiesRequest)(nil), "bnet.protocol.game_master.RegisterUtilitiesRequest")
-	proto.RegisterType((*SubscribeRequest)(nil), "bnet.protocol.game_master.SubscribeRequest")
-	proto.RegisterType((*SubscribeResponse)(nil), "bnet.protocol.game_master.SubscribeResponse")
-	proto.RegisterType((*UnregisterServerRequest)(nil), "bnet.protocol.game_master.UnregisterServerRequest")
-	proto.RegisterType((*UnregisterUtilitiesRequest)(nil), "bnet.protocol.game_master.UnregisterUtilitiesRequest")
-	proto.RegisterType((*UnsubscribeRequest)(nil), "bnet.protocol.game_master.UnsubscribeRequest")
 	proto.RegisterEnum("bnet.protocol.game_master.FactoryUpdateNotification_Operation", FactoryUpdateNotification_Operation_name, FactoryUpdateNotification_Operation_value)
-}
-
-func init() { proto.RegisterFile("bnet/protocol/game_master/game_master.proto", fileDescriptor0) }
-
-var fileDescriptor0 = []byte{
-	// 1559 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xcc, 0x58, 0x4b, 0x6f, 0x1b, 0x47,
-	0x12, 0xc6, 0x0c, 0x29, 0x4a, 0x2c, 0x4a, 0x14, 0xd5, 0x96, 0x64, 0x4a, 0xb6, 0x77, 0xb5, 0xb3,
-	0x5e, 0x5b, 0x6b, 0x19, 0x94, 0xc4, 0x15, 0xb4, 0x2b, 0xc1, 0x9b, 0xc0, 0xd1, 0xcb, 0x0c, 0x2c,
-	0xdb, 0x69, 0x45, 0xb9, 0x05, 0x83, 0x21, 0xa7, 0x29, 0x8d, 0x4d, 0x4e, 0x8f, 0x7b, 0x9a, 0xb6,
-	0xe4, 0xff, 0x90, 0x43, 0x80, 0xdc, 0x72, 0xc8, 0x2d, 0xa7, 0x20, 0x41, 0x8e, 0xf9, 0x03, 0x41,
-	0x8e, 0xf9, 0x1f, 0xf9, 0x05, 0xb9, 0x05, 0xfd, 0x98, 0xa7, 0x9e, 0x96, 0x63, 0x20, 0xb7, 0x9e,
-	0x7a, 0x75, 0x55, 0xf5, 0x57, 0xd5, 0xd5, 0x03, 0x0b, 0x6d, 0x9f, 0xf0, 0xc5, 0x80, 0x51, 0x4e,
-	0x3b, 0xb4, 0xb7, 0x78, 0xe0, 0xf4, 0x89, 0xdd, 0x77, 0x42, 0x4e, 0x58, 0x7a, 0xdd, 0x90, 0x02,
-	0x68, 0x46, 0x08, 0x37, 0x22, 0xe1, 0x46, 0x4a, 0x60, 0x76, 0x31, 0x6b, 0xc7, 0xe1, 0x9c, 0x79,
-	0xed, 0x01, 0x27, 0xf6, 0xca, 0xea, 0xff, 0xb2, 0x5f, 0x4a, 0x7f, 0xf6, 0x66, 0x56, 0x21, 0x36,
-	0xaa, 0xb8, 0x39, 0xb7, 0x42, 0xc2, 0x5e, 0x11, 0x66, 0x07, 0x34, 0xbb, 0x56, 0xc2, 0xd6, 0x97,
-	0x06, 0x4c, 0x6f, 0x38, 0x7e, 0x87, 0xf4, 0x76, 0x9c, 0x3e, 0xd9, 0xf2, 0x39, 0x3b, 0xc6, 0xe4,
-	0xe5, 0x80, 0x84, 0x1c, 0xdd, 0x02, 0x60, 0x6a, 0x69, 0x7b, 0x6e, 0xdd, 0x98, 0x33, 0xe7, 0x4b,
-	0xb8, 0xac, 0x29, 0x2d, 0x57, 0xb0, 0xbb, 0x4e, 0x87, 0x53, 0x76, 0x2c, 0xd8, 0xe6, 0x9c, 0x21,
-	0xd8, 0x9a, 0xd2, 0x72, 0xd1, 0x1a, 0x94, 0x82, 0x9e, 0x73, 0x4c, 0x58, 0xbd, 0x30, 0x57, 0x98,
-	0xaf, 0x34, 0xff, 0xd1, 0x38, 0x33, 0x01, 0x8d, 0x67, 0x52, 0x10, 0x6b, 0x05, 0xeb, 0x17, 0x03,
-	0x26, 0x36, 0x0e, 0x1d, 0xff, 0x80, 0x08, 0x9f, 0x22, 0x77, 0xb6, 0xa1, 0x22, 0x75, 0x0e, 0x1d,
-	0xdf, 0xed, 0x11, 0xe9, 0x4f, 0xa5, 0xf9, 0xaf, 0x73, 0xac, 0x0a, 0xe5, 0x47, 0x52, 0x18, 0xc3,
-	0x41, 0xbc, 0x46, 0x08, 0x8a, 0x34, 0x20, 0xbe, 0xf4, 0x78, 0x04, 0xcb, 0x35, 0x5a, 0x85, 0x72,
-	0x9c, 0x67, 0xed, 0x6f, 0x3d, 0x67, 0xf9, 0x61, 0xc4, 0xc7, 0x89, 0x28, 0xfa, 0x3b, 0x0c, 0x33,
-	0x12, 0xf4, 0x9c, 0x0e, 0xa9, 0x17, 0x85, 0xb9, 0xf5, 0xa1, 0xae, 0xd3, 0x0b, 0x09, 0x8e, 0xa8,
-	0xd6, 0x4f, 0x06, 0x54, 0x36, 0xa8, 0xef, 0x93, 0x0e, 0x6f, 0xf9, 0x5d, 0x8a, 0x56, 0xa0, 0xdc,
-	0x27, 0xfd, 0x36, 0x61, 0x51, 0x4a, 0x2b, 0xcd, 0xeb, 0xb9, 0x8d, 0xb6, 0x7c, 0xee, 0xf1, 0xe3,
-	0x96, 0x8b, 0x47, 0x94, 0x64, 0xcb, 0x15, 0x2e, 0x1f, 0xd2, 0x90, 0xd7, 0xcd, 0x39, 0x73, 0xbe,
-	0x8c, 0xe5, 0x5a, 0xd0, 0x02, 0xca, 0x78, 0xbd, 0x30, 0x67, 0xce, 0x0f, 0x61, 0xb9, 0x46, 0x93,
-	0x30, 0xc4, 0xe9, 0x0b, 0xe2, 0x4b, 0x67, 0x46, 0xb1, 0xfa, 0xc8, 0x06, 0x37, 0x74, 0xe9, 0xe0,
-	0xac, 0x2f, 0x4c, 0x98, 0xd9, 0x56, 0xe7, 0xb9, 0x1f, 0xb8, 0x0e, 0x27, 0x4f, 0x28, 0xf7, 0xba,
-	0x5e, 0xc7, 0xe1, 0x1e, 0xf5, 0xd1, 0x13, 0x30, 0x69, 0x20, 0x43, 0xa8, 0x36, 0x3f, 0x38, 0xe7,
-	0x14, 0xce, 0xb4, 0xd0, 0x78, 0x1a, 0x10, 0x26, 0x57, 0xd8, 0xa4, 0x01, 0xda, 0x83, 0x8a, 0x4b,
-	0xc2, 0x0e, 0xf3, 0x02, 0x41, 0x92, 0xa1, 0x56, 0x9a, 0xcb, 0x17, 0x1c, 0xaf, 0x36, 0xbe, 0x99,
-	0x28, 0xe2, 0xb4, 0x15, 0x81, 0xd1, 0x80, 0xd1, 0x03, 0xe6, 0xf4, 0x45, 0xbe, 0x0b, 0x73, 0xc6,
-	0xfc, 0x30, 0x2e, 0x6b, 0x4a, 0xcb, 0xb5, 0xee, 0x43, 0x39, 0x76, 0x02, 0x0d, 0x43, 0xe1, 0xe1,
-	0xe6, 0x66, 0xcd, 0x40, 0x00, 0x25, 0xbc, 0xb5, 0xfb, 0xf4, 0xb3, 0xad, 0x9a, 0x29, 0xd6, 0x1b,
-	0x8f, 0x1e, 0x3e, 0xd9, 0xd9, 0xaa, 0x15, 0xac, 0xef, 0x4d, 0x18, 0xdf, 0xf6, 0x7c, 0x37, 0x0d,
-	0xca, 0x04, 0xe5, 0xc6, 0x5b, 0xa2, 0xfc, 0xa2, 0xfa, 0x69, 0x49, 0xd7, 0x03, 0xc2, 0xb8, 0x47,
-	0x42, 0xe9, 0x7a, 0xa5, 0xf9, 0xef, 0x0b, 0xd2, 0xf1, 0x2c, 0x56, 0xc0, 0x29, 0x65, 0x74, 0x03,
-	0xca, 0xb4, 0xfd, 0x9c, 0x74, 0x64, 0x1d, 0x0b, 0x68, 0x14, 0xf1, 0x88, 0x22, 0xa8, 0x32, 0x4e,
-	0x55, 0xf9, 0x90, 0x72, 0x23, 0xa9, 0xf2, 0x75, 0x98, 0x72, 0xdc, 0x57, 0xa2, 0x41, 0xb8, 0xb6,
-	0x9f, 0x3a, 0xbd, 0x7a, 0x29, 0x8d, 0xf7, 0xc9, 0x48, 0x26, 0x7d, 0xc0, 0x16, 0x85, 0x5a, 0x92,
-	0xaf, 0x30, 0xa0, 0x7e, 0x48, 0x4e, 0x34, 0x15, 0xe3, 0xad, 0x9a, 0xca, 0x2d, 0x28, 0xbd, 0x1c,
-	0x90, 0x01, 0x51, 0x67, 0x19, 0x6f, 0xaf, 0x89, 0xd6, 0x1b, 0x98, 0x52, 0x5d, 0xcc, 0xcd, 0x7a,
-	0xf2, 0xa7, 0xf5, 0x8e, 0x19, 0x28, 0x31, 0xe2, 0x84, 0x54, 0x75, 0x8f, 0xb1, 0x75, 0x63, 0x09,
-	0x6b, 0x82, 0xf5, 0x95, 0x09, 0xd3, 0xa7, 0x43, 0x12, 0x55, 0xc1, 0x8c, 0x1b, 0xa8, 0xe9, 0xc9,
-	0x72, 0xf6, 0x9d, 0x3e, 0x91, 0x36, 0xca, 0x58, 0xae, 0xaf, 0xdc, 0x81, 0x76, 0x61, 0x34, 0xe4,
-	0x0e, 0x0f, 0xed, 0xf6, 0xa0, 0xf3, 0x82, 0xf0, 0x7a, 0x51, 0xaa, 0xde, 0xbb, 0x20, 0xb4, 0x3d,
-	0xa1, 0xf2, 0x91, 0xd4, 0xc0, 0x95, 0x30, 0xf9, 0x40, 0x16, 0x54, 0x06, 0x7e, 0x48, 0x88, 0x4b,
-	0xdc, 0x18, 0x0e, 0x22, 0x4a, 0x88, 0xa8, 0x2d, 0x17, 0x2d, 0x40, 0xd5, 0xe9, 0xf5, 0xe8, 0x6b,
-	0x5b, 0x66, 0xdd, 0xf3, 0x0f, 0x34, 0x16, 0x8a, 0x9c, 0x0d, 0x08, 0x1e, 0x93, 0xbc, 0x4f, 0x34,
-	0xcb, 0xfa, 0xcd, 0x50, 0x67, 0xb2, 0x4d, 0x07, 0x7e, 0xf6, 0x4c, 0x2e, 0xb8, 0x5e, 0xe6, 0x00,
-	0x08, 0x63, 0x94, 0xd9, 0x1d, 0xea, 0x92, 0x24, 0xdd, 0x65, 0x49, 0xdc, 0xa0, 0x2e, 0xc9, 0x1f,
-	0xaa, 0x2a, 0x91, 0x2b, 0x1c, 0x6a, 0x0b, 0x46, 0x3b, 0xaa, 0x45, 0xdb, 0x9e, 0xdf, 0xa5, 0x3a,
-	0x85, 0x77, 0xce, 0x31, 0x94, 0xea, 0xe8, 0xb8, 0xd2, 0x49, 0x3e, 0xac, 0xcf, 0x01, 0x92, 0x4d,
-	0x72, 0x60, 0xd6, 0x11, 0x26, 0x60, 0x5e, 0x82, 0x61, 0x69, 0x54, 0x02, 0xfd, 0xdc, 0x9b, 0xa0,
-	0x24, 0xe4, 0x5a, 0xae, 0xf5, 0xbb, 0x01, 0xd5, 0x6c, 0x9d, 0xa3, 0x16, 0x5c, 0xeb, 0x30, 0x22,
-	0x33, 0x6a, 0xc7, 0xa8, 0x08, 0x75, 0x37, 0x3a, 0x1b, 0x41, 0x28, 0x52, 0x8a, 0x49, 0x21, 0xda,
-	0x84, 0x52, 0xd7, 0xeb, 0x71, 0xc2, 0x64, 0xb6, 0x2b, 0xcd, 0xfb, 0x39, 0xed, 0xec, 0x24, 0x12,
-	0x2b, 0x6e, 0x4b, 0x1d, 0xac, 0x75, 0x45, 0x89, 0x4a, 0xdb, 0x24, 0x57, 0xa2, 0x8a, 0x88, 0xea,
-	0xfa, 0xf6, 0x2d, 0xa6, 0x20, 0xa3, 0xee, 0xe0, 0x6c, 0xaf, 0x1e, 0xca, 0xf7, 0xea, 0x9f, 0x8b,
-	0x30, 0x9e, 0x83, 0xae, 0xc0, 0x88, 0x82, 0xbd, 0xdd, 0xf7, 0x7c, 0xd9, 0x4c, 0x4c, 0x89, 0x11,
-	0x45, 0xdc, 0xf5, 0x7c, 0x74, 0x3f, 0x91, 0x70, 0x8e, 0x64, 0x5c, 0xe6, 0xfa, 0xd8, 0x4a, 0xa3,
-	0xb9, 0xb6, 0xb2, 0xb6, 0xfa, 0x5f, 0xb2, 0xb0, 0xb4, 0xb4, 0x16, 0x4b, 0x3b, 0x47, 0xa8, 0x01,
-	0x13, 0xaf, 0x1d, 0x4f, 0x58, 0xeb, 0xf5, 0xbc, 0x90, 0x74, 0xa8, 0xef, 0xaa, 0xd6, 0x2b, 0xa1,
-	0x57, 0x13, 0xbc, 0xdd, 0x14, 0x0b, 0xdd, 0x85, 0xaa, 0x38, 0x99, 0xd0, 0x0e, 0x08, 0xb3, 0x0f,
-	0xe9, 0x80, 0xc9, 0xb0, 0xa4, 0xf0, 0xa8, 0x64, 0x3c, 0x23, 0xec, 0x11, 0x1d, 0x30, 0x74, 0x1b,
-	0x46, 0x9d, 0x0e, 0xf7, 0x5e, 0x11, 0x5b, 0x92, 0x65, 0x74, 0x52, 0xac, 0xa2, 0xc8, 0x22, 0xb0,
-	0x10, 0xcd, 0x43, 0x55, 0x4b, 0xa9, 0x2b, 0x22, 0x94, 0x85, 0x25, 0xe5, 0xc6, 0x14, 0x43, 0x5d,
-	0x21, 0x21, 0xba, 0x03, 0x63, 0x5d, 0xca, 0xfa, 0x9e, 0x7f, 0xa0, 0x0d, 0x0e, 0xc7, 0xfb, 0x6a,
-	0xba, 0xb2, 0x78, 0x0f, 0xc6, 0x85, 0xd3, 0x42, 0x2e, 0x32, 0x39, 0x12, 0x49, 0x56, 0x35, 0x27,
-	0xb2, 0xb9, 0x0c, 0xd7, 0xc4, 0x39, 0xd8, 0xcf, 0xa9, 0xe7, 0x3b, 0xed, 0x5e, 0xe4, 0x6a, 0x39,
-	0x92, 0x9f, 0x10, 0xdc, 0x8f, 0x35, 0x53, 0x99, 0xdf, 0x82, 0xbf, 0x69, 0xb3, 0xb6, 0xe7, 0xdb,
-	0xa7, 0x69, 0x43, 0xa4, 0x3d, 0xab, 0x05, 0x5b, 0xfe, 0xd3, 0x13, 0x66, 0x16, 0xa0, 0x26, 0x75,
-	0x55, 0x2e, 0x39, 0xe5, 0x4e, 0xaf, 0x5e, 0x89, 0xdd, 0x14, 0x2c, 0x29, 0xf7, 0xa9, 0x60, 0xa0,
-	0x0f, 0xe1, 0x46, 0x7e, 0xcf, 0xb4, 0xde, 0x68, 0xa4, 0x77, 0x3d, 0xb3, 0x61, 0x62, 0xc0, 0x5a,
-	0x85, 0xa9, 0x1d, 0xc2, 0x75, 0x9b, 0x96, 0x25, 0x9c, 0xcc, 0xbb, 0xe7, 0x94, 0xab, 0xf5, 0x8d,
-	0x01, 0xd3, 0x79, 0x45, 0x7d, 0xa9, 0x65, 0x9a, 0xb7, 0x71, 0xf5, 0xe6, 0x6d, 0xbe, 0x53, 0xf3,
-	0xb6, 0xde, 0xc0, 0xb5, 0x1d, 0xc2, 0x63, 0x91, 0xcb, 0xc5, 0x95, 0x29, 0x7b, 0xf3, 0xaa, 0x65,
-	0x6f, 0x11, 0x98, 0xcc, 0xee, 0xad, 0x53, 0x93, 0x0f, 0xd1, 0x78, 0xb7, 0x10, 0x7f, 0x35, 0x60,
-	0x5c, 0x80, 0xe7, 0x7d, 0x3c, 0x0c, 0x92, 0x59, 0xce, 0x7c, 0xdb, 0x59, 0xee, 0xcc, 0x29, 0xa9,
-	0x70, 0xf1, 0x94, 0xf4, 0xb5, 0x01, 0xb5, 0x24, 0xa4, 0xcb, 0x8e, 0x49, 0xd1, 0x1c, 0x64, 0x9e,
-	0x32, 0x07, 0x9d, 0xb8, 0xd1, 0x0a, 0x57, 0xbf, 0xd1, 0xbe, 0x35, 0x60, 0xf2, 0xb1, 0x17, 0x6a,
-	0xd8, 0x8b, 0xc9, 0x52, 0x67, 0x3d, 0x81, 0x8d, 0x71, 0x75, 0xd8, 0x88, 0x79, 0x23, 0xe4, 0x0e,
-	0x13, 0x7e, 0xba, 0xe4, 0x28, 0xb9, 0xe6, 0x41, 0x52, 0x5b, 0x82, 0x88, 0x6e, 0x43, 0xa5, 0xef,
-	0x1c, 0xd9, 0x8c, 0x84, 0x83, 0x1e, 0x8f, 0xfa, 0x71, 0x61, 0x79, 0x69, 0x09, 0x43, 0xdf, 0x39,
-	0xc2, 0x8a, 0x2c, 0x1e, 0xb2, 0x53, 0x39, 0x47, 0x75, 0x2e, 0x73, 0x2f, 0x0b, 0x85, 0xc0, 0x77,
-	0x7d, 0x59, 0xfc, 0x13, 0xc6, 0x64, 0xc3, 0x89, 0xdd, 0x92, 0xae, 0xe3, 0x51, 0x49, 0x8c, 0x7c,
-	0x1a, 0x40, 0x49, 0x01, 0x05, 0xfd, 0x07, 0x46, 0x3c, 0x97, 0xc8, 0xfb, 0x5c, 0x9e, 0xe6, 0xc9,
-	0xcb, 0xbe, 0xa5, 0xd9, 0x38, 0x16, 0xcc, 0xb6, 0x15, 0xf3, 0xf2, 0x0f, 0xb7, 0x1f, 0x0d, 0x98,
-	0x56, 0xfb, 0x3e, 0x26, 0x5d, 0xfe, 0x5e, 0x06, 0xe1, 0xcc, 0x3b, 0xd6, 0xbc, 0xec, 0x3b, 0x36,
-	0x19, 0x9f, 0xf5, 0xa5, 0xba, 0x1c, 0x8f, 0xcf, 0xdf, 0x19, 0x30, 0x85, 0xc9, 0x81, 0x27, 0x36,
-	0xdd, 0x93, 0x7f, 0x29, 0x22, 0xa0, 0x5d, 0xb5, 0xb9, 0x3e, 0x80, 0x21, 0xd1, 0x39, 0x88, 0x9e,
-	0x66, 0xf2, 0xe8, 0x4f, 0xff, 0x0a, 0x51, 0x1b, 0x8a, 0xa6, 0x43, 0xb0, 0x52, 0x3a, 0xf1, 0x72,
-	0x34, 0xb3, 0xd3, 0xc8, 0x0f, 0x06, 0xd4, 0x23, 0x77, 0xf7, 0xb9, 0xd7, 0xf3, 0x78, 0xaa, 0x34,
-	0xfe, 0x92, 0x1e, 0x2f, 0x42, 0x6d, 0x6f, 0xd0, 0x16, 0x00, 0x6e, 0xc7, 0x9d, 0x33, 0xf3, 0x30,
-	0x14, 0x58, 0x48, 0x3d, 0x0c, 0xad, 0x07, 0x30, 0x91, 0x52, 0xd0, 0xb5, 0x74, 0x17, 0xc6, 0x43,
-	0x45, 0x94, 0x65, 0x10, 0x35, 0xa7, 0x22, 0xae, 0xa6, 0xc9, 0x2d, 0xd7, 0x9a, 0x81, 0xeb, 0xfb,
-	0x3e, 0x3b, 0xed, 0x40, 0xad, 0x9b, 0x30, 0x9b, 0xb0, 0xf2, 0xc9, 0xb3, 0xfe, 0x0f, 0x68, 0xdf,
-	0x0f, 0xf3, 0x9e, 0x9e, 0xba, 0xaf, 0x79, 0x72, 0xdf, 0x3f, 0x02, 0x00, 0x00, 0xff, 0xff, 0x14,
-	0xca, 0xbc, 0x6e, 0x94, 0x13, 0x00, 0x00,
 }

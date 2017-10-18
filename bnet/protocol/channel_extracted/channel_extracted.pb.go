@@ -2,40 +2,20 @@
 // source: bnet/protocol/channel_extracted/channel_extracted.proto
 // DO NOT EDIT!
 
-/*
-Package bnet_protocol_channel_extracted is a generated protocol buffer package.
-
-It is generated from these files:
-	bnet/protocol/channel_extracted/channel_extracted.proto
-
-It has these top-level messages:
-	ChannelDescription
-	ChannelInvitation
-	ChannelState
-	Invitation
-	InvitationNotification
-	SubscribeToFriendsResponse
-*/
 package bnet_protocol_channel_extracted
 
 import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
+import json "encoding/json"
 import math "math"
 import bnet_protocol_chat "github.com/HearthSim/hs-proto-go/bnet/protocol/chat"
 import bnet_protocol_friends "github.com/HearthSim/hs-proto-go/bnet/protocol/friends"
 import bnet_protocol_presence "github.com/HearthSim/hs-proto-go/bnet/protocol/presence"
 import bnet_protocol "github.com/HearthSim/hs-proto-go/bnet/protocol"
 
-// Reference imports to suppress errors if they are not otherwise used.
+// Reference proto, json, and math imports to suppress error if they are not otherwise used.
 var _ = proto.Marshal
-var _ = fmt.Errorf
+var _ = &json.SyntaxError{}
 var _ = math.Inf
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 // ref: bnet.protocol.channel.ChannelState/Types/PrivacyLevel
 type ChannelState_PrivacyLevel int32
@@ -68,6 +48,9 @@ func (x ChannelState_PrivacyLevel) Enum() *ChannelState_PrivacyLevel {
 func (x ChannelState_PrivacyLevel) String() string {
 	return proto.EnumName(ChannelState_PrivacyLevel_name, int32(x))
 }
+func (x ChannelState_PrivacyLevel) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *ChannelState_PrivacyLevel) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(ChannelState_PrivacyLevel_value, data, "ChannelState_PrivacyLevel")
 	if err != nil {
@@ -76,20 +59,18 @@ func (x *ChannelState_PrivacyLevel) UnmarshalJSON(data []byte) error {
 	*x = ChannelState_PrivacyLevel(value)
 	return nil
 }
-func (ChannelState_PrivacyLevel) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{2, 0} }
 
 // ref: bnet.protocol.channel.ChannelDescription
 type ChannelDescription struct {
-	ChannelId        *bnet_protocol.EntityId `protobuf:"bytes,1,req,name=channel_id,json=channelId" json:"channel_id,omitempty"`
-	CurrentMembers   *uint32                 `protobuf:"varint,2,opt,name=current_members,json=currentMembers" json:"current_members,omitempty"`
+	ChannelId        *bnet_protocol.EntityId `protobuf:"bytes,1,req,name=channel_id" json:"channel_id,omitempty"`
+	CurrentMembers   *uint32                 `protobuf:"varint,2,opt,name=current_members" json:"current_members,omitempty"`
 	State            *ChannelState           `protobuf:"bytes,3,opt,name=state" json:"state,omitempty"`
 	XXX_unrecognized []byte                  `json:"-"`
 }
 
-func (m *ChannelDescription) Reset()                    { *m = ChannelDescription{} }
-func (m *ChannelDescription) String() string            { return proto.CompactTextString(m) }
-func (*ChannelDescription) ProtoMessage()               {}
-func (*ChannelDescription) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *ChannelDescription) Reset()         { *m = ChannelDescription{} }
+func (m *ChannelDescription) String() string { return proto.CompactTextString(m) }
+func (*ChannelDescription) ProtoMessage()    {}
 
 func (m *ChannelDescription) GetChannelId() *bnet_protocol.EntityId {
 	if m != nil {
@@ -114,17 +95,16 @@ func (m *ChannelDescription) GetState() *ChannelState {
 
 // ref: bnet.protocol.channel_invitation.ChannelInvitation
 type ChannelInvitation struct {
-	ChannelDescription *ChannelDescription `protobuf:"bytes,1,req,name=channel_description,json=channelDescription" json:"channel_description,omitempty"`
+	ChannelDescription *ChannelDescription `protobuf:"bytes,1,req,name=channel_description" json:"channel_description,omitempty"`
 	Reserved           *bool               `protobuf:"varint,2,opt,name=reserved,def=0" json:"reserved,omitempty"`
 	Rejoin             *bool               `protobuf:"varint,3,opt,name=rejoin,def=0" json:"rejoin,omitempty"`
-	ServiceType        *uint32             `protobuf:"varint,4,req,name=service_type,json=serviceType" json:"service_type,omitempty"`
+	ServiceType        *uint32             `protobuf:"varint,4,req,name=service_type" json:"service_type,omitempty"`
 	XXX_unrecognized   []byte              `json:"-"`
 }
 
-func (m *ChannelInvitation) Reset()                    { *m = ChannelInvitation{} }
-func (m *ChannelInvitation) String() string            { return proto.CompactTextString(m) }
-func (*ChannelInvitation) ProtoMessage()               {}
-func (*ChannelInvitation) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+func (m *ChannelInvitation) Reset()         { *m = ChannelInvitation{} }
+func (m *ChannelInvitation) String() string { return proto.CompactTextString(m) }
+func (*ChannelInvitation) ProtoMessage()    {}
 
 const Default_ChannelInvitation_Reserved bool = false
 const Default_ChannelInvitation_Rejoin bool = false
@@ -159,28 +139,27 @@ func (m *ChannelInvitation) GetServiceType() uint32 {
 
 // ref: bnet.protocol.channel.ChannelState
 type ChannelState struct {
-	MaxMembers          *uint32                              `protobuf:"varint,1,opt,name=max_members,json=maxMembers" json:"max_members,omitempty"`
-	MinMembers          *uint32                              `protobuf:"varint,2,opt,name=min_members,json=minMembers" json:"min_members,omitempty"`
+	MaxMembers          *uint32                              `protobuf:"varint,1,opt,name=max_members" json:"max_members,omitempty"`
+	MinMembers          *uint32                              `protobuf:"varint,2,opt,name=min_members" json:"min_members,omitempty"`
 	Attribute           []*bnet_protocol.Attribute           `protobuf:"bytes,3,rep,name=attribute" json:"attribute,omitempty"`
 	Invitation          []*Invitation                        `protobuf:"bytes,4,rep,name=invitation" json:"invitation,omitempty"`
-	MaxInvitations      *uint32                              `protobuf:"varint,5,opt,name=max_invitations,json=maxInvitations" json:"max_invitations,omitempty"`
+	MaxInvitations      *uint32                              `protobuf:"varint,5,opt,name=max_invitations" json:"max_invitations,omitempty"`
 	Reason              *uint32                              `protobuf:"varint,6,opt,name=reason" json:"reason,omitempty"`
-	PrivacyLevel        *ChannelState_PrivacyLevel           `protobuf:"varint,7,opt,name=privacy_level,json=privacyLevel,enum=bnet.protocol.channel_extracted.ChannelState_PrivacyLevel,def=1" json:"privacy_level,omitempty"`
+	PrivacyLevel        *ChannelState_PrivacyLevel           `protobuf:"varint,7,opt,name=privacy_level,enum=bnet.protocol.channel_extracted.ChannelState_PrivacyLevel,def=1" json:"privacy_level,omitempty"`
 	Name                *string                              `protobuf:"bytes,8,opt,name=name" json:"name,omitempty"`
-	DelegateName        *string                              `protobuf:"bytes,9,opt,name=delegate_name,json=delegateName" json:"delegate_name,omitempty"`
-	ChannelType         *string                              `protobuf:"bytes,10,opt,name=channel_type,json=channelType,def=default" json:"channel_type,omitempty"`
+	DelegateName        *string                              `protobuf:"bytes,9,opt,name=delegate_name" json:"delegate_name,omitempty"`
+	ChannelType         *string                              `protobuf:"bytes,10,opt,name=channel_type,def=default" json:"channel_type,omitempty"`
 	Program             *uint32                              `protobuf:"fixed32,11,opt,name=program,def=0" json:"program,omitempty"`
-	AllowOfflineMembers *bool                                `protobuf:"varint,12,opt,name=allow_offline_members,json=allowOfflineMembers,def=0" json:"allow_offline_members,omitempty"`
-	SubscribeToPresence *bool                                `protobuf:"varint,13,opt,name=subscribe_to_presence,json=subscribeToPresence,def=1" json:"subscribe_to_presence,omitempty"`
+	AllowOfflineMembers *bool                                `protobuf:"varint,12,opt,name=allow_offline_members,def=0" json:"allow_offline_members,omitempty"`
+	SubscribeToPresence *bool                                `protobuf:"varint,13,opt,name=subscribe_to_presence,def=1" json:"subscribe_to_presence,omitempty"`
 	Chat                *bnet_protocol_chat.ChannelState     `protobuf:"bytes,100,opt,name=chat" json:"chat,omitempty"`
 	Presence            *bnet_protocol_presence.ChannelState `protobuf:"bytes,101,opt,name=presence" json:"presence,omitempty"`
 	XXX_unrecognized    []byte                               `json:"-"`
 }
 
-func (m *ChannelState) Reset()                    { *m = ChannelState{} }
-func (m *ChannelState) String() string            { return proto.CompactTextString(m) }
-func (*ChannelState) ProtoMessage()               {}
-func (*ChannelState) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
+func (m *ChannelState) Reset()         { *m = ChannelState{} }
+func (m *ChannelState) String() string { return proto.CompactTextString(m) }
+func (*ChannelState) ProtoMessage()    {}
 
 const Default_ChannelState_PrivacyLevel ChannelState_PrivacyLevel = ChannelState_PRIVACY_LEVEL_OPEN
 const Default_ChannelState_ChannelType string = "default"
@@ -296,22 +275,21 @@ func (m *ChannelState) GetPresence() *bnet_protocol_presence.ChannelState {
 // ref: bnet.protocol.invitation.Invitation
 type Invitation struct {
 	Id                *uint64                                 `protobuf:"fixed64,1,req,name=id" json:"id,omitempty"`
-	InviterIdentity   *bnet_protocol.Identity                 `protobuf:"bytes,2,req,name=inviter_identity,json=inviterIdentity" json:"inviter_identity,omitempty"`
-	InviteeIdentity   *bnet_protocol.Identity                 `protobuf:"bytes,3,req,name=invitee_identity,json=inviteeIdentity" json:"invitee_identity,omitempty"`
-	InviterName       *string                                 `protobuf:"bytes,4,opt,name=inviter_name,json=inviterName" json:"inviter_name,omitempty"`
-	InviteeName       *string                                 `protobuf:"bytes,5,opt,name=invitee_name,json=inviteeName" json:"invitee_name,omitempty"`
-	InvitationMessage *string                                 `protobuf:"bytes,6,opt,name=invitation_message,json=invitationMessage" json:"invitation_message,omitempty"`
-	CreationTime      *uint64                                 `protobuf:"varint,7,opt,name=creation_time,json=creationTime" json:"creation_time,omitempty"`
-	ExpirationTime    *uint64                                 `protobuf:"varint,8,opt,name=expiration_time,json=expirationTime" json:"expiration_time,omitempty"`
-	FriendInvite      *bnet_protocol_friends.FriendInvitation `protobuf:"bytes,103,opt,name=friend_invite,json=friendInvite" json:"friend_invite,omitempty"`
-	ChannelInvitation *ChannelInvitation                      `protobuf:"bytes,105,opt,name=channel_invitation,json=channelInvitation" json:"channel_invitation,omitempty"`
+	InviterIdentity   *bnet_protocol.Identity                 `protobuf:"bytes,2,req,name=inviter_identity" json:"inviter_identity,omitempty"`
+	InviteeIdentity   *bnet_protocol.Identity                 `protobuf:"bytes,3,req,name=invitee_identity" json:"invitee_identity,omitempty"`
+	InviterName       *string                                 `protobuf:"bytes,4,opt,name=inviter_name" json:"inviter_name,omitempty"`
+	InviteeName       *string                                 `protobuf:"bytes,5,opt,name=invitee_name" json:"invitee_name,omitempty"`
+	InvitationMessage *string                                 `protobuf:"bytes,6,opt,name=invitation_message" json:"invitation_message,omitempty"`
+	CreationTime      *uint64                                 `protobuf:"varint,7,opt,name=creation_time" json:"creation_time,omitempty"`
+	ExpirationTime    *uint64                                 `protobuf:"varint,8,opt,name=expiration_time" json:"expiration_time,omitempty"`
+	FriendInvite      *bnet_protocol_friends.FriendInvitation `protobuf:"bytes,103,opt,name=friend_invite" json:"friend_invite,omitempty"`
+	ChannelInvitation *ChannelInvitation                      `protobuf:"bytes,105,opt,name=channel_invitation" json:"channel_invitation,omitempty"`
 	XXX_unrecognized  []byte                                  `json:"-"`
 }
 
-func (m *Invitation) Reset()                    { *m = Invitation{} }
-func (m *Invitation) String() string            { return proto.CompactTextString(m) }
-func (*Invitation) ProtoMessage()               {}
-func (*Invitation) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
+func (m *Invitation) Reset()         { *m = Invitation{} }
+func (m *Invitation) String() string { return proto.CompactTextString(m) }
+func (*Invitation) ProtoMessage()    {}
 
 func (m *Invitation) GetId() uint64 {
 	if m != nil && m.Id != nil {
@@ -386,15 +364,14 @@ func (m *Invitation) GetChannelInvitation() *ChannelInvitation {
 // ref: bnet.protocol.friends.InvitationNotification
 type InvitationNotification struct {
 	Invitation       *Invitation             `protobuf:"bytes,1,req,name=invitation" json:"invitation,omitempty"`
-	GameAccountId    *bnet_protocol.EntityId `protobuf:"bytes,2,opt,name=game_account_id,json=gameAccountId" json:"game_account_id,omitempty"`
+	GameAccountId    *bnet_protocol.EntityId `protobuf:"bytes,2,opt,name=game_account_id" json:"game_account_id,omitempty"`
 	Reason           *uint32                 `protobuf:"varint,3,opt,name=reason,def=0" json:"reason,omitempty"`
 	XXX_unrecognized []byte                  `json:"-"`
 }
 
-func (m *InvitationNotification) Reset()                    { *m = InvitationNotification{} }
-func (m *InvitationNotification) String() string            { return proto.CompactTextString(m) }
-func (*InvitationNotification) ProtoMessage()               {}
-func (*InvitationNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
+func (m *InvitationNotification) Reset()         { *m = InvitationNotification{} }
+func (m *InvitationNotification) String() string { return proto.CompactTextString(m) }
+func (*InvitationNotification) ProtoMessage()    {}
 
 const Default_InvitationNotification_Reason uint32 = 0
 
@@ -421,20 +398,19 @@ func (m *InvitationNotification) GetReason() uint32 {
 
 // ref: bnet.protocol.friends.SubscribeToFriendsResponse
 type SubscribeToFriendsResponse struct {
-	MaxFriends             *uint32                         `protobuf:"varint,1,opt,name=max_friends,json=maxFriends" json:"max_friends,omitempty"`
-	MaxReceivedInvitations *uint32                         `protobuf:"varint,2,opt,name=max_received_invitations,json=maxReceivedInvitations" json:"max_received_invitations,omitempty"`
-	MaxSentInvitations     *uint32                         `protobuf:"varint,3,opt,name=max_sent_invitations,json=maxSentInvitations" json:"max_sent_invitations,omitempty"`
+	MaxFriends             *uint32                         `protobuf:"varint,1,opt,name=max_friends" json:"max_friends,omitempty"`
+	MaxReceivedInvitations *uint32                         `protobuf:"varint,2,opt,name=max_received_invitations" json:"max_received_invitations,omitempty"`
+	MaxSentInvitations     *uint32                         `protobuf:"varint,3,opt,name=max_sent_invitations" json:"max_sent_invitations,omitempty"`
 	Role                   []*bnet_protocol.Role           `protobuf:"bytes,4,rep,name=role" json:"role,omitempty"`
 	Friends                []*bnet_protocol_friends.Friend `protobuf:"bytes,5,rep,name=friends" json:"friends,omitempty"`
-	SentInvitations        []*Invitation                   `protobuf:"bytes,6,rep,name=sent_invitations,json=sentInvitations" json:"sent_invitations,omitempty"`
-	ReceivedInvitations    []*Invitation                   `protobuf:"bytes,7,rep,name=received_invitations,json=receivedInvitations" json:"received_invitations,omitempty"`
+	SentInvitations        []*Invitation                   `protobuf:"bytes,6,rep,name=sent_invitations" json:"sent_invitations,omitempty"`
+	ReceivedInvitations    []*Invitation                   `protobuf:"bytes,7,rep,name=received_invitations" json:"received_invitations,omitempty"`
 	XXX_unrecognized       []byte                          `json:"-"`
 }
 
-func (m *SubscribeToFriendsResponse) Reset()                    { *m = SubscribeToFriendsResponse{} }
-func (m *SubscribeToFriendsResponse) String() string            { return proto.CompactTextString(m) }
-func (*SubscribeToFriendsResponse) ProtoMessage()               {}
-func (*SubscribeToFriendsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
+func (m *SubscribeToFriendsResponse) Reset()         { *m = SubscribeToFriendsResponse{} }
+func (m *SubscribeToFriendsResponse) String() string { return proto.CompactTextString(m) }
+func (*SubscribeToFriendsResponse) ProtoMessage()    {}
 
 func (m *SubscribeToFriendsResponse) GetMaxFriends() uint32 {
 	if m != nil && m.MaxFriends != nil {
@@ -486,86 +462,5 @@ func (m *SubscribeToFriendsResponse) GetReceivedInvitations() []*Invitation {
 }
 
 func init() {
-	proto.RegisterType((*ChannelDescription)(nil), "bnet.protocol.channel_extracted.ChannelDescription")
-	proto.RegisterType((*ChannelInvitation)(nil), "bnet.protocol.channel_extracted.ChannelInvitation")
-	proto.RegisterType((*ChannelState)(nil), "bnet.protocol.channel_extracted.ChannelState")
-	proto.RegisterType((*Invitation)(nil), "bnet.protocol.channel_extracted.Invitation")
-	proto.RegisterType((*InvitationNotification)(nil), "bnet.protocol.channel_extracted.InvitationNotification")
-	proto.RegisterType((*SubscribeToFriendsResponse)(nil), "bnet.protocol.channel_extracted.SubscribeToFriendsResponse")
 	proto.RegisterEnum("bnet.protocol.channel_extracted.ChannelState_PrivacyLevel", ChannelState_PrivacyLevel_name, ChannelState_PrivacyLevel_value)
-}
-
-func init() {
-	proto.RegisterFile("bnet/protocol/channel_extracted/channel_extracted.proto", fileDescriptor0)
-}
-
-var fileDescriptor0 = []byte{
-	// 1066 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0x9c, 0x56, 0xdd, 0x4e, 0x23, 0x47,
-	0x13, 0xd5, 0x18, 0x83, 0xa1, 0x6c, 0x83, 0x69, 0x58, 0xbe, 0xf9, 0x48, 0xd0, 0x1a, 0x6f, 0x22,
-	0xac, 0x24, 0xeb, 0x5d, 0x91, 0x68, 0x77, 0xc3, 0x4d, 0x42, 0xc0, 0x2b, 0x59, 0x61, 0x0d, 0x6a,
-	0x10, 0x52, 0x6e, 0x32, 0x6a, 0x66, 0xca, 0xa4, 0xa3, 0xf9, 0x53, 0x4f, 0xdb, 0x31, 0x2f, 0x11,
-	0x29, 0x77, 0x79, 0x96, 0xdc, 0x45, 0x79, 0x8f, 0x3c, 0x4b, 0xd4, 0x3d, 0x3d, 0x3f, 0xb6, 0xc9,
-	0x2e, 0xe4, 0x06, 0xcf, 0x54, 0x9d, 0xaa, 0xa9, 0x3a, 0x5d, 0x7d, 0x0a, 0x78, 0x7d, 0x13, 0xa2,
-	0x7c, 0x11, 0x8b, 0x48, 0x46, 0x6e, 0xe4, 0xbf, 0x70, 0x7f, 0x62, 0x61, 0x88, 0xbe, 0x83, 0x53,
-	0x29, 0x98, 0x2b, 0xd1, 0x5b, 0xb4, 0xf4, 0x34, 0x98, 0x3c, 0x55, 0x81, 0xbd, 0x2c, 0xb0, 0xb7,
-	0x00, 0xdb, 0xdd, 0x5b, 0xc8, 0x2c, 0xf5, 0x9f, 0x34, 0x66, 0xf7, 0xd9, 0xac, 0x7b, 0x24, 0x38,
-	0x86, 0x5e, 0x92, 0xfd, 0x1a, 0xd0, 0xa7, 0xb3, 0xa0, 0x58, 0x60, 0x82, 0xa1, 0x8b, 0xf9, 0x83,
-	0x81, 0x7d, 0x3c, 0x0f, 0x33, 0x45, 0xe9, 0x87, 0xce, 0x1f, 0x16, 0x90, 0x93, 0xb4, 0xbc, 0x53,
-	0x4c, 0x5c, 0xc1, 0x63, 0xc9, 0xa3, 0x90, 0xbc, 0x02, 0xc8, 0x8a, 0xe6, 0x9e, 0x6d, 0xb5, 0x2b,
-	0xdd, 0xfa, 0xe1, 0xff, 0x7a, 0xb3, 0x5d, 0xf5, 0x43, 0xc9, 0xe5, 0xdd, 0xc0, 0xa3, 0x6b, 0x06,
-	0x3a, 0xf0, 0xc8, 0x01, 0x6c, 0xb8, 0x63, 0x21, 0x30, 0x94, 0x4e, 0x80, 0xc1, 0x0d, 0x8a, 0xc4,
-	0xae, 0xb4, 0xad, 0x6e, 0x93, 0xae, 0x1b, 0xf3, 0xbb, 0xd4, 0x4a, 0x4e, 0x60, 0x39, 0x91, 0x4c,
-	0xa2, 0xbd, 0xd4, 0xb6, 0xba, 0xf5, 0xc3, 0xe7, 0xbd, 0x0f, 0x30, 0xd6, 0x33, 0x45, 0x5e, 0xaa,
-	0x20, 0x9a, 0xc6, 0x76, 0xfe, 0xb6, 0x60, 0xd3, 0xd8, 0x07, 0xe1, 0x84, 0x4b, 0xa6, 0x6b, 0xf7,
-	0x60, 0x2b, 0x0b, 0xf7, 0x8a, 0x96, 0x4c, 0x13, 0x5f, 0x3e, 0xf4, 0x43, 0x25, 0x36, 0x28, 0x71,
-	0x17, 0x19, 0xda, 0x87, 0x55, 0xc5, 0xb3, 0x98, 0xa0, 0xa7, 0x5b, 0x5c, 0x3d, 0x5a, 0x1e, 0x31,
-	0x3f, 0x41, 0x9a, 0x9b, 0xc9, 0x1e, 0xac, 0x08, 0xfc, 0x39, 0xe2, 0xa1, 0x6e, 0x32, 0x07, 0x18,
-	0x23, 0xd9, 0x87, 0x86, 0x02, 0x72, 0x17, 0x1d, 0x79, 0x17, 0xa3, 0x5d, 0x6d, 0x57, 0xba, 0x4d,
-	0x5a, 0x37, 0xb6, 0xab, 0xbb, 0x18, 0x3b, 0xbf, 0xd6, 0xa0, 0x51, 0x6e, 0x9c, 0x3c, 0x85, 0x7a,
-	0xc0, 0xa6, 0x39, 0xb7, 0x96, 0xe6, 0x16, 0x02, 0x36, 0xcd, 0x78, 0x55, 0x00, 0x1e, 0xce, 0x91,
-	0x0f, 0x01, 0x0f, 0x33, 0xc0, 0x2b, 0x58, 0x63, 0x52, 0x0a, 0x7e, 0x33, 0xd6, 0xe4, 0x2f, 0x75,
-	0xeb, 0x87, 0xf6, 0x1c, 0x27, 0xc7, 0x99, 0x9f, 0x16, 0x50, 0xf2, 0x3d, 0x00, 0xcf, 0x39, 0xb6,
-	0xab, 0x3a, 0xf0, 0xf3, 0x0f, 0x92, 0x59, 0x1c, 0x0b, 0x2d, 0x85, 0xab, 0x31, 0x51, 0x6d, 0x14,
-	0x96, 0xc4, 0x5e, 0x4e, 0xc7, 0x24, 0x60, 0xd3, 0x22, 0x26, 0x21, 0x3b, 0x8a, 0x42, 0x96, 0x44,
-	0xa1, 0xbd, 0xa2, 0xfd, 0xe6, 0x8d, 0x24, 0xd0, 0x8c, 0x05, 0x9f, 0x30, 0xf7, 0xce, 0xf1, 0x71,
-	0x82, 0xbe, 0x5d, 0x6b, 0x5b, 0xdd, 0xf5, 0xc3, 0xa3, 0x47, 0x8d, 0x51, 0xef, 0x22, 0x4d, 0x71,
-	0xa6, 0x32, 0x1c, 0x91, 0x0b, 0x3a, 0xb8, 0x3e, 0x3e, 0xf9, 0xc1, 0x39, 0xeb, 0x5f, 0xf7, 0xcf,
-	0x9c, 0xf3, 0x8b, 0xfe, 0x90, 0x36, 0xe2, 0x12, 0x82, 0x10, 0xa8, 0x86, 0x2c, 0x40, 0x7b, 0xb5,
-	0x6d, 0x75, 0xd7, 0xa8, 0x7e, 0x26, 0xcf, 0xa0, 0xe9, 0xa1, 0x8f, 0xb7, 0x4c, 0xa2, 0xa3, 0x9d,
-	0x6b, 0xda, 0xd9, 0xc8, 0x8c, 0x43, 0x05, 0xfa, 0x0c, 0x1a, 0x59, 0x25, 0xfa, 0xa4, 0x41, 0x61,
-	0x8e, 0x6a, 0x1e, 0x8e, 0xd8, 0xd8, 0x97, 0xb4, 0x6e, 0x9c, 0xea, 0xc8, 0xc9, 0x47, 0x50, 0x8b,
-	0x45, 0x74, 0x2b, 0x58, 0x60, 0xd7, 0xdb, 0x56, 0xb7, 0x76, 0x64, 0xbd, 0xa4, 0x99, 0x85, 0x7c,
-	0x0d, 0x4f, 0x98, 0xef, 0x47, 0xbf, 0x38, 0xd1, 0x68, 0xe4, 0xf3, 0x10, 0xf3, 0x73, 0x6e, 0x94,
-	0x07, 0x6c, 0x4b, 0x63, 0xce, 0x53, 0x48, 0x76, 0xee, 0x6f, 0xe0, 0x49, 0x32, 0xbe, 0x51, 0xf3,
-	0x7b, 0x83, 0x8e, 0x8c, 0x9c, 0x4c, 0x25, 0xec, 0xa6, 0x0e, 0xad, 0x4a, 0x31, 0x46, 0xba, 0x95,
-	0x43, 0xae, 0xa2, 0x0b, 0x03, 0x20, 0x5f, 0x41, 0x55, 0x49, 0x93, 0xed, 0xe9, 0x9b, 0xda, 0x5e,
-	0xa4, 0x58, 0xce, 0x5e, 0x4e, 0x8d, 0x26, 0xdf, 0xc2, 0x6a, 0xfe, 0x09, 0xd4, 0x91, 0x9f, 0xcc,
-	0x45, 0xe6, 0x3a, 0x35, 0x13, 0x9d, 0x47, 0x75, 0x7e, 0xb3, 0xa0, 0x51, 0x3e, 0x21, 0xb2, 0x03,
-	0xf7, 0x9c, 0x51, 0xcb, 0x22, 0x5f, 0x40, 0x77, 0xd1, 0xee, 0x0c, 0x86, 0xd7, 0x83, 0xab, 0xe3,
-	0xab, 0xc1, 0xf9, 0xd0, 0x39, 0x1e, 0x9e, 0x3a, 0x6f, 0xe9, 0xa0, 0x3f, 0x3c, 0x6d, 0x55, 0xc8,
-	0x3e, 0xec, 0xbd, 0x17, 0xdd, 0x5a, 0x22, 0x36, 0x6c, 0xcf, 0x42, 0x4e, 0xce, 0xce, 0x2f, 0xfb,
-	0xa7, 0xad, 0x6a, 0xe7, 0xf7, 0x2a, 0x40, 0x49, 0x6a, 0xd6, 0xa1, 0x62, 0xe4, 0x71, 0x85, 0x56,
-	0xb8, 0x47, 0xbe, 0x83, 0x96, 0x9e, 0x69, 0x14, 0x0e, 0xf7, 0x50, 0xeb, 0xa3, 0x5d, 0xb9, 0x57,
-	0x3c, 0x07, 0xc6, 0x4d, 0x37, 0x4c, 0x40, 0x66, 0x28, 0x72, 0x60, 0x91, 0x63, 0xe9, 0x41, 0x39,
-	0x30, 0xcf, 0xb1, 0x0f, 0x8d, 0xac, 0x0e, 0x3d, 0x94, 0x55, 0x3d, 0x94, 0x75, 0x63, 0xd3, 0x33,
-	0x99, 0x43, 0xcc, 0xdc, 0x2e, 0x97, 0x21, 0xe9, 0xd8, 0x3e, 0x07, 0x52, 0xdc, 0x50, 0x27, 0xc0,
-	0x24, 0x61, 0xb7, 0xa8, 0x2f, 0xe2, 0x1a, 0xdd, 0x2c, 0x3c, 0xef, 0x52, 0x87, 0xba, 0x0a, 0xae,
-	0xc0, 0x14, 0x2c, 0x79, 0x80, 0xfa, 0x4e, 0x56, 0x69, 0x23, 0x33, 0x5e, 0xf1, 0x00, 0xd5, 0xcd,
-	0xc7, 0x69, 0xcc, 0x45, 0x09, 0xb6, 0xaa, 0x61, 0xeb, 0x85, 0x59, 0x03, 0xcf, 0xa0, 0x99, 0xae,
-	0xbb, 0x54, 0x25, 0xd0, 0xbe, 0xd5, 0x43, 0x74, 0x30, 0xc7, 0x41, 0xb6, 0x12, 0xdf, 0xea, 0xdf,
-	0x92, 0xdc, 0x34, 0x46, 0x85, 0x05, 0x09, 0x03, 0x92, 0xef, 0xb3, 0x42, 0xc5, 0xb8, 0x4e, 0x79,
-	0xf8, 0x50, 0xd1, 0x28, 0x65, 0xdf, 0x74, 0xe7, 0x4d, 0x9d, 0x3f, 0x2d, 0xd8, 0x29, 0x5e, 0x87,
-	0x91, 0xe4, 0x23, 0xee, 0xa6, 0x63, 0x32, 0xab, 0x9d, 0xe9, 0x22, 0xfa, 0xcf, 0xda, 0xf9, 0x0d,
-	0x6c, 0xdc, 0xb2, 0x00, 0x1d, 0xe6, 0xba, 0xd1, 0x38, 0x94, 0x6a, 0x3f, 0x57, 0x74, 0x1f, 0xff,
-	0xba, 0x9f, 0x9b, 0x0a, 0x7f, 0x9c, 0xc2, 0x07, 0x1e, 0xf9, 0x7f, 0xae, 0xa9, 0x6a, 0x2d, 0x35,
-	0x95, 0xc0, 0x18, 0x43, 0xe7, 0xaf, 0x25, 0xd8, 0xbd, 0x2c, 0x24, 0x20, 0x25, 0x35, 0xa1, 0x98,
-	0xc4, 0x51, 0x98, 0xe4, 0xdb, 0xc7, 0x70, 0x5e, 0xda, 0x3e, 0x06, 0x48, 0xde, 0x80, 0xad, 0x00,
-	0x02, 0x5d, 0xe4, 0x13, 0xf4, 0x66, 0x04, 0x3e, 0x5d, 0x45, 0x3b, 0x01, 0x9b, 0x52, 0xe3, 0x2e,
-	0x0b, 0xfd, 0x4b, 0xd8, 0x56, 0x91, 0x89, 0xfa, 0xcf, 0xa1, 0x1c, 0xa5, 0x4b, 0xa4, 0x24, 0x60,
-	0xd3, 0x4b, 0x0c, 0x65, 0x39, 0xe2, 0x00, 0xaa, 0x22, 0xf2, 0xd1, 0xac, 0xa2, 0xad, 0xb9, 0xe6,
-	0x69, 0xe4, 0x23, 0xd5, 0x00, 0xf2, 0x1a, 0x6a, 0x59, 0xc5, 0xcb, 0x1a, 0xbb, 0xf7, 0xde, 0x19,
-	0xa2, 0x19, 0x9a, 0x5c, 0x43, 0x6b, 0xa1, 0x9e, 0x95, 0xc7, 0x2f, 0xbe, 0x8d, 0x64, 0xae, 0xf2,
-	0x1f, 0x61, 0xfb, 0x5e, 0x86, 0x6a, 0x8f, 0xcf, 0xbd, 0x25, 0x16, 0xb9, 0xfc, 0x27, 0x00, 0x00,
-	0xff, 0xff, 0x26, 0x1a, 0xc3, 0x3b, 0xb7, 0x0a, 0x00, 0x00,
 }

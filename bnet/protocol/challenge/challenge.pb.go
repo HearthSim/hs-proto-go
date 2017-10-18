@@ -2,43 +2,17 @@
 // source: bnet/protocol/challenge/challenge.proto
 // DO NOT EDIT!
 
-/*
-Package bnet_protocol_challenge is a generated protocol buffer package.
-
-It is generated from these files:
-	bnet/protocol/challenge/challenge.proto
-
-It has these top-level messages:
-	Challenge
-	ChallengeAnsweredRequest
-	ChallengeAnsweredResponse
-	ChallengeCancelledRequest
-	ChallengeExternalRequest
-	ChallengeExternalResult
-	ChallengePickedRequest
-	ChallengePickedResponse
-	ChallengeResultRequest
-	ChallengeUserRequest
-	SendChallengeToUserRequest
-	SendChallengeToUserResponse
-*/
 package bnet_protocol_challenge
 
 import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
+import json "encoding/json"
 import math "math"
 import bnet_protocol "github.com/HearthSim/hs-proto-go/bnet/protocol"
 
-// Reference imports to suppress errors if they are not otherwise used.
+// Reference proto, json, and math imports to suppress error if they are not otherwise used.
 var _ = proto.Marshal
-var _ = fmt.Errorf
+var _ = &json.SyntaxError{}
 var _ = math.Inf
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 // ref: bnet.protocol.challenge.Challenge
 type Challenge struct {
@@ -49,10 +23,9 @@ type Challenge struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *Challenge) Reset()                    { *m = Challenge{} }
-func (m *Challenge) String() string            { return proto.CompactTextString(m) }
-func (*Challenge) ProtoMessage()               {}
-func (*Challenge) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *Challenge) Reset()         { *m = Challenge{} }
+func (m *Challenge) String() string { return proto.CompactTextString(m) }
+func (*Challenge) ProtoMessage()    {}
 
 func (m *Challenge) GetType() uint32 {
 	if m != nil && m.Type != nil {
@@ -90,10 +63,9 @@ type ChallengeAnsweredRequest struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *ChallengeAnsweredRequest) Reset()                    { *m = ChallengeAnsweredRequest{} }
-func (m *ChallengeAnsweredRequest) String() string            { return proto.CompactTextString(m) }
-func (*ChallengeAnsweredRequest) ProtoMessage()               {}
-func (*ChallengeAnsweredRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+func (m *ChallengeAnsweredRequest) Reset()         { *m = ChallengeAnsweredRequest{} }
+func (m *ChallengeAnsweredRequest) String() string { return proto.CompactTextString(m) }
+func (*ChallengeAnsweredRequest) ProtoMessage()    {}
 
 func (m *ChallengeAnsweredRequest) GetAnswer() string {
 	if m != nil && m.Answer != nil {
@@ -119,15 +91,14 @@ func (m *ChallengeAnsweredRequest) GetId() uint32 {
 // ref: bnet.protocol.challenge.ChallengeAnsweredResponse
 type ChallengeAnsweredResponse struct {
 	Data             []byte `protobuf:"bytes,1,opt,name=data" json:"data,omitempty"`
-	DoRetry          *bool  `protobuf:"varint,2,opt,name=do_retry,json=doRetry" json:"do_retry,omitempty"`
-	RecordNotFound   *bool  `protobuf:"varint,3,opt,name=record_not_found,json=recordNotFound" json:"record_not_found,omitempty"`
+	DoRetry          *bool  `protobuf:"varint,2,opt,name=do_retry" json:"do_retry,omitempty"`
+	RecordNotFound   *bool  `protobuf:"varint,3,opt,name=record_not_found" json:"record_not_found,omitempty"`
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *ChallengeAnsweredResponse) Reset()                    { *m = ChallengeAnsweredResponse{} }
-func (m *ChallengeAnsweredResponse) String() string            { return proto.CompactTextString(m) }
-func (*ChallengeAnsweredResponse) ProtoMessage()               {}
-func (*ChallengeAnsweredResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
+func (m *ChallengeAnsweredResponse) Reset()         { *m = ChallengeAnsweredResponse{} }
+func (m *ChallengeAnsweredResponse) String() string { return proto.CompactTextString(m) }
+func (*ChallengeAnsweredResponse) ProtoMessage()    {}
 
 func (m *ChallengeAnsweredResponse) GetData() []byte {
 	if m != nil {
@@ -156,10 +127,9 @@ type ChallengeCancelledRequest struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *ChallengeCancelledRequest) Reset()                    { *m = ChallengeCancelledRequest{} }
-func (m *ChallengeCancelledRequest) String() string            { return proto.CompactTextString(m) }
-func (*ChallengeCancelledRequest) ProtoMessage()               {}
-func (*ChallengeCancelledRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
+func (m *ChallengeCancelledRequest) Reset()         { *m = ChallengeCancelledRequest{} }
+func (m *ChallengeCancelledRequest) String() string { return proto.CompactTextString(m) }
+func (*ChallengeCancelledRequest) ProtoMessage()    {}
 
 func (m *ChallengeCancelledRequest) GetId() uint32 {
 	if m != nil && m.Id != nil {
@@ -170,16 +140,15 @@ func (m *ChallengeCancelledRequest) GetId() uint32 {
 
 // ref: bnet.protocol.challenge.ChallengeExternalRequest
 type ChallengeExternalRequest struct {
-	RequestToken     *string `protobuf:"bytes,1,opt,name=request_token,json=requestToken" json:"request_token,omitempty"`
-	PayloadType      *string `protobuf:"bytes,2,opt,name=payload_type,json=payloadType" json:"payload_type,omitempty"`
+	RequestToken     *string `protobuf:"bytes,1,opt,name=request_token" json:"request_token,omitempty"`
+	PayloadType      *string `protobuf:"bytes,2,opt,name=payload_type" json:"payload_type,omitempty"`
 	Payload          []byte  `protobuf:"bytes,3,opt,name=payload" json:"payload,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *ChallengeExternalRequest) Reset()                    { *m = ChallengeExternalRequest{} }
-func (m *ChallengeExternalRequest) String() string            { return proto.CompactTextString(m) }
-func (*ChallengeExternalRequest) ProtoMessage()               {}
-func (*ChallengeExternalRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
+func (m *ChallengeExternalRequest) Reset()         { *m = ChallengeExternalRequest{} }
+func (m *ChallengeExternalRequest) String() string { return proto.CompactTextString(m) }
+func (*ChallengeExternalRequest) ProtoMessage()    {}
 
 func (m *ChallengeExternalRequest) GetRequestToken() string {
 	if m != nil && m.RequestToken != nil {
@@ -204,15 +173,14 @@ func (m *ChallengeExternalRequest) GetPayload() []byte {
 
 // ref: bnet.protocol.challenge.ChallengeExternalResult
 type ChallengeExternalResult struct {
-	RequestToken     *string `protobuf:"bytes,1,opt,name=request_token,json=requestToken" json:"request_token,omitempty"`
+	RequestToken     *string `protobuf:"bytes,1,opt,name=request_token" json:"request_token,omitempty"`
 	Passed           *bool   `protobuf:"varint,2,opt,name=passed,def=1" json:"passed,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *ChallengeExternalResult) Reset()                    { *m = ChallengeExternalResult{} }
-func (m *ChallengeExternalResult) String() string            { return proto.CompactTextString(m) }
-func (*ChallengeExternalResult) ProtoMessage()               {}
-func (*ChallengeExternalResult) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
+func (m *ChallengeExternalResult) Reset()         { *m = ChallengeExternalResult{} }
+func (m *ChallengeExternalResult) String() string { return proto.CompactTextString(m) }
+func (*ChallengeExternalResult) ProtoMessage()    {}
 
 const Default_ChallengeExternalResult_Passed bool = true
 
@@ -234,14 +202,13 @@ func (m *ChallengeExternalResult) GetPassed() bool {
 type ChallengePickedRequest struct {
 	Challenge            *uint32 `protobuf:"fixed32,1,req,name=challenge" json:"challenge,omitempty"`
 	Id                   *uint32 `protobuf:"varint,2,opt,name=id" json:"id,omitempty"`
-	NewChallengeProtocol *bool   `protobuf:"varint,3,opt,name=new_challenge_protocol,json=newChallengeProtocol,def=0" json:"new_challenge_protocol,omitempty"`
+	NewChallengeProtocol *bool   `protobuf:"varint,3,opt,name=new_challenge_protocol,def=0" json:"new_challenge_protocol,omitempty"`
 	XXX_unrecognized     []byte  `json:"-"`
 }
 
-func (m *ChallengePickedRequest) Reset()                    { *m = ChallengePickedRequest{} }
-func (m *ChallengePickedRequest) String() string            { return proto.CompactTextString(m) }
-func (*ChallengePickedRequest) ProtoMessage()               {}
-func (*ChallengePickedRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
+func (m *ChallengePickedRequest) Reset()         { *m = ChallengePickedRequest{} }
+func (m *ChallengePickedRequest) String() string { return proto.CompactTextString(m) }
+func (*ChallengePickedRequest) ProtoMessage()    {}
 
 const Default_ChallengePickedRequest_NewChallengeProtocol bool = false
 
@@ -272,10 +239,9 @@ type ChallengePickedResponse struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *ChallengePickedResponse) Reset()                    { *m = ChallengePickedResponse{} }
-func (m *ChallengePickedResponse) String() string            { return proto.CompactTextString(m) }
-func (*ChallengePickedResponse) ProtoMessage()               {}
-func (*ChallengePickedResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{7} }
+func (m *ChallengePickedResponse) Reset()         { *m = ChallengePickedResponse{} }
+func (m *ChallengePickedResponse) String() string { return proto.CompactTextString(m) }
+func (*ChallengePickedResponse) ProtoMessage()    {}
 
 func (m *ChallengePickedResponse) GetData() []byte {
 	if m != nil {
@@ -288,15 +254,14 @@ func (m *ChallengePickedResponse) GetData() []byte {
 type ChallengeResultRequest struct {
 	Id               *uint32 `protobuf:"varint,1,opt,name=id" json:"id,omitempty"`
 	Type             *uint32 `protobuf:"fixed32,2,opt,name=type" json:"type,omitempty"`
-	ErrorId          *uint32 `protobuf:"varint,3,opt,name=error_id,json=errorId" json:"error_id,omitempty"`
+	ErrorId          *uint32 `protobuf:"varint,3,opt,name=error_id" json:"error_id,omitempty"`
 	Answer           []byte  `protobuf:"bytes,4,opt,name=answer" json:"answer,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *ChallengeResultRequest) Reset()                    { *m = ChallengeResultRequest{} }
-func (m *ChallengeResultRequest) String() string            { return proto.CompactTextString(m) }
-func (*ChallengeResultRequest) ProtoMessage()               {}
-func (*ChallengeResultRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{8} }
+func (m *ChallengeResultRequest) Reset()         { *m = ChallengeResultRequest{} }
+func (m *ChallengeResultRequest) String() string { return proto.CompactTextString(m) }
+func (*ChallengeResultRequest) ProtoMessage()    {}
 
 func (m *ChallengeResultRequest) GetId() uint32 {
 	if m != nil && m.Id != nil {
@@ -333,14 +298,13 @@ type ChallengeUserRequest struct {
 	Id               *uint32                    `protobuf:"varint,3,opt,name=id" json:"id,omitempty"`
 	Deadline         *uint64                    `protobuf:"varint,4,opt,name=deadline" json:"deadline,omitempty"`
 	Attributes       []*bnet_protocol.Attribute `protobuf:"bytes,5,rep,name=attributes" json:"attributes,omitempty"`
-	GameAccountId    *bnet_protocol.EntityId    `protobuf:"bytes,6,opt,name=game_account_id,json=gameAccountId" json:"game_account_id,omitempty"`
+	GameAccountId    *bnet_protocol.EntityId    `protobuf:"bytes,6,opt,name=game_account_id" json:"game_account_id,omitempty"`
 	XXX_unrecognized []byte                     `json:"-"`
 }
 
-func (m *ChallengeUserRequest) Reset()                    { *m = ChallengeUserRequest{} }
-func (m *ChallengeUserRequest) String() string            { return proto.CompactTextString(m) }
-func (*ChallengeUserRequest) ProtoMessage()               {}
-func (*ChallengeUserRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9} }
+func (m *ChallengeUserRequest) Reset()         { *m = ChallengeUserRequest{} }
+func (m *ChallengeUserRequest) String() string { return proto.CompactTextString(m) }
+func (*ChallengeUserRequest) ProtoMessage()    {}
 
 func (m *ChallengeUserRequest) GetChallenges() []*Challenge {
 	if m != nil {
@@ -386,8 +350,8 @@ func (m *ChallengeUserRequest) GetGameAccountId() *bnet_protocol.EntityId {
 
 // ref: bnet.protocol.challenge.SendChallengeToUserRequest
 type SendChallengeToUserRequest struct {
-	PeerId           *bnet_protocol.ProcessId   `protobuf:"bytes,1,opt,name=peer_id,json=peerId" json:"peer_id,omitempty"`
-	GameAccountId    *bnet_protocol.EntityId    `protobuf:"bytes,2,opt,name=game_account_id,json=gameAccountId" json:"game_account_id,omitempty"`
+	PeerId           *bnet_protocol.ProcessId   `protobuf:"bytes,1,opt,name=peer_id" json:"peer_id,omitempty"`
+	GameAccountId    *bnet_protocol.EntityId    `protobuf:"bytes,2,opt,name=game_account_id" json:"game_account_id,omitempty"`
 	Challenges       []*Challenge               `protobuf:"bytes,3,rep,name=challenges" json:"challenges,omitempty"`
 	Context          *uint32                    `protobuf:"fixed32,4,req,name=context" json:"context,omitempty"`
 	Timeout          *uint64                    `protobuf:"varint,5,opt,name=timeout" json:"timeout,omitempty"`
@@ -395,10 +359,9 @@ type SendChallengeToUserRequest struct {
 	XXX_unrecognized []byte                     `json:"-"`
 }
 
-func (m *SendChallengeToUserRequest) Reset()                    { *m = SendChallengeToUserRequest{} }
-func (m *SendChallengeToUserRequest) String() string            { return proto.CompactTextString(m) }
-func (*SendChallengeToUserRequest) ProtoMessage()               {}
-func (*SendChallengeToUserRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{10} }
+func (m *SendChallengeToUserRequest) Reset()         { *m = SendChallengeToUserRequest{} }
+func (m *SendChallengeToUserRequest) String() string { return proto.CompactTextString(m) }
+func (*SendChallengeToUserRequest) ProtoMessage()    {}
 
 func (m *SendChallengeToUserRequest) GetPeerId() *bnet_protocol.ProcessId {
 	if m != nil {
@@ -448,10 +411,9 @@ type SendChallengeToUserResponse struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *SendChallengeToUserResponse) Reset()                    { *m = SendChallengeToUserResponse{} }
-func (m *SendChallengeToUserResponse) String() string            { return proto.CompactTextString(m) }
-func (*SendChallengeToUserResponse) ProtoMessage()               {}
-func (*SendChallengeToUserResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{11} }
+func (m *SendChallengeToUserResponse) Reset()         { *m = SendChallengeToUserResponse{} }
+func (m *SendChallengeToUserResponse) String() string { return proto.CompactTextString(m) }
+func (*SendChallengeToUserResponse) ProtoMessage()    {}
 
 func (m *SendChallengeToUserResponse) GetId() uint32 {
 	if m != nil && m.Id != nil {
@@ -461,64 +423,4 @@ func (m *SendChallengeToUserResponse) GetId() uint32 {
 }
 
 func init() {
-	proto.RegisterType((*Challenge)(nil), "bnet.protocol.challenge.Challenge")
-	proto.RegisterType((*ChallengeAnsweredRequest)(nil), "bnet.protocol.challenge.ChallengeAnsweredRequest")
-	proto.RegisterType((*ChallengeAnsweredResponse)(nil), "bnet.protocol.challenge.ChallengeAnsweredResponse")
-	proto.RegisterType((*ChallengeCancelledRequest)(nil), "bnet.protocol.challenge.ChallengeCancelledRequest")
-	proto.RegisterType((*ChallengeExternalRequest)(nil), "bnet.protocol.challenge.ChallengeExternalRequest")
-	proto.RegisterType((*ChallengeExternalResult)(nil), "bnet.protocol.challenge.ChallengeExternalResult")
-	proto.RegisterType((*ChallengePickedRequest)(nil), "bnet.protocol.challenge.ChallengePickedRequest")
-	proto.RegisterType((*ChallengePickedResponse)(nil), "bnet.protocol.challenge.ChallengePickedResponse")
-	proto.RegisterType((*ChallengeResultRequest)(nil), "bnet.protocol.challenge.ChallengeResultRequest")
-	proto.RegisterType((*ChallengeUserRequest)(nil), "bnet.protocol.challenge.ChallengeUserRequest")
-	proto.RegisterType((*SendChallengeToUserRequest)(nil), "bnet.protocol.challenge.SendChallengeToUserRequest")
-	proto.RegisterType((*SendChallengeToUserResponse)(nil), "bnet.protocol.challenge.SendChallengeToUserResponse")
-}
-
-func init() { proto.RegisterFile("bnet/protocol/challenge/challenge.proto", fileDescriptor0) }
-
-var fileDescriptor0 = []byte{
-	// 657 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xa4, 0x53, 0x41, 0x4f, 0xdb, 0x4c,
-	0x10, 0x95, 0x4d, 0x88, 0x93, 0x21, 0xe1, 0xfb, 0x64, 0x21, 0x30, 0x94, 0x43, 0xea, 0x1e, 0x1a,
-	0xa9, 0x22, 0xa8, 0x9c, 0x2a, 0x7a, 0xa8, 0x28, 0xa2, 0x52, 0x2e, 0x15, 0xda, 0xd2, 0x9e, 0x2a,
-	0x59, 0x8b, 0x77, 0xa0, 0x16, 0x66, 0x37, 0xdd, 0x5d, 0x0b, 0x22, 0xf5, 0xd6, 0x9f, 0xd1, 0x7f,
-	0xd3, 0x5f, 0x56, 0x79, 0xed, 0x5d, 0x1b, 0x2b, 0x48, 0x54, 0xbd, 0xcd, 0x8c, 0x9f, 0xe7, 0xbd,
-	0x9d, 0x37, 0x03, 0x2f, 0x2f, 0x39, 0xea, 0xc3, 0x85, 0x14, 0x5a, 0xa4, 0x22, 0x3f, 0x4c, 0xbf,
-	0xd1, 0x3c, 0x47, 0x7e, 0x8d, 0x4d, 0x34, 0x33, 0x1f, 0xc3, 0x9d, 0x12, 0x38, 0xb3, 0xc0, 0x99,
-	0xfb, 0xbc, 0xb7, 0xff, 0xb0, 0x83, 0x43, 0x98, 0x20, 0x46, 0x18, 0x9e, 0x5a, 0x68, 0x18, 0x42,
-	0x4f, 0x2f, 0x17, 0x18, 0x79, 0x13, 0x7f, 0x1a, 0x10, 0x13, 0x97, 0xb5, 0x8c, 0x5f, 0x89, 0xc8,
-	0x9f, 0x78, 0xd3, 0x21, 0x31, 0x71, 0xb8, 0x0d, 0x7d, 0xca, 0xd5, 0x1d, 0xca, 0x68, 0xcd, 0x54,
-	0xeb, 0x2c, 0x8c, 0x20, 0x90, 0xa8, 0x65, 0x86, 0x2a, 0xea, 0x4d, 0xbc, 0xe9, 0x98, 0xd8, 0x34,
-	0xfe, 0x02, 0x91, 0xa3, 0x39, 0x31, 0x60, 0x64, 0x04, 0xbf, 0x17, 0xa8, 0x74, 0xab, 0x5b, 0xc9,
-	0xdb, 0x74, 0x0b, 0xa1, 0xc7, 0xa8, 0xa6, 0x86, 0x79, 0x44, 0x4c, 0x1c, 0x6e, 0x82, 0x9f, 0x31,
-	0xc3, 0x3a, 0x26, 0x7e, 0xc6, 0x62, 0x0d, 0xbb, 0x2b, 0xfa, 0xaa, 0x85, 0xe0, 0x0a, 0x5d, 0x03,
-	0xaf, 0xd5, 0x60, 0x17, 0x06, 0x4c, 0x24, 0xa5, 0xac, 0xa5, 0x69, 0x3c, 0x20, 0x01, 0x13, 0xa4,
-	0x4c, 0xc3, 0x29, 0xfc, 0x2f, 0x31, 0x15, 0x92, 0x25, 0x5c, 0xe8, 0xe4, 0x4a, 0x14, 0xbc, 0x62,
-	0x1a, 0x90, 0xcd, 0xaa, 0xfe, 0x51, 0xe8, 0x0f, 0x65, 0x35, 0x7e, 0xd5, 0x62, 0x3d, 0xa5, 0x3c,
-	0xc5, 0x3c, 0x6f, 0x9e, 0x53, 0x49, 0xf4, 0x9c, 0xc4, 0x1f, 0xad, 0xa7, 0x9f, 0xdd, 0x6b, 0x94,
-	0x9c, 0xe6, 0x16, 0xfb, 0x02, 0xc6, 0xb2, 0x0a, 0x13, 0x2d, 0x6e, 0x90, 0x9b, 0xdf, 0x86, 0x64,
-	0x54, 0x17, 0x2f, 0xca, 0x5a, 0xf8, 0x1c, 0x46, 0x0b, 0xba, 0xcc, 0x05, 0x65, 0x89, 0x71, 0xa7,
-	0x72, 0x62, 0xa3, 0xae, 0x5d, 0x94, 0x26, 0x45, 0x10, 0xd4, 0xa9, 0x51, 0x3c, 0x22, 0x36, 0x8d,
-	0xbf, 0xc2, 0xce, 0x0a, 0x76, 0x55, 0xe4, 0x4f, 0x24, 0xdf, 0x87, 0xfe, 0x82, 0x2a, 0x85, 0xac,
-	0x9a, 0xd6, 0x71, 0x4f, 0xcb, 0x02, 0x49, 0x5d, 0x8b, 0x7f, 0x7a, 0xb0, 0xed, 0xda, 0x9f, 0x67,
-	0xe9, 0x4d, 0x33, 0x86, 0x7d, 0x18, 0xba, 0x1d, 0xac, 0x17, 0xaa, 0x29, 0xd4, 0x43, 0xf2, 0xed,
-	0x90, 0xc2, 0xb7, 0xb0, 0xcd, 0xf1, 0x2e, 0x71, 0x80, 0xc4, 0xae, 0x69, 0xe5, 0xc0, 0xf1, 0xfa,
-	0x15, 0xcd, 0x15, 0x92, 0x2d, 0x8e, 0x77, 0x0d, 0x5f, 0x0d, 0x89, 0x0f, 0x5a, 0x6f, 0xb4, 0x22,
-	0x1e, 0x5f, 0x81, 0x58, 0xb4, 0x34, 0x57, 0xa3, 0x78, 0xc4, 0x3a, 0x77, 0x0f, 0xa5, 0x4e, 0x7b,
-	0x0f, 0xbb, 0x30, 0x40, 0x29, 0x85, 0x4c, 0xdc, 0x1e, 0x06, 0x26, 0x9f, 0xb3, 0xd6, 0x22, 0xf7,
-	0x0c, 0x5d, 0x9d, 0xc5, 0xbf, 0x7c, 0xd8, 0x72, 0x8c, 0x9f, 0x15, 0x4a, 0xcb, 0xf7, 0x1e, 0xc0,
-	0xbd, 0x58, 0x45, 0xde, 0x64, 0x6d, 0xba, 0x71, 0x14, 0xcf, 0x1e, 0x39, 0xe4, 0x59, 0x23, 0xba,
-	0xf5, 0x57, 0x69, 0x7d, 0x2a, 0xb8, 0xc6, 0x7b, 0x1d, 0xf9, 0x66, 0xca, 0x36, 0xed, 0xde, 0x4a,
-	0xb8, 0x07, 0x03, 0x86, 0x94, 0xe5, 0x19, 0x47, 0x23, 0xb0, 0x47, 0x5c, 0x1e, 0xbe, 0x01, 0xa0,
-	0x5a, 0xcb, 0xec, 0xb2, 0xd0, 0xa8, 0xa2, 0x75, 0xa3, 0x24, 0xea, 0x28, 0x39, 0xb1, 0x00, 0xd2,
-	0xc2, 0x86, 0xef, 0xe0, 0xbf, 0x6b, 0x7a, 0x8b, 0x09, 0x4d, 0x53, 0x51, 0x70, 0x5d, 0x8e, 0xa5,
-	0x3f, 0xf1, 0xa6, 0x1b, 0x47, 0x3b, 0x9d, 0xdf, 0xcf, 0xb8, 0xce, 0xf4, 0x72, 0xce, 0xc8, 0xb8,
-	0xc4, 0x9f, 0x54, 0xf0, 0x39, 0x8b, 0x7f, 0xfb, 0xb0, 0xf7, 0x09, 0x39, 0x73, 0xcf, 0xbb, 0x10,
-	0xed, 0x19, 0xbd, 0x86, 0x60, 0x81, 0x68, 0xc6, 0xed, 0x99, 0xbe, 0x5d, 0x59, 0xe7, 0x52, 0xa4,
-	0xa8, 0xd4, 0x9c, 0x91, 0x7e, 0x09, 0x9c, 0xb3, 0x55, 0x92, 0xfc, 0xbf, 0x91, 0xd4, 0xf1, 0x65,
-	0xed, 0x5f, 0x7d, 0xe9, 0x3d, 0xf4, 0x25, 0x82, 0x40, 0x67, 0xb7, 0x28, 0x0a, 0x1d, 0xad, 0x1b,
-	0x1b, 0x6c, 0xda, 0x71, 0xa1, 0xff, 0x74, 0x17, 0xe2, 0x03, 0x78, 0xb6, 0x72, 0x86, 0xf5, 0x19,
-	0x74, 0x16, 0xfb, 0x4f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x32, 0x26, 0x91, 0xa8, 0x56, 0x06, 0x00,
-	0x00,
 }

@@ -2,32 +2,17 @@
 // source: bnet/protocol/attribute_468/attribute_468.proto
 // DO NOT EDIT!
 
-/*
-Package bnet_protocol_attribute_468 is a generated protocol buffer package.
-
-It is generated from these files:
-	bnet/protocol/attribute_468/attribute_468.proto
-
-It has these top-level messages:
-	AttributeFilter
-*/
 package bnet_protocol_attribute_468
 
 import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
+import json "encoding/json"
 import math "math"
 import bnet_protocol "github.com/HearthSim/hs-proto-go/bnet/protocol"
 
-// Reference imports to suppress errors if they are not otherwise used.
+// Reference proto, json, and math imports to suppress error if they are not otherwise used.
 var _ = proto.Marshal
-var _ = fmt.Errorf
+var _ = &json.SyntaxError{}
 var _ = math.Inf
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 // ref: bnet.protocol.attribute.AttributeFilter/Types/Operation
 type AttributeFilter_Operation int32
@@ -60,6 +45,9 @@ func (x AttributeFilter_Operation) Enum() *AttributeFilter_Operation {
 func (x AttributeFilter_Operation) String() string {
 	return proto.EnumName(AttributeFilter_Operation_name, int32(x))
 }
+func (x AttributeFilter_Operation) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *AttributeFilter_Operation) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(AttributeFilter_Operation_value, data, "AttributeFilter_Operation")
 	if err != nil {
@@ -68,7 +56,6 @@ func (x *AttributeFilter_Operation) UnmarshalJSON(data []byte) error {
 	*x = AttributeFilter_Operation(value)
 	return nil
 }
-func (AttributeFilter_Operation) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{0, 0} }
 
 // ref: bnet.protocol.attribute.AttributeFilter
 type AttributeFilter struct {
@@ -77,16 +64,15 @@ type AttributeFilter struct {
 	XXX_unrecognized []byte                     `json:"-"`
 }
 
-func (m *AttributeFilter) Reset()                    { *m = AttributeFilter{} }
-func (m *AttributeFilter) String() string            { return proto.CompactTextString(m) }
-func (*AttributeFilter) ProtoMessage()               {}
-func (*AttributeFilter) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *AttributeFilter) Reset()         { *m = AttributeFilter{} }
+func (m *AttributeFilter) String() string { return proto.CompactTextString(m) }
+func (*AttributeFilter) ProtoMessage()    {}
 
 func (m *AttributeFilter) GetOp() AttributeFilter_Operation {
 	if m != nil && m.Op != nil {
 		return *m.Op
 	}
-	return AttributeFilter_MATCH_NONE
+	return 0
 }
 
 func (m *AttributeFilter) GetAttribute() []*bnet_protocol.Attribute {
@@ -97,25 +83,5 @@ func (m *AttributeFilter) GetAttribute() []*bnet_protocol.Attribute {
 }
 
 func init() {
-	proto.RegisterType((*AttributeFilter)(nil), "bnet.protocol.attribute_468.AttributeFilter")
 	proto.RegisterEnum("bnet.protocol.attribute_468.AttributeFilter_Operation", AttributeFilter_Operation_name, AttributeFilter_Operation_value)
-}
-
-func init() { proto.RegisterFile("bnet/protocol/attribute_468/attribute_468.proto", fileDescriptor0) }
-
-var fileDescriptor0 = []byte{
-	// 207 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xe2, 0xd2, 0x4f, 0xca, 0x4b, 0x2d,
-	0xd1, 0x2f, 0x28, 0xca, 0x2f, 0xc9, 0x4f, 0xce, 0xcf, 0xd1, 0x4f, 0x2c, 0x29, 0x29, 0xca, 0x4c,
-	0x2a, 0x2d, 0x49, 0x8d, 0x37, 0x31, 0xb3, 0x40, 0xe5, 0xe9, 0x81, 0x15, 0x09, 0x49, 0x83, 0x34,
-	0xe8, 0xc1, 0x34, 0xe8, 0xa1, 0x28, 0x91, 0x92, 0x41, 0x35, 0x0d, 0xae, 0x0a, 0xcc, 0x50, 0x7a,
-	0xc9, 0xc8, 0xc5, 0xef, 0x08, 0x53, 0xef, 0x96, 0x99, 0x53, 0x92, 0x5a, 0x24, 0xe4, 0xc6, 0xc5,
-	0x94, 0x5f, 0x20, 0xc1, 0xa8, 0xc0, 0xa4, 0xc1, 0x67, 0x64, 0xa6, 0x87, 0xc7, 0x6c, 0x3d, 0x34,
-	0x9d, 0x7a, 0xfe, 0x05, 0xa9, 0x45, 0x89, 0x25, 0x99, 0xf9, 0x79, 0x41, 0x4c, 0xf9, 0x05, 0x42,
-	0x66, 0x5c, 0x9c, 0x70, 0xe5, 0x12, 0x4c, 0x0a, 0xcc, 0x1a, 0xdc, 0x46, 0x12, 0x68, 0xc6, 0xc1,
-	0x0d, 0x08, 0x42, 0x28, 0x55, 0x0a, 0xe3, 0xe2, 0x84, 0x1b, 0x24, 0xc4, 0xc7, 0xc5, 0xe5, 0xeb,
-	0x18, 0xe2, 0xec, 0x11, 0xef, 0xe7, 0xef, 0xe7, 0x2a, 0xc0, 0x20, 0xc4, 0xcb, 0xc5, 0x09, 0xe1,
-	0x3b, 0xfa, 0x45, 0x0a, 0x30, 0x22, 0x71, 0x7d, 0x7c, 0x04, 0x98, 0x84, 0xa4, 0xb9, 0xc4, 0xe1,
-	0xdc, 0x78, 0x5f, 0xff, 0xe0, 0x90, 0xf8, 0xe0, 0x00, 0x57, 0x67, 0x4f, 0x37, 0x4f, 0x67, 0x01,
-	0x66, 0x40, 0x00, 0x00, 0x00, 0xff, 0xff, 0x7a, 0xd9, 0xf8, 0x72, 0x58, 0x01, 0x00, 0x00,
 }

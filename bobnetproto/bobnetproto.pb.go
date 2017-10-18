@@ -2,42 +2,16 @@
 // source: bobnetproto/bobnetproto.proto
 // DO NOT EDIT!
 
-/*
-Package bobnetproto is a generated protocol buffer package.
-
-It is generated from these files:
-	bobnetproto/bobnetproto.proto
-
-It has these top-level messages:
-	Deadend
-	DeadendUtil
-	DebugConsoleCmdList
-	DebugConsoleCommand
-	DebugConsoleGetCmdList
-	DebugConsoleGetZones
-	DebugConsoleResponse
-	DebugConsoleUpdateFromPane
-	DebugConsoleZones
-	DebugPaneDelItems
-	DebugPaneNewItems
-	PACKETTYPES
-*/
 package bobnetproto
 
 import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
+import json "encoding/json"
 import math "math"
 
-// Reference imports to suppress errors if they are not otherwise used.
+// Reference proto, json, and math imports to suppress error if they are not otherwise used.
 var _ = proto.Marshal
-var _ = fmt.Errorf
+var _ = &json.SyntaxError{}
 var _ = math.Inf
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 // ref: BobNetProto.Deadend/PacketID
 type Deadend_PacketID int32
@@ -61,6 +35,9 @@ func (x Deadend_PacketID) Enum() *Deadend_PacketID {
 func (x Deadend_PacketID) String() string {
 	return proto.EnumName(Deadend_PacketID_name, int32(x))
 }
+func (x Deadend_PacketID) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *Deadend_PacketID) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(Deadend_PacketID_value, data, "Deadend_PacketID")
 	if err != nil {
@@ -69,7 +46,6 @@ func (x *Deadend_PacketID) UnmarshalJSON(data []byte) error {
 	*x = Deadend_PacketID(value)
 	return nil
 }
-func (Deadend_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{0, 0} }
 
 // ref: BobNetProto.DeadendUtil/PacketID
 type DeadendUtil_PacketID int32
@@ -93,6 +69,9 @@ func (x DeadendUtil_PacketID) Enum() *DeadendUtil_PacketID {
 func (x DeadendUtil_PacketID) String() string {
 	return proto.EnumName(DeadendUtil_PacketID_name, int32(x))
 }
+func (x DeadendUtil_PacketID) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *DeadendUtil_PacketID) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(DeadendUtil_PacketID_value, data, "DeadendUtil_PacketID")
 	if err != nil {
@@ -101,7 +80,6 @@ func (x *DeadendUtil_PacketID) UnmarshalJSON(data []byte) error {
 	*x = DeadendUtil_PacketID(value)
 	return nil
 }
-func (DeadendUtil_PacketID) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{1, 0} }
 
 // ref: BobNetProto.DebugConsoleCmdList/PacketID
 type DebugConsoleCmdList_PacketID int32
@@ -125,6 +103,9 @@ func (x DebugConsoleCmdList_PacketID) Enum() *DebugConsoleCmdList_PacketID {
 func (x DebugConsoleCmdList_PacketID) String() string {
 	return proto.EnumName(DebugConsoleCmdList_PacketID_name, int32(x))
 }
+func (x DebugConsoleCmdList_PacketID) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *DebugConsoleCmdList_PacketID) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(DebugConsoleCmdList_PacketID_value, data, "DebugConsoleCmdList_PacketID")
 	if err != nil {
@@ -132,9 +113,6 @@ func (x *DebugConsoleCmdList_PacketID) UnmarshalJSON(data []byte) error {
 	}
 	*x = DebugConsoleCmdList_PacketID(value)
 	return nil
-}
-func (DebugConsoleCmdList_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{2, 0}
 }
 
 // ref: BobNetProto.DebugConsoleCommand/PacketID
@@ -159,6 +137,9 @@ func (x DebugConsoleCommand_PacketID) Enum() *DebugConsoleCommand_PacketID {
 func (x DebugConsoleCommand_PacketID) String() string {
 	return proto.EnumName(DebugConsoleCommand_PacketID_name, int32(x))
 }
+func (x DebugConsoleCommand_PacketID) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *DebugConsoleCommand_PacketID) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(DebugConsoleCommand_PacketID_value, data, "DebugConsoleCommand_PacketID")
 	if err != nil {
@@ -166,9 +147,6 @@ func (x *DebugConsoleCommand_PacketID) UnmarshalJSON(data []byte) error {
 	}
 	*x = DebugConsoleCommand_PacketID(value)
 	return nil
-}
-func (DebugConsoleCommand_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{3, 0}
 }
 
 // ref: BobNetProto.DebugConsoleGetCmdList/PacketID
@@ -193,6 +171,9 @@ func (x DebugConsoleGetCmdList_PacketID) Enum() *DebugConsoleGetCmdList_PacketID
 func (x DebugConsoleGetCmdList_PacketID) String() string {
 	return proto.EnumName(DebugConsoleGetCmdList_PacketID_name, int32(x))
 }
+func (x DebugConsoleGetCmdList_PacketID) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *DebugConsoleGetCmdList_PacketID) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(DebugConsoleGetCmdList_PacketID_value, data, "DebugConsoleGetCmdList_PacketID")
 	if err != nil {
@@ -200,9 +181,6 @@ func (x *DebugConsoleGetCmdList_PacketID) UnmarshalJSON(data []byte) error {
 	}
 	*x = DebugConsoleGetCmdList_PacketID(value)
 	return nil
-}
-func (DebugConsoleGetCmdList_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{4, 0}
 }
 
 // ref: BobNetProto.DebugConsoleGetZones/PacketID
@@ -227,6 +205,9 @@ func (x DebugConsoleGetZones_PacketID) Enum() *DebugConsoleGetZones_PacketID {
 func (x DebugConsoleGetZones_PacketID) String() string {
 	return proto.EnumName(DebugConsoleGetZones_PacketID_name, int32(x))
 }
+func (x DebugConsoleGetZones_PacketID) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *DebugConsoleGetZones_PacketID) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(DebugConsoleGetZones_PacketID_value, data, "DebugConsoleGetZones_PacketID")
 	if err != nil {
@@ -234,9 +215,6 @@ func (x *DebugConsoleGetZones_PacketID) UnmarshalJSON(data []byte) error {
 	}
 	*x = DebugConsoleGetZones_PacketID(value)
 	return nil
-}
-func (DebugConsoleGetZones_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{5, 0}
 }
 
 // ref: BobNetProto.DebugConsoleResponse/PacketID
@@ -261,6 +239,9 @@ func (x DebugConsoleResponse_PacketID) Enum() *DebugConsoleResponse_PacketID {
 func (x DebugConsoleResponse_PacketID) String() string {
 	return proto.EnumName(DebugConsoleResponse_PacketID_name, int32(x))
 }
+func (x DebugConsoleResponse_PacketID) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *DebugConsoleResponse_PacketID) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(DebugConsoleResponse_PacketID_value, data, "DebugConsoleResponse_PacketID")
 	if err != nil {
@@ -268,9 +249,6 @@ func (x *DebugConsoleResponse_PacketID) UnmarshalJSON(data []byte) error {
 	}
 	*x = DebugConsoleResponse_PacketID(value)
 	return nil
-}
-func (DebugConsoleResponse_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{6, 0}
 }
 
 // ref: BobNetProto.DebugConsoleResponse/ResponseType
@@ -298,6 +276,9 @@ func (x DebugConsoleResponse_ResponseType) Enum() *DebugConsoleResponse_Response
 func (x DebugConsoleResponse_ResponseType) String() string {
 	return proto.EnumName(DebugConsoleResponse_ResponseType_name, int32(x))
 }
+func (x DebugConsoleResponse_ResponseType) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *DebugConsoleResponse_ResponseType) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(DebugConsoleResponse_ResponseType_value, data, "DebugConsoleResponse_ResponseType")
 	if err != nil {
@@ -305,9 +286,6 @@ func (x *DebugConsoleResponse_ResponseType) UnmarshalJSON(data []byte) error {
 	}
 	*x = DebugConsoleResponse_ResponseType(value)
 	return nil
-}
-func (DebugConsoleResponse_ResponseType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{6, 1}
 }
 
 // ref: BobNetProto.DebugConsoleUpdateFromPane/PacketID
@@ -332,6 +310,9 @@ func (x DebugConsoleUpdateFromPane_PacketID) Enum() *DebugConsoleUpdateFromPane_
 func (x DebugConsoleUpdateFromPane_PacketID) String() string {
 	return proto.EnumName(DebugConsoleUpdateFromPane_PacketID_name, int32(x))
 }
+func (x DebugConsoleUpdateFromPane_PacketID) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *DebugConsoleUpdateFromPane_PacketID) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(DebugConsoleUpdateFromPane_PacketID_value, data, "DebugConsoleUpdateFromPane_PacketID")
 	if err != nil {
@@ -339,9 +320,6 @@ func (x *DebugConsoleUpdateFromPane_PacketID) UnmarshalJSON(data []byte) error {
 	}
 	*x = DebugConsoleUpdateFromPane_PacketID(value)
 	return nil
-}
-func (DebugConsoleUpdateFromPane_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{7, 0}
 }
 
 // ref: BobNetProto.DebugConsoleZones/PacketID
@@ -366,6 +344,9 @@ func (x DebugConsoleZones_PacketID) Enum() *DebugConsoleZones_PacketID {
 func (x DebugConsoleZones_PacketID) String() string {
 	return proto.EnumName(DebugConsoleZones_PacketID_name, int32(x))
 }
+func (x DebugConsoleZones_PacketID) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *DebugConsoleZones_PacketID) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(DebugConsoleZones_PacketID_value, data, "DebugConsoleZones_PacketID")
 	if err != nil {
@@ -373,9 +354,6 @@ func (x *DebugConsoleZones_PacketID) UnmarshalJSON(data []byte) error {
 	}
 	*x = DebugConsoleZones_PacketID(value)
 	return nil
-}
-func (DebugConsoleZones_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{8, 0}
 }
 
 // ref: BobNetProto.DebugPaneDelItems/PacketID
@@ -400,6 +378,9 @@ func (x DebugPaneDelItems_PacketID) Enum() *DebugPaneDelItems_PacketID {
 func (x DebugPaneDelItems_PacketID) String() string {
 	return proto.EnumName(DebugPaneDelItems_PacketID_name, int32(x))
 }
+func (x DebugPaneDelItems_PacketID) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *DebugPaneDelItems_PacketID) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(DebugPaneDelItems_PacketID_value, data, "DebugPaneDelItems_PacketID")
 	if err != nil {
@@ -407,9 +388,6 @@ func (x *DebugPaneDelItems_PacketID) UnmarshalJSON(data []byte) error {
 	}
 	*x = DebugPaneDelItems_PacketID(value)
 	return nil
-}
-func (DebugPaneDelItems_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{9, 0}
 }
 
 // ref: BobNetProto.DebugPaneNewItems/PacketID
@@ -434,6 +412,9 @@ func (x DebugPaneNewItems_PacketID) Enum() *DebugPaneNewItems_PacketID {
 func (x DebugPaneNewItems_PacketID) String() string {
 	return proto.EnumName(DebugPaneNewItems_PacketID_name, int32(x))
 }
+func (x DebugPaneNewItems_PacketID) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *DebugPaneNewItems_PacketID) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(DebugPaneNewItems_PacketID_value, data, "DebugPaneNewItems_PacketID")
 	if err != nil {
@@ -441,9 +422,6 @@ func (x *DebugPaneNewItems_PacketID) UnmarshalJSON(data []byte) error {
 	}
 	*x = DebugPaneNewItems_PacketID(value)
 	return nil
-}
-func (DebugPaneNewItems_PacketID) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{10, 0}
 }
 
 // ref: BobNetProto.PACKETTYPES/BobNetCount
@@ -468,6 +446,9 @@ func (x PACKETTYPES_BobNetCount) Enum() *PACKETTYPES_BobNetCount {
 func (x PACKETTYPES_BobNetCount) String() string {
 	return proto.EnumName(PACKETTYPES_BobNetCount_name, int32(x))
 }
+func (x PACKETTYPES_BobNetCount) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *PACKETTYPES_BobNetCount) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(PACKETTYPES_BobNetCount_value, data, "PACKETTYPES_BobNetCount")
 	if err != nil {
@@ -476,7 +457,6 @@ func (x *PACKETTYPES_BobNetCount) UnmarshalJSON(data []byte) error {
 	*x = PACKETTYPES_BobNetCount(value)
 	return nil
 }
-func (PACKETTYPES_BobNetCount) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{11, 0} }
 
 // ref: BobNetProto.Deadend
 type Deadend struct {
@@ -486,10 +466,9 @@ type Deadend struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *Deadend) Reset()                    { *m = Deadend{} }
-func (m *Deadend) String() string            { return proto.CompactTextString(m) }
-func (*Deadend) ProtoMessage()               {}
-func (*Deadend) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *Deadend) Reset()         { *m = Deadend{} }
+func (m *Deadend) String() string { return proto.CompactTextString(m) }
+func (*Deadend) ProtoMessage()    {}
 
 func (m *Deadend) GetReply1() string {
 	if m != nil && m.Reply1 != nil {
@@ -520,10 +499,9 @@ type DeadendUtil struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *DeadendUtil) Reset()                    { *m = DeadendUtil{} }
-func (m *DeadendUtil) String() string            { return proto.CompactTextString(m) }
-func (*DeadendUtil) ProtoMessage()               {}
-func (*DeadendUtil) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+func (m *DeadendUtil) Reset()         { *m = DeadendUtil{} }
+func (m *DeadendUtil) String() string { return proto.CompactTextString(m) }
+func (*DeadendUtil) ProtoMessage()    {}
 
 func (m *DeadendUtil) GetReply1() string {
 	if m != nil && m.Reply1 != nil {
@@ -552,10 +530,9 @@ type DebugConsoleCmdList struct {
 	XXX_unrecognized []byte                                 `json:"-"`
 }
 
-func (m *DebugConsoleCmdList) Reset()                    { *m = DebugConsoleCmdList{} }
-func (m *DebugConsoleCmdList) String() string            { return proto.CompactTextString(m) }
-func (*DebugConsoleCmdList) ProtoMessage()               {}
-func (*DebugConsoleCmdList) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
+func (m *DebugConsoleCmdList) Reset()         { *m = DebugConsoleCmdList{} }
+func (m *DebugConsoleCmdList) String() string { return proto.CompactTextString(m) }
+func (*DebugConsoleCmdList) ProtoMessage()    {}
 
 func (m *DebugConsoleCmdList) GetCommands() []*DebugConsoleCmdList_DebugConsoleCmd {
 	if m != nil {
@@ -574,9 +551,6 @@ type DebugConsoleCmdList_DebugConsoleCmd struct {
 func (m *DebugConsoleCmdList_DebugConsoleCmd) Reset()         { *m = DebugConsoleCmdList_DebugConsoleCmd{} }
 func (m *DebugConsoleCmdList_DebugConsoleCmd) String() string { return proto.CompactTextString(m) }
 func (*DebugConsoleCmdList_DebugConsoleCmd) ProtoMessage()    {}
-func (*DebugConsoleCmdList_DebugConsoleCmd) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{2, 0}
-}
 
 func (m *DebugConsoleCmdList_DebugConsoleCmd) GetName() string {
 	if m != nil && m.Name != nil {
@@ -594,8 +568,8 @@ func (m *DebugConsoleCmdList_DebugConsoleCmd) GetParams() []*DebugConsoleCmdList
 
 // ref: BobNetProto.DebugConsoleCmdList/DebugConsoleCmd/DebugConsoleCmdParam
 type DebugConsoleCmdList_DebugConsoleCmd_DebugConsoleCmdParam struct {
-	ParamType        *string `protobuf:"bytes,1,req,name=param_type,json=paramType" json:"param_type,omitempty"`
-	ParamName        *string `protobuf:"bytes,2,req,name=param_name,json=paramName" json:"param_name,omitempty"`
+	ParamType        *string `protobuf:"bytes,1,req,name=param_type" json:"param_type,omitempty"`
+	ParamName        *string `protobuf:"bytes,2,req,name=param_name" json:"param_name,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
@@ -606,9 +580,6 @@ func (m *DebugConsoleCmdList_DebugConsoleCmd_DebugConsoleCmdParam) String() stri
 	return proto.CompactTextString(m)
 }
 func (*DebugConsoleCmdList_DebugConsoleCmd_DebugConsoleCmdParam) ProtoMessage() {}
-func (*DebugConsoleCmdList_DebugConsoleCmd_DebugConsoleCmdParam) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{2, 0, 0}
-}
 
 func (m *DebugConsoleCmdList_DebugConsoleCmd_DebugConsoleCmdParam) GetParamType() string {
 	if m != nil && m.ParamType != nil {
@@ -626,8 +597,8 @@ func (m *DebugConsoleCmdList_DebugConsoleCmd_DebugConsoleCmdParam) GetParamName(
 
 // ref: BobNetProto.DebugConsoleCmdList/DebugConsoleCmd/DebugConsoleCmdParam
 type DebugConsoleCmdList_DebugConsoleCmdParam struct {
-	ParamType        *string `protobuf:"bytes,1,req,name=param_type,json=paramType" json:"param_type,omitempty"`
-	ParamName        *string `protobuf:"bytes,2,req,name=param_name,json=paramName" json:"param_name,omitempty"`
+	ParamType        *string `protobuf:"bytes,1,req,name=param_type" json:"param_type,omitempty"`
+	ParamName        *string `protobuf:"bytes,2,req,name=param_name" json:"param_name,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
@@ -636,9 +607,6 @@ func (m *DebugConsoleCmdList_DebugConsoleCmdParam) Reset() {
 }
 func (m *DebugConsoleCmdList_DebugConsoleCmdParam) String() string { return proto.CompactTextString(m) }
 func (*DebugConsoleCmdList_DebugConsoleCmdParam) ProtoMessage()    {}
-func (*DebugConsoleCmdList_DebugConsoleCmdParam) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{2, 1}
-}
 
 func (m *DebugConsoleCmdList_DebugConsoleCmdParam) GetParamType() string {
 	if m != nil && m.ParamType != nil {
@@ -660,10 +628,9 @@ type DebugConsoleCommand struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *DebugConsoleCommand) Reset()                    { *m = DebugConsoleCommand{} }
-func (m *DebugConsoleCommand) String() string            { return proto.CompactTextString(m) }
-func (*DebugConsoleCommand) ProtoMessage()               {}
-func (*DebugConsoleCommand) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
+func (m *DebugConsoleCommand) Reset()         { *m = DebugConsoleCommand{} }
+func (m *DebugConsoleCommand) String() string { return proto.CompactTextString(m) }
+func (*DebugConsoleCommand) ProtoMessage()    {}
 
 func (m *DebugConsoleCommand) GetCommand() string {
 	if m != nil && m.Command != nil {
@@ -677,32 +644,29 @@ type DebugConsoleGetCmdList struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *DebugConsoleGetCmdList) Reset()                    { *m = DebugConsoleGetCmdList{} }
-func (m *DebugConsoleGetCmdList) String() string            { return proto.CompactTextString(m) }
-func (*DebugConsoleGetCmdList) ProtoMessage()               {}
-func (*DebugConsoleGetCmdList) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
+func (m *DebugConsoleGetCmdList) Reset()         { *m = DebugConsoleGetCmdList{} }
+func (m *DebugConsoleGetCmdList) String() string { return proto.CompactTextString(m) }
+func (*DebugConsoleGetCmdList) ProtoMessage()    {}
 
 // ref: BobNetProto.DebugConsoleGetZones
 type DebugConsoleGetZones struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *DebugConsoleGetZones) Reset()                    { *m = DebugConsoleGetZones{} }
-func (m *DebugConsoleGetZones) String() string            { return proto.CompactTextString(m) }
-func (*DebugConsoleGetZones) ProtoMessage()               {}
-func (*DebugConsoleGetZones) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
+func (m *DebugConsoleGetZones) Reset()         { *m = DebugConsoleGetZones{} }
+func (m *DebugConsoleGetZones) String() string { return proto.CompactTextString(m) }
+func (*DebugConsoleGetZones) ProtoMessage()    {}
 
 // ref: BobNetProto.DebugConsoleResponse
 type DebugConsoleResponse struct {
 	Response         *string                            `protobuf:"bytes,1,req,name=response" json:"response,omitempty"`
-	ResponseType     *DebugConsoleResponse_ResponseType `protobuf:"varint,2,req,name=response_type,json=responseType,enum=bobnetproto.DebugConsoleResponse_ResponseType" json:"response_type,omitempty"`
+	ResponseType     *DebugConsoleResponse_ResponseType `protobuf:"varint,2,req,name=response_type,enum=bobnetproto.DebugConsoleResponse_ResponseType" json:"response_type,omitempty"`
 	XXX_unrecognized []byte                             `json:"-"`
 }
 
-func (m *DebugConsoleResponse) Reset()                    { *m = DebugConsoleResponse{} }
-func (m *DebugConsoleResponse) String() string            { return proto.CompactTextString(m) }
-func (*DebugConsoleResponse) ProtoMessage()               {}
-func (*DebugConsoleResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
+func (m *DebugConsoleResponse) Reset()         { *m = DebugConsoleResponse{} }
+func (m *DebugConsoleResponse) String() string { return proto.CompactTextString(m) }
+func (*DebugConsoleResponse) ProtoMessage()    {}
 
 func (m *DebugConsoleResponse) GetResponse() string {
 	if m != nil && m.Response != nil {
@@ -715,7 +679,7 @@ func (m *DebugConsoleResponse) GetResponseType() DebugConsoleResponse_ResponseTy
 	if m != nil && m.ResponseType != nil {
 		return *m.ResponseType
 	}
-	return DebugConsoleResponse_CONSOLE_OUTPUT
+	return 0
 }
 
 // ref: BobNetProto.DebugConsoleUpdateFromPane
@@ -725,10 +689,9 @@ type DebugConsoleUpdateFromPane struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *DebugConsoleUpdateFromPane) Reset()                    { *m = DebugConsoleUpdateFromPane{} }
-func (m *DebugConsoleUpdateFromPane) String() string            { return proto.CompactTextString(m) }
-func (*DebugConsoleUpdateFromPane) ProtoMessage()               {}
-func (*DebugConsoleUpdateFromPane) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{7} }
+func (m *DebugConsoleUpdateFromPane) Reset()         { *m = DebugConsoleUpdateFromPane{} }
+func (m *DebugConsoleUpdateFromPane) String() string { return proto.CompactTextString(m) }
+func (*DebugConsoleUpdateFromPane) ProtoMessage()    {}
 
 func (m *DebugConsoleUpdateFromPane) GetName() string {
 	if m != nil && m.Name != nil {
@@ -750,10 +713,9 @@ type DebugConsoleZones struct {
 	XXX_unrecognized []byte                                `json:"-"`
 }
 
-func (m *DebugConsoleZones) Reset()                    { *m = DebugConsoleZones{} }
-func (m *DebugConsoleZones) String() string            { return proto.CompactTextString(m) }
-func (*DebugConsoleZones) ProtoMessage()               {}
-func (*DebugConsoleZones) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{8} }
+func (m *DebugConsoleZones) Reset()         { *m = DebugConsoleZones{} }
+func (m *DebugConsoleZones) String() string { return proto.CompactTextString(m) }
+func (*DebugConsoleZones) ProtoMessage()    {}
 
 func (m *DebugConsoleZones) GetZones() []*DebugConsoleZones_DebugConsoleZone {
 	if m != nil {
@@ -772,9 +734,6 @@ type DebugConsoleZones_DebugConsoleZone struct {
 func (m *DebugConsoleZones_DebugConsoleZone) Reset()         { *m = DebugConsoleZones_DebugConsoleZone{} }
 func (m *DebugConsoleZones_DebugConsoleZone) String() string { return proto.CompactTextString(m) }
 func (*DebugConsoleZones_DebugConsoleZone) ProtoMessage()    {}
-func (*DebugConsoleZones_DebugConsoleZone) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{8, 0}
-}
 
 func (m *DebugConsoleZones_DebugConsoleZone) GetName() string {
 	if m != nil && m.Name != nil {
@@ -796,10 +755,9 @@ type DebugPaneDelItems struct {
 	XXX_unrecognized []byte                                `json:"-"`
 }
 
-func (m *DebugPaneDelItems) Reset()                    { *m = DebugPaneDelItems{} }
-func (m *DebugPaneDelItems) String() string            { return proto.CompactTextString(m) }
-func (*DebugPaneDelItems) ProtoMessage()               {}
-func (*DebugPaneDelItems) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9} }
+func (m *DebugPaneDelItems) Reset()         { *m = DebugPaneDelItems{} }
+func (m *DebugPaneDelItems) String() string { return proto.CompactTextString(m) }
+func (*DebugPaneDelItems) ProtoMessage()    {}
 
 func (m *DebugPaneDelItems) GetItems() []*DebugPaneDelItems_DebugPaneDelItem {
 	if m != nil {
@@ -817,9 +775,6 @@ type DebugPaneDelItems_DebugPaneDelItem struct {
 func (m *DebugPaneDelItems_DebugPaneDelItem) Reset()         { *m = DebugPaneDelItems_DebugPaneDelItem{} }
 func (m *DebugPaneDelItems_DebugPaneDelItem) String() string { return proto.CompactTextString(m) }
 func (*DebugPaneDelItems_DebugPaneDelItem) ProtoMessage()    {}
-func (*DebugPaneDelItems_DebugPaneDelItem) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{9, 0}
-}
 
 func (m *DebugPaneDelItems_DebugPaneDelItem) GetName() string {
 	if m != nil && m.Name != nil {
@@ -834,10 +789,9 @@ type DebugPaneNewItems struct {
 	XXX_unrecognized []byte                                `json:"-"`
 }
 
-func (m *DebugPaneNewItems) Reset()                    { *m = DebugPaneNewItems{} }
-func (m *DebugPaneNewItems) String() string            { return proto.CompactTextString(m) }
-func (*DebugPaneNewItems) ProtoMessage()               {}
-func (*DebugPaneNewItems) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{10} }
+func (m *DebugPaneNewItems) Reset()         { *m = DebugPaneNewItems{} }
+func (m *DebugPaneNewItems) String() string { return proto.CompactTextString(m) }
+func (*DebugPaneNewItems) ProtoMessage()    {}
 
 func (m *DebugPaneNewItems) GetItems() []*DebugPaneNewItems_DebugPaneNewItem {
 	if m != nil {
@@ -856,9 +810,6 @@ type DebugPaneNewItems_DebugPaneNewItem struct {
 func (m *DebugPaneNewItems_DebugPaneNewItem) Reset()         { *m = DebugPaneNewItems_DebugPaneNewItem{} }
 func (m *DebugPaneNewItems_DebugPaneNewItem) String() string { return proto.CompactTextString(m) }
 func (*DebugPaneNewItems_DebugPaneNewItem) ProtoMessage()    {}
-func (*DebugPaneNewItems_DebugPaneNewItem) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{10, 0}
-}
 
 func (m *DebugPaneNewItems_DebugPaneNewItem) GetName() string {
 	if m != nil && m.Name != nil {
@@ -879,30 +830,11 @@ type PACKETTYPES struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *PACKETTYPES) Reset()                    { *m = PACKETTYPES{} }
-func (m *PACKETTYPES) String() string            { return proto.CompactTextString(m) }
-func (*PACKETTYPES) ProtoMessage()               {}
-func (*PACKETTYPES) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{11} }
+func (m *PACKETTYPES) Reset()         { *m = PACKETTYPES{} }
+func (m *PACKETTYPES) String() string { return proto.CompactTextString(m) }
+func (*PACKETTYPES) ProtoMessage()    {}
 
 func init() {
-	proto.RegisterType((*Deadend)(nil), "bobnetproto.Deadend")
-	proto.RegisterType((*DeadendUtil)(nil), "bobnetproto.DeadendUtil")
-	proto.RegisterType((*DebugConsoleCmdList)(nil), "bobnetproto.DebugConsoleCmdList")
-	proto.RegisterType((*DebugConsoleCmdList_DebugConsoleCmd)(nil), "bobnetproto.DebugConsoleCmdList.DebugConsoleCmd")
-	proto.RegisterType((*DebugConsoleCmdList_DebugConsoleCmd_DebugConsoleCmdParam)(nil), "bobnetproto.DebugConsoleCmdList.DebugConsoleCmd.DebugConsoleCmdParam")
-	proto.RegisterType((*DebugConsoleCmdList_DebugConsoleCmdParam)(nil), "bobnetproto.DebugConsoleCmdList.DebugConsoleCmdParam")
-	proto.RegisterType((*DebugConsoleCommand)(nil), "bobnetproto.DebugConsoleCommand")
-	proto.RegisterType((*DebugConsoleGetCmdList)(nil), "bobnetproto.DebugConsoleGetCmdList")
-	proto.RegisterType((*DebugConsoleGetZones)(nil), "bobnetproto.DebugConsoleGetZones")
-	proto.RegisterType((*DebugConsoleResponse)(nil), "bobnetproto.DebugConsoleResponse")
-	proto.RegisterType((*DebugConsoleUpdateFromPane)(nil), "bobnetproto.DebugConsoleUpdateFromPane")
-	proto.RegisterType((*DebugConsoleZones)(nil), "bobnetproto.DebugConsoleZones")
-	proto.RegisterType((*DebugConsoleZones_DebugConsoleZone)(nil), "bobnetproto.DebugConsoleZones.DebugConsoleZone")
-	proto.RegisterType((*DebugPaneDelItems)(nil), "bobnetproto.DebugPaneDelItems")
-	proto.RegisterType((*DebugPaneDelItems_DebugPaneDelItem)(nil), "bobnetproto.DebugPaneDelItems.DebugPaneDelItem")
-	proto.RegisterType((*DebugPaneNewItems)(nil), "bobnetproto.DebugPaneNewItems")
-	proto.RegisterType((*DebugPaneNewItems_DebugPaneNewItem)(nil), "bobnetproto.DebugPaneNewItems.DebugPaneNewItem")
-	proto.RegisterType((*PACKETTYPES)(nil), "bobnetproto.PACKETTYPES")
 	proto.RegisterEnum("bobnetproto.Deadend_PacketID", Deadend_PacketID_name, Deadend_PacketID_value)
 	proto.RegisterEnum("bobnetproto.DeadendUtil_PacketID", DeadendUtil_PacketID_name, DeadendUtil_PacketID_value)
 	proto.RegisterEnum("bobnetproto.DebugConsoleCmdList_PacketID", DebugConsoleCmdList_PacketID_name, DebugConsoleCmdList_PacketID_value)
@@ -916,48 +848,4 @@ func init() {
 	proto.RegisterEnum("bobnetproto.DebugPaneDelItems_PacketID", DebugPaneDelItems_PacketID_name, DebugPaneDelItems_PacketID_value)
 	proto.RegisterEnum("bobnetproto.DebugPaneNewItems_PacketID", DebugPaneNewItems_PacketID_name, DebugPaneNewItems_PacketID_value)
 	proto.RegisterEnum("bobnetproto.PACKETTYPES_BobNetCount", PACKETTYPES_BobNetCount_name, PACKETTYPES_BobNetCount_value)
-}
-
-func init() { proto.RegisterFile("bobnetproto/bobnetproto.proto", fileDescriptor0) }
-
-var fileDescriptor0 = []byte{
-	// 605 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xb4, 0x53, 0x4d, 0x6f, 0xd3, 0x4c,
-	0x10, 0x7e, 0xd7, 0x6d, 0xbe, 0xc6, 0x6d, 0x9a, 0x77, 0x5b, 0x55, 0xc6, 0x52, 0xa5, 0x68, 0x0f,
-	0x28, 0x12, 0x28, 0x85, 0x44, 0x70, 0xe2, 0x52, 0x1c, 0x13, 0x45, 0xa4, 0x89, 0xe5, 0x38, 0x07,
-	0xe0, 0x10, 0x39, 0xf5, 0x82, 0x02, 0xf1, 0x87, 0xec, 0x0d, 0x28, 0x7c, 0xfc, 0x05, 0x10, 0x1f,
-	0x12, 0x07, 0x7e, 0x40, 0xc5, 0x81, 0x3f, 0xc2, 0x89, 0x23, 0x3f, 0x07, 0xd9, 0xb1, 0xc3, 0x36,
-	0xd9, 0x1c, 0x2a, 0xd4, 0x4b, 0x34, 0xf3, 0xcc, 0xcc, 0x33, 0xcf, 0x3e, 0x13, 0xc3, 0xd1, 0xd8,
-	0x1f, 0x7b, 0x94, 0x05, 0xa1, 0xcf, 0xfc, 0x63, 0x2e, 0xae, 0x27, 0xbf, 0x58, 0xe6, 0x20, 0xf2,
-	0x14, 0x0a, 0x2d, 0x6a, 0x3b, 0xd4, 0x73, 0xf0, 0x21, 0xe4, 0x43, 0x1a, 0x4c, 0xe7, 0xb7, 0x15,
-	0x54, 0x45, 0xb5, 0x92, 0x99, 0x66, 0x4b, 0xbc, 0xa1, 0x48, 0x1c, 0xde, 0x58, 0xe2, 0x4d, 0x65,
-	0x8b, 0xc3, 0x9b, 0x64, 0x1f, 0x8a, 0x86, 0x7d, 0xf6, 0x82, 0xb2, 0x4e, 0x0b, 0x17, 0x40, 0xea,
-	0xb4, 0x2a, 0xdf, 0x11, 0x79, 0x0e, 0x72, 0xba, 0x67, 0xc8, 0x26, 0xd3, 0x2b, 0xdc, 0x75, 0x8e,
-	0xc8, 0xb7, 0x2d, 0xd8, 0x6f, 0xd1, 0xf1, 0xec, 0x99, 0xe6, 0x7b, 0x91, 0x3f, 0xa5, 0x9a, 0xeb,
-	0x74, 0x27, 0x11, 0xc3, 0x5d, 0x28, 0x9e, 0xf9, 0xae, 0x6b, 0x7b, 0x4e, 0xa4, 0xa0, 0xea, 0x56,
-	0x4d, 0x6e, 0xdc, 0xaa, 0xf3, 0xf6, 0x08, 0x66, 0x56, 0x31, 0x73, 0xc9, 0xa0, 0xfe, 0x44, 0xb0,
-	0xb7, 0x52, 0xc5, 0x18, 0xb6, 0x3d, 0xdb, 0xa5, 0x0a, 0xaa, 0x4a, 0xb5, 0x92, 0x99, 0xc4, 0xf8,
-	0x14, 0xf2, 0x81, 0x1d, 0xda, 0x6e, 0xa4, 0x48, 0xc9, 0xce, 0x3b, 0x97, 0xdd, 0x69, 0xc4, 0xd3,
-	0x66, 0x4a, 0xa2, 0x5a, 0x70, 0x20, 0xaa, 0xe3, 0x23, 0x80, 0xa4, 0x63, 0xc4, 0xe6, 0x41, 0x26,
-	0xa0, 0x94, 0x20, 0xd6, 0x3c, 0xa0, 0x7f, 0xcb, 0x89, 0x3e, 0x89, 0x2b, 0xf7, 0x6c, 0x97, 0x5e,
-	0x0d, 0xab, 0xe0, 0x3a, 0x9f, 0x10, 0xd1, 0x56, 0x8e, 0xb3, 0xf0, 0x13, 0x2b, 0x50, 0x48, 0xad,
-	0x4d, 0xd7, 0x64, 0x29, 0xc1, 0x1c, 0x4b, 0x3e, 0x61, 0x79, 0x43, 0x6e, 0xc2, 0x21, 0x4f, 0xd2,
-	0xa6, 0x2c, 0x35, 0x4f, 0xd0, 0xfd, 0x8e, 0xdc, 0xb8, 0xf8, 0xba, 0x36, 0x65, 0x8f, 0x7d, 0x8f,
-	0x46, 0x02, 0x7d, 0x9f, 0x11, 0xf9, 0x85, 0x2e, 0x76, 0x9b, 0x34, 0x0a, 0x7c, 0x2f, 0xa2, 0x58,
-	0x85, 0x62, 0x98, 0xc6, 0xa9, 0xc4, 0x65, 0x8e, 0x07, 0xb0, 0x9b, 0xc5, 0x0b, 0xab, 0x62, 0x2f,
-	0xca, 0x8d, 0xfa, 0xc6, 0x5b, 0x67, 0xac, 0xf5, 0x2c, 0x88, 0xfd, 0x34, 0x77, 0x42, 0x2e, 0x13,
-	0x3c, 0xe5, 0x2d, 0x69, 0xc2, 0x0e, 0x3f, 0x81, 0x31, 0x94, 0xb5, 0x7e, 0x6f, 0xd0, 0xef, 0xea,
-	0xa3, 0xfe, 0xd0, 0x32, 0x86, 0x56, 0xe5, 0x3f, 0xbc, 0x07, 0x72, 0xb7, 0xdf, 0x1e, 0x9d, 0xea,
-	0x83, 0xc1, 0x49, 0x5b, 0xaf, 0x20, 0xf2, 0x04, 0x54, 0x7e, 0xf7, 0x30, 0x70, 0x6c, 0x46, 0x1f,
-	0x84, 0xbe, 0x6b, 0xd8, 0x1e, 0x15, 0xfe, 0x69, 0x0f, 0x20, 0xf7, 0xd2, 0x9e, 0xce, 0xb2, 0x9b,
-	0x2e, 0x12, 0x81, 0x5f, 0x1f, 0x11, 0x39, 0x47, 0xf0, 0x3f, 0xcf, 0x9e, 0x58, 0x8b, 0x75, 0xc8,
-	0xbd, 0x8e, 0x83, 0xf4, 0x43, 0x3b, 0xde, 0x68, 0x44, 0xd2, 0xbe, 0x86, 0x98, 0x8b, 0x69, 0xf5,
-	0x2e, 0x54, 0x56, 0x4b, 0x42, 0xbd, 0x65, 0x90, 0x26, 0x4e, 0x22, 0x76, 0xd7, 0x94, 0x26, 0x8e,
-	0x40, 0xe9, 0x17, 0x44, 0xbe, 0x66, 0x4a, 0xe3, 0x67, 0xb7, 0xe8, 0xb4, 0xc3, 0xa8, 0x9b, 0x28,
-	0x9d, 0xc4, 0xc1, 0x66, 0xa5, 0x7c, 0xfb, 0x1a, 0x62, 0x2e, 0xa6, 0xd5, 0xeb, 0xa9, 0x52, 0xae,
-	0x24, 0x52, 0x2a, 0x50, 0xf6, 0x01, 0x91, 0x1f, 0xbc, 0xb2, 0x1e, 0x7d, 0x75, 0x19, 0x65, 0x59,
-	0xfb, 0x1a, 0x92, 0x29, 0xbb, 0xc7, 0x29, 0x4b, 0x4b, 0xff, 0x74, 0xf3, 0xf7, 0x88, 0xd4, 0x40,
-	0x36, 0x4e, 0xb4, 0x87, 0xba, 0x65, 0x3d, 0x32, 0xf4, 0x01, 0xb9, 0x06, 0xf2, 0x7d, 0x7f, 0xdc,
-	0xa3, 0x4c, 0xf3, 0x67, 0x1e, 0xc3, 0x00, 0x39, 0xad, 0x3f, 0xec, 0x59, 0x95, 0xdf, 0xdb, 0x7f,
-	0x02, 0x00, 0x00, 0xff, 0xff, 0xe5, 0x94, 0xf6, 0xad, 0x8c, 0x06, 0x00, 0x00,
 }

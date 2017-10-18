@@ -2,37 +2,93 @@
 // source: blizzard/telemetry/wtcg/client/client.proto
 // DO NOT EDIT!
 
-/*
-Package blizzard_telemetry_wtcg_client is a generated protocol buffer package.
-
-It is generated from these files:
-	blizzard/telemetry/wtcg/client/client.proto
-
-It has these top-level messages:
-	DeckCopied
-	DeviceInfo
-	NetworkError
-	Player
-	PresenceChanged
-	PresenceStatus
-	ReturningPlayerDeckNotCreated
-*/
 package blizzard_telemetry_wtcg_client
 
 import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
+import json "encoding/json"
 import math "math"
 
-// Reference imports to suppress errors if they are not otherwise used.
+// Reference proto, json, and math imports to suppress error if they are not otherwise used.
 var _ = proto.Marshal
-var _ = fmt.Errorf
+var _ = &json.SyntaxError{}
 var _ = math.Inf
 
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+// ref: Blizzard.Telemetry.WTCG.Client.CollectionLeftRightClick/Target
+type CollectionLeftRightClick_Target int32
+
+const (
+	CollectionLeftRightClick_CARD      CollectionLeftRightClick_Target = 1
+	CollectionLeftRightClick_HERO_SKIN CollectionLeftRightClick_Target = 2
+	CollectionLeftRightClick_CARD_BACK CollectionLeftRightClick_Target = 3
+)
+
+var CollectionLeftRightClick_Target_name = map[int32]string{
+	1: "CARD",
+	2: "HERO_SKIN",
+	3: "CARD_BACK",
+}
+var CollectionLeftRightClick_Target_value = map[string]int32{
+	"CARD":      1,
+	"HERO_SKIN": 2,
+	"CARD_BACK": 3,
+}
+
+func (x CollectionLeftRightClick_Target) Enum() *CollectionLeftRightClick_Target {
+	p := new(CollectionLeftRightClick_Target)
+	*p = x
+	return p
+}
+func (x CollectionLeftRightClick_Target) String() string {
+	return proto.EnumName(CollectionLeftRightClick_Target_name, int32(x))
+}
+func (x CollectionLeftRightClick_Target) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
+func (x *CollectionLeftRightClick_Target) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(CollectionLeftRightClick_Target_value, data, "CollectionLeftRightClick_Target")
+	if err != nil {
+		return err
+	}
+	*x = CollectionLeftRightClick_Target(value)
+	return nil
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.DeckPickerToCollection/Path
+type DeckPickerToCollection_Path int32
+
+const (
+	DeckPickerToCollection_DECK_PICKER_BUTTON DeckPickerToCollection_Path = 1
+	DeckPickerToCollection_BACK_TO_BOX        DeckPickerToCollection_Path = 2
+)
+
+var DeckPickerToCollection_Path_name = map[int32]string{
+	1: "DECK_PICKER_BUTTON",
+	2: "BACK_TO_BOX",
+}
+var DeckPickerToCollection_Path_value = map[string]int32{
+	"DECK_PICKER_BUTTON": 1,
+	"BACK_TO_BOX":        2,
+}
+
+func (x DeckPickerToCollection_Path) Enum() *DeckPickerToCollection_Path {
+	p := new(DeckPickerToCollection_Path)
+	*p = x
+	return p
+}
+func (x DeckPickerToCollection_Path) String() string {
+	return proto.EnumName(DeckPickerToCollection_Path_name, int32(x))
+}
+func (x DeckPickerToCollection_Path) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
+func (x *DeckPickerToCollection_Path) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(DeckPickerToCollection_Path_value, data, "DeckPickerToCollection_Path")
+	if err != nil {
+		return err
+	}
+	*x = DeckPickerToCollection_Path(value)
+	return nil
+}
 
 // ref: Blizzard.Telemetry.WTCG.Client.DeviceInfo/ConnectionType
 type DeviceInfo_ConnectionType int32
@@ -65,6 +121,9 @@ func (x DeviceInfo_ConnectionType) Enum() *DeviceInfo_ConnectionType {
 func (x DeviceInfo_ConnectionType) String() string {
 	return proto.EnumName(DeviceInfo_ConnectionType_name, int32(x))
 }
+func (x DeviceInfo_ConnectionType) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *DeviceInfo_ConnectionType) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(DeviceInfo_ConnectionType_value, data, "DeviceInfo_ConnectionType")
 	if err != nil {
@@ -73,7 +132,6 @@ func (x *DeviceInfo_ConnectionType) UnmarshalJSON(data []byte) error {
 	*x = DeviceInfo_ConnectionType(value)
 	return nil
 }
-func (DeviceInfo_ConnectionType) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{1, 0} }
 
 // ref: Blizzard.Telemetry.WTCG.Client.DeviceInfo/OSCategory
 type DeviceInfo_OSCategory int32
@@ -106,6 +164,9 @@ func (x DeviceInfo_OSCategory) Enum() *DeviceInfo_OSCategory {
 func (x DeviceInfo_OSCategory) String() string {
 	return proto.EnumName(DeviceInfo_OSCategory_name, int32(x))
 }
+func (x DeviceInfo_OSCategory) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *DeviceInfo_OSCategory) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(DeviceInfo_OSCategory_value, data, "DeviceInfo_OSCategory")
 	if err != nil {
@@ -114,7 +175,6 @@ func (x *DeviceInfo_OSCategory) UnmarshalJSON(data []byte) error {
 	*x = DeviceInfo_OSCategory(value)
 	return nil
 }
-func (DeviceInfo_OSCategory) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{1, 1} }
 
 // ref: Blizzard.Telemetry.WTCG.Client.DeviceInfo/ScreenCategory
 type DeviceInfo_ScreenCategory int32
@@ -147,6 +207,9 @@ func (x DeviceInfo_ScreenCategory) Enum() *DeviceInfo_ScreenCategory {
 func (x DeviceInfo_ScreenCategory) String() string {
 	return proto.EnumName(DeviceInfo_ScreenCategory_name, int32(x))
 }
+func (x DeviceInfo_ScreenCategory) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *DeviceInfo_ScreenCategory) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(DeviceInfo_ScreenCategory_value, data, "DeviceInfo_ScreenCategory")
 	if err != nil {
@@ -155,7 +218,6 @@ func (x *DeviceInfo_ScreenCategory) UnmarshalJSON(data []byte) error {
 	*x = DeviceInfo_ScreenCategory(value)
 	return nil
 }
-func (DeviceInfo_ScreenCategory) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{1, 2} }
 
 // ref: Blizzard.Telemetry.WTCG.Client.NetworkError/ErrorType
 type NetworkError_ErrorType int32
@@ -197,6 +259,9 @@ func (x NetworkError_ErrorType) Enum() *NetworkError_ErrorType {
 func (x NetworkError_ErrorType) String() string {
 	return proto.EnumName(NetworkError_ErrorType_name, int32(x))
 }
+func (x NetworkError_ErrorType) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *NetworkError_ErrorType) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(NetworkError_ErrorType_value, data, "NetworkError_ErrorType")
 	if err != nil {
@@ -205,21 +270,279 @@ func (x *NetworkError_ErrorType) UnmarshalJSON(data []byte) error {
 	*x = NetworkError_ErrorType(value)
 	return nil
 }
-func (NetworkError_ErrorType) EnumDescriptor() ([]byte, []int) { return fileDescriptor0, []int{2, 0} }
+
+// ref: Blizzard.Telemetry.WTCG.Client.PackOpenToStore/Path
+type PackOpenToStore_Path int32
+
+const (
+	PackOpenToStore_PACK_OPENING_BUTTON PackOpenToStore_Path = 1
+	PackOpenToStore_BACK_TO_BOX         PackOpenToStore_Path = 2
+)
+
+var PackOpenToStore_Path_name = map[int32]string{
+	1: "PACK_OPENING_BUTTON",
+	2: "BACK_TO_BOX",
+}
+var PackOpenToStore_Path_value = map[string]int32{
+	"PACK_OPENING_BUTTON": 1,
+	"BACK_TO_BOX":         2,
+}
+
+func (x PackOpenToStore_Path) Enum() *PackOpenToStore_Path {
+	p := new(PackOpenToStore_Path)
+	*p = x
+	return p
+}
+func (x PackOpenToStore_Path) String() string {
+	return proto.EnumName(PackOpenToStore_Path_name, int32(x))
+}
+func (x PackOpenToStore_Path) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
+func (x *PackOpenToStore_Path) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(PackOpenToStore_Path_value, data, "PackOpenToStore_Path")
+	if err != nil {
+		return err
+	}
+	*x = PackOpenToStore_Path(value)
+	return nil
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.ThirdPartyPurchaseDanglingReceiptFail/FailureReason
+type ThirdPartyPurchaseDanglingReceiptFail_FailureReason int32
+
+const (
+	ThirdPartyPurchaseDanglingReceiptFail_INVALID_STATE          ThirdPartyPurchaseDanglingReceiptFail_FailureReason = 1
+	ThirdPartyPurchaseDanglingReceiptFail_NO_THIRD_PARTY_USER_ID ThirdPartyPurchaseDanglingReceiptFail_FailureReason = 2
+)
+
+var ThirdPartyPurchaseDanglingReceiptFail_FailureReason_name = map[int32]string{
+	1: "INVALID_STATE",
+	2: "NO_THIRD_PARTY_USER_ID",
+}
+var ThirdPartyPurchaseDanglingReceiptFail_FailureReason_value = map[string]int32{
+	"INVALID_STATE":          1,
+	"NO_THIRD_PARTY_USER_ID": 2,
+}
+
+func (x ThirdPartyPurchaseDanglingReceiptFail_FailureReason) Enum() *ThirdPartyPurchaseDanglingReceiptFail_FailureReason {
+	p := new(ThirdPartyPurchaseDanglingReceiptFail_FailureReason)
+	*p = x
+	return p
+}
+func (x ThirdPartyPurchaseDanglingReceiptFail_FailureReason) String() string {
+	return proto.EnumName(ThirdPartyPurchaseDanglingReceiptFail_FailureReason_name, int32(x))
+}
+func (x ThirdPartyPurchaseDanglingReceiptFail_FailureReason) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
+func (x *ThirdPartyPurchaseDanglingReceiptFail_FailureReason) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ThirdPartyPurchaseDanglingReceiptFail_FailureReason_value, data, "ThirdPartyPurchaseDanglingReceiptFail_FailureReason")
+	if err != nil {
+		return err
+	}
+	*x = ThirdPartyPurchaseDanglingReceiptFail_FailureReason(value)
+	return nil
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.ThirdPartyPurchaseReceiptSubmitFail/FailureReason
+type ThirdPartyPurchaseReceiptSubmitFail_FailureReason int32
+
+const (
+	ThirdPartyPurchaseReceiptSubmitFail_INVALID_STATE          ThirdPartyPurchaseReceiptSubmitFail_FailureReason = 1
+	ThirdPartyPurchaseReceiptSubmitFail_INVALID_PROVIDER       ThirdPartyPurchaseReceiptSubmitFail_FailureReason = 2
+	ThirdPartyPurchaseReceiptSubmitFail_NO_ACTIVE_TRANSACTION  ThirdPartyPurchaseReceiptSubmitFail_FailureReason = 3
+	ThirdPartyPurchaseReceiptSubmitFail_NO_THIRD_PARTY_USER_ID ThirdPartyPurchaseReceiptSubmitFail_FailureReason = 4
+)
+
+var ThirdPartyPurchaseReceiptSubmitFail_FailureReason_name = map[int32]string{
+	1: "INVALID_STATE",
+	2: "INVALID_PROVIDER",
+	3: "NO_ACTIVE_TRANSACTION",
+	4: "NO_THIRD_PARTY_USER_ID",
+}
+var ThirdPartyPurchaseReceiptSubmitFail_FailureReason_value = map[string]int32{
+	"INVALID_STATE":          1,
+	"INVALID_PROVIDER":       2,
+	"NO_ACTIVE_TRANSACTION":  3,
+	"NO_THIRD_PARTY_USER_ID": 4,
+}
+
+func (x ThirdPartyPurchaseReceiptSubmitFail_FailureReason) Enum() *ThirdPartyPurchaseReceiptSubmitFail_FailureReason {
+	p := new(ThirdPartyPurchaseReceiptSubmitFail_FailureReason)
+	*p = x
+	return p
+}
+func (x ThirdPartyPurchaseReceiptSubmitFail_FailureReason) String() string {
+	return proto.EnumName(ThirdPartyPurchaseReceiptSubmitFail_FailureReason_name, int32(x))
+}
+func (x ThirdPartyPurchaseReceiptSubmitFail_FailureReason) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
+func (x *ThirdPartyPurchaseReceiptSubmitFail_FailureReason) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ThirdPartyPurchaseReceiptSubmitFail_FailureReason_value, data, "ThirdPartyPurchaseReceiptSubmitFail_FailureReason")
+	if err != nil {
+		return err
+	}
+	*x = ThirdPartyPurchaseReceiptSubmitFail_FailureReason(value)
+	return nil
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.AttackInputMethod
+type AttackInputMethod struct {
+	DeviceInfo          *DeviceInfo `protobuf:"bytes,1,opt,name=device_info" json:"device_info,omitempty"`
+	TotalNumAttacks     *int64      `protobuf:"varint,2,opt,name=total_num_attacks" json:"total_num_attacks,omitempty"`
+	TotalClickAttacks   *int64      `protobuf:"varint,3,opt,name=total_click_attacks" json:"total_click_attacks,omitempty"`
+	PercentClickAttacks *int32      `protobuf:"varint,4,opt,name=percent_click_attacks" json:"percent_click_attacks,omitempty"`
+	TotalDragAttacks    *int64      `protobuf:"varint,5,opt,name=total_drag_attacks" json:"total_drag_attacks,omitempty"`
+	PercentDragAttacks  *int32      `protobuf:"varint,6,opt,name=percent_drag_attacks" json:"percent_drag_attacks,omitempty"`
+	XXX_unrecognized    []byte      `json:"-"`
+}
+
+func (m *AttackInputMethod) Reset()         { *m = AttackInputMethod{} }
+func (m *AttackInputMethod) String() string { return proto.CompactTextString(m) }
+func (*AttackInputMethod) ProtoMessage()    {}
+
+func (m *AttackInputMethod) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *AttackInputMethod) GetTotalNumAttacks() int64 {
+	if m != nil && m.TotalNumAttacks != nil {
+		return *m.TotalNumAttacks
+	}
+	return 0
+}
+
+func (m *AttackInputMethod) GetTotalClickAttacks() int64 {
+	if m != nil && m.TotalClickAttacks != nil {
+		return *m.TotalClickAttacks
+	}
+	return 0
+}
+
+func (m *AttackInputMethod) GetPercentClickAttacks() int32 {
+	if m != nil && m.PercentClickAttacks != nil {
+		return *m.PercentClickAttacks
+	}
+	return 0
+}
+
+func (m *AttackInputMethod) GetTotalDragAttacks() int64 {
+	if m != nil && m.TotalDragAttacks != nil {
+		return *m.TotalDragAttacks
+	}
+	return 0
+}
+
+func (m *AttackInputMethod) GetPercentDragAttacks() int32 {
+	if m != nil && m.PercentDragAttacks != nil {
+		return *m.PercentDragAttacks
+	}
+	return 0
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.ChangePackQuantity
+type ChangePackQuantity struct {
+	BoosterId        *int32 `protobuf:"varint,1,opt,name=booster_id" json:"booster_id,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
+}
+
+func (m *ChangePackQuantity) Reset()         { *m = ChangePackQuantity{} }
+func (m *ChangePackQuantity) String() string { return proto.CompactTextString(m) }
+func (*ChangePackQuantity) ProtoMessage()    {}
+
+func (m *ChangePackQuantity) GetBoosterId() int32 {
+	if m != nil && m.BoosterId != nil {
+		return *m.BoosterId
+	}
+	return 0
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.ClickRecruitAFriend
+type ClickRecruitAFriend struct {
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,1,opt,name=device_info" json:"device_info,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *ClickRecruitAFriend) Reset()         { *m = ClickRecruitAFriend{} }
+func (m *ClickRecruitAFriend) String() string { return proto.CompactTextString(m) }
+func (*ClickRecruitAFriend) ProtoMessage()    {}
+
+func (m *ClickRecruitAFriend) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.ClientReset
+type ClientReset struct {
+	DeviceInfo             *DeviceInfo `protobuf:"bytes,1,opt,name=device_info" json:"device_info,omitempty"`
+	ForceLogin             *bool       `protobuf:"varint,2,opt,name=force_login" json:"force_login,omitempty"`
+	ForceNoAccountTutorial *bool       `protobuf:"varint,3,opt,name=force_no_account_tutorial" json:"force_no_account_tutorial,omitempty"`
+	XXX_unrecognized       []byte      `json:"-"`
+}
+
+func (m *ClientReset) Reset()         { *m = ClientReset{} }
+func (m *ClientReset) String() string { return proto.CompactTextString(m) }
+func (*ClientReset) ProtoMessage()    {}
+
+func (m *ClientReset) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *ClientReset) GetForceLogin() bool {
+	if m != nil && m.ForceLogin != nil {
+		return *m.ForceLogin
+	}
+	return false
+}
+
+func (m *ClientReset) GetForceNoAccountTutorial() bool {
+	if m != nil && m.ForceNoAccountTutorial != nil {
+		return *m.ForceNoAccountTutorial
+	}
+	return false
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.CollectionLeftRightClick
+type CollectionLeftRightClick struct {
+	Target           *CollectionLeftRightClick_Target `protobuf:"varint,1,opt,name=target,enum=blizzard.telemetry.wtcg.client.CollectionLeftRightClick_Target,def=1" json:"target,omitempty"`
+	XXX_unrecognized []byte                           `json:"-"`
+}
+
+func (m *CollectionLeftRightClick) Reset()         { *m = CollectionLeftRightClick{} }
+func (m *CollectionLeftRightClick) String() string { return proto.CompactTextString(m) }
+func (*CollectionLeftRightClick) ProtoMessage()    {}
+
+const Default_CollectionLeftRightClick_Target CollectionLeftRightClick_Target = CollectionLeftRightClick_CARD
+
+func (m *CollectionLeftRightClick) GetTarget() CollectionLeftRightClick_Target {
+	if m != nil && m.Target != nil {
+		return *m.Target
+	}
+	return Default_CollectionLeftRightClick_Target
+}
 
 // ref: Blizzard.Telemetry.WTCG.Client.DeckCopied
 type DeckCopied struct {
 	Player           *Player     `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
-	DeviceInfo       *DeviceInfo `protobuf:"bytes,2,opt,name=device_info,json=deviceInfo" json:"device_info,omitempty"`
-	DeckId           *int64      `protobuf:"varint,3,opt,name=deck_id,json=deckId" json:"deck_id,omitempty"`
-	DeckHash         *string     `protobuf:"bytes,4,opt,name=deck_hash,json=deckHash" json:"deck_hash,omitempty"`
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,2,opt,name=device_info" json:"device_info,omitempty"`
+	DeckId           *int64      `protobuf:"varint,3,opt,name=deck_id" json:"deck_id,omitempty"`
+	DeckHash         *string     `protobuf:"bytes,4,opt,name=deck_hash" json:"deck_hash,omitempty"`
 	XXX_unrecognized []byte      `json:"-"`
 }
 
-func (m *DeckCopied) Reset()                    { *m = DeckCopied{} }
-func (m *DeckCopied) String() string            { return proto.CompactTextString(m) }
-func (*DeckCopied) ProtoMessage()               {}
-func (*DeckCopied) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *DeckCopied) Reset()         { *m = DeckCopied{} }
+func (m *DeckCopied) String() string { return proto.CompactTextString(m) }
+func (*DeckCopied) ProtoMessage()    {}
 
 func (m *DeckCopied) GetPlayer() *Player {
 	if m != nil {
@@ -249,21 +572,47 @@ func (m *DeckCopied) GetDeckHash() string {
 	return ""
 }
 
+// ref: Blizzard.Telemetry.WTCG.Client.DeckPickerToCollection
+type DeckPickerToCollection struct {
+	DeviceInfo       *DeviceInfo                  `protobuf:"bytes,1,opt,name=device_info" json:"device_info,omitempty"`
+	Path             *DeckPickerToCollection_Path `protobuf:"varint,2,opt,name=path,enum=blizzard.telemetry.wtcg.client.DeckPickerToCollection_Path,def=1" json:"path,omitempty"`
+	XXX_unrecognized []byte                       `json:"-"`
+}
+
+func (m *DeckPickerToCollection) Reset()         { *m = DeckPickerToCollection{} }
+func (m *DeckPickerToCollection) String() string { return proto.CompactTextString(m) }
+func (*DeckPickerToCollection) ProtoMessage()    {}
+
+const Default_DeckPickerToCollection_Path DeckPickerToCollection_Path = DeckPickerToCollection_DECK_PICKER_BUTTON
+
+func (m *DeckPickerToCollection) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *DeckPickerToCollection) GetPath() DeckPickerToCollection_Path {
+	if m != nil && m.Path != nil {
+		return *m.Path
+	}
+	return Default_DeckPickerToCollection_Path
+}
+
 // ref: Blizzard.Telemetry.WTCG.Client.DeviceInfo
 type DeviceInfo struct {
 	Os                      *DeviceInfo_OSCategory     `protobuf:"varint,1,opt,name=os,enum=blizzard.telemetry.wtcg.client.DeviceInfo_OSCategory,def=1" json:"os,omitempty"`
-	OsVersion               *string                    `protobuf:"bytes,2,opt,name=os_version,json=osVersion" json:"os_version,omitempty"`
+	OsVersion               *string                    `protobuf:"bytes,2,opt,name=os_version" json:"os_version,omitempty"`
 	Model                   *string                    `protobuf:"bytes,3,opt,name=model" json:"model,omitempty"`
 	Screen                  *DeviceInfo_ScreenCategory `protobuf:"varint,4,opt,name=screen,enum=blizzard.telemetry.wtcg.client.DeviceInfo_ScreenCategory,def=1" json:"screen,omitempty"`
-	ConnectionType          *DeviceInfo_ConnectionType `protobuf:"varint,5,opt,name=connection_type,json=connectionType,enum=blizzard.telemetry.wtcg.client.DeviceInfo_ConnectionType,def=1" json:"connection_type,omitempty"`
-	DroidTextureCompression *string                    `protobuf:"bytes,6,opt,name=droid_texture_compression,json=droidTextureCompression" json:"droid_texture_compression,omitempty"`
+	ConnectionType          *DeviceInfo_ConnectionType `protobuf:"varint,5,opt,name=connection_type,enum=blizzard.telemetry.wtcg.client.DeviceInfo_ConnectionType,def=1" json:"connection_type,omitempty"`
+	DroidTextureCompression *string                    `protobuf:"bytes,6,opt,name=droid_texture_compression" json:"droid_texture_compression,omitempty"`
 	XXX_unrecognized        []byte                     `json:"-"`
 }
 
-func (m *DeviceInfo) Reset()                    { *m = DeviceInfo{} }
-func (m *DeviceInfo) String() string            { return proto.CompactTextString(m) }
-func (*DeviceInfo) ProtoMessage()               {}
-func (*DeviceInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+func (m *DeviceInfo) Reset()         { *m = DeviceInfo{} }
+func (m *DeviceInfo) String() string { return proto.CompactTextString(m) }
+func (*DeviceInfo) ProtoMessage()    {}
 
 const Default_DeviceInfo_Os DeviceInfo_OSCategory = DeviceInfo_WINDOWS
 const Default_DeviceInfo_Screen DeviceInfo_ScreenCategory = DeviceInfo_PHONE
@@ -311,19 +660,192 @@ func (m *DeviceInfo) GetDroidTextureCompression() string {
 	return ""
 }
 
+// ref: Blizzard.Telemetry.WTCG.Client.DragDropCancelPlayCard
+type DragDropCancelPlayCard struct {
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,1,opt,name=device_info" json:"device_info,omitempty"`
+	ScenarioId       *int64      `protobuf:"varint,2,opt,name=scenario_id" json:"scenario_id,omitempty"`
+	CardType         *string     `protobuf:"bytes,3,opt,name=card_type" json:"card_type,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *DragDropCancelPlayCard) Reset()         { *m = DragDropCancelPlayCard{} }
+func (m *DragDropCancelPlayCard) String() string { return proto.CompactTextString(m) }
+func (*DragDropCancelPlayCard) ProtoMessage()    {}
+
+func (m *DragDropCancelPlayCard) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *DragDropCancelPlayCard) GetScenarioId() int64 {
+	if m != nil && m.ScenarioId != nil {
+		return *m.ScenarioId
+	}
+	return 0
+}
+
+func (m *DragDropCancelPlayCard) GetCardType() string {
+	if m != nil && m.CardType != nil {
+		return *m.CardType
+	}
+	return ""
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.FatalBattleNetError
+type FatalBattleNetError struct {
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,1,opt,name=device_info" json:"device_info,omitempty"`
+	ErrorCode        *int32      `protobuf:"varint,2,opt,name=error_code" json:"error_code,omitempty"`
+	Description      *string     `protobuf:"bytes,3,opt,name=description" json:"description,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *FatalBattleNetError) Reset()         { *m = FatalBattleNetError{} }
+func (m *FatalBattleNetError) String() string { return proto.CompactTextString(m) }
+func (*FatalBattleNetError) ProtoMessage()    {}
+
+func (m *FatalBattleNetError) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *FatalBattleNetError) GetErrorCode() int32 {
+	if m != nil && m.ErrorCode != nil {
+		return *m.ErrorCode
+	}
+	return 0
+}
+
+func (m *FatalBattleNetError) GetDescription() string {
+	if m != nil && m.Description != nil {
+		return *m.Description
+	}
+	return ""
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.FriendsListView
+type FriendsListView struct {
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,1,opt,name=device_info" json:"device_info,omitempty"`
+	CurrentScene     *string     `protobuf:"bytes,2,opt,name=current_scene" json:"current_scene,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *FriendsListView) Reset()         { *m = FriendsListView{} }
+func (m *FriendsListView) String() string { return proto.CompactTextString(m) }
+func (*FriendsListView) ProtoMessage()    {}
+
+func (m *FriendsListView) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *FriendsListView) GetCurrentScene() string {
+	if m != nil && m.CurrentScene != nil {
+		return *m.CurrentScene
+	}
+	return ""
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.IgnorableBattleNetError
+type IgnorableBattleNetError struct {
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,1,opt,name=device_info" json:"device_info,omitempty"`
+	ErrorCode        *int32      `protobuf:"varint,2,opt,name=error_code" json:"error_code,omitempty"`
+	Description      *string     `protobuf:"bytes,3,opt,name=description" json:"description,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *IgnorableBattleNetError) Reset()         { *m = IgnorableBattleNetError{} }
+func (m *IgnorableBattleNetError) String() string { return proto.CompactTextString(m) }
+func (*IgnorableBattleNetError) ProtoMessage()    {}
+
+func (m *IgnorableBattleNetError) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *IgnorableBattleNetError) GetErrorCode() int32 {
+	if m != nil && m.ErrorCode != nil {
+		return *m.ErrorCode
+	}
+	return 0
+}
+
+func (m *IgnorableBattleNetError) GetDescription() string {
+	if m != nil && m.Description != nil {
+		return *m.Description
+	}
+	return ""
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.LargeThirdPartyReceiptFound
+type LargeThirdPartyReceiptFound struct {
+	Player           *Player     `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,2,opt,name=device_info" json:"device_info,omitempty"`
+	ReceiptSize      *int64      `protobuf:"varint,3,opt,name=receipt_size" json:"receipt_size,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *LargeThirdPartyReceiptFound) Reset()         { *m = LargeThirdPartyReceiptFound{} }
+func (m *LargeThirdPartyReceiptFound) String() string { return proto.CompactTextString(m) }
+func (*LargeThirdPartyReceiptFound) ProtoMessage()    {}
+
+func (m *LargeThirdPartyReceiptFound) GetPlayer() *Player {
+	if m != nil {
+		return m.Player
+	}
+	return nil
+}
+
+func (m *LargeThirdPartyReceiptFound) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *LargeThirdPartyReceiptFound) GetReceiptSize() int64 {
+	if m != nil && m.ReceiptSize != nil {
+		return *m.ReceiptSize
+	}
+	return 0
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.ManaFilterToggleOff
+type ManaFilterToggleOff struct {
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,1,opt,name=device_info" json:"device_info,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *ManaFilterToggleOff) Reset()         { *m = ManaFilterToggleOff{} }
+func (m *ManaFilterToggleOff) String() string { return proto.CompactTextString(m) }
+func (*ManaFilterToggleOff) ProtoMessage()    {}
+
+func (m *ManaFilterToggleOff) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
 // ref: Blizzard.Telemetry.WTCG.Client.NetworkError
 type NetworkError struct {
-	DeviceInfo       *DeviceInfo             `protobuf:"bytes,1,opt,name=device_info,json=deviceInfo" json:"device_info,omitempty"`
-	ErrorType        *NetworkError_ErrorType `protobuf:"varint,2,opt,name=error_type,json=errorType,enum=blizzard.telemetry.wtcg.client.NetworkError_ErrorType,def=1" json:"error_type,omitempty"`
+	DeviceInfo       *DeviceInfo             `protobuf:"bytes,1,opt,name=device_info" json:"device_info,omitempty"`
+	ErrorType        *NetworkError_ErrorType `protobuf:"varint,2,opt,name=error_type,enum=blizzard.telemetry.wtcg.client.NetworkError_ErrorType,def=1" json:"error_type,omitempty"`
 	Description      *string                 `protobuf:"bytes,3,opt,name=description" json:"description,omitempty"`
-	ErrorCode        *int32                  `protobuf:"varint,4,opt,name=error_code,json=errorCode" json:"error_code,omitempty"`
+	ErrorCode        *int32                  `protobuf:"varint,4,opt,name=error_code" json:"error_code,omitempty"`
 	XXX_unrecognized []byte                  `json:"-"`
 }
 
-func (m *NetworkError) Reset()                    { *m = NetworkError{} }
-func (m *NetworkError) String() string            { return proto.CompactTextString(m) }
-func (*NetworkError) ProtoMessage()               {}
-func (*NetworkError) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
+func (m *NetworkError) Reset()         { *m = NetworkError{} }
+func (m *NetworkError) String() string { return proto.CompactTextString(m) }
+func (*NetworkError) ProtoMessage()    {}
 
 const Default_NetworkError_ErrorType NetworkError_ErrorType = NetworkError_PRIVATE_SERVER
 
@@ -355,19 +877,45 @@ func (m *NetworkError) GetErrorCode() int32 {
 	return 0
 }
 
+// ref: Blizzard.Telemetry.WTCG.Client.PackOpenToStore
+type PackOpenToStore struct {
+	DeviceInfo       *DeviceInfo           `protobuf:"bytes,1,opt,name=device_info" json:"device_info,omitempty"`
+	Path             *PackOpenToStore_Path `protobuf:"varint,2,opt,name=path,enum=blizzard.telemetry.wtcg.client.PackOpenToStore_Path,def=1" json:"path,omitempty"`
+	XXX_unrecognized []byte                `json:"-"`
+}
+
+func (m *PackOpenToStore) Reset()         { *m = PackOpenToStore{} }
+func (m *PackOpenToStore) String() string { return proto.CompactTextString(m) }
+func (*PackOpenToStore) ProtoMessage()    {}
+
+const Default_PackOpenToStore_Path PackOpenToStore_Path = PackOpenToStore_PACK_OPENING_BUTTON
+
+func (m *PackOpenToStore) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *PackOpenToStore) GetPath() PackOpenToStore_Path {
+	if m != nil && m.Path != nil {
+		return *m.Path
+	}
+	return Default_PackOpenToStore_Path
+}
+
 // ref: Blizzard.Telemetry.WTCG.Client.Player
 type Player struct {
-	BattleNetIdLo    *int64  `protobuf:"varint,1,opt,name=battle_net_id_lo,json=battleNetIdLo" json:"battle_net_id_lo,omitempty"`
-	GameAccountId    *int64  `protobuf:"varint,2,opt,name=game_account_id,json=gameAccountId" json:"game_account_id,omitempty"`
-	BnetRegion       *string `protobuf:"bytes,3,opt,name=bnet_region,json=bnetRegion" json:"bnet_region,omitempty"`
+	BattleNetIdLo    *int64  `protobuf:"varint,1,opt,name=battle_net_id_lo" json:"battle_net_id_lo,omitempty"`
+	GameAccountId    *int64  `protobuf:"varint,2,opt,name=game_account_id" json:"game_account_id,omitempty"`
+	BnetRegion       *string `protobuf:"bytes,3,opt,name=bnet_region" json:"bnet_region,omitempty"`
 	Locale           *string `protobuf:"bytes,4,opt,name=locale" json:"locale,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *Player) Reset()                    { *m = Player{} }
-func (m *Player) String() string            { return proto.CompactTextString(m) }
-func (*Player) ProtoMessage()               {}
-func (*Player) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
+func (m *Player) Reset()         { *m = Player{} }
+func (m *Player) String() string { return proto.CompactTextString(m) }
+func (*Player) ProtoMessage()    {}
 
 func (m *Player) GetBattleNetIdLo() int64 {
 	if m != nil && m.BattleNetIdLo != nil {
@@ -400,17 +948,16 @@ func (m *Player) GetLocale() string {
 // ref: Blizzard.Telemetry.WTCG.Client.PresenceChanged
 type PresenceChanged struct {
 	Player                *Player         `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
-	DeviceInfo            *DeviceInfo     `protobuf:"bytes,2,opt,name=device_info,json=deviceInfo" json:"device_info,omitempty"`
-	NewPresenceStatus     *PresenceStatus `protobuf:"bytes,3,opt,name=new_presence_status,json=newPresenceStatus" json:"new_presence_status,omitempty"`
-	PrevPresenceStatus    *PresenceStatus `protobuf:"bytes,4,opt,name=prev_presence_status,json=prevPresenceStatus" json:"prev_presence_status,omitempty"`
-	MillisecondsSincePrev *int64          `protobuf:"varint,5,opt,name=milliseconds_since_prev,json=millisecondsSincePrev" json:"milliseconds_since_prev,omitempty"`
+	DeviceInfo            *DeviceInfo     `protobuf:"bytes,2,opt,name=device_info" json:"device_info,omitempty"`
+	NewPresenceStatus     *PresenceStatus `protobuf:"bytes,3,opt,name=new_presence_status" json:"new_presence_status,omitempty"`
+	PrevPresenceStatus    *PresenceStatus `protobuf:"bytes,4,opt,name=prev_presence_status" json:"prev_presence_status,omitempty"`
+	MillisecondsSincePrev *int64          `protobuf:"varint,5,opt,name=milliseconds_since_prev" json:"milliseconds_since_prev,omitempty"`
 	XXX_unrecognized      []byte          `json:"-"`
 }
 
-func (m *PresenceChanged) Reset()                    { *m = PresenceChanged{} }
-func (m *PresenceChanged) String() string            { return proto.CompactTextString(m) }
-func (*PresenceChanged) ProtoMessage()               {}
-func (*PresenceChanged) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
+func (m *PresenceChanged) Reset()         { *m = PresenceChanged{} }
+func (m *PresenceChanged) String() string { return proto.CompactTextString(m) }
+func (*PresenceChanged) ProtoMessage()    {}
 
 func (m *PresenceChanged) GetPlayer() *Player {
 	if m != nil {
@@ -449,15 +996,14 @@ func (m *PresenceChanged) GetMillisecondsSincePrev() int64 {
 
 // ref: Blizzard.Telemetry.WTCG.Client.PresenceStatus
 type PresenceStatus struct {
-	PresenceId       *int64 `protobuf:"varint,1,opt,name=presence_id,json=presenceId" json:"presence_id,omitempty"`
-	PresenceSubId    *int64 `protobuf:"varint,2,opt,name=presence_sub_id,json=presenceSubId" json:"presence_sub_id,omitempty"`
+	PresenceId       *int64 `protobuf:"varint,1,opt,name=presence_id" json:"presence_id,omitempty"`
+	PresenceSubId    *int64 `protobuf:"varint,2,opt,name=presence_sub_id" json:"presence_sub_id,omitempty"`
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *PresenceStatus) Reset()                    { *m = PresenceStatus{} }
-func (m *PresenceStatus) String() string            { return proto.CompactTextString(m) }
-func (*PresenceStatus) ProtoMessage()               {}
-func (*PresenceStatus) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
+func (m *PresenceStatus) Reset()         { *m = PresenceStatus{} }
+func (m *PresenceStatus) String() string { return proto.CompactTextString(m) }
+func (*PresenceStatus) ProtoMessage()    {}
 
 func (m *PresenceStatus) GetPresenceId() int64 {
 	if m != nil && m.PresenceId != nil {
@@ -473,6 +1019,88 @@ func (m *PresenceStatus) GetPresenceSubId() int64 {
 	return 0
 }
 
+// ref: Blizzard.Telemetry.WTCG.Client.ReconnectSuccess
+type ReconnectSuccess struct {
+	Player             *Player     `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
+	DeviceInfo         *DeviceInfo `protobuf:"bytes,2,opt,name=device_info" json:"device_info,omitempty"`
+	DisconnectDuration *float32    `protobuf:"fixed32,3,opt,name=disconnect_duration" json:"disconnect_duration,omitempty"`
+	ReconnectDuration  *float32    `protobuf:"fixed32,4,opt,name=reconnect_duration" json:"reconnect_duration,omitempty"`
+	ReconnectType      *string     `protobuf:"bytes,5,opt,name=reconnect_type" json:"reconnect_type,omitempty"`
+	XXX_unrecognized   []byte      `json:"-"`
+}
+
+func (m *ReconnectSuccess) Reset()         { *m = ReconnectSuccess{} }
+func (m *ReconnectSuccess) String() string { return proto.CompactTextString(m) }
+func (*ReconnectSuccess) ProtoMessage()    {}
+
+func (m *ReconnectSuccess) GetPlayer() *Player {
+	if m != nil {
+		return m.Player
+	}
+	return nil
+}
+
+func (m *ReconnectSuccess) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *ReconnectSuccess) GetDisconnectDuration() float32 {
+	if m != nil && m.DisconnectDuration != nil {
+		return *m.DisconnectDuration
+	}
+	return 0
+}
+
+func (m *ReconnectSuccess) GetReconnectDuration() float32 {
+	if m != nil && m.ReconnectDuration != nil {
+		return *m.ReconnectDuration
+	}
+	return 0
+}
+
+func (m *ReconnectSuccess) GetReconnectType() string {
+	if m != nil && m.ReconnectType != nil {
+		return *m.ReconnectType
+	}
+	return ""
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.ReconnectTimeout
+type ReconnectTimeout struct {
+	Player           *Player     `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,2,opt,name=device_info" json:"device_info,omitempty"`
+	ReconnectType    *string     `protobuf:"bytes,3,opt,name=reconnect_type" json:"reconnect_type,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *ReconnectTimeout) Reset()         { *m = ReconnectTimeout{} }
+func (m *ReconnectTimeout) String() string { return proto.CompactTextString(m) }
+func (*ReconnectTimeout) ProtoMessage()    {}
+
+func (m *ReconnectTimeout) GetPlayer() *Player {
+	if m != nil {
+		return m.Player
+	}
+	return nil
+}
+
+func (m *ReconnectTimeout) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *ReconnectTimeout) GetReconnectType() string {
+	if m != nil && m.ReconnectType != nil {
+		return *m.ReconnectType
+	}
+	return ""
+}
+
 // ref: Blizzard.Telemetry.WTCG.Client.ReturningPlayerDeckNotCreated
 type ReturningPlayerDeckNotCreated struct {
 	Player           *Player `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
@@ -480,10 +1108,9 @@ type ReturningPlayerDeckNotCreated struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *ReturningPlayerDeckNotCreated) Reset()                    { *m = ReturningPlayerDeckNotCreated{} }
-func (m *ReturningPlayerDeckNotCreated) String() string            { return proto.CompactTextString(m) }
-func (*ReturningPlayerDeckNotCreated) ProtoMessage()               {}
-func (*ReturningPlayerDeckNotCreated) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
+func (m *ReturningPlayerDeckNotCreated) Reset()         { *m = ReturningPlayerDeckNotCreated{} }
+func (m *ReturningPlayerDeckNotCreated) String() string { return proto.CompactTextString(m) }
+func (*ReturningPlayerDeckNotCreated) ProtoMessage()    {}
 
 func (m *ReturningPlayerDeckNotCreated) GetPlayer() *Player {
 	if m != nil {
@@ -499,80 +1126,710 @@ func (m *ReturningPlayerDeckNotCreated) GetAbgroup() uint32 {
 	return 0
 }
 
+// ref: Blizzard.Telemetry.WTCG.Client.ThirdPartyPurchaseCompletedFail
+type ThirdPartyPurchaseCompletedFail struct {
+	Player           *Player     `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,2,opt,name=device_info" json:"device_info,omitempty"`
+	TransactionId    *string     `protobuf:"bytes,3,opt,name=transaction_id" json:"transaction_id,omitempty"`
+	ProductId        *string     `protobuf:"bytes,4,opt,name=product_id" json:"product_id,omitempty"`
+	BpayProvider     *string     `protobuf:"bytes,5,opt,name=bpay_provider" json:"bpay_provider,omitempty"`
+	ErrorInfo        *string     `protobuf:"bytes,6,opt,name=error_info" json:"error_info,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *ThirdPartyPurchaseCompletedFail) Reset()         { *m = ThirdPartyPurchaseCompletedFail{} }
+func (m *ThirdPartyPurchaseCompletedFail) String() string { return proto.CompactTextString(m) }
+func (*ThirdPartyPurchaseCompletedFail) ProtoMessage()    {}
+
+func (m *ThirdPartyPurchaseCompletedFail) GetPlayer() *Player {
+	if m != nil {
+		return m.Player
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseCompletedFail) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseCompletedFail) GetTransactionId() string {
+	if m != nil && m.TransactionId != nil {
+		return *m.TransactionId
+	}
+	return ""
+}
+
+func (m *ThirdPartyPurchaseCompletedFail) GetProductId() string {
+	if m != nil && m.ProductId != nil {
+		return *m.ProductId
+	}
+	return ""
+}
+
+func (m *ThirdPartyPurchaseCompletedFail) GetBpayProvider() string {
+	if m != nil && m.BpayProvider != nil {
+		return *m.BpayProvider
+	}
+	return ""
+}
+
+func (m *ThirdPartyPurchaseCompletedFail) GetErrorInfo() string {
+	if m != nil && m.ErrorInfo != nil {
+		return *m.ErrorInfo
+	}
+	return ""
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.ThirdPartyPurchaseCompletedSuccess
+type ThirdPartyPurchaseCompletedSuccess struct {
+	Player           *Player     `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,2,opt,name=device_info" json:"device_info,omitempty"`
+	TransactionId    *string     `protobuf:"bytes,3,opt,name=transaction_id" json:"transaction_id,omitempty"`
+	ProductId        *string     `protobuf:"bytes,4,opt,name=product_id" json:"product_id,omitempty"`
+	BpayProvider     *string     `protobuf:"bytes,5,opt,name=bpay_provider" json:"bpay_provider,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *ThirdPartyPurchaseCompletedSuccess) Reset()         { *m = ThirdPartyPurchaseCompletedSuccess{} }
+func (m *ThirdPartyPurchaseCompletedSuccess) String() string { return proto.CompactTextString(m) }
+func (*ThirdPartyPurchaseCompletedSuccess) ProtoMessage()    {}
+
+func (m *ThirdPartyPurchaseCompletedSuccess) GetPlayer() *Player {
+	if m != nil {
+		return m.Player
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseCompletedSuccess) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseCompletedSuccess) GetTransactionId() string {
+	if m != nil && m.TransactionId != nil {
+		return *m.TransactionId
+	}
+	return ""
+}
+
+func (m *ThirdPartyPurchaseCompletedSuccess) GetProductId() string {
+	if m != nil && m.ProductId != nil {
+		return *m.ProductId
+	}
+	return ""
+}
+
+func (m *ThirdPartyPurchaseCompletedSuccess) GetBpayProvider() string {
+	if m != nil && m.BpayProvider != nil {
+		return *m.BpayProvider
+	}
+	return ""
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.ThirdPartyPurchaseDanglingReceiptFail
+type ThirdPartyPurchaseDanglingReceiptFail struct {
+	Player           *Player                                              `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
+	DeviceInfo       *DeviceInfo                                          `protobuf:"bytes,2,opt,name=device_info" json:"device_info,omitempty"`
+	TransactionId    *string                                              `protobuf:"bytes,3,opt,name=transaction_id" json:"transaction_id,omitempty"`
+	ProductId        *string                                              `protobuf:"bytes,4,opt,name=product_id" json:"product_id,omitempty"`
+	Provider         *string                                              `protobuf:"bytes,5,opt,name=provider" json:"provider,omitempty"`
+	Reason           *ThirdPartyPurchaseDanglingReceiptFail_FailureReason `protobuf:"varint,6,opt,name=reason,enum=blizzard.telemetry.wtcg.client.ThirdPartyPurchaseDanglingReceiptFail_FailureReason,def=1" json:"reason,omitempty"`
+	InvalidData      *string                                              `protobuf:"bytes,7,opt,name=invalid_data" json:"invalid_data,omitempty"`
+	XXX_unrecognized []byte                                               `json:"-"`
+}
+
+func (m *ThirdPartyPurchaseDanglingReceiptFail) Reset()         { *m = ThirdPartyPurchaseDanglingReceiptFail{} }
+func (m *ThirdPartyPurchaseDanglingReceiptFail) String() string { return proto.CompactTextString(m) }
+func (*ThirdPartyPurchaseDanglingReceiptFail) ProtoMessage()    {}
+
+const Default_ThirdPartyPurchaseDanglingReceiptFail_Reason ThirdPartyPurchaseDanglingReceiptFail_FailureReason = ThirdPartyPurchaseDanglingReceiptFail_INVALID_STATE
+
+func (m *ThirdPartyPurchaseDanglingReceiptFail) GetPlayer() *Player {
+	if m != nil {
+		return m.Player
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseDanglingReceiptFail) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseDanglingReceiptFail) GetTransactionId() string {
+	if m != nil && m.TransactionId != nil {
+		return *m.TransactionId
+	}
+	return ""
+}
+
+func (m *ThirdPartyPurchaseDanglingReceiptFail) GetProductId() string {
+	if m != nil && m.ProductId != nil {
+		return *m.ProductId
+	}
+	return ""
+}
+
+func (m *ThirdPartyPurchaseDanglingReceiptFail) GetProvider() string {
+	if m != nil && m.Provider != nil {
+		return *m.Provider
+	}
+	return ""
+}
+
+func (m *ThirdPartyPurchaseDanglingReceiptFail) GetReason() ThirdPartyPurchaseDanglingReceiptFail_FailureReason {
+	if m != nil && m.Reason != nil {
+		return *m.Reason
+	}
+	return Default_ThirdPartyPurchaseDanglingReceiptFail_Reason
+}
+
+func (m *ThirdPartyPurchaseDanglingReceiptFail) GetInvalidData() string {
+	if m != nil && m.InvalidData != nil {
+		return *m.InvalidData
+	}
+	return ""
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.ThirdPartyPurchaseDeferred
+type ThirdPartyPurchaseDeferred struct {
+	Player           *Player     `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,2,opt,name=device_info" json:"device_info,omitempty"`
+	TransactionId    *string     `protobuf:"bytes,3,opt,name=transaction_id" json:"transaction_id,omitempty"`
+	ProductId        *string     `protobuf:"bytes,4,opt,name=product_id" json:"product_id,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *ThirdPartyPurchaseDeferred) Reset()         { *m = ThirdPartyPurchaseDeferred{} }
+func (m *ThirdPartyPurchaseDeferred) String() string { return proto.CompactTextString(m) }
+func (*ThirdPartyPurchaseDeferred) ProtoMessage()    {}
+
+func (m *ThirdPartyPurchaseDeferred) GetPlayer() *Player {
+	if m != nil {
+		return m.Player
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseDeferred) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseDeferred) GetTransactionId() string {
+	if m != nil && m.TransactionId != nil {
+		return *m.TransactionId
+	}
+	return ""
+}
+
+func (m *ThirdPartyPurchaseDeferred) GetProductId() string {
+	if m != nil && m.ProductId != nil {
+		return *m.ProductId
+	}
+	return ""
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.ThirdPartyPurchaseMalformedData
+type ThirdPartyPurchaseMalformedData struct {
+	Player           *Player     `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,2,opt,name=device_info" json:"device_info,omitempty"`
+	TransactionId    *string     `protobuf:"bytes,3,opt,name=transaction_id" json:"transaction_id,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *ThirdPartyPurchaseMalformedData) Reset()         { *m = ThirdPartyPurchaseMalformedData{} }
+func (m *ThirdPartyPurchaseMalformedData) String() string { return proto.CompactTextString(m) }
+func (*ThirdPartyPurchaseMalformedData) ProtoMessage()    {}
+
+func (m *ThirdPartyPurchaseMalformedData) GetPlayer() *Player {
+	if m != nil {
+		return m.Player
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseMalformedData) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseMalformedData) GetTransactionId() string {
+	if m != nil && m.TransactionId != nil {
+		return *m.TransactionId
+	}
+	return ""
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.ThirdPartyPurchaseReceiptFound
+type ThirdPartyPurchaseReceiptFound struct {
+	Player           *Player     `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,2,opt,name=device_info" json:"device_info,omitempty"`
+	TransactionId    *string     `protobuf:"bytes,3,opt,name=transaction_id" json:"transaction_id,omitempty"`
+	ProductId        *string     `protobuf:"bytes,4,opt,name=product_id" json:"product_id,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *ThirdPartyPurchaseReceiptFound) Reset()         { *m = ThirdPartyPurchaseReceiptFound{} }
+func (m *ThirdPartyPurchaseReceiptFound) String() string { return proto.CompactTextString(m) }
+func (*ThirdPartyPurchaseReceiptFound) ProtoMessage()    {}
+
+func (m *ThirdPartyPurchaseReceiptFound) GetPlayer() *Player {
+	if m != nil {
+		return m.Player
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseReceiptFound) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseReceiptFound) GetTransactionId() string {
+	if m != nil && m.TransactionId != nil {
+		return *m.TransactionId
+	}
+	return ""
+}
+
+func (m *ThirdPartyPurchaseReceiptFound) GetProductId() string {
+	if m != nil && m.ProductId != nil {
+		return *m.ProductId
+	}
+	return ""
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.ThirdPartyPurchaseReceiptNotFound
+type ThirdPartyPurchaseReceiptNotFound struct {
+	Player           *Player     `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,2,opt,name=device_info" json:"device_info,omitempty"`
+	TransactionId    *string     `protobuf:"bytes,3,opt,name=transaction_id" json:"transaction_id,omitempty"`
+	ProductId        *string     `protobuf:"bytes,4,opt,name=product_id" json:"product_id,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *ThirdPartyPurchaseReceiptNotFound) Reset()         { *m = ThirdPartyPurchaseReceiptNotFound{} }
+func (m *ThirdPartyPurchaseReceiptNotFound) String() string { return proto.CompactTextString(m) }
+func (*ThirdPartyPurchaseReceiptNotFound) ProtoMessage()    {}
+
+func (m *ThirdPartyPurchaseReceiptNotFound) GetPlayer() *Player {
+	if m != nil {
+		return m.Player
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseReceiptNotFound) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseReceiptNotFound) GetTransactionId() string {
+	if m != nil && m.TransactionId != nil {
+		return *m.TransactionId
+	}
+	return ""
+}
+
+func (m *ThirdPartyPurchaseReceiptNotFound) GetProductId() string {
+	if m != nil && m.ProductId != nil {
+		return *m.ProductId
+	}
+	return ""
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.ThirdPartyPurchaseReceiptReceived
+type ThirdPartyPurchaseReceiptReceived struct {
+	Player           *Player     `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,2,opt,name=device_info" json:"device_info,omitempty"`
+	TransactionId    *string     `protobuf:"bytes,3,opt,name=transaction_id" json:"transaction_id,omitempty"`
+	ProductId        *string     `protobuf:"bytes,4,opt,name=product_id" json:"product_id,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *ThirdPartyPurchaseReceiptReceived) Reset()         { *m = ThirdPartyPurchaseReceiptReceived{} }
+func (m *ThirdPartyPurchaseReceiptReceived) String() string { return proto.CompactTextString(m) }
+func (*ThirdPartyPurchaseReceiptReceived) ProtoMessage()    {}
+
+func (m *ThirdPartyPurchaseReceiptReceived) GetPlayer() *Player {
+	if m != nil {
+		return m.Player
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseReceiptReceived) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseReceiptReceived) GetTransactionId() string {
+	if m != nil && m.TransactionId != nil {
+		return *m.TransactionId
+	}
+	return ""
+}
+
+func (m *ThirdPartyPurchaseReceiptReceived) GetProductId() string {
+	if m != nil && m.ProductId != nil {
+		return *m.ProductId
+	}
+	return ""
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.ThirdPartyPurchaseReceiptRequest
+type ThirdPartyPurchaseReceiptRequest struct {
+	Player           *Player     `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,2,opt,name=device_info" json:"device_info,omitempty"`
+	TransactionId    *string     `protobuf:"bytes,3,opt,name=transaction_id" json:"transaction_id,omitempty"`
+	ProductId        *string     `protobuf:"bytes,4,opt,name=product_id" json:"product_id,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *ThirdPartyPurchaseReceiptRequest) Reset()         { *m = ThirdPartyPurchaseReceiptRequest{} }
+func (m *ThirdPartyPurchaseReceiptRequest) String() string { return proto.CompactTextString(m) }
+func (*ThirdPartyPurchaseReceiptRequest) ProtoMessage()    {}
+
+func (m *ThirdPartyPurchaseReceiptRequest) GetPlayer() *Player {
+	if m != nil {
+		return m.Player
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseReceiptRequest) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseReceiptRequest) GetTransactionId() string {
+	if m != nil && m.TransactionId != nil {
+		return *m.TransactionId
+	}
+	return ""
+}
+
+func (m *ThirdPartyPurchaseReceiptRequest) GetProductId() string {
+	if m != nil && m.ProductId != nil {
+		return *m.ProductId
+	}
+	return ""
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.ThirdPartyPurchaseReceiptSubmitFail
+type ThirdPartyPurchaseReceiptSubmitFail struct {
+	Player           *Player                                            `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
+	DeviceInfo       *DeviceInfo                                        `protobuf:"bytes,2,opt,name=device_info" json:"device_info,omitempty"`
+	TransactionId    *string                                            `protobuf:"bytes,3,opt,name=transaction_id" json:"transaction_id,omitempty"`
+	ProductId        *string                                            `protobuf:"bytes,4,opt,name=product_id" json:"product_id,omitempty"`
+	Provider         *string                                            `protobuf:"bytes,5,opt,name=provider" json:"provider,omitempty"`
+	Reason           *ThirdPartyPurchaseReceiptSubmitFail_FailureReason `protobuf:"varint,6,opt,name=reason,enum=blizzard.telemetry.wtcg.client.ThirdPartyPurchaseReceiptSubmitFail_FailureReason,def=1" json:"reason,omitempty"`
+	InvalidData      *string                                            `protobuf:"bytes,7,opt,name=invalid_data" json:"invalid_data,omitempty"`
+	XXX_unrecognized []byte                                             `json:"-"`
+}
+
+func (m *ThirdPartyPurchaseReceiptSubmitFail) Reset()         { *m = ThirdPartyPurchaseReceiptSubmitFail{} }
+func (m *ThirdPartyPurchaseReceiptSubmitFail) String() string { return proto.CompactTextString(m) }
+func (*ThirdPartyPurchaseReceiptSubmitFail) ProtoMessage()    {}
+
+const Default_ThirdPartyPurchaseReceiptSubmitFail_Reason ThirdPartyPurchaseReceiptSubmitFail_FailureReason = ThirdPartyPurchaseReceiptSubmitFail_INVALID_STATE
+
+func (m *ThirdPartyPurchaseReceiptSubmitFail) GetPlayer() *Player {
+	if m != nil {
+		return m.Player
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseReceiptSubmitFail) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseReceiptSubmitFail) GetTransactionId() string {
+	if m != nil && m.TransactionId != nil {
+		return *m.TransactionId
+	}
+	return ""
+}
+
+func (m *ThirdPartyPurchaseReceiptSubmitFail) GetProductId() string {
+	if m != nil && m.ProductId != nil {
+		return *m.ProductId
+	}
+	return ""
+}
+
+func (m *ThirdPartyPurchaseReceiptSubmitFail) GetProvider() string {
+	if m != nil && m.Provider != nil {
+		return *m.Provider
+	}
+	return ""
+}
+
+func (m *ThirdPartyPurchaseReceiptSubmitFail) GetReason() ThirdPartyPurchaseReceiptSubmitFail_FailureReason {
+	if m != nil && m.Reason != nil {
+		return *m.Reason
+	}
+	return Default_ThirdPartyPurchaseReceiptSubmitFail_Reason
+}
+
+func (m *ThirdPartyPurchaseReceiptSubmitFail) GetInvalidData() string {
+	if m != nil && m.InvalidData != nil {
+		return *m.InvalidData
+	}
+	return ""
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.ThirdPartyPurchaseStart
+type ThirdPartyPurchaseStart struct {
+	Player           *Player     `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,2,opt,name=device_info" json:"device_info,omitempty"`
+	TransactionId    *string     `protobuf:"bytes,3,opt,name=transaction_id" json:"transaction_id,omitempty"`
+	ProductId        *string     `protobuf:"bytes,4,opt,name=product_id" json:"product_id,omitempty"`
+	BpayProvider     *string     `protobuf:"bytes,5,opt,name=bpay_provider" json:"bpay_provider,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *ThirdPartyPurchaseStart) Reset()         { *m = ThirdPartyPurchaseStart{} }
+func (m *ThirdPartyPurchaseStart) String() string { return proto.CompactTextString(m) }
+func (*ThirdPartyPurchaseStart) ProtoMessage()    {}
+
+func (m *ThirdPartyPurchaseStart) GetPlayer() *Player {
+	if m != nil {
+		return m.Player
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseStart) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseStart) GetTransactionId() string {
+	if m != nil && m.TransactionId != nil {
+		return *m.TransactionId
+	}
+	return ""
+}
+
+func (m *ThirdPartyPurchaseStart) GetProductId() string {
+	if m != nil && m.ProductId != nil {
+		return *m.ProductId
+	}
+	return ""
+}
+
+func (m *ThirdPartyPurchaseStart) GetBpayProvider() string {
+	if m != nil && m.BpayProvider != nil {
+		return *m.BpayProvider
+	}
+	return ""
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.ThirdPartyPurchaseSubmitResponseDeviceNotification
+type ThirdPartyPurchaseSubmitResponseDeviceNotification struct {
+	Player           *Player     `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,2,opt,name=device_info" json:"device_info,omitempty"`
+	TransactionId    *string     `protobuf:"bytes,3,opt,name=transaction_id" json:"transaction_id,omitempty"`
+	Success          *bool       `protobuf:"varint,4,opt,name=success" json:"success,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *ThirdPartyPurchaseSubmitResponseDeviceNotification) Reset() {
+	*m = ThirdPartyPurchaseSubmitResponseDeviceNotification{}
+}
+func (m *ThirdPartyPurchaseSubmitResponseDeviceNotification) String() string {
+	return proto.CompactTextString(m)
+}
+func (*ThirdPartyPurchaseSubmitResponseDeviceNotification) ProtoMessage() {}
+
+func (m *ThirdPartyPurchaseSubmitResponseDeviceNotification) GetPlayer() *Player {
+	if m != nil {
+		return m.Player
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseSubmitResponseDeviceNotification) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *ThirdPartyPurchaseSubmitResponseDeviceNotification) GetTransactionId() string {
+	if m != nil && m.TransactionId != nil {
+		return *m.TransactionId
+	}
+	return ""
+}
+
+func (m *ThirdPartyPurchaseSubmitResponseDeviceNotification) GetSuccess() bool {
+	if m != nil && m.Success != nil {
+		return *m.Success
+	}
+	return false
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.ThirdPartyReceiptConsumed
+type ThirdPartyReceiptConsumed struct {
+	Player           *Player     `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,2,opt,name=device_info" json:"device_info,omitempty"`
+	TransactionId    *string     `protobuf:"bytes,3,opt,name=transaction_id" json:"transaction_id,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *ThirdPartyReceiptConsumed) Reset()         { *m = ThirdPartyReceiptConsumed{} }
+func (m *ThirdPartyReceiptConsumed) String() string { return proto.CompactTextString(m) }
+func (*ThirdPartyReceiptConsumed) ProtoMessage()    {}
+
+func (m *ThirdPartyReceiptConsumed) GetPlayer() *Player {
+	if m != nil {
+		return m.Player
+	}
+	return nil
+}
+
+func (m *ThirdPartyReceiptConsumed) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *ThirdPartyReceiptConsumed) GetTransactionId() string {
+	if m != nil && m.TransactionId != nil {
+		return *m.TransactionId
+	}
+	return ""
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.ThirdPartyUserIdUpdated
+type ThirdPartyUserIdUpdated struct {
+	Player           *Player     `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,2,opt,name=device_info" json:"device_info,omitempty"`
+	ValidChange      *bool       `protobuf:"varint,3,opt,name=valid_change" json:"valid_change,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *ThirdPartyUserIdUpdated) Reset()         { *m = ThirdPartyUserIdUpdated{} }
+func (m *ThirdPartyUserIdUpdated) String() string { return proto.CompactTextString(m) }
+func (*ThirdPartyUserIdUpdated) ProtoMessage()    {}
+
+func (m *ThirdPartyUserIdUpdated) GetPlayer() *Player {
+	if m != nil {
+		return m.Player
+	}
+	return nil
+}
+
+func (m *ThirdPartyUserIdUpdated) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *ThirdPartyUserIdUpdated) GetValidChange() bool {
+	if m != nil && m.ValidChange != nil {
+		return *m.ValidChange
+	}
+	return false
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.WebLoginError
+type WebLoginError struct {
+	Player           *Player     `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,2,opt,name=device_info" json:"device_info,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *WebLoginError) Reset()         { *m = WebLoginError{} }
+func (m *WebLoginError) String() string { return proto.CompactTextString(m) }
+func (*WebLoginError) ProtoMessage()    {}
+
+func (m *WebLoginError) GetPlayer() *Player {
+	if m != nil {
+		return m.Player
+	}
+	return nil
+}
+
+func (m *WebLoginError) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+// ref: Blizzard.Telemetry.WTCG.Client.WelcomeQuestsAcknowledged
+type WelcomeQuestsAcknowledged struct {
+	Player           *Player     `protobuf:"bytes,1,opt,name=player" json:"player,omitempty"`
+	DeviceInfo       *DeviceInfo `protobuf:"bytes,2,opt,name=device_info" json:"device_info,omitempty"`
+	QuestAckDuration *float32    `protobuf:"fixed32,3,opt,name=quest_ack_duration" json:"quest_ack_duration,omitempty"`
+	XXX_unrecognized []byte      `json:"-"`
+}
+
+func (m *WelcomeQuestsAcknowledged) Reset()         { *m = WelcomeQuestsAcknowledged{} }
+func (m *WelcomeQuestsAcknowledged) String() string { return proto.CompactTextString(m) }
+func (*WelcomeQuestsAcknowledged) ProtoMessage()    {}
+
+func (m *WelcomeQuestsAcknowledged) GetPlayer() *Player {
+	if m != nil {
+		return m.Player
+	}
+	return nil
+}
+
+func (m *WelcomeQuestsAcknowledged) GetDeviceInfo() *DeviceInfo {
+	if m != nil {
+		return m.DeviceInfo
+	}
+	return nil
+}
+
+func (m *WelcomeQuestsAcknowledged) GetQuestAckDuration() float32 {
+	if m != nil && m.QuestAckDuration != nil {
+		return *m.QuestAckDuration
+	}
+	return 0
+}
+
 func init() {
-	proto.RegisterType((*DeckCopied)(nil), "blizzard.telemetry.wtcg.client.DeckCopied")
-	proto.RegisterType((*DeviceInfo)(nil), "blizzard.telemetry.wtcg.client.DeviceInfo")
-	proto.RegisterType((*NetworkError)(nil), "blizzard.telemetry.wtcg.client.NetworkError")
-	proto.RegisterType((*Player)(nil), "blizzard.telemetry.wtcg.client.Player")
-	proto.RegisterType((*PresenceChanged)(nil), "blizzard.telemetry.wtcg.client.PresenceChanged")
-	proto.RegisterType((*PresenceStatus)(nil), "blizzard.telemetry.wtcg.client.PresenceStatus")
-	proto.RegisterType((*ReturningPlayerDeckNotCreated)(nil), "blizzard.telemetry.wtcg.client.ReturningPlayerDeckNotCreated")
+	proto.RegisterEnum("blizzard.telemetry.wtcg.client.CollectionLeftRightClick_Target", CollectionLeftRightClick_Target_name, CollectionLeftRightClick_Target_value)
+	proto.RegisterEnum("blizzard.telemetry.wtcg.client.DeckPickerToCollection_Path", DeckPickerToCollection_Path_name, DeckPickerToCollection_Path_value)
 	proto.RegisterEnum("blizzard.telemetry.wtcg.client.DeviceInfo_ConnectionType", DeviceInfo_ConnectionType_name, DeviceInfo_ConnectionType_value)
 	proto.RegisterEnum("blizzard.telemetry.wtcg.client.DeviceInfo_OSCategory", DeviceInfo_OSCategory_name, DeviceInfo_OSCategory_value)
 	proto.RegisterEnum("blizzard.telemetry.wtcg.client.DeviceInfo_ScreenCategory", DeviceInfo_ScreenCategory_name, DeviceInfo_ScreenCategory_value)
 	proto.RegisterEnum("blizzard.telemetry.wtcg.client.NetworkError_ErrorType", NetworkError_ErrorType_name, NetworkError_ErrorType_value)
-}
-
-func init() { proto.RegisterFile("blizzard/telemetry/wtcg/client/client.proto", fileDescriptor0) }
-
-var fileDescriptor0 = []byte{
-	// 928 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xcc, 0x55, 0xdd, 0x6e, 0xe3, 0x44,
-	0x14, 0x96, 0xe3, 0xfc, 0x34, 0x27, 0xdb, 0xd4, 0x3b, 0x5b, 0x68, 0x56, 0xa8, 0x6c, 0xc9, 0xc5,
-	0x52, 0x81, 0x94, 0x4a, 0x95, 0x58, 0x41, 0x2f, 0x10, 0xc1, 0x99, 0x55, 0xad, 0x4d, 0xed, 0x30,
-	0x4e, 0x5b, 0xb8, 0xc1, 0x38, 0xf6, 0xd9, 0xd4, 0xaa, 0xeb, 0x89, 0xc6, 0x93, 0x96, 0xec, 0x63,
-	0x70, 0xc5, 0x93, 0x70, 0xc5, 0x3b, 0xc0, 0x23, 0xa1, 0x19, 0x3b, 0x69, 0xd3, 0x45, 0x94, 0x05,
-	0x2e, 0xb8, 0x49, 0x66, 0xbe, 0x73, 0xce, 0xf7, 0x7d, 0x33, 0xe7, 0x68, 0x0c, 0x9f, 0x4e, 0xd2,
-	0xe4, 0xcd, 0x9b, 0x50, 0xc4, 0x07, 0x12, 0x53, 0xbc, 0x42, 0x29, 0x16, 0x07, 0x37, 0x32, 0x9a,
-	0x1e, 0x44, 0x69, 0x82, 0x99, 0x2c, 0xff, 0x7a, 0x33, 0xc1, 0x25, 0x27, 0x1f, 0x2e, 0x93, 0x7b,
-	0xab, 0xe4, 0x9e, 0x4a, 0xee, 0x15, 0x59, 0xdd, 0xdf, 0x0c, 0x80, 0x01, 0x46, 0x97, 0x36, 0x9f,
-	0x25, 0x18, 0x93, 0x2f, 0xa1, 0x3e, 0x4b, 0xc3, 0x05, 0x8a, 0x8e, 0xb1, 0x67, 0xec, 0xb7, 0x0e,
-	0x9f, 0xf7, 0xfe, 0xba, 0xbe, 0x37, 0xd2, 0xd9, 0xac, 0xac, 0x22, 0xaf, 0xa0, 0x15, 0xe3, 0x75,
-	0x12, 0x61, 0x90, 0x64, 0xaf, 0x79, 0xa7, 0xa2, 0x49, 0x3e, 0x79, 0x88, 0x64, 0xa0, 0x4b, 0x9c,
-	0xec, 0x35, 0x67, 0x10, 0xaf, 0xd6, 0x64, 0x07, 0x1a, 0x31, 0x46, 0x97, 0x41, 0x12, 0x77, 0xcc,
-	0x3d, 0x63, 0xdf, 0x64, 0x75, 0xb5, 0x75, 0x62, 0xf2, 0x01, 0x34, 0x75, 0xe0, 0x22, 0xcc, 0x2f,
-	0x3a, 0xd5, 0x3d, 0x63, 0xbf, 0xc9, 0x36, 0x14, 0x70, 0x1c, 0xe6, 0x17, 0xdd, 0xdf, 0xab, 0xea,
-	0x44, 0x2b, 0x12, 0x17, 0x2a, 0x3c, 0xd7, 0xa7, 0x69, 0x1f, 0x7e, 0xf6, 0xf7, 0x8d, 0xf4, 0x3c,
-	0xdf, 0x0e, 0x25, 0x4e, 0xb9, 0x58, 0x1c, 0x35, 0xce, 0x1d, 0x77, 0xe0, 0x9d, 0xfb, 0xac, 0xc2,
-	0x73, 0xb2, 0x0b, 0xc0, 0xf3, 0xe0, 0x1a, 0x45, 0x9e, 0xf0, 0x4c, 0x1f, 0xb0, 0xc9, 0x9a, 0x3c,
-	0x3f, 0x2b, 0x00, 0xb2, 0x0d, 0xb5, 0x2b, 0x1e, 0x63, 0xaa, 0x1d, 0x37, 0x59, 0xb1, 0x21, 0xdf,
-	0x42, 0x3d, 0x8f, 0x04, 0x62, 0xa6, 0xdd, 0xb6, 0x0f, 0xbf, 0x78, 0x07, 0x23, 0xbe, 0x2e, 0x5c,
-	0x99, 0xa9, 0x8d, 0x8e, 0x3d, 0x97, 0xb2, 0x92, 0x8f, 0x24, 0xb0, 0x15, 0xf1, 0x2c, 0xc3, 0x48,
-	0x26, 0x3c, 0x0b, 0xe4, 0x62, 0x86, 0x9d, 0xda, 0x3b, 0x4b, 0xd8, 0x2b, 0x86, 0xf1, 0x62, 0x86,
-	0x47, 0xb5, 0x73, 0x87, 0xd1, 0x01, 0x6b, 0x47, 0x6b, 0x30, 0x39, 0x82, 0xa7, 0xb1, 0xe0, 0x49,
-	0x1c, 0x48, 0xfc, 0x51, 0xce, 0x05, 0x06, 0x11, 0xbf, 0x9a, 0x09, 0xcc, 0xf5, 0x45, 0xd4, 0xf5,
-	0x71, 0x77, 0x74, 0xc2, 0xb8, 0x88, 0xdb, 0xb7, 0xe1, 0xee, 0x57, 0xd0, 0x5e, 0x17, 0x21, 0x4d,
-	0x28, 0x64, 0x2c, 0x83, 0x6c, 0x40, 0xf5, 0xdc, 0x79, 0xe9, 0x58, 0x15, 0xf2, 0x08, 0x36, 0x6c,
-	0x3a, 0x1c, 0x9e, 0x0e, 0xfb, 0xcc, 0x32, 0x49, 0x0b, 0x1a, 0xa7, 0xee, 0x2b, 0xd7, 0x3b, 0x77,
-	0xad, 0x6a, 0xf7, 0x73, 0x80, 0xdb, 0x96, 0xa8, 0x50, 0xd9, 0x14, 0xcb, 0x20, 0x0d, 0x30, 0x4f,
-	0xfa, 0xb6, 0x55, 0x51, 0x0b, 0xc7, 0xf3, 0x8b, 0xca, 0xbe, 0x3b, 0x60, 0x9e, 0x33, 0xb0, 0xaa,
-	0x4a, 0x7b, 0xfd, 0x0e, 0x95, 0xb6, 0xbe, 0x45, 0xcb, 0x20, 0x5b, 0xd0, 0x3a, 0x71, 0x5c, 0x27,
-	0x18, 0xf7, 0xbf, 0x1e, 0xd2, 0xb1, 0x55, 0x21, 0x00, 0xf5, 0x72, 0x6d, 0x92, 0x3a, 0x54, 0x46,
-	0xb6, 0x55, 0xed, 0xfe, 0x6a, 0xc2, 0x23, 0x17, 0xe5, 0x0d, 0x17, 0x97, 0x54, 0x08, 0xfe, 0xd6,
-	0x98, 0x1b, 0xff, 0x6a, 0xcc, 0x11, 0x00, 0x15, 0x6b, 0xd1, 0xbd, 0x8a, 0xee, 0xde, 0x8b, 0x87,
-	0xb8, 0xee, 0xda, 0xe9, 0xe9, 0x5f, 0xdd, 0xba, 0xf6, 0x88, 0x39, 0x67, 0xfd, 0x31, 0x0d, 0x7c,
-	0xca, 0xce, 0x28, 0x63, 0x4d, 0x5c, 0x86, 0xc8, 0x9e, 0xf2, 0x9c, 0x47, 0x22, 0x99, 0xa9, 0x1e,
-	0x94, 0xf3, 0x79, 0x17, 0x52, 0xa3, 0x5d, 0x18, 0x89, 0x78, 0x8c, 0x7a, 0x52, 0x6b, 0x25, 0x81,
-	0xcd, 0x63, 0xec, 0xfe, 0x62, 0x40, 0x73, 0xa5, 0x44, 0x08, 0xdc, 0xd3, 0xb2, 0x0c, 0xb2, 0x03,
-	0x4f, 0xd4, 0xda, 0xb1, 0x69, 0x70, 0xea, 0xf6, 0xcf, 0xfa, 0xce, 0x50, 0xdd, 0xa4, 0x55, 0x21,
-	0xdb, 0x60, 0x8d, 0x28, 0x65, 0x6b, 0xa8, 0x49, 0x76, 0xe1, 0xe9, 0xd8, 0x39, 0xa1, 0xde, 0xe9,
-	0x38, 0x18, 0xd0, 0x97, 0x94, 0x31, 0x3a, 0x08, 0x18, 0xf5, 0x47, 0x9e, 0xeb, 0x53, 0xab, 0x4a,
-	0x3e, 0x82, 0xdd, 0x65, 0xd8, 0xf5, 0xfe, 0x2c, 0xa5, 0x46, 0x1e, 0xc3, 0x26, 0xa3, 0xdf, 0x9c,
-	0x52, 0x7f, 0x1c, 0x50, 0xc6, 0x3c, 0x66, 0xd5, 0x15, 0xe4, 0x8d, 0x8f, 0xb5, 0x56, 0x31, 0x3a,
-	0x8d, 0xee, 0x4f, 0x06, 0xd4, 0x8b, 0x77, 0x8a, 0x7c, 0x0c, 0xd6, 0x24, 0x94, 0x32, 0xc5, 0x20,
-	0x43, 0x19, 0x24, 0x71, 0x90, 0x16, 0xdd, 0x33, 0xd9, 0x66, 0x81, 0xbb, 0x28, 0x9d, 0x78, 0xc8,
-	0xc9, 0x73, 0xd8, 0x9a, 0x86, 0x57, 0x18, 0x84, 0x51, 0xc4, 0xe7, 0x99, 0x4a, 0xd5, 0x9d, 0x31,
-	0xd9, 0xa6, 0x82, 0xfb, 0x05, 0xea, 0xc4, 0xe4, 0x19, 0xb4, 0x26, 0x8a, 0x4a, 0xe0, 0xf4, 0xf6,
-	0x56, 0x41, 0x41, 0x4c, 0x23, 0xe4, 0x7d, 0xa8, 0xa7, 0x3c, 0x0a, 0x53, 0x2c, 0x1f, 0xaa, 0x72,
-	0xd7, 0xfd, 0xd9, 0x84, 0xad, 0x91, 0xc0, 0x1c, 0xb3, 0x08, 0xed, 0x8b, 0x30, 0x9b, 0xfe, 0xdf,
-	0x5e, 0xdf, 0xef, 0xe1, 0x49, 0x86, 0x37, 0xc1, 0xac, 0xf4, 0x18, 0xe4, 0x32, 0x94, 0xf3, 0x5c,
-	0x9f, 0xb0, 0x75, 0xd8, 0x7b, 0xd0, 0x59, 0x59, 0xe6, 0xeb, 0x2a, 0xf6, 0x38, 0xc3, 0x9b, 0x75,
-	0x88, 0xfc, 0x00, 0xdb, 0x33, 0x81, 0xd7, 0x6f, 0x09, 0x54, 0xff, 0x91, 0x00, 0x51, 0x5c, 0xf7,
-	0x14, 0x5e, 0xc0, 0xce, 0x55, 0x92, 0xa6, 0x49, 0x8e, 0x11, 0xcf, 0xe2, 0x3c, 0xc8, 0x13, 0x25,
-	0xa3, 0x12, 0xf5, 0x1b, 0x69, 0xb2, 0xf7, 0xee, 0x86, 0x7d, 0x15, 0x1d, 0x09, 0xbc, 0xee, 0x7e,
-	0x07, 0xed, 0x7b, 0x4c, 0xcf, 0xa0, 0xb5, 0xb2, 0x99, 0xc4, 0xe5, 0xc4, 0xc0, 0x12, 0x72, 0x62,
-	0x35, 0x2e, 0xb7, 0xe7, 0x98, 0x4f, 0xee, 0x8c, 0xcb, 0x12, 0xf6, 0xe7, 0x13, 0x27, 0xee, 0x2e,
-	0x60, 0x97, 0xa1, 0x9c, 0x8b, 0x2c, 0xc9, 0xa6, 0x45, 0xf3, 0xd4, 0xc7, 0xd7, 0xe5, 0xd2, 0x16,
-	0x18, 0xca, 0xff, 0x60, 0x04, 0x3a, 0xd0, 0x08, 0x27, 0x53, 0xc1, 0xe7, 0x33, 0x6d, 0x60, 0x93,
-	0x2d, 0xb7, 0x7f, 0x04, 0x00, 0x00, 0xff, 0xff, 0x7c, 0x28, 0xd0, 0x56, 0x37, 0x08, 0x00, 0x00,
+	proto.RegisterEnum("blizzard.telemetry.wtcg.client.PackOpenToStore_Path", PackOpenToStore_Path_name, PackOpenToStore_Path_value)
+	proto.RegisterEnum("blizzard.telemetry.wtcg.client.ThirdPartyPurchaseDanglingReceiptFail_FailureReason", ThirdPartyPurchaseDanglingReceiptFail_FailureReason_name, ThirdPartyPurchaseDanglingReceiptFail_FailureReason_value)
+	proto.RegisterEnum("blizzard.telemetry.wtcg.client.ThirdPartyPurchaseReceiptSubmitFail_FailureReason", ThirdPartyPurchaseReceiptSubmitFail_FailureReason_name, ThirdPartyPurchaseReceiptSubmitFail_FailureReason_value)
 }

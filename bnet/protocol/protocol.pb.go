@@ -2,62 +2,29 @@
 // source: bnet/protocol/protocol.proto
 // DO NOT EDIT!
 
-/*
-Package bnet_protocol is a generated protocol buffer package.
-
-It is generated from these files:
-	bnet/protocol/protocol.proto
-
-It has these top-level messages:
-	AccountInfo
-	Address
-	Attribute
-	ContentHandle
-	EntityId
-	ErrorInfo
-	Header
-	Identity
-	NoData
-	NORESPONSE
-	ObjectAddress
-	Path
-	Privilege
-	ProcessId
-	Role
-	RoleSet
-	RoleSetConfig
-	Variant
-*/
 package bnet_protocol
 
 import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
+import json "encoding/json"
 import math "math"
 
-// Reference imports to suppress errors if they are not otherwise used.
+// Reference proto, json, and math imports to suppress error if they are not otherwise used.
 var _ = proto.Marshal
-var _ = fmt.Errorf
+var _ = &json.SyntaxError{}
 var _ = math.Inf
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 // ref: bnet.protocol.AccountInfo
 type AccountInfo struct {
-	AccountPaid      *bool   `protobuf:"varint,1,opt,name=account_paid,json=accountPaid,def=0" json:"account_paid,omitempty"`
-	CountryId        *uint32 `protobuf:"fixed32,2,opt,name=country_id,json=countryId,def=0" json:"country_id,omitempty"`
-	BattleTag        *string `protobuf:"bytes,3,opt,name=battle_tag,json=battleTag" json:"battle_tag,omitempty"`
-	ManualReview     *bool   `protobuf:"varint,4,opt,name=manual_review,json=manualReview,def=0" json:"manual_review,omitempty"`
+	AccountPaid      *bool   `protobuf:"varint,1,opt,name=account_paid,def=0" json:"account_paid,omitempty"`
+	CountryId        *uint32 `protobuf:"fixed32,2,opt,name=country_id,def=0" json:"country_id,omitempty"`
+	BattleTag        *string `protobuf:"bytes,3,opt,name=battle_tag" json:"battle_tag,omitempty"`
+	ManualReview     *bool   `protobuf:"varint,4,opt,name=manual_review,def=0" json:"manual_review,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *AccountInfo) Reset()                    { *m = AccountInfo{} }
-func (m *AccountInfo) String() string            { return proto.CompactTextString(m) }
-func (*AccountInfo) ProtoMessage()               {}
-func (*AccountInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *AccountInfo) Reset()         { *m = AccountInfo{} }
+func (m *AccountInfo) String() string { return proto.CompactTextString(m) }
+func (*AccountInfo) ProtoMessage()    {}
 
 const Default_AccountInfo_AccountPaid bool = false
 const Default_AccountInfo_CountryId uint32 = 0
@@ -98,10 +65,9 @@ type Address struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *Address) Reset()                    { *m = Address{} }
-func (m *Address) String() string            { return proto.CompactTextString(m) }
-func (*Address) ProtoMessage()               {}
-func (*Address) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+func (m *Address) Reset()         { *m = Address{} }
+func (m *Address) String() string { return proto.CompactTextString(m) }
+func (*Address) ProtoMessage()    {}
 
 func (m *Address) GetAddress() string {
 	if m != nil && m.Address != nil {
@@ -124,10 +90,9 @@ type Attribute struct {
 	XXX_unrecognized []byte   `json:"-"`
 }
 
-func (m *Attribute) Reset()                    { *m = Attribute{} }
-func (m *Attribute) String() string            { return proto.CompactTextString(m) }
-func (*Attribute) ProtoMessage()               {}
-func (*Attribute) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
+func (m *Attribute) Reset()         { *m = Attribute{} }
+func (m *Attribute) String() string { return proto.CompactTextString(m) }
+func (*Attribute) ProtoMessage()    {}
 
 func (m *Attribute) GetName() string {
 	if m != nil && m.Name != nil {
@@ -148,14 +113,13 @@ type ContentHandle struct {
 	Region           *uint32 `protobuf:"fixed32,1,req,name=region" json:"region,omitempty"`
 	Usage            *uint32 `protobuf:"fixed32,2,req,name=usage" json:"usage,omitempty"`
 	Hash             []byte  `protobuf:"bytes,3,req,name=hash" json:"hash,omitempty"`
-	ProtoUrl         *string `protobuf:"bytes,4,opt,name=proto_url,json=protoUrl" json:"proto_url,omitempty"`
+	ProtoUrl         *string `protobuf:"bytes,4,opt,name=proto_url" json:"proto_url,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *ContentHandle) Reset()                    { *m = ContentHandle{} }
-func (m *ContentHandle) String() string            { return proto.CompactTextString(m) }
-func (*ContentHandle) ProtoMessage()               {}
-func (*ContentHandle) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
+func (m *ContentHandle) Reset()         { *m = ContentHandle{} }
+func (m *ContentHandle) String() string { return proto.CompactTextString(m) }
+func (*ContentHandle) ProtoMessage()    {}
 
 func (m *ContentHandle) GetRegion() uint32 {
 	if m != nil && m.Region != nil {
@@ -192,10 +156,9 @@ type EntityId struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *EntityId) Reset()                    { *m = EntityId{} }
-func (m *EntityId) String() string            { return proto.CompactTextString(m) }
-func (*EntityId) ProtoMessage()               {}
-func (*EntityId) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
+func (m *EntityId) Reset()         { *m = EntityId{} }
+func (m *EntityId) String() string { return proto.CompactTextString(m) }
+func (*EntityId) ProtoMessage()    {}
 
 func (m *EntityId) GetHigh() uint64 {
 	if m != nil && m.High != nil {
@@ -213,17 +176,16 @@ func (m *EntityId) GetLow() uint64 {
 
 // ref: bnet.protocol.ErrorInfo
 type ErrorInfo struct {
-	ObjectAddress    *ObjectAddress `protobuf:"bytes,1,req,name=object_address,json=objectAddress" json:"object_address,omitempty"`
+	ObjectAddress    *ObjectAddress `protobuf:"bytes,1,req,name=object_address" json:"object_address,omitempty"`
 	Status           *uint32        `protobuf:"varint,2,req,name=status" json:"status,omitempty"`
-	ServiceHash      *uint32        `protobuf:"varint,3,req,name=service_hash,json=serviceHash" json:"service_hash,omitempty"`
-	MethodId         *uint32        `protobuf:"varint,4,req,name=method_id,json=methodId" json:"method_id,omitempty"`
+	ServiceHash      *uint32        `protobuf:"varint,3,req,name=service_hash" json:"service_hash,omitempty"`
+	MethodId         *uint32        `protobuf:"varint,4,req,name=method_id" json:"method_id,omitempty"`
 	XXX_unrecognized []byte         `json:"-"`
 }
 
-func (m *ErrorInfo) Reset()                    { *m = ErrorInfo{} }
-func (m *ErrorInfo) String() string            { return proto.CompactTextString(m) }
-func (*ErrorInfo) ProtoMessage()               {}
-func (*ErrorInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
+func (m *ErrorInfo) Reset()         { *m = ErrorInfo{} }
+func (m *ErrorInfo) String() string { return proto.CompactTextString(m) }
+func (*ErrorInfo) ProtoMessage()    {}
 
 func (m *ErrorInfo) GetObjectAddress() *ObjectAddress {
 	if m != nil {
@@ -255,10 +217,10 @@ func (m *ErrorInfo) GetMethodId() uint32 {
 
 // ref: bnet.protocol.Header
 type Header struct {
-	ServiceId        *uint32      `protobuf:"varint,1,req,name=service_id,json=serviceId" json:"service_id,omitempty"`
-	MethodId         *uint32      `protobuf:"varint,2,opt,name=method_id,json=methodId" json:"method_id,omitempty"`
+	ServiceId        *uint32      `protobuf:"varint,1,req,name=service_id" json:"service_id,omitempty"`
+	MethodId         *uint32      `protobuf:"varint,2,opt,name=method_id" json:"method_id,omitempty"`
 	Token            *uint32      `protobuf:"varint,3,req,name=token" json:"token,omitempty"`
-	ObjectId         *uint64      `protobuf:"varint,4,opt,name=object_id,json=objectId,def=0" json:"object_id,omitempty"`
+	ObjectId         *uint64      `protobuf:"varint,4,opt,name=object_id,def=0" json:"object_id,omitempty"`
 	Size             *uint32      `protobuf:"varint,5,opt,name=size,def=0" json:"size,omitempty"`
 	Status           *uint32      `protobuf:"varint,6,opt,name=status,def=0" json:"status,omitempty"`
 	Error            []*ErrorInfo `protobuf:"bytes,7,rep,name=error" json:"error,omitempty"`
@@ -266,10 +228,9 @@ type Header struct {
 	XXX_unrecognized []byte       `json:"-"`
 }
 
-func (m *Header) Reset()                    { *m = Header{} }
-func (m *Header) String() string            { return proto.CompactTextString(m) }
-func (*Header) ProtoMessage()               {}
-func (*Header) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
+func (m *Header) Reset()         { *m = Header{} }
+func (m *Header) String() string { return proto.CompactTextString(m) }
+func (*Header) ProtoMessage()    {}
 
 const Default_Header_ObjectId uint64 = 0
 const Default_Header_Size uint32 = 0
@@ -333,15 +294,14 @@ func (m *Header) GetTimeout() uint64 {
 
 // ref: bnet.protocol.Identity
 type Identity struct {
-	AccountId        *EntityId `protobuf:"bytes,1,opt,name=account_id,json=accountId" json:"account_id,omitempty"`
-	GameAccountId    *EntityId `protobuf:"bytes,2,opt,name=game_account_id,json=gameAccountId" json:"game_account_id,omitempty"`
+	AccountId        *EntityId `protobuf:"bytes,1,opt,name=account_id" json:"account_id,omitempty"`
+	GameAccountId    *EntityId `protobuf:"bytes,2,opt,name=game_account_id" json:"game_account_id,omitempty"`
 	XXX_unrecognized []byte    `json:"-"`
 }
 
-func (m *Identity) Reset()                    { *m = Identity{} }
-func (m *Identity) String() string            { return proto.CompactTextString(m) }
-func (*Identity) ProtoMessage()               {}
-func (*Identity) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{7} }
+func (m *Identity) Reset()         { *m = Identity{} }
+func (m *Identity) String() string { return proto.CompactTextString(m) }
+func (*Identity) ProtoMessage()    {}
 
 func (m *Identity) GetAccountId() *EntityId {
 	if m != nil {
@@ -362,32 +322,29 @@ type NoData struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *NoData) Reset()                    { *m = NoData{} }
-func (m *NoData) String() string            { return proto.CompactTextString(m) }
-func (*NoData) ProtoMessage()               {}
-func (*NoData) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{8} }
+func (m *NoData) Reset()         { *m = NoData{} }
+func (m *NoData) String() string { return proto.CompactTextString(m) }
+func (*NoData) ProtoMessage()    {}
 
 // ref: bnet.protocol.NORESPONSE
 type NORESPONSE struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *NORESPONSE) Reset()                    { *m = NORESPONSE{} }
-func (m *NORESPONSE) String() string            { return proto.CompactTextString(m) }
-func (*NORESPONSE) ProtoMessage()               {}
-func (*NORESPONSE) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9} }
+func (m *NORESPONSE) Reset()         { *m = NORESPONSE{} }
+func (m *NORESPONSE) String() string { return proto.CompactTextString(m) }
+func (*NORESPONSE) ProtoMessage()    {}
 
 // ref: bnet.protocol.ObjectAddress
 type ObjectAddress struct {
 	Host             *ProcessId `protobuf:"bytes,1,req,name=host" json:"host,omitempty"`
-	ObjectId         *uint64    `protobuf:"varint,2,opt,name=object_id,json=objectId,def=0" json:"object_id,omitempty"`
+	ObjectId         *uint64    `protobuf:"varint,2,opt,name=object_id,def=0" json:"object_id,omitempty"`
 	XXX_unrecognized []byte     `json:"-"`
 }
 
-func (m *ObjectAddress) Reset()                    { *m = ObjectAddress{} }
-func (m *ObjectAddress) String() string            { return proto.CompactTextString(m) }
-func (*ObjectAddress) ProtoMessage()               {}
-func (*ObjectAddress) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{10} }
+func (m *ObjectAddress) Reset()         { *m = ObjectAddress{} }
+func (m *ObjectAddress) String() string { return proto.CompactTextString(m) }
+func (*ObjectAddress) ProtoMessage()    {}
 
 const Default_ObjectAddress_ObjectId uint64 = 0
 
@@ -411,10 +368,9 @@ type Path struct {
 	XXX_unrecognized []byte   `json:"-"`
 }
 
-func (m *Path) Reset()                    { *m = Path{} }
-func (m *Path) String() string            { return proto.CompactTextString(m) }
-func (*Path) ProtoMessage()               {}
-func (*Path) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{11} }
+func (m *Path) Reset()         { *m = Path{} }
+func (m *Path) String() string { return proto.CompactTextString(m) }
+func (*Path) ProtoMessage()    {}
 
 func (m *Path) GetOrdinal() []uint32 {
 	if m != nil {
@@ -430,10 +386,9 @@ type Privilege struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *Privilege) Reset()                    { *m = Privilege{} }
-func (m *Privilege) String() string            { return proto.CompactTextString(m) }
-func (*Privilege) ProtoMessage()               {}
-func (*Privilege) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{12} }
+func (m *Privilege) Reset()         { *m = Privilege{} }
+func (m *Privilege) String() string { return proto.CompactTextString(m) }
+func (*Privilege) ProtoMessage()    {}
 
 func (m *Privilege) GetName() string {
 	if m != nil && m.Name != nil {
@@ -456,10 +411,9 @@ type ProcessId struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *ProcessId) Reset()                    { *m = ProcessId{} }
-func (m *ProcessId) String() string            { return proto.CompactTextString(m) }
-func (*ProcessId) ProtoMessage()               {}
-func (*ProcessId) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{13} }
+func (m *ProcessId) Reset()         { *m = ProcessId{} }
+func (m *ProcessId) String() string { return proto.CompactTextString(m) }
+func (*ProcessId) ProtoMessage()    {}
 
 func (m *ProcessId) GetLabel() uint32 {
 	if m != nil && m.Label != nil {
@@ -480,18 +434,17 @@ type Role struct {
 	Id               *uint32      `protobuf:"varint,1,req,name=id" json:"id,omitempty"`
 	Name             *string      `protobuf:"bytes,2,req,name=name" json:"name,omitempty"`
 	Privilege        []string     `protobuf:"bytes,3,rep,name=privilege" json:"privilege,omitempty"`
-	AssignableRole   []uint32     `protobuf:"varint,4,rep,packed,name=assignable_role,json=assignableRole" json:"assignable_role,omitempty"`
+	AssignableRole   []uint32     `protobuf:"varint,4,rep,packed,name=assignable_role" json:"assignable_role,omitempty"`
 	Required         *bool        `protobuf:"varint,5,opt,name=required,def=0" json:"required,omitempty"`
 	Unique           *bool        `protobuf:"varint,6,opt,name=unique,def=0" json:"unique,omitempty"`
-	RelegationRole   *uint32      `protobuf:"varint,7,opt,name=relegation_role,json=relegationRole" json:"relegation_role,omitempty"`
+	RelegationRole   *uint32      `protobuf:"varint,7,opt,name=relegation_role" json:"relegation_role,omitempty"`
 	Attribute        []*Attribute `protobuf:"bytes,8,rep,name=attribute" json:"attribute,omitempty"`
 	XXX_unrecognized []byte       `json:"-"`
 }
 
-func (m *Role) Reset()                    { *m = Role{} }
-func (m *Role) String() string            { return proto.CompactTextString(m) }
-func (*Role) ProtoMessage()               {}
-func (*Role) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{14} }
+func (m *Role) Reset()         { *m = Role{} }
+func (m *Role) String() string { return proto.CompactTextString(m) }
+func (*Role) ProtoMessage()    {}
 
 const Default_Role_Required bool = false
 const Default_Role_Unique bool = false
@@ -558,16 +511,15 @@ type RoleSet struct {
 	Service          *string      `protobuf:"bytes,2,req,name=service" json:"service,omitempty"`
 	Subtype          *string      `protobuf:"bytes,3,opt,name=subtype,def=default" json:"subtype,omitempty"`
 	Role             []*Role      `protobuf:"bytes,4,rep,name=role" json:"role,omitempty"`
-	DefaultRole      []uint32     `protobuf:"varint,5,rep,packed,name=default_role,json=defaultRole" json:"default_role,omitempty"`
-	MaxMembers       *int32       `protobuf:"varint,6,opt,name=max_members,json=maxMembers" json:"max_members,omitempty"`
+	DefaultRole      []uint32     `protobuf:"varint,5,rep,packed,name=default_role" json:"default_role,omitempty"`
+	MaxMembers       *int32       `protobuf:"varint,6,opt,name=max_members" json:"max_members,omitempty"`
 	Attribute        []*Attribute `protobuf:"bytes,7,rep,name=attribute" json:"attribute,omitempty"`
 	XXX_unrecognized []byte       `json:"-"`
 }
 
-func (m *RoleSet) Reset()                    { *m = RoleSet{} }
-func (m *RoleSet) String() string            { return proto.CompactTextString(m) }
-func (*RoleSet) ProtoMessage()               {}
-func (*RoleSet) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{15} }
+func (m *RoleSet) Reset()         { *m = RoleSet{} }
+func (m *RoleSet) String() string { return proto.CompactTextString(m) }
+func (*RoleSet) ProtoMessage()    {}
 
 const Default_RoleSet_Subtype string = "default"
 
@@ -623,14 +575,13 @@ func (m *RoleSet) GetAttribute() []*Attribute {
 // ref: bnet.protocol.RoleSetConfig
 type RoleSetConfig struct {
 	Privilege        []*Privilege `protobuf:"bytes,1,rep,name=privilege" json:"privilege,omitempty"`
-	RoleSet          *RoleSet     `protobuf:"bytes,2,req,name=role_set,json=roleSet" json:"role_set,omitempty"`
+	RoleSet          *RoleSet     `protobuf:"bytes,2,req,name=role_set" json:"role_set,omitempty"`
 	XXX_unrecognized []byte       `json:"-"`
 }
 
-func (m *RoleSetConfig) Reset()                    { *m = RoleSetConfig{} }
-func (m *RoleSetConfig) String() string            { return proto.CompactTextString(m) }
-func (*RoleSetConfig) ProtoMessage()               {}
-func (*RoleSetConfig) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{16} }
+func (m *RoleSetConfig) Reset()         { *m = RoleSetConfig{} }
+func (m *RoleSetConfig) String() string { return proto.CompactTextString(m) }
+func (*RoleSetConfig) ProtoMessage()    {}
 
 func (m *RoleSetConfig) GetPrivilege() []*Privilege {
 	if m != nil {
@@ -648,22 +599,21 @@ func (m *RoleSetConfig) GetRoleSet() *RoleSet {
 
 // ref: bnet.protocol.attribute.Variant
 type Variant struct {
-	BoolValue        *bool     `protobuf:"varint,2,opt,name=bool_value,json=boolValue" json:"bool_value,omitempty"`
-	IntValue         *int64    `protobuf:"varint,3,opt,name=int_value,json=intValue" json:"int_value,omitempty"`
-	FloatValue       *float64  `protobuf:"fixed64,4,opt,name=float_value,json=floatValue" json:"float_value,omitempty"`
-	StringValue      *string   `protobuf:"bytes,5,opt,name=string_value,json=stringValue" json:"string_value,omitempty"`
-	BlobValue        []byte    `protobuf:"bytes,6,opt,name=blob_value,json=blobValue" json:"blob_value,omitempty"`
-	MessageValue     []byte    `protobuf:"bytes,7,opt,name=message_value,json=messageValue" json:"message_value,omitempty"`
-	FourccValue      *string   `protobuf:"bytes,8,opt,name=fourcc_value,json=fourccValue" json:"fourcc_value,omitempty"`
-	UintValue        *uint64   `protobuf:"varint,9,opt,name=uint_value,json=uintValue" json:"uint_value,omitempty"`
-	EntityidValue    *EntityId `protobuf:"bytes,10,opt,name=entityid_value,json=entityidValue" json:"entityid_value,omitempty"`
+	BoolValue        *bool     `protobuf:"varint,2,opt,name=bool_value" json:"bool_value,omitempty"`
+	IntValue         *int64    `protobuf:"varint,3,opt,name=int_value" json:"int_value,omitempty"`
+	FloatValue       *float64  `protobuf:"fixed64,4,opt,name=float_value" json:"float_value,omitempty"`
+	StringValue      *string   `protobuf:"bytes,5,opt,name=string_value" json:"string_value,omitempty"`
+	BlobValue        []byte    `protobuf:"bytes,6,opt,name=blob_value" json:"blob_value,omitempty"`
+	MessageValue     []byte    `protobuf:"bytes,7,opt,name=message_value" json:"message_value,omitempty"`
+	FourccValue      *string   `protobuf:"bytes,8,opt,name=fourcc_value" json:"fourcc_value,omitempty"`
+	UintValue        *uint64   `protobuf:"varint,9,opt,name=uint_value" json:"uint_value,omitempty"`
+	EntityidValue    *EntityId `protobuf:"bytes,10,opt,name=entityid_value" json:"entityid_value,omitempty"`
 	XXX_unrecognized []byte    `json:"-"`
 }
 
-func (m *Variant) Reset()                    { *m = Variant{} }
-func (m *Variant) String() string            { return proto.CompactTextString(m) }
-func (*Variant) ProtoMessage()               {}
-func (*Variant) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{17} }
+func (m *Variant) Reset()         { *m = Variant{} }
+func (m *Variant) String() string { return proto.CompactTextString(m) }
+func (*Variant) ProtoMessage()    {}
 
 func (m *Variant) GetBoolValue() bool {
 	if m != nil && m.BoolValue != nil {
@@ -729,97 +679,4 @@ func (m *Variant) GetEntityidValue() *EntityId {
 }
 
 func init() {
-	proto.RegisterType((*AccountInfo)(nil), "bnet.protocol.AccountInfo")
-	proto.RegisterType((*Address)(nil), "bnet.protocol.Address")
-	proto.RegisterType((*Attribute)(nil), "bnet.protocol.Attribute")
-	proto.RegisterType((*ContentHandle)(nil), "bnet.protocol.ContentHandle")
-	proto.RegisterType((*EntityId)(nil), "bnet.protocol.EntityId")
-	proto.RegisterType((*ErrorInfo)(nil), "bnet.protocol.ErrorInfo")
-	proto.RegisterType((*Header)(nil), "bnet.protocol.Header")
-	proto.RegisterType((*Identity)(nil), "bnet.protocol.Identity")
-	proto.RegisterType((*NoData)(nil), "bnet.protocol.NoData")
-	proto.RegisterType((*NORESPONSE)(nil), "bnet.protocol.NORESPONSE")
-	proto.RegisterType((*ObjectAddress)(nil), "bnet.protocol.ObjectAddress")
-	proto.RegisterType((*Path)(nil), "bnet.protocol.Path")
-	proto.RegisterType((*Privilege)(nil), "bnet.protocol.Privilege")
-	proto.RegisterType((*ProcessId)(nil), "bnet.protocol.ProcessId")
-	proto.RegisterType((*Role)(nil), "bnet.protocol.Role")
-	proto.RegisterType((*RoleSet)(nil), "bnet.protocol.RoleSet")
-	proto.RegisterType((*RoleSetConfig)(nil), "bnet.protocol.RoleSetConfig")
-	proto.RegisterType((*Variant)(nil), "bnet.protocol.Variant")
-}
-
-func init() { proto.RegisterFile("bnet/protocol/protocol.proto", fileDescriptor0) }
-
-var fileDescriptor0 = []byte{
-	// 1096 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0x8c, 0x55, 0xcd, 0x6e, 0xe4, 0x44,
-	0x10, 0x96, 0x3d, 0x3f, 0xb6, 0xcb, 0xe3, 0xec, 0xaa, 0x59, 0x16, 0x23, 0xb2, 0xec, 0xc4, 0x80,
-	0xd6, 0x82, 0x55, 0x58, 0x22, 0xb1, 0x2b, 0xe5, 0x00, 0x0a, 0x21, 0x52, 0xe6, 0xb0, 0x49, 0xd4,
-	0x81, 0xbd, 0x21, 0xab, 0x67, 0xdc, 0xe3, 0x69, 0xb0, 0xdd, 0xb3, 0xed, 0x76, 0xf6, 0xe7, 0xca,
-	0x89, 0x37, 0xe0, 0x01, 0x38, 0xf0, 0x36, 0xbc, 0x0d, 0x67, 0xd4, 0x3f, 0x76, 0x26, 0x43, 0xf8,
-	0xb9, 0x75, 0x7d, 0xf5, 0x75, 0x95, 0xeb, 0x73, 0x55, 0x35, 0xec, 0xce, 0x6b, 0x2a, 0x3f, 0x5f,
-	0x0b, 0x2e, 0xf9, 0x82, 0x97, 0xfd, 0x61, 0x5f, 0x1f, 0x50, 0xa4, 0xbc, 0xfb, 0x1d, 0x98, 0xfc,
-	0xe6, 0x40, 0x78, 0xb4, 0x58, 0xf0, 0xb6, 0x96, 0xb3, 0x7a, 0xc9, 0x51, 0x0a, 0x13, 0x62, 0xcc,
-	0x6c, 0x4d, 0x58, 0x1e, 0x3b, 0x53, 0x27, 0xf5, 0x0f, 0x47, 0x4b, 0x52, 0x36, 0x14, 0x87, 0xd6,
-	0x75, 0x41, 0x58, 0x8e, 0xa6, 0x00, 0xda, 0x10, 0x6f, 0x32, 0x96, 0xc7, 0xee, 0xd4, 0x49, 0xbd,
-	0x43, 0xe7, 0x09, 0x0e, 0x2c, 0x38, 0xcb, 0xd1, 0x03, 0x80, 0x39, 0x91, 0xb2, 0xa4, 0x99, 0x24,
-	0x45, 0x3c, 0x98, 0x3a, 0x69, 0x80, 0x03, 0x83, 0x7c, 0x47, 0x0a, 0xf4, 0x29, 0x44, 0x15, 0xa9,
-	0x5b, 0x52, 0x66, 0x82, 0x5e, 0x31, 0xfa, 0x2a, 0x1e, 0x6e, 0xe6, 0x9a, 0x18, 0x1f, 0xd6, 0xae,
-	0xe4, 0x19, 0x78, 0x47, 0x79, 0x2e, 0x68, 0xd3, 0xa0, 0x18, 0x3c, 0x62, 0x8e, 0xb1, 0x33, 0x75,
-	0xd3, 0x00, 0x77, 0x26, 0x42, 0x30, 0x5c, 0x73, 0x21, 0xf5, 0xb7, 0x44, 0x58, 0x9f, 0x93, 0xe7,
-	0x10, 0x1c, 0x49, 0x29, 0xd8, 0xbc, 0x95, 0x54, 0x11, 0x6a, 0x52, 0x51, 0x7b, 0x4f, 0x9f, 0xd1,
-	0x63, 0x18, 0x5d, 0x91, 0xb2, 0xa5, 0xb1, 0x3b, 0x75, 0xd3, 0xf0, 0xe0, 0xfe, 0xfe, 0x0d, 0x7d,
-	0xf6, 0x5f, 0x10, 0xc1, 0x48, 0x2d, 0xb1, 0x21, 0x25, 0x35, 0x44, 0xc7, 0xbc, 0x96, 0xb4, 0x96,
-	0xa7, 0xa4, 0xce, 0x4b, 0x8a, 0xee, 0xc3, 0x58, 0xd0, 0x82, 0xf1, 0x5a, 0x07, 0xf5, 0xb0, 0xb5,
-	0xd0, 0x3d, 0x18, 0xb5, 0x0d, 0x29, 0x4c, 0x58, 0x0f, 0x1b, 0x43, 0x7d, 0xc0, 0x8a, 0x34, 0xab,
-	0x78, 0x30, 0x75, 0xd3, 0x09, 0xd6, 0x67, 0xf4, 0x01, 0x04, 0x3a, 0x5b, 0xd6, 0x8a, 0x52, 0x4b,
-	0x10, 0x60, 0x5f, 0x03, 0xdf, 0x8b, 0x32, 0x79, 0x02, 0xfe, 0x49, 0x2d, 0x99, 0x54, 0x72, 0xaa,
-	0xcb, 0xac, 0x58, 0xe9, 0x44, 0x63, 0xac, 0xcf, 0xe8, 0x2e, 0x0c, 0x4a, 0xfe, 0x4a, 0x27, 0x19,
-	0x63, 0x75, 0x4c, 0x7e, 0x77, 0x20, 0x38, 0x11, 0x82, 0x0b, 0xfd, 0x3b, 0x8f, 0x61, 0x87, 0xcf,
-	0x7f, 0xa4, 0x0b, 0x99, 0x6d, 0x6a, 0x16, 0x1e, 0xec, 0x6e, 0x95, 0x79, 0xae, 0x49, 0x56, 0x62,
-	0x1c, 0xf1, 0x4d, 0x53, 0xd5, 0xd8, 0x48, 0x22, 0xdb, 0x46, 0xe7, 0x89, 0xb0, 0xb5, 0xd0, 0x1e,
-	0x4c, 0x1a, 0x2a, 0xae, 0xd8, 0x82, 0x66, 0x7d, 0x55, 0x11, 0x0e, 0x2d, 0x76, 0x6a, 0x8b, 0xab,
-	0xa8, 0x5c, 0xf1, 0x5c, 0xf5, 0xc8, 0x50, 0xfb, 0x7d, 0x03, 0xcc, 0xf2, 0xe4, 0x4f, 0x07, 0xc6,
-	0xa7, 0x94, 0xe4, 0x54, 0xa8, 0x56, 0xe9, 0x42, 0xe9, 0xa6, 0x53, 0xc4, 0xc0, 0x22, 0xb3, 0xfc,
-	0x66, 0x18, 0xf3, 0x7b, 0xfb, 0x30, 0x4a, 0x6a, 0xc9, 0x7f, 0xa2, 0xb5, 0xcd, 0x6f, 0x0c, 0xf4,
-	0x21, 0x04, 0xb6, 0x72, 0x9d, 0xd9, 0x49, 0x87, 0xaa, 0x3b, 0x7d, 0x83, 0xcd, 0x72, 0xf4, 0x2e,
-	0x0c, 0x1b, 0xf6, 0x96, 0xc6, 0x23, 0x15, 0x4d, 0xb9, 0xb4, 0x89, 0xde, 0xef, 0x6b, 0x1d, 0x77,
-	0x8e, 0xae, 0xdc, 0x7d, 0x18, 0x51, 0x25, 0x6c, 0xec, 0x4d, 0x07, 0x69, 0x78, 0x10, 0x6f, 0x49,
-	0xd8, 0x8b, 0x8e, 0x0d, 0x4d, 0x35, 0xaa, 0x64, 0x15, 0xe5, 0xad, 0x8c, 0x7d, 0x95, 0x1f, 0x77,
-	0x66, 0xf2, 0xb3, 0x03, 0xfe, 0x2c, 0xa7, 0xfa, 0xc7, 0xa2, 0xa7, 0x00, 0xdd, 0xc4, 0xd9, 0x79,
-	0x0b, 0x0f, 0xde, 0xdb, 0x8e, 0x6d, 0x7b, 0x00, 0x07, 0x96, 0x3a, 0xcb, 0xd1, 0xd7, 0x70, 0xa7,
-	0x20, 0x15, 0xcd, 0x36, 0x2e, 0xbb, 0xff, 0x7e, 0x39, 0x52, 0xfc, 0x6e, 0xd8, 0xf3, 0xc4, 0x87,
-	0xf1, 0x19, 0xff, 0x96, 0x48, 0x92, 0x4c, 0x00, 0xce, 0xce, 0xf1, 0xc9, 0xe5, 0xc5, 0xf9, 0xd9,
-	0xe5, 0x49, 0xf2, 0x03, 0x44, 0x37, 0xda, 0x01, 0x3d, 0x86, 0xe1, 0x8a, 0x37, 0xd2, 0xb6, 0xce,
-	0x76, 0xdd, 0x17, 0x82, 0x2f, 0x68, 0xd3, 0xcc, 0x72, 0xac, 0x59, 0x37, 0x85, 0x77, 0xff, 0x26,
-	0x7c, 0xf2, 0x31, 0x0c, 0x2f, 0x88, 0x5c, 0xa1, 0x5d, 0xf0, 0xb8, 0xc8, 0x59, 0x4d, 0xca, 0xd8,
-	0x99, 0x0e, 0xd2, 0xe8, 0x1b, 0xf7, 0xae, 0x83, 0x3b, 0x28, 0xf9, 0x12, 0x82, 0x0b, 0xc1, 0xae,
-	0x58, 0x49, 0x8b, 0xdb, 0xe7, 0xf6, 0xde, 0xe6, 0xdc, 0x46, 0xdd, 0x7c, 0x3e, 0x53, 0xd7, 0xec,
-	0xf7, 0x28, 0x4a, 0x49, 0xe6, 0xb4, 0xb4, 0xfd, 0x64, 0x0c, 0x85, 0xd2, 0x35, 0x5f, 0xac, 0xba,
-	0x8b, 0xda, 0x48, 0x7e, 0x75, 0x61, 0x88, 0x79, 0x49, 0xd1, 0x0e, 0xb8, 0x7d, 0x07, 0xba, 0x2c,
-	0xef, 0x73, 0xbb, 0x1b, 0xb9, 0x77, 0xd5, 0xc8, 0xda, 0x8f, 0x8b, 0x07, 0xd3, 0x81, 0xda, 0x6b,
-	0x3d, 0x80, 0x3e, 0x83, 0x3b, 0xa4, 0x69, 0x58, 0x51, 0x93, 0x79, 0x49, 0x33, 0xc1, 0x4b, 0x1a,
-	0x0f, 0xfb, 0x02, 0x77, 0xae, 0x5d, 0x3a, 0xdd, 0x1e, 0xf8, 0x82, 0xbe, 0x6c, 0x99, 0xa0, 0xb9,
-	0x6e, 0xc5, 0x7e, 0xff, 0xf5, 0x30, 0x7a, 0x00, 0xe3, 0xb6, 0x66, 0x2f, 0x5b, 0xaa, 0x5b, 0xb2,
-	0x27, 0x58, 0x10, 0x3d, 0x82, 0x3b, 0x82, 0x96, 0xb4, 0x20, 0x92, 0xf1, 0xda, 0xa4, 0xf3, 0xf4,
-	0x84, 0xec, 0x5c, 0xc3, 0x3a, 0xd5, 0x53, 0x08, 0x48, 0xb7, 0x0a, 0x63, 0xff, 0xd6, 0x1e, 0xee,
-	0x57, 0x25, 0xbe, 0xa6, 0x26, 0xbf, 0xb8, 0xe0, 0xa9, 0x00, 0x97, 0x54, 0xaa, 0x9e, 0x5e, 0x0b,
-	0x5e, 0x08, 0x52, 0x75, 0xcb, 0xd7, 0x9a, 0xca, 0x63, 0xe7, 0xd5, 0x4a, 0xd5, 0x99, 0x68, 0x0f,
-	0xbc, 0xa6, 0x9d, 0xcb, 0x37, 0x6b, 0x6a, 0xde, 0x80, 0x43, 0x2f, 0xa7, 0x4b, 0xd2, 0x96, 0x12,
-	0x77, 0x38, 0x7a, 0x04, 0xc3, 0x5e, 0xa7, 0xf0, 0xe0, 0x9d, 0xad, 0xaf, 0x52, 0xc9, 0xb1, 0x26,
-	0xa0, 0x4f, 0x60, 0x62, 0x2f, 0x9b, 0x4a, 0x47, 0xbd, 0xb0, 0x61, 0x17, 0x54, 0xd1, 0x1e, 0x42,
-	0x58, 0x91, 0xd7, 0x59, 0x45, 0xab, 0x39, 0x15, 0x66, 0x94, 0x47, 0x18, 0x2a, 0xf2, 0xfa, 0xb9,
-	0x41, 0x6e, 0x6a, 0xe1, 0xfd, 0x7f, 0x2d, 0xde, 0x42, 0x64, 0xa5, 0x38, 0xe6, 0xf5, 0x92, 0x15,
-	0x2a, 0xd0, 0x75, 0x2b, 0x38, 0xb7, 0x06, 0xea, 0xfb, 0x78, 0xb3, 0x49, 0xbe, 0x00, 0x5f, 0x15,
-	0x90, 0x35, 0x54, 0xfe, 0xc3, 0xcb, 0x63, 0xf3, 0x60, 0x4f, 0x98, 0x43, 0xf2, 0x87, 0x0b, 0x9e,
-	0x7d, 0x8e, 0xf4, 0xd3, 0xca, 0x79, 0x99, 0x75, 0x23, 0xe0, 0xa4, 0x3e, 0x0e, 0x14, 0xf2, 0x42,
-	0x01, 0x6a, 0x5f, 0xb2, 0x5a, 0x5a, 0xaf, 0x12, 0x7d, 0x80, 0x7d, 0x56, 0x4b, 0xe3, 0x7c, 0x08,
-	0xe1, 0xb2, 0xe4, 0xa4, 0x73, 0xab, 0xdd, 0xe8, 0x60, 0xd0, 0x90, 0x21, 0xa8, 0xbd, 0x2e, 0x05,
-	0xab, 0x0b, 0xcb, 0x18, 0xe9, 0x47, 0x29, 0x34, 0x98, 0xa1, 0xa8, 0xfc, 0x25, 0x9f, 0x5b, 0x82,
-	0xd2, 0x77, 0x82, 0x03, 0x85, 0x18, 0xf7, 0x47, 0x10, 0x55, 0xb4, 0x51, 0x4f, 0x9e, 0x65, 0x78,
-	0x9a, 0x31, 0xb1, 0x60, 0x9f, 0x66, 0xc9, 0x5b, 0xb1, 0x58, 0x58, 0x8e, 0x6f, 0xd2, 0x18, 0xac,
-	0x4f, 0xd3, 0x5e, 0x17, 0x12, 0xe8, 0x2d, 0x1a, 0xb4, 0x7d, 0x25, 0x5f, 0xc1, 0x8e, 0x59, 0xa2,
-	0x2c, 0xb7, 0x14, 0xf8, 0x8f, 0x0d, 0xd8, 0xd1, 0xf5, 0xfd, 0xbf, 0x02, 0x00, 0x00, 0xff, 0xff,
-	0xda, 0xe2, 0xad, 0xd5, 0x2a, 0x09, 0x00, 0x00,
 }

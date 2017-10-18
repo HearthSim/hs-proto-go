@@ -2,47 +2,27 @@
 // source: bnet/protocol/notification/notification.proto
 // DO NOT EDIT!
 
-/*
-Package bnet_protocol_notification is a generated protocol buffer package.
-
-It is generated from these files:
-	bnet/protocol/notification/notification.proto
-
-It has these top-level messages:
-	FindClientRequest
-	FindClientResponse
-	Notification
-	RegisterClientRequest
-	UnregisterClientRequest
-*/
 package bnet_protocol_notification
 
 import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
+import json "encoding/json"
 import math "math"
 import bnet_protocol "github.com/HearthSim/hs-proto-go/bnet/protocol"
 
-// Reference imports to suppress errors if they are not otherwise used.
+// Reference proto, json, and math imports to suppress error if they are not otherwise used.
 var _ = proto.Marshal
-var _ = fmt.Errorf
+var _ = &json.SyntaxError{}
 var _ = math.Inf
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 // ref: bnet.protocol.notification.FindClientRequest
 type FindClientRequest struct {
-	EntityId         *bnet_protocol.EntityId `protobuf:"bytes,1,req,name=entity_id,json=entityId" json:"entity_id,omitempty"`
+	EntityId         *bnet_protocol.EntityId `protobuf:"bytes,1,req,name=entity_id" json:"entity_id,omitempty"`
 	XXX_unrecognized []byte                  `json:"-"`
 }
 
-func (m *FindClientRequest) Reset()                    { *m = FindClientRequest{} }
-func (m *FindClientRequest) String() string            { return proto.CompactTextString(m) }
-func (*FindClientRequest) ProtoMessage()               {}
-func (*FindClientRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *FindClientRequest) Reset()         { *m = FindClientRequest{} }
+func (m *FindClientRequest) String() string { return proto.CompactTextString(m) }
+func (*FindClientRequest) ProtoMessage()    {}
 
 func (m *FindClientRequest) GetEntityId() *bnet_protocol.EntityId {
 	if m != nil {
@@ -54,14 +34,13 @@ func (m *FindClientRequest) GetEntityId() *bnet_protocol.EntityId {
 // ref: bnet.protocol.notification.FindClientResponse
 type FindClientResponse struct {
 	Label            *uint32                  `protobuf:"varint,1,req,name=label" json:"label,omitempty"`
-	ClientProcessId  *bnet_protocol.ProcessId `protobuf:"bytes,2,opt,name=client_process_id,json=clientProcessId" json:"client_process_id,omitempty"`
+	ClientProcessId  *bnet_protocol.ProcessId `protobuf:"bytes,2,opt,name=client_process_id" json:"client_process_id,omitempty"`
 	XXX_unrecognized []byte                   `json:"-"`
 }
 
-func (m *FindClientResponse) Reset()                    { *m = FindClientResponse{} }
-func (m *FindClientResponse) String() string            { return proto.CompactTextString(m) }
-func (*FindClientResponse) ProtoMessage()               {}
-func (*FindClientResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+func (m *FindClientResponse) Reset()         { *m = FindClientResponse{} }
+func (m *FindClientResponse) String() string { return proto.CompactTextString(m) }
+func (*FindClientResponse) ProtoMessage()    {}
 
 func (m *FindClientResponse) GetLabel() uint32 {
 	if m != nil && m.Label != nil {
@@ -79,20 +58,19 @@ func (m *FindClientResponse) GetClientProcessId() *bnet_protocol.ProcessId {
 
 // ref: bnet.protocol.notification.Notification
 type Notification struct {
-	SenderId         *bnet_protocol.EntityId    `protobuf:"bytes,1,opt,name=sender_id,json=senderId" json:"sender_id,omitempty"`
-	TargetId         *bnet_protocol.EntityId    `protobuf:"bytes,2,req,name=target_id,json=targetId" json:"target_id,omitempty"`
+	SenderId         *bnet_protocol.EntityId    `protobuf:"bytes,1,opt,name=sender_id" json:"sender_id,omitempty"`
+	TargetId         *bnet_protocol.EntityId    `protobuf:"bytes,2,req,name=target_id" json:"target_id,omitempty"`
 	Type             *string                    `protobuf:"bytes,3,req,name=type" json:"type,omitempty"`
 	Attribute        []*bnet_protocol.Attribute `protobuf:"bytes,4,rep,name=attribute" json:"attribute,omitempty"`
-	SenderAccountId  *bnet_protocol.EntityId    `protobuf:"bytes,5,opt,name=sender_account_id,json=senderAccountId" json:"sender_account_id,omitempty"`
-	TargetAccountId  *bnet_protocol.EntityId    `protobuf:"bytes,6,opt,name=target_account_id,json=targetAccountId" json:"target_account_id,omitempty"`
-	SenderBattleTag  *string                    `protobuf:"bytes,7,opt,name=sender_battle_tag,json=senderBattleTag" json:"sender_battle_tag,omitempty"`
+	SenderAccountId  *bnet_protocol.EntityId    `protobuf:"bytes,5,opt,name=sender_account_id" json:"sender_account_id,omitempty"`
+	TargetAccountId  *bnet_protocol.EntityId    `protobuf:"bytes,6,opt,name=target_account_id" json:"target_account_id,omitempty"`
+	SenderBattleTag  *string                    `protobuf:"bytes,7,opt,name=sender_battle_tag" json:"sender_battle_tag,omitempty"`
 	XXX_unrecognized []byte                     `json:"-"`
 }
 
-func (m *Notification) Reset()                    { *m = Notification{} }
-func (m *Notification) String() string            { return proto.CompactTextString(m) }
-func (*Notification) ProtoMessage()               {}
-func (*Notification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
+func (m *Notification) Reset()         { *m = Notification{} }
+func (m *Notification) String() string { return proto.CompactTextString(m) }
+func (*Notification) ProtoMessage()    {}
 
 func (m *Notification) GetSenderId() *bnet_protocol.EntityId {
 	if m != nil {
@@ -145,14 +123,13 @@ func (m *Notification) GetSenderBattleTag() string {
 
 // ref: bnet.protocol.notification.RegisterClientRequest
 type RegisterClientRequest struct {
-	EntityId         *bnet_protocol.EntityId `protobuf:"bytes,1,req,name=entity_id,json=entityId" json:"entity_id,omitempty"`
+	EntityId         *bnet_protocol.EntityId `protobuf:"bytes,1,req,name=entity_id" json:"entity_id,omitempty"`
 	XXX_unrecognized []byte                  `json:"-"`
 }
 
-func (m *RegisterClientRequest) Reset()                    { *m = RegisterClientRequest{} }
-func (m *RegisterClientRequest) String() string            { return proto.CompactTextString(m) }
-func (*RegisterClientRequest) ProtoMessage()               {}
-func (*RegisterClientRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
+func (m *RegisterClientRequest) Reset()         { *m = RegisterClientRequest{} }
+func (m *RegisterClientRequest) String() string { return proto.CompactTextString(m) }
+func (*RegisterClientRequest) ProtoMessage()    {}
 
 func (m *RegisterClientRequest) GetEntityId() *bnet_protocol.EntityId {
 	if m != nil {
@@ -163,14 +140,13 @@ func (m *RegisterClientRequest) GetEntityId() *bnet_protocol.EntityId {
 
 // ref: bnet.protocol.notification.UnregisterClientRequest
 type UnregisterClientRequest struct {
-	EntityId         *bnet_protocol.EntityId `protobuf:"bytes,1,req,name=entity_id,json=entityId" json:"entity_id,omitempty"`
+	EntityId         *bnet_protocol.EntityId `protobuf:"bytes,1,req,name=entity_id" json:"entity_id,omitempty"`
 	XXX_unrecognized []byte                  `json:"-"`
 }
 
-func (m *UnregisterClientRequest) Reset()                    { *m = UnregisterClientRequest{} }
-func (m *UnregisterClientRequest) String() string            { return proto.CompactTextString(m) }
-func (*UnregisterClientRequest) ProtoMessage()               {}
-func (*UnregisterClientRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
+func (m *UnregisterClientRequest) Reset()         { *m = UnregisterClientRequest{} }
+func (m *UnregisterClientRequest) String() string { return proto.CompactTextString(m) }
+func (*UnregisterClientRequest) ProtoMessage()    {}
 
 func (m *UnregisterClientRequest) GetEntityId() *bnet_protocol.EntityId {
 	if m != nil {
@@ -180,37 +156,4 @@ func (m *UnregisterClientRequest) GetEntityId() *bnet_protocol.EntityId {
 }
 
 func init() {
-	proto.RegisterType((*FindClientRequest)(nil), "bnet.protocol.notification.FindClientRequest")
-	proto.RegisterType((*FindClientResponse)(nil), "bnet.protocol.notification.FindClientResponse")
-	proto.RegisterType((*Notification)(nil), "bnet.protocol.notification.Notification")
-	proto.RegisterType((*RegisterClientRequest)(nil), "bnet.protocol.notification.RegisterClientRequest")
-	proto.RegisterType((*UnregisterClientRequest)(nil), "bnet.protocol.notification.UnregisterClientRequest")
-}
-
-func init() { proto.RegisterFile("bnet/protocol/notification/notification.proto", fileDescriptor0) }
-
-var fileDescriptor0 = []byte{
-	// 348 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xac, 0x92, 0xcf, 0x4b, 0xfb, 0x30,
-	0x18, 0xc6, 0x69, 0xb7, 0x7d, 0xbf, 0x36, 0x53, 0xc6, 0x82, 0xb2, 0x32, 0x3c, 0x94, 0x9e, 0x8a,
-	0x60, 0x07, 0x43, 0xbc, 0xcf, 0xa9, 0xd0, 0x83, 0x3f, 0x28, 0x7a, 0x1e, 0x69, 0xf3, 0x5a, 0x02,
-	0x25, 0xa9, 0xcd, 0xbb, 0xc3, 0xfe, 0x77, 0x0f, 0xd2, 0x64, 0x3f, 0x3a, 0x91, 0x79, 0xd9, 0xed,
-	0x4d, 0xf2, 0x79, 0x9e, 0xf7, 0x79, 0x20, 0xe4, 0x3a, 0x93, 0x80, 0x93, 0xaa, 0x56, 0xa8, 0x72,
-	0x55, 0x4e, 0xa4, 0x42, 0xf1, 0x21, 0x72, 0x86, 0x42, 0xc9, 0xbd, 0x43, 0x6c, 0x10, 0x3a, 0x6e,
-	0xf0, 0x78, 0x83, 0xc7, 0x6d, 0x62, 0x7c, 0xb9, 0x6f, 0xb5, 0x85, 0xcc, 0x10, 0x26, 0x64, 0xf8,
-	0x28, 0x24, 0x9f, 0x97, 0x02, 0x24, 0xa6, 0xf0, 0xb9, 0x04, 0x8d, 0xf4, 0x86, 0x78, 0x20, 0x51,
-	0xe0, 0x6a, 0x21, 0xb8, 0xef, 0x04, 0x6e, 0xd4, 0x9f, 0x8e, 0xe2, 0xfd, 0x15, 0x0f, 0xe6, 0x3d,
-	0xe1, 0xe9, 0x09, 0xac, 0xa7, 0xb0, 0x22, 0xb4, 0x6d, 0xa5, 0x2b, 0x25, 0x35, 0xd0, 0x73, 0xd2,
-	0x2b, 0x59, 0x06, 0xa5, 0xf1, 0x39, 0x4b, 0xed, 0x81, 0xde, 0x93, 0x61, 0x6e, 0xb8, 0x45, 0x55,
-	0xab, 0x1c, 0xb4, 0x6e, 0x36, 0xb9, 0x81, 0x13, 0xf5, 0xa7, 0xfe, 0x8f, 0x4d, 0xaf, 0x16, 0x48,
-	0x78, 0x3a, 0xb0, 0x92, 0xed, 0x45, 0xf8, 0xe5, 0x92, 0xd3, 0xe7, 0x56, 0xd7, 0x26, 0xb8, 0x06,
-	0xc9, 0xa1, 0xb6, 0xc1, 0x9d, 0x83, 0xc1, 0x2d, 0x99, 0xf0, 0x46, 0x85, 0xac, 0x2e, 0x00, 0x6d,
-	0x88, 0xc3, 0x75, 0x2d, 0x99, 0x70, 0x4a, 0x49, 0x17, 0x57, 0x15, 0xf8, 0x9d, 0xc0, 0x8d, 0xbc,
-	0xd4, 0xcc, 0xf4, 0x96, 0x78, 0x0c, 0xb1, 0x16, 0xd9, 0x12, 0xc1, 0xef, 0x06, 0x9d, 0x5f, 0xea,
-	0xcc, 0x36, 0xef, 0xe9, 0x0e, 0xa5, 0x73, 0x32, 0x5c, 0xe7, 0x66, 0x79, 0xae, 0x96, 0xd2, 0x24,
-	0xe9, 0x1d, 0xce, 0x3f, 0xb0, 0x8a, 0x99, 0x15, 0x24, 0xbc, 0x31, 0x59, 0xd7, 0x68, 0x99, 0xfc,
-	0xfb, 0xc3, 0xc4, 0x2a, 0x76, 0x26, 0x57, 0xdb, 0x24, 0x19, 0x43, 0x2c, 0x61, 0x81, 0xac, 0xf0,
-	0xff, 0x07, 0x4e, 0xe4, 0x6d, 0x16, 0xde, 0x99, 0xfb, 0x37, 0x56, 0x84, 0x4f, 0xe4, 0x22, 0x85,
-	0x42, 0x68, 0x84, 0xfa, 0x18, 0xff, 0xe7, 0x85, 0x8c, 0xde, 0x65, 0x7d, 0x3c, 0xc3, 0xef, 0x00,
-	0x00, 0x00, 0xff, 0xff, 0x9e, 0x70, 0x6f, 0xc4, 0x45, 0x03, 0x00, 0x00,
 }

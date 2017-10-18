@@ -2,103 +2,17 @@
 // source: bnet/protocol/account/account.proto
 // DO NOT EDIT!
 
-/*
-Package bnet_protocol_account is a generated protocol buffer package.
-
-It is generated from these files:
-	bnet/protocol/account/account.proto
-
-It has these top-level messages:
-	AccountBlob
-	AccountBlobList
-	AccountCredential
-	AccountFieldOptions
-	AccountFieldTags
-	AccountId
-	AccountLevelInfo
-	AccountLicense
-	AccountReference
-	AccountServiceConfig
-	AccountServiceRegion
-	AccountState
-	AccountStateNotification
-	AccountStateTagged
-	CacheExpireRequest
-	CAIS
-	CreateGameAccountRequest
-	CredentialUpdateRequest
-	CredentialUpdateResponse
-	CurrencyRestriction
-	FlagUpdateRequest
-	FlagUpdateResponse
-	ForwardCacheExpireRequest
-	GameAccountBlob
-	GameAccountBlobList
-	GameAccountFieldOptions
-	GameAccountFieldTags
-	GameAccountHandle
-	GameAccountLink
-	GameAccountList
-	GameAccountNotification
-	GameAccountSessionNotification
-	GameAccountState
-	GameAccountStateNotification
-	GameAccountStateTagged
-	GameLevelInfo
-	GameSessionInfo
-	GameSessionLocation
-	GameSessionUpdateInfo
-	GameStatus
-	GameTimeInfo
-	GameTimeRemainingInfo
-	GetAccountRequest
-	GetAccountResponse
-	GetAccountStateRequest
-	GetAccountStateResponse
-	GetCAISInfoRequest
-	GetCAISInfoResponse
-	GetEBalanceRequest
-	GetEBalanceResponse
-	GetEBalanceRestrictionsRequest
-	GetEBalanceRestrictionsResponse
-	GetGameAccountStateRequest
-	GetGameAccountStateResponse
-	GetGameSessionInfoRequest
-	GetGameSessionInfoResponse
-	GetGameTimeRemainingInfoRequest
-	GetGameTimeRemainingInfoResponse
-	GetLicensesRequest
-	GetLicensesResponse
-	GetWalletListRequest
-	GetWalletListResponse
-	IsIgrAddressRequest
-	ParentalControlInfo
-	PrivacyInfo
-	ProgramTag
-	RegionTag
-	SubscriberReference
-	SubscriptionUpdateRequest
-	SubscriptionUpdateResponse
-	Wallet
-	Wallets
-*/
 package bnet_protocol_account
 
 import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
+import json "encoding/json"
 import math "math"
 import bnet_protocol "github.com/HearthSim/hs-proto-go/bnet/protocol"
 
-// Reference imports to suppress errors if they are not otherwise used.
+// Reference proto, json, and math imports to suppress error if they are not otherwise used.
 var _ = proto.Marshal
-var _ = fmt.Errorf
+var _ = &json.SyntaxError{}
 var _ = math.Inf
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 // ref: bnet.protocol.account.PrivacyInfo/Types/GameInfoPrivacy
 type PrivacyInfo_GameInfoPrivacy int32
@@ -128,6 +42,9 @@ func (x PrivacyInfo_GameInfoPrivacy) Enum() *PrivacyInfo_GameInfoPrivacy {
 func (x PrivacyInfo_GameInfoPrivacy) String() string {
 	return proto.EnumName(PrivacyInfo_GameInfoPrivacy_name, int32(x))
 }
+func (x PrivacyInfo_GameInfoPrivacy) MarshalJSON() ([]byte, error) {
+	return json.Marshal(x.String())
+}
 func (x *PrivacyInfo_GameInfoPrivacy) UnmarshalJSON(data []byte) error {
 	value, err := proto.UnmarshalJSONEnum(PrivacyInfo_GameInfoPrivacy_value, data, "PrivacyInfo_GameInfoPrivacy")
 	if err != nil {
@@ -136,9 +53,6 @@ func (x *PrivacyInfo_GameInfoPrivacy) UnmarshalJSON(data []byte) error {
 	*x = PrivacyInfo_GameInfoPrivacy(value)
 	return nil
 }
-func (PrivacyInfo_GameInfoPrivacy) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{64, 0}
-}
 
 // ref: bnet.protocol.account.AccountBlob
 type AccountBlob struct {
@@ -146,28 +60,27 @@ type AccountBlob struct {
 	Region              *uint32              `protobuf:"varint,3,req,name=region" json:"region,omitempty"`
 	Email               []string             `protobuf:"bytes,4,rep,name=email" json:"email,omitempty"`
 	Flags               *uint64              `protobuf:"varint,5,req,name=flags" json:"flags,omitempty"`
-	SecureRelease       *uint64              `protobuf:"varint,6,opt,name=secure_release,json=secureRelease" json:"secure_release,omitempty"`
-	WhitelistStart      *uint64              `protobuf:"varint,7,opt,name=whitelist_start,json=whitelistStart" json:"whitelist_start,omitempty"`
-	WhitelistEnd        *uint64              `protobuf:"varint,8,opt,name=whitelist_end,json=whitelistEnd" json:"whitelist_end,omitempty"`
-	FullName            *string              `protobuf:"bytes,10,req,name=full_name,json=fullName" json:"full_name,omitempty"`
+	SecureRelease       *uint64              `protobuf:"varint,6,opt,name=secure_release" json:"secure_release,omitempty"`
+	WhitelistStart      *uint64              `protobuf:"varint,7,opt,name=whitelist_start" json:"whitelist_start,omitempty"`
+	WhitelistEnd        *uint64              `protobuf:"varint,8,opt,name=whitelist_end" json:"whitelist_end,omitempty"`
+	FullName            *string              `protobuf:"bytes,10,req,name=full_name" json:"full_name,omitempty"`
 	Licenses            []*AccountLicense    `protobuf:"bytes,20,rep,name=licenses" json:"licenses,omitempty"`
 	Credentials         []*AccountCredential `protobuf:"bytes,21,rep,name=credentials" json:"credentials,omitempty"`
-	AccountLinks        []*GameAccountLink   `protobuf:"bytes,22,rep,name=account_links,json=accountLinks" json:"account_links,omitempty"`
-	BattleTag           *string              `protobuf:"bytes,23,opt,name=battle_tag,json=battleTag" json:"battle_tag,omitempty"`
-	DefaultCurrency     *uint32              `protobuf:"fixed32,25,opt,name=default_currency,json=defaultCurrency" json:"default_currency,omitempty"`
-	LegalRegion         *uint32              `protobuf:"varint,26,opt,name=legal_region,json=legalRegion" json:"legal_region,omitempty"`
-	LegalLocale         *uint32              `protobuf:"fixed32,27,opt,name=legal_locale,json=legalLocale" json:"legal_locale,omitempty"`
-	CacheExpiration     *uint64              `protobuf:"varint,30,req,name=cache_expiration,json=cacheExpiration" json:"cache_expiration,omitempty"`
-	ParentalControlInfo *ParentalControlInfo `protobuf:"bytes,31,opt,name=parental_control_info,json=parentalControlInfo" json:"parental_control_info,omitempty"`
+	AccountLinks        []*GameAccountLink   `protobuf:"bytes,22,rep,name=account_links" json:"account_links,omitempty"`
+	BattleTag           *string              `protobuf:"bytes,23,opt,name=battle_tag" json:"battle_tag,omitempty"`
+	DefaultCurrency     *uint32              `protobuf:"fixed32,25,opt,name=default_currency" json:"default_currency,omitempty"`
+	LegalRegion         *uint32              `protobuf:"varint,26,opt,name=legal_region" json:"legal_region,omitempty"`
+	LegalLocale         *uint32              `protobuf:"fixed32,27,opt,name=legal_locale" json:"legal_locale,omitempty"`
+	CacheExpiration     *uint64              `protobuf:"varint,30,req,name=cache_expiration" json:"cache_expiration,omitempty"`
+	ParentalControlInfo *ParentalControlInfo `protobuf:"bytes,31,opt,name=parental_control_info" json:"parental_control_info,omitempty"`
 	Country             *string              `protobuf:"bytes,32,opt,name=country" json:"country,omitempty"`
-	PreferredRegion     *uint32              `protobuf:"varint,33,opt,name=preferred_region,json=preferredRegion" json:"preferred_region,omitempty"`
+	PreferredRegion     *uint32              `protobuf:"varint,33,opt,name=preferred_region" json:"preferred_region,omitempty"`
 	XXX_unrecognized    []byte               `json:"-"`
 }
 
-func (m *AccountBlob) Reset()                    { *m = AccountBlob{} }
-func (m *AccountBlob) String() string            { return proto.CompactTextString(m) }
-func (*AccountBlob) ProtoMessage()               {}
-func (*AccountBlob) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *AccountBlob) Reset()         { *m = AccountBlob{} }
+func (m *AccountBlob) String() string { return proto.CompactTextString(m) }
+func (*AccountBlob) ProtoMessage()    {}
 
 func (m *AccountBlob) GetId() uint32 {
 	if m != nil && m.Id != nil {
@@ -308,10 +221,9 @@ type AccountBlobList struct {
 	XXX_unrecognized []byte         `json:"-"`
 }
 
-func (m *AccountBlobList) Reset()                    { *m = AccountBlobList{} }
-func (m *AccountBlobList) String() string            { return proto.CompactTextString(m) }
-func (*AccountBlobList) ProtoMessage()               {}
-func (*AccountBlobList) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+func (m *AccountBlobList) Reset()         { *m = AccountBlobList{} }
+func (m *AccountBlobList) String() string { return proto.CompactTextString(m) }
+func (*AccountBlobList) ProtoMessage()    {}
 
 func (m *AccountBlobList) GetBlob() []*AccountBlob {
 	if m != nil {
@@ -327,10 +239,9 @@ type AccountCredential struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *AccountCredential) Reset()                    { *m = AccountCredential{} }
-func (m *AccountCredential) String() string            { return proto.CompactTextString(m) }
-func (*AccountCredential) ProtoMessage()               {}
-func (*AccountCredential) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
+func (m *AccountCredential) Reset()         { *m = AccountCredential{} }
+func (m *AccountCredential) String() string { return proto.CompactTextString(m) }
+func (*AccountCredential) ProtoMessage()    {}
 
 func (m *AccountCredential) GetId() uint32 {
 	if m != nil && m.Id != nil {
@@ -348,20 +259,19 @@ func (m *AccountCredential) GetData() []byte {
 
 // ref: bnet.protocol.account.AccountFieldOptions
 type AccountFieldOptions struct {
-	AllFields                *bool  `protobuf:"varint,1,opt,name=all_fields,json=allFields" json:"all_fields,omitempty"`
-	FieldAccountLevelInfo    *bool  `protobuf:"varint,2,opt,name=field_account_level_info,json=fieldAccountLevelInfo" json:"field_account_level_info,omitempty"`
-	FieldPrivacyInfo         *bool  `protobuf:"varint,3,opt,name=field_privacy_info,json=fieldPrivacyInfo" json:"field_privacy_info,omitempty"`
-	FieldParentalControlInfo *bool  `protobuf:"varint,4,opt,name=field_parental_control_info,json=fieldParentalControlInfo" json:"field_parental_control_info,omitempty"`
-	FieldGameLevelInfo       *bool  `protobuf:"varint,6,opt,name=field_game_level_info,json=fieldGameLevelInfo" json:"field_game_level_info,omitempty"`
-	FieldGameStatus          *bool  `protobuf:"varint,7,opt,name=field_game_status,json=fieldGameStatus" json:"field_game_status,omitempty"`
-	FieldGameAccounts        *bool  `protobuf:"varint,8,opt,name=field_game_accounts,json=fieldGameAccounts" json:"field_game_accounts,omitempty"`
+	AllFields                *bool  `protobuf:"varint,1,opt,name=all_fields" json:"all_fields,omitempty"`
+	FieldAccountLevelInfo    *bool  `protobuf:"varint,2,opt,name=field_account_level_info" json:"field_account_level_info,omitempty"`
+	FieldPrivacyInfo         *bool  `protobuf:"varint,3,opt,name=field_privacy_info" json:"field_privacy_info,omitempty"`
+	FieldParentalControlInfo *bool  `protobuf:"varint,4,opt,name=field_parental_control_info" json:"field_parental_control_info,omitempty"`
+	FieldGameLevelInfo       *bool  `protobuf:"varint,6,opt,name=field_game_level_info" json:"field_game_level_info,omitempty"`
+	FieldGameStatus          *bool  `protobuf:"varint,7,opt,name=field_game_status" json:"field_game_status,omitempty"`
+	FieldGameAccounts        *bool  `protobuf:"varint,8,opt,name=field_game_accounts" json:"field_game_accounts,omitempty"`
 	XXX_unrecognized         []byte `json:"-"`
 }
 
-func (m *AccountFieldOptions) Reset()                    { *m = AccountFieldOptions{} }
-func (m *AccountFieldOptions) String() string            { return proto.CompactTextString(m) }
-func (*AccountFieldOptions) ProtoMessage()               {}
-func (*AccountFieldOptions) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
+func (m *AccountFieldOptions) Reset()         { *m = AccountFieldOptions{} }
+func (m *AccountFieldOptions) String() string { return proto.CompactTextString(m) }
+func (*AccountFieldOptions) ProtoMessage()    {}
 
 func (m *AccountFieldOptions) GetAllFields() bool {
 	if m != nil && m.AllFields != nil {
@@ -414,19 +324,18 @@ func (m *AccountFieldOptions) GetFieldGameAccounts() bool {
 
 // ref: bnet.protocol.account.AccountFieldTags
 type AccountFieldTags struct {
-	AccountLevelInfoTag    *uint32       `protobuf:"fixed32,2,opt,name=account_level_info_tag,json=accountLevelInfoTag" json:"account_level_info_tag,omitempty"`
-	PrivacyInfoTag         *uint32       `protobuf:"fixed32,3,opt,name=privacy_info_tag,json=privacyInfoTag" json:"privacy_info_tag,omitempty"`
-	ParentalControlInfoTag *uint32       `protobuf:"fixed32,4,opt,name=parental_control_info_tag,json=parentalControlInfoTag" json:"parental_control_info_tag,omitempty"`
-	GameLevelInfoTags      []*ProgramTag `protobuf:"bytes,7,rep,name=game_level_info_tags,json=gameLevelInfoTags" json:"game_level_info_tags,omitempty"`
-	GameStatusTags         []*ProgramTag `protobuf:"bytes,9,rep,name=game_status_tags,json=gameStatusTags" json:"game_status_tags,omitempty"`
-	GameAccountTags        []*RegionTag  `protobuf:"bytes,11,rep,name=game_account_tags,json=gameAccountTags" json:"game_account_tags,omitempty"`
+	AccountLevelInfoTag    *uint32       `protobuf:"fixed32,2,opt,name=account_level_info_tag" json:"account_level_info_tag,omitempty"`
+	PrivacyInfoTag         *uint32       `protobuf:"fixed32,3,opt,name=privacy_info_tag" json:"privacy_info_tag,omitempty"`
+	ParentalControlInfoTag *uint32       `protobuf:"fixed32,4,opt,name=parental_control_info_tag" json:"parental_control_info_tag,omitempty"`
+	GameLevelInfoTags      []*ProgramTag `protobuf:"bytes,7,rep,name=game_level_info_tags" json:"game_level_info_tags,omitempty"`
+	GameStatusTags         []*ProgramTag `protobuf:"bytes,9,rep,name=game_status_tags" json:"game_status_tags,omitempty"`
+	GameAccountTags        []*RegionTag  `protobuf:"bytes,11,rep,name=game_account_tags" json:"game_account_tags,omitempty"`
 	XXX_unrecognized       []byte        `json:"-"`
 }
 
-func (m *AccountFieldTags) Reset()                    { *m = AccountFieldTags{} }
-func (m *AccountFieldTags) String() string            { return proto.CompactTextString(m) }
-func (*AccountFieldTags) ProtoMessage()               {}
-func (*AccountFieldTags) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
+func (m *AccountFieldTags) Reset()         { *m = AccountFieldTags{} }
+func (m *AccountFieldTags) String() string { return proto.CompactTextString(m) }
+func (*AccountFieldTags) ProtoMessage()    {}
 
 func (m *AccountFieldTags) GetAccountLevelInfoTag() uint32 {
 	if m != nil && m.AccountLevelInfoTag != nil {
@@ -476,10 +385,9 @@ type AccountId struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *AccountId) Reset()                    { *m = AccountId{} }
-func (m *AccountId) String() string            { return proto.CompactTextString(m) }
-func (*AccountId) ProtoMessage()               {}
-func (*AccountId) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
+func (m *AccountId) Reset()         { *m = AccountId{} }
+func (m *AccountId) String() string { return proto.CompactTextString(m) }
+func (*AccountId) ProtoMessage()    {}
 
 func (m *AccountId) GetId() uint32 {
 	if m != nil && m.Id != nil {
@@ -491,17 +399,16 @@ func (m *AccountId) GetId() uint32 {
 // ref: bnet.protocol.account.AccountLevelInfo
 type AccountLevelInfo struct {
 	Licenses         []*AccountLicense `protobuf:"bytes,3,rep,name=licenses" json:"licenses,omitempty"`
-	DefaultCurrency  *uint32           `protobuf:"fixed32,4,opt,name=default_currency,json=defaultCurrency" json:"default_currency,omitempty"`
+	DefaultCurrency  *uint32           `protobuf:"fixed32,4,opt,name=default_currency" json:"default_currency,omitempty"`
 	Country          *string           `protobuf:"bytes,5,opt,name=country" json:"country,omitempty"`
-	PreferredRegion  *uint32           `protobuf:"varint,6,opt,name=preferred_region,json=preferredRegion" json:"preferred_region,omitempty"`
-	HeadlessAccount  *bool             `protobuf:"varint,14,opt,name=headless_account,json=headlessAccount" json:"headless_account,omitempty"`
+	PreferredRegion  *uint32           `protobuf:"varint,6,opt,name=preferred_region" json:"preferred_region,omitempty"`
+	HeadlessAccount  *bool             `protobuf:"varint,14,opt,name=headless_account" json:"headless_account,omitempty"`
 	XXX_unrecognized []byte            `json:"-"`
 }
 
-func (m *AccountLevelInfo) Reset()                    { *m = AccountLevelInfo{} }
-func (m *AccountLevelInfo) String() string            { return proto.CompactTextString(m) }
-func (*AccountLevelInfo) ProtoMessage()               {}
-func (*AccountLevelInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
+func (m *AccountLevelInfo) Reset()         { *m = AccountLevelInfo{} }
+func (m *AccountLevelInfo) String() string { return proto.CompactTextString(m) }
+func (*AccountLevelInfo) ProtoMessage()    {}
 
 func (m *AccountLevelInfo) GetLicenses() []*AccountLicense {
 	if m != nil {
@@ -545,10 +452,9 @@ type AccountLicense struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *AccountLicense) Reset()                    { *m = AccountLicense{} }
-func (m *AccountLicense) String() string            { return proto.CompactTextString(m) }
-func (*AccountLicense) ProtoMessage()               {}
-func (*AccountLicense) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{7} }
+func (m *AccountLicense) Reset()         { *m = AccountLicense{} }
+func (m *AccountLicense) String() string { return proto.CompactTextString(m) }
+func (*AccountLicense) ProtoMessage()    {}
 
 func (m *AccountLicense) GetId() uint32 {
 	if m != nil && m.Id != nil {
@@ -569,15 +475,14 @@ type AccountReference struct {
 	Id               *uint32            `protobuf:"fixed32,1,opt,name=id" json:"id,omitempty"`
 	Email            *string            `protobuf:"bytes,2,opt,name=email" json:"email,omitempty"`
 	Handle           *GameAccountHandle `protobuf:"bytes,3,opt,name=handle" json:"handle,omitempty"`
-	BattleTag        *string            `protobuf:"bytes,4,opt,name=battle_tag,json=battleTag" json:"battle_tag,omitempty"`
+	BattleTag        *string            `protobuf:"bytes,4,opt,name=battle_tag" json:"battle_tag,omitempty"`
 	Region           *uint32            `protobuf:"varint,10,opt,name=region,def=0" json:"region,omitempty"`
 	XXX_unrecognized []byte             `json:"-"`
 }
 
-func (m *AccountReference) Reset()                    { *m = AccountReference{} }
-func (m *AccountReference) String() string            { return proto.CompactTextString(m) }
-func (*AccountReference) ProtoMessage()               {}
-func (*AccountReference) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{8} }
+func (m *AccountReference) Reset()         { *m = AccountReference{} }
+func (m *AccountReference) String() string { return proto.CompactTextString(m) }
+func (*AccountReference) ProtoMessage()    {}
 
 const Default_AccountReference_Region uint32 = 0
 
@@ -622,10 +527,9 @@ type AccountServiceConfig struct {
 	XXX_unrecognized []byte                  `json:"-"`
 }
 
-func (m *AccountServiceConfig) Reset()                    { *m = AccountServiceConfig{} }
-func (m *AccountServiceConfig) String() string            { return proto.CompactTextString(m) }
-func (*AccountServiceConfig) ProtoMessage()               {}
-func (*AccountServiceConfig) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9} }
+func (m *AccountServiceConfig) Reset()         { *m = AccountServiceConfig{} }
+func (m *AccountServiceConfig) String() string { return proto.CompactTextString(m) }
+func (*AccountServiceConfig) ProtoMessage()    {}
 
 func (m *AccountServiceConfig) GetRegion() []*AccountServiceRegion {
 	if m != nil {
@@ -641,10 +545,9 @@ type AccountServiceRegion struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *AccountServiceRegion) Reset()                    { *m = AccountServiceRegion{} }
-func (m *AccountServiceRegion) String() string            { return proto.CompactTextString(m) }
-func (*AccountServiceRegion) ProtoMessage()               {}
-func (*AccountServiceRegion) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{10} }
+func (m *AccountServiceRegion) Reset()         { *m = AccountServiceRegion{} }
+func (m *AccountServiceRegion) String() string { return proto.CompactTextString(m) }
+func (*AccountServiceRegion) ProtoMessage()    {}
 
 func (m *AccountServiceRegion) GetId() uint32 {
 	if m != nil && m.Id != nil {
@@ -662,19 +565,18 @@ func (m *AccountServiceRegion) GetShard() string {
 
 // ref: bnet.protocol.account.AccountState
 type AccountState struct {
-	AccountLevelInfo    *AccountLevelInfo    `protobuf:"bytes,1,opt,name=account_level_info,json=accountLevelInfo" json:"account_level_info,omitempty"`
-	PrivacyInfo         *PrivacyInfo         `protobuf:"bytes,2,opt,name=privacy_info,json=privacyInfo" json:"privacy_info,omitempty"`
-	ParentalControlInfo *ParentalControlInfo `protobuf:"bytes,3,opt,name=parental_control_info,json=parentalControlInfo" json:"parental_control_info,omitempty"`
-	GameLevelInfo       []*GameLevelInfo     `protobuf:"bytes,5,rep,name=game_level_info,json=gameLevelInfo" json:"game_level_info,omitempty"`
-	GameStatus          []*GameStatus        `protobuf:"bytes,6,rep,name=game_status,json=gameStatus" json:"game_status,omitempty"`
-	GameAccounts        []*GameAccountList   `protobuf:"bytes,7,rep,name=game_accounts,json=gameAccounts" json:"game_accounts,omitempty"`
+	AccountLevelInfo    *AccountLevelInfo    `protobuf:"bytes,1,opt,name=account_level_info" json:"account_level_info,omitempty"`
+	PrivacyInfo         *PrivacyInfo         `protobuf:"bytes,2,opt,name=privacy_info" json:"privacy_info,omitempty"`
+	ParentalControlInfo *ParentalControlInfo `protobuf:"bytes,3,opt,name=parental_control_info" json:"parental_control_info,omitempty"`
+	GameLevelInfo       []*GameLevelInfo     `protobuf:"bytes,5,rep,name=game_level_info" json:"game_level_info,omitempty"`
+	GameStatus          []*GameStatus        `protobuf:"bytes,6,rep,name=game_status" json:"game_status,omitempty"`
+	GameAccounts        []*GameAccountList   `protobuf:"bytes,7,rep,name=game_accounts" json:"game_accounts,omitempty"`
 	XXX_unrecognized    []byte               `json:"-"`
 }
 
-func (m *AccountState) Reset()                    { *m = AccountState{} }
-func (m *AccountState) String() string            { return proto.CompactTextString(m) }
-func (*AccountState) ProtoMessage()               {}
-func (*AccountState) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{11} }
+func (m *AccountState) Reset()         { *m = AccountState{} }
+func (m *AccountState) String() string { return proto.CompactTextString(m) }
+func (*AccountState) ProtoMessage()    {}
 
 func (m *AccountState) GetAccountLevelInfo() *AccountLevelInfo {
 	if m != nil {
@@ -721,16 +623,15 @@ func (m *AccountState) GetGameAccounts() []*GameAccountList {
 // ref: bnet.protocol.account.AccountStateNotification
 type AccountStateNotification struct {
 	State                 *AccountState     `protobuf:"bytes,1,opt,name=state" json:"state,omitempty"`
-	SubscriberId          *uint64           `protobuf:"varint,2,opt,name=subscriber_id,json=subscriberId" json:"subscriber_id,omitempty"`
-	AccountTags           *AccountFieldTags `protobuf:"bytes,3,opt,name=account_tags,json=accountTags" json:"account_tags,omitempty"`
-	SubscriptionCompleted *bool             `protobuf:"varint,4,opt,name=subscription_completed,json=subscriptionCompleted" json:"subscription_completed,omitempty"`
+	SubscriberId          *uint64           `protobuf:"varint,2,opt,name=subscriber_id" json:"subscriber_id,omitempty"`
+	AccountTags           *AccountFieldTags `protobuf:"bytes,3,opt,name=account_tags" json:"account_tags,omitempty"`
+	SubscriptionCompleted *bool             `protobuf:"varint,4,opt,name=subscription_completed" json:"subscription_completed,omitempty"`
 	XXX_unrecognized      []byte            `json:"-"`
 }
 
-func (m *AccountStateNotification) Reset()                    { *m = AccountStateNotification{} }
-func (m *AccountStateNotification) String() string            { return proto.CompactTextString(m) }
-func (*AccountStateNotification) ProtoMessage()               {}
-func (*AccountStateNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{12} }
+func (m *AccountStateNotification) Reset()         { *m = AccountStateNotification{} }
+func (m *AccountStateNotification) String() string { return proto.CompactTextString(m) }
+func (*AccountStateNotification) ProtoMessage()    {}
 
 func (m *AccountStateNotification) GetState() *AccountState {
 	if m != nil {
@@ -762,15 +663,14 @@ func (m *AccountStateNotification) GetSubscriptionCompleted() bool {
 
 // ref: bnet.protocol.account.AccountStateTagged
 type AccountStateTagged struct {
-	AccountState     *AccountState     `protobuf:"bytes,1,opt,name=account_state,json=accountState" json:"account_state,omitempty"`
+	AccountState     *AccountState     `protobuf:"bytes,1,opt,name=account_state" json:"account_state,omitempty"`
 	Tags             *AccountFieldTags `protobuf:"bytes,2,opt,name=tags" json:"tags,omitempty"`
 	XXX_unrecognized []byte            `json:"-"`
 }
 
-func (m *AccountStateTagged) Reset()                    { *m = AccountStateTagged{} }
-func (m *AccountStateTagged) String() string            { return proto.CompactTextString(m) }
-func (*AccountStateTagged) ProtoMessage()               {}
-func (*AccountStateTagged) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{13} }
+func (m *AccountStateTagged) Reset()         { *m = AccountStateTagged{} }
+func (m *AccountStateTagged) String() string { return proto.CompactTextString(m) }
+func (*AccountStateTagged) ProtoMessage()    {}
 
 func (m *AccountStateTagged) GetAccountState() *AccountState {
 	if m != nil {
@@ -789,15 +689,14 @@ func (m *AccountStateTagged) GetTags() *AccountFieldTags {
 // ref: bnet.protocol.account.CacheExpireRequest
 type CacheExpireRequest struct {
 	Account          []*AccountId         `protobuf:"bytes,1,rep,name=account" json:"account,omitempty"`
-	GameAccount      []*GameAccountHandle `protobuf:"bytes,2,rep,name=game_account,json=gameAccount" json:"game_account,omitempty"`
+	GameAccount      []*GameAccountHandle `protobuf:"bytes,2,rep,name=game_account" json:"game_account,omitempty"`
 	Email            []string             `protobuf:"bytes,3,rep,name=email" json:"email,omitempty"`
 	XXX_unrecognized []byte               `json:"-"`
 }
 
-func (m *CacheExpireRequest) Reset()                    { *m = CacheExpireRequest{} }
-func (m *CacheExpireRequest) String() string            { return proto.CompactTextString(m) }
-func (*CacheExpireRequest) ProtoMessage()               {}
-func (*CacheExpireRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{14} }
+func (m *CacheExpireRequest) Reset()         { *m = CacheExpireRequest{} }
+func (m *CacheExpireRequest) String() string { return proto.CompactTextString(m) }
+func (*CacheExpireRequest) ProtoMessage()    {}
 
 func (m *CacheExpireRequest) GetAccount() []*AccountId {
 	if m != nil {
@@ -822,16 +721,15 @@ func (m *CacheExpireRequest) GetEmail() []string {
 
 // ref: bnet.protocol.account.CAIS
 type CAIS struct {
-	PlayedMinutes    *uint32 `protobuf:"varint,1,opt,name=played_minutes,json=playedMinutes" json:"played_minutes,omitempty"`
-	RestedMinutes    *uint32 `protobuf:"varint,2,opt,name=rested_minutes,json=restedMinutes" json:"rested_minutes,omitempty"`
-	LastHeardTime    *uint64 `protobuf:"varint,3,opt,name=last_heard_time,json=lastHeardTime" json:"last_heard_time,omitempty"`
+	PlayedMinutes    *uint32 `protobuf:"varint,1,opt,name=played_minutes" json:"played_minutes,omitempty"`
+	RestedMinutes    *uint32 `protobuf:"varint,2,opt,name=rested_minutes" json:"rested_minutes,omitempty"`
+	LastHeardTime    *uint64 `protobuf:"varint,3,opt,name=last_heard_time" json:"last_heard_time,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CAIS) Reset()                    { *m = CAIS{} }
-func (m *CAIS) String() string            { return proto.CompactTextString(m) }
-func (*CAIS) ProtoMessage()               {}
-func (*CAIS) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{15} }
+func (m *CAIS) Reset()         { *m = CAIS{} }
+func (m *CAIS) String() string { return proto.CompactTextString(m) }
+func (*CAIS) ProtoMessage()    {}
 
 func (m *CAIS) GetPlayedMinutes() uint32 {
 	if m != nil && m.PlayedMinutes != nil {
@@ -859,14 +757,13 @@ type CreateGameAccountRequest struct {
 	Account          *AccountId `protobuf:"bytes,1,opt,name=account" json:"account,omitempty"`
 	Region           *uint32    `protobuf:"varint,2,opt,name=region" json:"region,omitempty"`
 	Program          *uint32    `protobuf:"fixed32,3,opt,name=program" json:"program,omitempty"`
-	RealmPermissions *uint32    `protobuf:"varint,4,opt,name=realm_permissions,json=realmPermissions,def=1" json:"realm_permissions,omitempty"`
+	RealmPermissions *uint32    `protobuf:"varint,4,opt,name=realm_permissions,def=1" json:"realm_permissions,omitempty"`
 	XXX_unrecognized []byte     `json:"-"`
 }
 
-func (m *CreateGameAccountRequest) Reset()                    { *m = CreateGameAccountRequest{} }
-func (m *CreateGameAccountRequest) String() string            { return proto.CompactTextString(m) }
-func (*CreateGameAccountRequest) ProtoMessage()               {}
-func (*CreateGameAccountRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{16} }
+func (m *CreateGameAccountRequest) Reset()         { *m = CreateGameAccountRequest{} }
+func (m *CreateGameAccountRequest) String() string { return proto.CompactTextString(m) }
+func (*CreateGameAccountRequest) ProtoMessage()    {}
 
 const Default_CreateGameAccountRequest_RealmPermissions uint32 = 1
 
@@ -901,16 +798,15 @@ func (m *CreateGameAccountRequest) GetRealmPermissions() uint32 {
 // ref: bnet.protocol.account.CredentialUpdateRequest
 type CredentialUpdateRequest struct {
 	Account          *AccountId           `protobuf:"bytes,1,req,name=account" json:"account,omitempty"`
-	OldCredentials   []*AccountCredential `protobuf:"bytes,2,rep,name=old_credentials,json=oldCredentials" json:"old_credentials,omitempty"`
-	NewCredentials   []*AccountCredential `protobuf:"bytes,3,rep,name=new_credentials,json=newCredentials" json:"new_credentials,omitempty"`
+	OldCredentials   []*AccountCredential `protobuf:"bytes,2,rep,name=old_credentials" json:"old_credentials,omitempty"`
+	NewCredentials   []*AccountCredential `protobuf:"bytes,3,rep,name=new_credentials" json:"new_credentials,omitempty"`
 	Region           *uint32              `protobuf:"varint,4,opt,name=region" json:"region,omitempty"`
 	XXX_unrecognized []byte               `json:"-"`
 }
 
-func (m *CredentialUpdateRequest) Reset()                    { *m = CredentialUpdateRequest{} }
-func (m *CredentialUpdateRequest) String() string            { return proto.CompactTextString(m) }
-func (*CredentialUpdateRequest) ProtoMessage()               {}
-func (*CredentialUpdateRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{17} }
+func (m *CredentialUpdateRequest) Reset()         { *m = CredentialUpdateRequest{} }
+func (m *CredentialUpdateRequest) String() string { return proto.CompactTextString(m) }
+func (*CredentialUpdateRequest) ProtoMessage()    {}
 
 func (m *CredentialUpdateRequest) GetAccount() *AccountId {
 	if m != nil {
@@ -945,23 +841,21 @@ type CredentialUpdateResponse struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *CredentialUpdateResponse) Reset()                    { *m = CredentialUpdateResponse{} }
-func (m *CredentialUpdateResponse) String() string            { return proto.CompactTextString(m) }
-func (*CredentialUpdateResponse) ProtoMessage()               {}
-func (*CredentialUpdateResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{18} }
+func (m *CredentialUpdateResponse) Reset()         { *m = CredentialUpdateResponse{} }
+func (m *CredentialUpdateResponse) String() string { return proto.CompactTextString(m) }
+func (*CredentialUpdateResponse) ProtoMessage()    {}
 
 // ref: bnet.protocol.account.CurrencyRestriction
 type CurrencyRestriction struct {
 	Currency         *string `protobuf:"bytes,1,req,name=currency" json:"currency,omitempty"`
-	AuthenticatorCap *string `protobuf:"bytes,2,req,name=authenticator_cap,json=authenticatorCap" json:"authenticator_cap,omitempty"`
-	SoftCap          *string `protobuf:"bytes,3,req,name=soft_cap,json=softCap" json:"soft_cap,omitempty"`
+	AuthenticatorCap *string `protobuf:"bytes,2,req,name=authenticator_cap" json:"authenticator_cap,omitempty"`
+	SoftCap          *string `protobuf:"bytes,3,req,name=soft_cap" json:"soft_cap,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CurrencyRestriction) Reset()                    { *m = CurrencyRestriction{} }
-func (m *CurrencyRestriction) String() string            { return proto.CompactTextString(m) }
-func (*CurrencyRestriction) ProtoMessage()               {}
-func (*CurrencyRestriction) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{19} }
+func (m *CurrencyRestriction) Reset()         { *m = CurrencyRestriction{} }
+func (m *CurrencyRestriction) String() string { return proto.CompactTextString(m) }
+func (*CurrencyRestriction) ProtoMessage()    {}
 
 func (m *CurrencyRestriction) GetCurrency() string {
 	if m != nil && m.Currency != nil {
@@ -993,10 +887,9 @@ type FlagUpdateRequest struct {
 	XXX_unrecognized []byte     `json:"-"`
 }
 
-func (m *FlagUpdateRequest) Reset()                    { *m = FlagUpdateRequest{} }
-func (m *FlagUpdateRequest) String() string            { return proto.CompactTextString(m) }
-func (*FlagUpdateRequest) ProtoMessage()               {}
-func (*FlagUpdateRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{20} }
+func (m *FlagUpdateRequest) Reset()         { *m = FlagUpdateRequest{} }
+func (m *FlagUpdateRequest) String() string { return proto.CompactTextString(m) }
+func (*FlagUpdateRequest) ProtoMessage()    {}
 
 func (m *FlagUpdateRequest) GetAccount() *AccountId {
 	if m != nil {
@@ -1031,21 +924,19 @@ type FlagUpdateResponse struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *FlagUpdateResponse) Reset()                    { *m = FlagUpdateResponse{} }
-func (m *FlagUpdateResponse) String() string            { return proto.CompactTextString(m) }
-func (*FlagUpdateResponse) ProtoMessage()               {}
-func (*FlagUpdateResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{21} }
+func (m *FlagUpdateResponse) Reset()         { *m = FlagUpdateResponse{} }
+func (m *FlagUpdateResponse) String() string { return proto.CompactTextString(m) }
+func (*FlagUpdateResponse) ProtoMessage()    {}
 
 // ref: bnet.protocol.account.ForwardCacheExpireRequest
 type ForwardCacheExpireRequest struct {
-	EntityId         *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=entity_id,json=entityId" json:"entity_id,omitempty"`
+	EntityId         *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=entity_id" json:"entity_id,omitempty"`
 	XXX_unrecognized []byte                  `json:"-"`
 }
 
-func (m *ForwardCacheExpireRequest) Reset()                    { *m = ForwardCacheExpireRequest{} }
-func (m *ForwardCacheExpireRequest) String() string            { return proto.CompactTextString(m) }
-func (*ForwardCacheExpireRequest) ProtoMessage()               {}
-func (*ForwardCacheExpireRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{22} }
+func (m *ForwardCacheExpireRequest) Reset()         { *m = ForwardCacheExpireRequest{} }
+func (m *ForwardCacheExpireRequest) String() string { return proto.CompactTextString(m) }
+func (*ForwardCacheExpireRequest) ProtoMessage()    {}
 
 func (m *ForwardCacheExpireRequest) GetEntityId() *bnet_protocol.EntityId {
 	if m != nil {
@@ -1056,26 +947,25 @@ func (m *ForwardCacheExpireRequest) GetEntityId() *bnet_protocol.EntityId {
 
 // ref: bnet.protocol.account.GameAccountBlob
 type GameAccountBlob struct {
-	GameAccount            *GameAccountHandle `protobuf:"bytes,1,req,name=game_account,json=gameAccount" json:"game_account,omitempty"`
-	Name                   *string            `protobuf:"bytes,2,opt,name=name,def=" json:"name,omitempty"`
-	RealmPermissions       *uint32            `protobuf:"varint,3,opt,name=realm_permissions,json=realmPermissions,def=0" json:"realm_permissions,omitempty"`
+	GameAccount            *GameAccountHandle `protobuf:"bytes,1,req,name=game_account" json:"game_account,omitempty"`
+	Name                   *string            `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
+	RealmPermissions       *uint32            `protobuf:"varint,3,opt,name=realm_permissions,def=0" json:"realm_permissions,omitempty"`
 	Status                 *uint32            `protobuf:"varint,4,req,name=status" json:"status,omitempty"`
 	Flags                  *uint64            `protobuf:"varint,5,opt,name=flags,def=0" json:"flags,omitempty"`
-	BillingFlags           *uint32            `protobuf:"varint,6,opt,name=billing_flags,json=billingFlags,def=0" json:"billing_flags,omitempty"`
-	CacheExpiration        *uint64            `protobuf:"varint,7,req,name=cache_expiration,json=cacheExpiration" json:"cache_expiration,omitempty"`
-	SubscriptionExpiration *uint64            `protobuf:"varint,10,opt,name=subscription_expiration,json=subscriptionExpiration" json:"subscription_expiration,omitempty"`
-	UnitsRemaining         *uint32            `protobuf:"varint,11,opt,name=units_remaining,json=unitsRemaining" json:"units_remaining,omitempty"`
-	StatusExpiration       *uint64            `protobuf:"varint,12,opt,name=status_expiration,json=statusExpiration" json:"status_expiration,omitempty"`
-	BoxLevel               *uint32            `protobuf:"varint,13,opt,name=box_level,json=boxLevel" json:"box_level,omitempty"`
-	BoxLevelExpiration     *uint64            `protobuf:"varint,14,opt,name=box_level_expiration,json=boxLevelExpiration" json:"box_level_expiration,omitempty"`
+	BillingFlags           *uint32            `protobuf:"varint,6,opt,name=billing_flags,def=0" json:"billing_flags,omitempty"`
+	CacheExpiration        *uint64            `protobuf:"varint,7,req,name=cache_expiration" json:"cache_expiration,omitempty"`
+	SubscriptionExpiration *uint64            `protobuf:"varint,10,opt,name=subscription_expiration" json:"subscription_expiration,omitempty"`
+	UnitsRemaining         *uint32            `protobuf:"varint,11,opt,name=units_remaining" json:"units_remaining,omitempty"`
+	StatusExpiration       *uint64            `protobuf:"varint,12,opt,name=status_expiration" json:"status_expiration,omitempty"`
+	BoxLevel               *uint32            `protobuf:"varint,13,opt,name=box_level" json:"box_level,omitempty"`
+	BoxLevelExpiration     *uint64            `protobuf:"varint,14,opt,name=box_level_expiration" json:"box_level_expiration,omitempty"`
 	Licenses               []*AccountLicense  `protobuf:"bytes,20,rep,name=licenses" json:"licenses,omitempty"`
 	XXX_unrecognized       []byte             `json:"-"`
 }
 
-func (m *GameAccountBlob) Reset()                    { *m = GameAccountBlob{} }
-func (m *GameAccountBlob) String() string            { return proto.CompactTextString(m) }
-func (*GameAccountBlob) ProtoMessage()               {}
-func (*GameAccountBlob) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{23} }
+func (m *GameAccountBlob) Reset()         { *m = GameAccountBlob{} }
+func (m *GameAccountBlob) String() string { return proto.CompactTextString(m) }
+func (*GameAccountBlob) ProtoMessage()    {}
 
 const Default_GameAccountBlob_RealmPermissions uint32 = 0
 const Default_GameAccountBlob_Flags uint64 = 0
@@ -1178,10 +1068,9 @@ type GameAccountBlobList struct {
 	XXX_unrecognized []byte             `json:"-"`
 }
 
-func (m *GameAccountBlobList) Reset()                    { *m = GameAccountBlobList{} }
-func (m *GameAccountBlobList) String() string            { return proto.CompactTextString(m) }
-func (*GameAccountBlobList) ProtoMessage()               {}
-func (*GameAccountBlobList) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{24} }
+func (m *GameAccountBlobList) Reset()         { *m = GameAccountBlobList{} }
+func (m *GameAccountBlobList) String() string { return proto.CompactTextString(m) }
+func (*GameAccountBlobList) ProtoMessage()    {}
 
 func (m *GameAccountBlobList) GetBlob() []*GameAccountBlob {
 	if m != nil {
@@ -1192,17 +1081,16 @@ func (m *GameAccountBlobList) GetBlob() []*GameAccountBlob {
 
 // ref: bnet.protocol.account.GameAccountFieldOptions
 type GameAccountFieldOptions struct {
-	AllFields          *bool  `protobuf:"varint,1,opt,name=all_fields,json=allFields" json:"all_fields,omitempty"`
-	FieldGameLevelInfo *bool  `protobuf:"varint,2,opt,name=field_game_level_info,json=fieldGameLevelInfo" json:"field_game_level_info,omitempty"`
-	FieldGameTimeInfo  *bool  `protobuf:"varint,3,opt,name=field_game_time_info,json=fieldGameTimeInfo" json:"field_game_time_info,omitempty"`
-	FieldGameStatus    *bool  `protobuf:"varint,4,opt,name=field_game_status,json=fieldGameStatus" json:"field_game_status,omitempty"`
+	AllFields          *bool  `protobuf:"varint,1,opt,name=all_fields" json:"all_fields,omitempty"`
+	FieldGameLevelInfo *bool  `protobuf:"varint,2,opt,name=field_game_level_info" json:"field_game_level_info,omitempty"`
+	FieldGameTimeInfo  *bool  `protobuf:"varint,3,opt,name=field_game_time_info" json:"field_game_time_info,omitempty"`
+	FieldGameStatus    *bool  `protobuf:"varint,4,opt,name=field_game_status" json:"field_game_status,omitempty"`
 	XXX_unrecognized   []byte `json:"-"`
 }
 
-func (m *GameAccountFieldOptions) Reset()                    { *m = GameAccountFieldOptions{} }
-func (m *GameAccountFieldOptions) String() string            { return proto.CompactTextString(m) }
-func (*GameAccountFieldOptions) ProtoMessage()               {}
-func (*GameAccountFieldOptions) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{25} }
+func (m *GameAccountFieldOptions) Reset()         { *m = GameAccountFieldOptions{} }
+func (m *GameAccountFieldOptions) String() string { return proto.CompactTextString(m) }
+func (*GameAccountFieldOptions) ProtoMessage()    {}
 
 func (m *GameAccountFieldOptions) GetAllFields() bool {
 	if m != nil && m.AllFields != nil {
@@ -1234,16 +1122,15 @@ func (m *GameAccountFieldOptions) GetFieldGameStatus() bool {
 
 // ref: bnet.protocol.account.GameAccountFieldTags
 type GameAccountFieldTags struct {
-	GameLevelInfoTag *uint32 `protobuf:"fixed32,2,opt,name=game_level_info_tag,json=gameLevelInfoTag" json:"game_level_info_tag,omitempty"`
-	GameTimeInfoTag  *uint32 `protobuf:"fixed32,3,opt,name=game_time_info_tag,json=gameTimeInfoTag" json:"game_time_info_tag,omitempty"`
-	GameStatusTag    *uint32 `protobuf:"fixed32,4,opt,name=game_status_tag,json=gameStatusTag" json:"game_status_tag,omitempty"`
+	GameLevelInfoTag *uint32 `protobuf:"fixed32,2,opt,name=game_level_info_tag" json:"game_level_info_tag,omitempty"`
+	GameTimeInfoTag  *uint32 `protobuf:"fixed32,3,opt,name=game_time_info_tag" json:"game_time_info_tag,omitempty"`
+	GameStatusTag    *uint32 `protobuf:"fixed32,4,opt,name=game_status_tag" json:"game_status_tag,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *GameAccountFieldTags) Reset()                    { *m = GameAccountFieldTags{} }
-func (m *GameAccountFieldTags) String() string            { return proto.CompactTextString(m) }
-func (*GameAccountFieldTags) ProtoMessage()               {}
-func (*GameAccountFieldTags) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{26} }
+func (m *GameAccountFieldTags) Reset()         { *m = GameAccountFieldTags{} }
+func (m *GameAccountFieldTags) String() string { return proto.CompactTextString(m) }
+func (*GameAccountFieldTags) ProtoMessage()    {}
 
 func (m *GameAccountFieldTags) GetGameLevelInfoTag() uint32 {
 	if m != nil && m.GameLevelInfoTag != nil {
@@ -1274,10 +1161,9 @@ type GameAccountHandle struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *GameAccountHandle) Reset()                    { *m = GameAccountHandle{} }
-func (m *GameAccountHandle) String() string            { return proto.CompactTextString(m) }
-func (*GameAccountHandle) ProtoMessage()               {}
-func (*GameAccountHandle) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{27} }
+func (m *GameAccountHandle) Reset()         { *m = GameAccountHandle{} }
+func (m *GameAccountHandle) String() string { return proto.CompactTextString(m) }
+func (*GameAccountHandle) ProtoMessage()    {}
 
 func (m *GameAccountHandle) GetId() uint32 {
 	if m != nil && m.Id != nil {
@@ -1302,15 +1188,14 @@ func (m *GameAccountHandle) GetRegion() uint32 {
 
 // ref: bnet.protocol.account.GameAccountLink
 type GameAccountLink struct {
-	GameAccount      *GameAccountHandle `protobuf:"bytes,1,req,name=game_account,json=gameAccount" json:"game_account,omitempty"`
+	GameAccount      *GameAccountHandle `protobuf:"bytes,1,req,name=game_account" json:"game_account,omitempty"`
 	Name             *string            `protobuf:"bytes,2,req,name=name" json:"name,omitempty"`
 	XXX_unrecognized []byte             `json:"-"`
 }
 
-func (m *GameAccountLink) Reset()                    { *m = GameAccountLink{} }
-func (m *GameAccountLink) String() string            { return proto.CompactTextString(m) }
-func (*GameAccountLink) ProtoMessage()               {}
-func (*GameAccountLink) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{28} }
+func (m *GameAccountLink) Reset()         { *m = GameAccountLink{} }
+func (m *GameAccountLink) String() string { return proto.CompactTextString(m) }
+func (*GameAccountLink) ProtoMessage()    {}
 
 func (m *GameAccountLink) GetGameAccount() *GameAccountHandle {
 	if m != nil {
@@ -1333,10 +1218,9 @@ type GameAccountList struct {
 	XXX_unrecognized []byte               `json:"-"`
 }
 
-func (m *GameAccountList) Reset()                    { *m = GameAccountList{} }
-func (m *GameAccountList) String() string            { return proto.CompactTextString(m) }
-func (*GameAccountList) ProtoMessage()               {}
-func (*GameAccountList) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{29} }
+func (m *GameAccountList) Reset()         { *m = GameAccountList{} }
+func (m *GameAccountList) String() string { return proto.CompactTextString(m) }
+func (*GameAccountList) ProtoMessage()    {}
 
 func (m *GameAccountList) GetRegion() uint32 {
 	if m != nil && m.Region != nil {
@@ -1354,16 +1238,15 @@ func (m *GameAccountList) GetHandle() []*GameAccountHandle {
 
 // ref: bnet.protocol.account.GameAccountNotification
 type GameAccountNotification struct {
-	RegionDelta      []*GameAccountList `protobuf:"bytes,1,rep,name=region_delta,json=regionDelta" json:"region_delta,omitempty"`
-	SubscriberId     *uint64            `protobuf:"varint,2,opt,name=subscriber_id,json=subscriberId" json:"subscriber_id,omitempty"`
-	AccountTags      *AccountFieldTags  `protobuf:"bytes,3,opt,name=account_tags,json=accountTags" json:"account_tags,omitempty"`
+	RegionDelta      []*GameAccountList `protobuf:"bytes,1,rep,name=region_delta" json:"region_delta,omitempty"`
+	SubscriberId     *uint64            `protobuf:"varint,2,opt,name=subscriber_id" json:"subscriber_id,omitempty"`
+	AccountTags      *AccountFieldTags  `protobuf:"bytes,3,opt,name=account_tags" json:"account_tags,omitempty"`
 	XXX_unrecognized []byte             `json:"-"`
 }
 
-func (m *GameAccountNotification) Reset()                    { *m = GameAccountNotification{} }
-func (m *GameAccountNotification) String() string            { return proto.CompactTextString(m) }
-func (*GameAccountNotification) ProtoMessage()               {}
-func (*GameAccountNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{30} }
+func (m *GameAccountNotification) Reset()         { *m = GameAccountNotification{} }
+func (m *GameAccountNotification) String() string { return proto.CompactTextString(m) }
+func (*GameAccountNotification) ProtoMessage()    {}
 
 func (m *GameAccountNotification) GetRegionDelta() []*GameAccountList {
 	if m != nil {
@@ -1388,15 +1271,14 @@ func (m *GameAccountNotification) GetAccountTags() *AccountFieldTags {
 
 // ref: bnet.protocol.account.GameAccountSessionNotification
 type GameAccountSessionNotification struct {
-	GameAccount      *GameAccountHandle     `protobuf:"bytes,1,opt,name=game_account,json=gameAccount" json:"game_account,omitempty"`
-	SessionInfo      *GameSessionUpdateInfo `protobuf:"bytes,2,opt,name=session_info,json=sessionInfo" json:"session_info,omitempty"`
+	GameAccount      *GameAccountHandle     `protobuf:"bytes,1,opt,name=game_account" json:"game_account,omitempty"`
+	SessionInfo      *GameSessionUpdateInfo `protobuf:"bytes,2,opt,name=session_info" json:"session_info,omitempty"`
 	XXX_unrecognized []byte                 `json:"-"`
 }
 
-func (m *GameAccountSessionNotification) Reset()                    { *m = GameAccountSessionNotification{} }
-func (m *GameAccountSessionNotification) String() string            { return proto.CompactTextString(m) }
-func (*GameAccountSessionNotification) ProtoMessage()               {}
-func (*GameAccountSessionNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{31} }
+func (m *GameAccountSessionNotification) Reset()         { *m = GameAccountSessionNotification{} }
+func (m *GameAccountSessionNotification) String() string { return proto.CompactTextString(m) }
+func (*GameAccountSessionNotification) ProtoMessage()    {}
 
 func (m *GameAccountSessionNotification) GetGameAccount() *GameAccountHandle {
 	if m != nil {
@@ -1414,16 +1296,15 @@ func (m *GameAccountSessionNotification) GetSessionInfo() *GameSessionUpdateInfo
 
 // ref: bnet.protocol.account.GameAccountState
 type GameAccountState struct {
-	GameLevelInfo    *GameLevelInfo `protobuf:"bytes,1,opt,name=game_level_info,json=gameLevelInfo" json:"game_level_info,omitempty"`
-	GameTimeInfo     *GameTimeInfo  `protobuf:"bytes,2,opt,name=game_time_info,json=gameTimeInfo" json:"game_time_info,omitempty"`
-	GameStatus       *GameStatus    `protobuf:"bytes,3,opt,name=game_status,json=gameStatus" json:"game_status,omitempty"`
+	GameLevelInfo    *GameLevelInfo `protobuf:"bytes,1,opt,name=game_level_info" json:"game_level_info,omitempty"`
+	GameTimeInfo     *GameTimeInfo  `protobuf:"bytes,2,opt,name=game_time_info" json:"game_time_info,omitempty"`
+	GameStatus       *GameStatus    `protobuf:"bytes,3,opt,name=game_status" json:"game_status,omitempty"`
 	XXX_unrecognized []byte         `json:"-"`
 }
 
-func (m *GameAccountState) Reset()                    { *m = GameAccountState{} }
-func (m *GameAccountState) String() string            { return proto.CompactTextString(m) }
-func (*GameAccountState) ProtoMessage()               {}
-func (*GameAccountState) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{32} }
+func (m *GameAccountState) Reset()         { *m = GameAccountState{} }
+func (m *GameAccountState) String() string { return proto.CompactTextString(m) }
+func (*GameAccountState) ProtoMessage()    {}
 
 func (m *GameAccountState) GetGameLevelInfo() *GameLevelInfo {
 	if m != nil {
@@ -1449,16 +1330,15 @@ func (m *GameAccountState) GetGameStatus() *GameStatus {
 // ref: bnet.protocol.account.GameAccountStateNotification
 type GameAccountStateNotification struct {
 	State                 *GameAccountState     `protobuf:"bytes,1,opt,name=state" json:"state,omitempty"`
-	SubscriberId          *uint64               `protobuf:"varint,2,opt,name=subscriber_id,json=subscriberId" json:"subscriber_id,omitempty"`
-	GameAccountTags       *GameAccountFieldTags `protobuf:"bytes,3,opt,name=game_account_tags,json=gameAccountTags" json:"game_account_tags,omitempty"`
-	SubscriptionCompleted *bool                 `protobuf:"varint,4,opt,name=subscription_completed,json=subscriptionCompleted" json:"subscription_completed,omitempty"`
+	SubscriberId          *uint64               `protobuf:"varint,2,opt,name=subscriber_id" json:"subscriber_id,omitempty"`
+	GameAccountTags       *GameAccountFieldTags `protobuf:"bytes,3,opt,name=game_account_tags" json:"game_account_tags,omitempty"`
+	SubscriptionCompleted *bool                 `protobuf:"varint,4,opt,name=subscription_completed" json:"subscription_completed,omitempty"`
 	XXX_unrecognized      []byte                `json:"-"`
 }
 
-func (m *GameAccountStateNotification) Reset()                    { *m = GameAccountStateNotification{} }
-func (m *GameAccountStateNotification) String() string            { return proto.CompactTextString(m) }
-func (*GameAccountStateNotification) ProtoMessage()               {}
-func (*GameAccountStateNotification) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{33} }
+func (m *GameAccountStateNotification) Reset()         { *m = GameAccountStateNotification{} }
+func (m *GameAccountStateNotification) String() string { return proto.CompactTextString(m) }
+func (*GameAccountStateNotification) ProtoMessage()    {}
 
 func (m *GameAccountStateNotification) GetState() *GameAccountState {
 	if m != nil {
@@ -1490,15 +1370,14 @@ func (m *GameAccountStateNotification) GetSubscriptionCompleted() bool {
 
 // ref: bnet.protocol.account.GameAccountStateTagged
 type GameAccountStateTagged struct {
-	GameAccountState *GameAccountState     `protobuf:"bytes,1,opt,name=game_account_state,json=gameAccountState" json:"game_account_state,omitempty"`
-	GameAccountTags  *GameAccountFieldTags `protobuf:"bytes,2,opt,name=game_account_tags,json=gameAccountTags" json:"game_account_tags,omitempty"`
+	GameAccountState *GameAccountState     `protobuf:"bytes,1,opt,name=game_account_state" json:"game_account_state,omitempty"`
+	GameAccountTags  *GameAccountFieldTags `protobuf:"bytes,2,opt,name=game_account_tags" json:"game_account_tags,omitempty"`
 	XXX_unrecognized []byte                `json:"-"`
 }
 
-func (m *GameAccountStateTagged) Reset()                    { *m = GameAccountStateTagged{} }
-func (m *GameAccountStateTagged) String() string            { return proto.CompactTextString(m) }
-func (*GameAccountStateTagged) ProtoMessage()               {}
-func (*GameAccountStateTagged) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{34} }
+func (m *GameAccountStateTagged) Reset()         { *m = GameAccountStateTagged{} }
+func (m *GameAccountStateTagged) String() string { return proto.CompactTextString(m) }
+func (*GameAccountStateTagged) ProtoMessage()    {}
 
 func (m *GameAccountStateTagged) GetGameAccountState() *GameAccountState {
 	if m != nil {
@@ -1516,22 +1395,21 @@ func (m *GameAccountStateTagged) GetGameAccountTags() *GameAccountFieldTags {
 
 // ref: bnet.protocol.account.GameLevelInfo
 type GameLevelInfo struct {
-	IsStarterEdition *bool             `protobuf:"varint,3,opt,name=is_starter_edition,json=isStarterEdition" json:"is_starter_edition,omitempty"`
-	IsTrial          *bool             `protobuf:"varint,4,opt,name=is_trial,json=isTrial" json:"is_trial,omitempty"`
-	IsLifetime       *bool             `protobuf:"varint,5,opt,name=is_lifetime,json=isLifetime" json:"is_lifetime,omitempty"`
-	IsRestricted     *bool             `protobuf:"varint,6,opt,name=is_restricted,json=isRestricted" json:"is_restricted,omitempty"`
-	IsBeta           *bool             `protobuf:"varint,7,opt,name=is_beta,json=isBeta" json:"is_beta,omitempty"`
+	IsStarterEdition *bool             `protobuf:"varint,3,opt,name=is_starter_edition" json:"is_starter_edition,omitempty"`
+	IsTrial          *bool             `protobuf:"varint,4,opt,name=is_trial" json:"is_trial,omitempty"`
+	IsLifetime       *bool             `protobuf:"varint,5,opt,name=is_lifetime" json:"is_lifetime,omitempty"`
+	IsRestricted     *bool             `protobuf:"varint,6,opt,name=is_restricted" json:"is_restricted,omitempty"`
+	IsBeta           *bool             `protobuf:"varint,7,opt,name=is_beta" json:"is_beta,omitempty"`
 	Name             *string           `protobuf:"bytes,8,opt,name=name" json:"name,omitempty"`
 	Program          *uint32           `protobuf:"fixed32,9,opt,name=program" json:"program,omitempty"`
 	Licenses         []*AccountLicense `protobuf:"bytes,10,rep,name=licenses" json:"licenses,omitempty"`
-	RealmPermissions *uint32           `protobuf:"varint,11,opt,name=realm_permissions,json=realmPermissions" json:"realm_permissions,omitempty"`
+	RealmPermissions *uint32           `protobuf:"varint,11,opt,name=realm_permissions" json:"realm_permissions,omitempty"`
 	XXX_unrecognized []byte            `json:"-"`
 }
 
-func (m *GameLevelInfo) Reset()                    { *m = GameLevelInfo{} }
-func (m *GameLevelInfo) String() string            { return proto.CompactTextString(m) }
-func (*GameLevelInfo) ProtoMessage()               {}
-func (*GameLevelInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{35} }
+func (m *GameLevelInfo) Reset()         { *m = GameLevelInfo{} }
+func (m *GameLevelInfo) String() string { return proto.CompactTextString(m) }
+func (*GameLevelInfo) ProtoMessage()    {}
 
 func (m *GameLevelInfo) GetIsStarterEdition() bool {
 	if m != nil && m.IsStarterEdition != nil {
@@ -1598,18 +1476,17 @@ func (m *GameLevelInfo) GetRealmPermissions() uint32 {
 
 // ref: bnet.protocol.account.GameSessionInfo
 type GameSessionInfo struct {
-	StartTime              *uint32              `protobuf:"varint,3,opt,name=start_time,json=startTime" json:"start_time,omitempty"`
+	StartTime              *uint32              `protobuf:"varint,3,opt,name=start_time" json:"start_time,omitempty"`
 	Location               *GameSessionLocation `protobuf:"bytes,4,opt,name=location" json:"location,omitempty"`
-	HasBenefactor          *bool                `protobuf:"varint,5,opt,name=has_benefactor,json=hasBenefactor" json:"has_benefactor,omitempty"`
-	IsUsingIgr             *bool                `protobuf:"varint,6,opt,name=is_using_igr,json=isUsingIgr" json:"is_using_igr,omitempty"`
-	ParentalControlsActive *bool                `protobuf:"varint,7,opt,name=parental_controls_active,json=parentalControlsActive" json:"parental_controls_active,omitempty"`
+	HasBenefactor          *bool                `protobuf:"varint,5,opt,name=has_benefactor" json:"has_benefactor,omitempty"`
+	IsUsingIgr             *bool                `protobuf:"varint,6,opt,name=is_using_igr" json:"is_using_igr,omitempty"`
+	ParentalControlsActive *bool                `protobuf:"varint,7,opt,name=parental_controls_active" json:"parental_controls_active,omitempty"`
 	XXX_unrecognized       []byte               `json:"-"`
 }
 
-func (m *GameSessionInfo) Reset()                    { *m = GameSessionInfo{} }
-func (m *GameSessionInfo) String() string            { return proto.CompactTextString(m) }
-func (*GameSessionInfo) ProtoMessage()               {}
-func (*GameSessionInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{36} }
+func (m *GameSessionInfo) Reset()         { *m = GameSessionInfo{} }
+func (m *GameSessionInfo) String() string { return proto.CompactTextString(m) }
+func (*GameSessionInfo) ProtoMessage()    {}
 
 func (m *GameSessionInfo) GetStartTime() uint32 {
 	if m != nil && m.StartTime != nil {
@@ -1648,16 +1525,15 @@ func (m *GameSessionInfo) GetParentalControlsActive() bool {
 
 // ref: bnet.protocol.account.GameSessionLocation
 type GameSessionLocation struct {
-	IpAddress        *string `protobuf:"bytes,1,opt,name=ip_address,json=ipAddress" json:"ip_address,omitempty"`
+	IpAddress        *string `protobuf:"bytes,1,opt,name=ip_address" json:"ip_address,omitempty"`
 	Country          *uint32 `protobuf:"varint,2,opt,name=country" json:"country,omitempty"`
 	City             *string `protobuf:"bytes,3,opt,name=city" json:"city,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *GameSessionLocation) Reset()                    { *m = GameSessionLocation{} }
-func (m *GameSessionLocation) String() string            { return proto.CompactTextString(m) }
-func (*GameSessionLocation) ProtoMessage()               {}
-func (*GameSessionLocation) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{37} }
+func (m *GameSessionLocation) Reset()         { *m = GameSessionLocation{} }
+func (m *GameSessionLocation) String() string { return proto.CompactTextString(m) }
+func (*GameSessionLocation) ProtoMessage()    {}
 
 func (m *GameSessionLocation) GetIpAddress() string {
 	if m != nil && m.IpAddress != nil {
@@ -1686,10 +1562,9 @@ type GameSessionUpdateInfo struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *GameSessionUpdateInfo) Reset()                    { *m = GameSessionUpdateInfo{} }
-func (m *GameSessionUpdateInfo) String() string            { return proto.CompactTextString(m) }
-func (*GameSessionUpdateInfo) ProtoMessage()               {}
-func (*GameSessionUpdateInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{38} }
+func (m *GameSessionUpdateInfo) Reset()         { *m = GameSessionUpdateInfo{} }
+func (m *GameSessionUpdateInfo) String() string { return proto.CompactTextString(m) }
+func (*GameSessionUpdateInfo) ProtoMessage()    {}
 
 func (m *GameSessionUpdateInfo) GetCais() *CAIS {
 	if m != nil {
@@ -1700,17 +1575,16 @@ func (m *GameSessionUpdateInfo) GetCais() *CAIS {
 
 // ref: bnet.protocol.account.GameStatus
 type GameStatus struct {
-	IsSuspended       *bool   `protobuf:"varint,4,opt,name=is_suspended,json=isSuspended" json:"is_suspended,omitempty"`
-	IsBanned          *bool   `protobuf:"varint,5,opt,name=is_banned,json=isBanned" json:"is_banned,omitempty"`
-	SuspensionExpires *uint64 `protobuf:"varint,6,opt,name=suspension_expires,json=suspensionExpires" json:"suspension_expires,omitempty"`
+	IsSuspended       *bool   `protobuf:"varint,4,opt,name=is_suspended" json:"is_suspended,omitempty"`
+	IsBanned          *bool   `protobuf:"varint,5,opt,name=is_banned" json:"is_banned,omitempty"`
+	SuspensionExpires *uint64 `protobuf:"varint,6,opt,name=suspension_expires" json:"suspension_expires,omitempty"`
 	Program           *uint32 `protobuf:"fixed32,7,opt,name=program" json:"program,omitempty"`
 	XXX_unrecognized  []byte  `json:"-"`
 }
 
-func (m *GameStatus) Reset()                    { *m = GameStatus{} }
-func (m *GameStatus) String() string            { return proto.CompactTextString(m) }
-func (*GameStatus) ProtoMessage()               {}
-func (*GameStatus) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{39} }
+func (m *GameStatus) Reset()         { *m = GameStatus{} }
+func (m *GameStatus) String() string { return proto.CompactTextString(m) }
+func (*GameStatus) ProtoMessage()    {}
 
 func (m *GameStatus) GetIsSuspended() bool {
 	if m != nil && m.IsSuspended != nil {
@@ -1742,17 +1616,16 @@ func (m *GameStatus) GetProgram() uint32 {
 
 // ref: bnet.protocol.account.GameTimeInfo
 type GameTimeInfo struct {
-	IsUnlimitedPlayTime     *bool   `protobuf:"varint,3,opt,name=is_unlimited_play_time,json=isUnlimitedPlayTime" json:"is_unlimited_play_time,omitempty"`
-	PlayTimeExpires         *uint64 `protobuf:"varint,5,opt,name=play_time_expires,json=playTimeExpires" json:"play_time_expires,omitempty"`
-	IsSubscription          *bool   `protobuf:"varint,6,opt,name=is_subscription,json=isSubscription" json:"is_subscription,omitempty"`
-	IsRecurringSubscription *bool   `protobuf:"varint,7,opt,name=is_recurring_subscription,json=isRecurringSubscription" json:"is_recurring_subscription,omitempty"`
+	IsUnlimitedPlayTime     *bool   `protobuf:"varint,3,opt,name=is_unlimited_play_time" json:"is_unlimited_play_time,omitempty"`
+	PlayTimeExpires         *uint64 `protobuf:"varint,5,opt,name=play_time_expires" json:"play_time_expires,omitempty"`
+	IsSubscription          *bool   `protobuf:"varint,6,opt,name=is_subscription" json:"is_subscription,omitempty"`
+	IsRecurringSubscription *bool   `protobuf:"varint,7,opt,name=is_recurring_subscription" json:"is_recurring_subscription,omitempty"`
 	XXX_unrecognized        []byte  `json:"-"`
 }
 
-func (m *GameTimeInfo) Reset()                    { *m = GameTimeInfo{} }
-func (m *GameTimeInfo) String() string            { return proto.CompactTextString(m) }
-func (*GameTimeInfo) ProtoMessage()               {}
-func (*GameTimeInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{40} }
+func (m *GameTimeInfo) Reset()         { *m = GameTimeInfo{} }
+func (m *GameTimeInfo) String() string { return proto.CompactTextString(m) }
+func (*GameTimeInfo) ProtoMessage()    {}
 
 func (m *GameTimeInfo) GetIsUnlimitedPlayTime() bool {
 	if m != nil && m.IsUnlimitedPlayTime != nil {
@@ -1784,16 +1657,15 @@ func (m *GameTimeInfo) GetIsRecurringSubscription() bool {
 
 // ref: bnet.protocol.account.GameTimeRemainingInfo
 type GameTimeRemainingInfo struct {
-	MinutesRemaining               *uint32 `protobuf:"varint,1,opt,name=minutes_remaining,json=minutesRemaining" json:"minutes_remaining,omitempty"`
-	ParentalDailyMinutesRemaining  *uint32 `protobuf:"varint,2,opt,name=parental_daily_minutes_remaining,json=parentalDailyMinutesRemaining" json:"parental_daily_minutes_remaining,omitempty"`
-	ParentalWeeklyMinutesRemaining *uint32 `protobuf:"varint,3,opt,name=parental_weekly_minutes_remaining,json=parentalWeeklyMinutesRemaining" json:"parental_weekly_minutes_remaining,omitempty"`
+	MinutesRemaining               *uint32 `protobuf:"varint,1,opt,name=minutes_remaining" json:"minutes_remaining,omitempty"`
+	ParentalDailyMinutesRemaining  *uint32 `protobuf:"varint,2,opt,name=parental_daily_minutes_remaining" json:"parental_daily_minutes_remaining,omitempty"`
+	ParentalWeeklyMinutesRemaining *uint32 `protobuf:"varint,3,opt,name=parental_weekly_minutes_remaining" json:"parental_weekly_minutes_remaining,omitempty"`
 	XXX_unrecognized               []byte  `json:"-"`
 }
 
-func (m *GameTimeRemainingInfo) Reset()                    { *m = GameTimeRemainingInfo{} }
-func (m *GameTimeRemainingInfo) String() string            { return proto.CompactTextString(m) }
-func (*GameTimeRemainingInfo) ProtoMessage()               {}
-func (*GameTimeRemainingInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{41} }
+func (m *GameTimeRemainingInfo) Reset()         { *m = GameTimeRemainingInfo{} }
+func (m *GameTimeRemainingInfo) String() string { return proto.CompactTextString(m) }
+func (*GameTimeRemainingInfo) ProtoMessage()    {}
 
 func (m *GameTimeRemainingInfo) GetMinutesRemaining() uint32 {
 	if m != nil && m.MinutesRemaining != nil {
@@ -1819,21 +1691,20 @@ func (m *GameTimeRemainingInfo) GetParentalWeeklyMinutesRemaining() uint32 {
 // ref: bnet.protocol.account.GetAccountRequest
 type GetAccountRequest struct {
 	Ref                   *AccountReference `protobuf:"bytes,1,opt,name=ref" json:"ref,omitempty"`
-	FetchAll              *bool             `protobuf:"varint,10,opt,name=fetch_all,json=fetchAll,def=0" json:"fetch_all,omitempty"`
-	FetchBlob             *bool             `protobuf:"varint,11,opt,name=fetch_blob,json=fetchBlob,def=0" json:"fetch_blob,omitempty"`
-	FetchId               *bool             `protobuf:"varint,12,opt,name=fetch_id,json=fetchId,def=0" json:"fetch_id,omitempty"`
-	FetchEmail            *bool             `protobuf:"varint,13,opt,name=fetch_email,json=fetchEmail,def=0" json:"fetch_email,omitempty"`
-	FetchBattleTag        *bool             `protobuf:"varint,14,opt,name=fetch_battle_tag,json=fetchBattleTag,def=0" json:"fetch_battle_tag,omitempty"`
-	FetchFullName         *bool             `protobuf:"varint,15,opt,name=fetch_full_name,json=fetchFullName,def=0" json:"fetch_full_name,omitempty"`
-	FetchLinks            *bool             `protobuf:"varint,16,opt,name=fetch_links,json=fetchLinks,def=0" json:"fetch_links,omitempty"`
-	FetchParentalControls *bool             `protobuf:"varint,17,opt,name=fetch_parental_controls,json=fetchParentalControls,def=0" json:"fetch_parental_controls,omitempty"`
+	FetchAll              *bool             `protobuf:"varint,10,opt,name=fetch_all,def=0" json:"fetch_all,omitempty"`
+	FetchBlob             *bool             `protobuf:"varint,11,opt,name=fetch_blob,def=0" json:"fetch_blob,omitempty"`
+	FetchId               *bool             `protobuf:"varint,12,opt,name=fetch_id,def=0" json:"fetch_id,omitempty"`
+	FetchEmail            *bool             `protobuf:"varint,13,opt,name=fetch_email,def=0" json:"fetch_email,omitempty"`
+	FetchBattleTag        *bool             `protobuf:"varint,14,opt,name=fetch_battle_tag,def=0" json:"fetch_battle_tag,omitempty"`
+	FetchFullName         *bool             `protobuf:"varint,15,opt,name=fetch_full_name,def=0" json:"fetch_full_name,omitempty"`
+	FetchLinks            *bool             `protobuf:"varint,16,opt,name=fetch_links,def=0" json:"fetch_links,omitempty"`
+	FetchParentalControls *bool             `protobuf:"varint,17,opt,name=fetch_parental_controls,def=0" json:"fetch_parental_controls,omitempty"`
 	XXX_unrecognized      []byte            `json:"-"`
 }
 
-func (m *GetAccountRequest) Reset()                    { *m = GetAccountRequest{} }
-func (m *GetAccountRequest) String() string            { return proto.CompactTextString(m) }
-func (*GetAccountRequest) ProtoMessage()               {}
-func (*GetAccountRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{42} }
+func (m *GetAccountRequest) Reset()         { *m = GetAccountRequest{} }
+func (m *GetAccountRequest) String() string { return proto.CompactTextString(m) }
+func (*GetAccountRequest) ProtoMessage()    {}
 
 const Default_GetAccountRequest_FetchAll bool = false
 const Default_GetAccountRequest_FetchBlob bool = false
@@ -1912,17 +1783,16 @@ type GetAccountResponse struct {
 	Blob                *AccountBlob         `protobuf:"bytes,11,opt,name=blob" json:"blob,omitempty"`
 	Id                  *AccountId           `protobuf:"bytes,12,opt,name=id" json:"id,omitempty"`
 	Email               []string             `protobuf:"bytes,13,rep,name=email" json:"email,omitempty"`
-	BattleTag           *string              `protobuf:"bytes,14,opt,name=battle_tag,json=battleTag" json:"battle_tag,omitempty"`
-	FullName            *string              `protobuf:"bytes,15,opt,name=full_name,json=fullName" json:"full_name,omitempty"`
+	BattleTag           *string              `protobuf:"bytes,14,opt,name=battle_tag" json:"battle_tag,omitempty"`
+	FullName            *string              `protobuf:"bytes,15,opt,name=full_name" json:"full_name,omitempty"`
 	Links               []*GameAccountLink   `protobuf:"bytes,16,rep,name=links" json:"links,omitempty"`
-	ParentalControlInfo *ParentalControlInfo `protobuf:"bytes,17,opt,name=parental_control_info,json=parentalControlInfo" json:"parental_control_info,omitempty"`
+	ParentalControlInfo *ParentalControlInfo `protobuf:"bytes,17,opt,name=parental_control_info" json:"parental_control_info,omitempty"`
 	XXX_unrecognized    []byte               `json:"-"`
 }
 
-func (m *GetAccountResponse) Reset()                    { *m = GetAccountResponse{} }
-func (m *GetAccountResponse) String() string            { return proto.CompactTextString(m) }
-func (*GetAccountResponse) ProtoMessage()               {}
-func (*GetAccountResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{43} }
+func (m *GetAccountResponse) Reset()         { *m = GetAccountResponse{} }
+func (m *GetAccountResponse) String() string { return proto.CompactTextString(m) }
+func (*GetAccountResponse) ProtoMessage()    {}
 
 func (m *GetAccountResponse) GetBlob() *AccountBlob {
 	if m != nil {
@@ -1975,7 +1845,7 @@ func (m *GetAccountResponse) GetParentalControlInfo() *ParentalControlInfo {
 
 // ref: bnet.protocol.account.GetAccountStateRequest
 type GetAccountStateRequest struct {
-	EntityId         *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=entity_id,json=entityId" json:"entity_id,omitempty"`
+	EntityId         *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=entity_id" json:"entity_id,omitempty"`
 	Program          *uint32                 `protobuf:"varint,2,opt,name=program" json:"program,omitempty"`
 	Region           *uint32                 `protobuf:"varint,3,opt,name=region" json:"region,omitempty"`
 	Options          *AccountFieldOptions    `protobuf:"bytes,10,opt,name=options" json:"options,omitempty"`
@@ -1983,10 +1853,9 @@ type GetAccountStateRequest struct {
 	XXX_unrecognized []byte                  `json:"-"`
 }
 
-func (m *GetAccountStateRequest) Reset()                    { *m = GetAccountStateRequest{} }
-func (m *GetAccountStateRequest) String() string            { return proto.CompactTextString(m) }
-func (*GetAccountStateRequest) ProtoMessage()               {}
-func (*GetAccountStateRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{44} }
+func (m *GetAccountStateRequest) Reset()         { *m = GetAccountStateRequest{} }
+func (m *GetAccountStateRequest) String() string { return proto.CompactTextString(m) }
+func (*GetAccountStateRequest) ProtoMessage()    {}
 
 func (m *GetAccountStateRequest) GetEntityId() *bnet_protocol.EntityId {
 	if m != nil {
@@ -2030,10 +1899,9 @@ type GetAccountStateResponse struct {
 	XXX_unrecognized []byte            `json:"-"`
 }
 
-func (m *GetAccountStateResponse) Reset()                    { *m = GetAccountStateResponse{} }
-func (m *GetAccountStateResponse) String() string            { return proto.CompactTextString(m) }
-func (*GetAccountStateResponse) ProtoMessage()               {}
-func (*GetAccountStateResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{45} }
+func (m *GetAccountStateResponse) Reset()         { *m = GetAccountStateResponse{} }
+func (m *GetAccountStateResponse) String() string { return proto.CompactTextString(m) }
+func (*GetAccountStateResponse) ProtoMessage()    {}
 
 func (m *GetAccountStateResponse) GetState() *AccountState {
 	if m != nil {
@@ -2051,14 +1919,13 @@ func (m *GetAccountStateResponse) GetTags() *AccountFieldTags {
 
 // ref: bnet.protocol.account.GetCAISInfoRequest
 type GetCAISInfoRequest struct {
-	EntityId         *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=entity_id,json=entityId" json:"entity_id,omitempty"`
+	EntityId         *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=entity_id" json:"entity_id,omitempty"`
 	XXX_unrecognized []byte                  `json:"-"`
 }
 
-func (m *GetCAISInfoRequest) Reset()                    { *m = GetCAISInfoRequest{} }
-func (m *GetCAISInfoRequest) String() string            { return proto.CompactTextString(m) }
-func (*GetCAISInfoRequest) ProtoMessage()               {}
-func (*GetCAISInfoRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{46} }
+func (m *GetCAISInfoRequest) Reset()         { *m = GetCAISInfoRequest{} }
+func (m *GetCAISInfoRequest) String() string { return proto.CompactTextString(m) }
+func (*GetCAISInfoRequest) ProtoMessage()    {}
 
 func (m *GetCAISInfoRequest) GetEntityId() *bnet_protocol.EntityId {
 	if m != nil {
@@ -2069,14 +1936,13 @@ func (m *GetCAISInfoRequest) GetEntityId() *bnet_protocol.EntityId {
 
 // ref: bnet.protocol.account.GetCAISInfoResponse
 type GetCAISInfoResponse struct {
-	CaisInfo         *CAIS  `protobuf:"bytes,1,opt,name=cais_info,json=caisInfo" json:"cais_info,omitempty"`
+	CaisInfo         *CAIS  `protobuf:"bytes,1,opt,name=cais_info" json:"cais_info,omitempty"`
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *GetCAISInfoResponse) Reset()                    { *m = GetCAISInfoResponse{} }
-func (m *GetCAISInfoResponse) String() string            { return proto.CompactTextString(m) }
-func (*GetCAISInfoResponse) ProtoMessage()               {}
-func (*GetCAISInfoResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{47} }
+func (m *GetCAISInfoResponse) Reset()         { *m = GetCAISInfoResponse{} }
+func (m *GetCAISInfoResponse) String() string { return proto.CompactTextString(m) }
+func (*GetCAISInfoResponse) ProtoMessage()    {}
 
 func (m *GetCAISInfoResponse) GetCaisInfo() *CAIS {
 	if m != nil {
@@ -2087,16 +1953,15 @@ func (m *GetCAISInfoResponse) GetCaisInfo() *CAIS {
 
 // ref: bnet.protocol.account.GetEBalanceRequest
 type GetEBalanceRequest struct {
-	AccountId          *AccountId `protobuf:"bytes,1,req,name=account_id,json=accountId" json:"account_id,omitempty"`
+	AccountId          *AccountId `protobuf:"bytes,1,req,name=account_id" json:"account_id,omitempty"`
 	Currency           *string    `protobuf:"bytes,2,req,name=currency" json:"currency,omitempty"`
-	CurrencyHomeRegion *uint32    `protobuf:"varint,3,opt,name=currency_home_region,json=currencyHomeRegion" json:"currency_home_region,omitempty"`
+	CurrencyHomeRegion *uint32    `protobuf:"varint,3,opt,name=currency_home_region" json:"currency_home_region,omitempty"`
 	XXX_unrecognized   []byte     `json:"-"`
 }
 
-func (m *GetEBalanceRequest) Reset()                    { *m = GetEBalanceRequest{} }
-func (m *GetEBalanceRequest) String() string            { return proto.CompactTextString(m) }
-func (*GetEBalanceRequest) ProtoMessage()               {}
-func (*GetEBalanceRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{48} }
+func (m *GetEBalanceRequest) Reset()         { *m = GetEBalanceRequest{} }
+func (m *GetEBalanceRequest) String() string { return proto.CompactTextString(m) }
+func (*GetEBalanceRequest) ProtoMessage()    {}
 
 func (m *GetEBalanceRequest) GetAccountId() *AccountId {
 	if m != nil {
@@ -2125,10 +1990,9 @@ type GetEBalanceResponse struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *GetEBalanceResponse) Reset()                    { *m = GetEBalanceResponse{} }
-func (m *GetEBalanceResponse) String() string            { return proto.CompactTextString(m) }
-func (*GetEBalanceResponse) ProtoMessage()               {}
-func (*GetEBalanceResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{49} }
+func (m *GetEBalanceResponse) Reset()         { *m = GetEBalanceResponse{} }
+func (m *GetEBalanceResponse) String() string { return proto.CompactTextString(m) }
+func (*GetEBalanceResponse) ProtoMessage()    {}
 
 func (m *GetEBalanceResponse) GetBalance() string {
 	if m != nil && m.Balance != nil {
@@ -2139,14 +2003,13 @@ func (m *GetEBalanceResponse) GetBalance() string {
 
 // ref: bnet.protocol.account.GetEBalanceRestrictionsRequest
 type GetEBalanceRestrictionsRequest struct {
-	CurrencyHomeRegion *uint32 `protobuf:"varint,1,opt,name=currency_home_region,json=currencyHomeRegion" json:"currency_home_region,omitempty"`
+	CurrencyHomeRegion *uint32 `protobuf:"varint,1,opt,name=currency_home_region" json:"currency_home_region,omitempty"`
 	XXX_unrecognized   []byte  `json:"-"`
 }
 
-func (m *GetEBalanceRestrictionsRequest) Reset()                    { *m = GetEBalanceRestrictionsRequest{} }
-func (m *GetEBalanceRestrictionsRequest) String() string            { return proto.CompactTextString(m) }
-func (*GetEBalanceRestrictionsRequest) ProtoMessage()               {}
-func (*GetEBalanceRestrictionsRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{50} }
+func (m *GetEBalanceRestrictionsRequest) Reset()         { *m = GetEBalanceRestrictionsRequest{} }
+func (m *GetEBalanceRestrictionsRequest) String() string { return proto.CompactTextString(m) }
+func (*GetEBalanceRestrictionsRequest) ProtoMessage()    {}
 
 func (m *GetEBalanceRestrictionsRequest) GetCurrencyHomeRegion() uint32 {
 	if m != nil && m.CurrencyHomeRegion != nil {
@@ -2157,16 +2020,13 @@ func (m *GetEBalanceRestrictionsRequest) GetCurrencyHomeRegion() uint32 {
 
 // ref: bnet.protocol.account.GetEBalanceRestrictionsResponse
 type GetEBalanceRestrictionsResponse struct {
-	CurrencyRestrictions []*CurrencyRestriction `protobuf:"bytes,1,rep,name=currency_restrictions,json=currencyRestrictions" json:"currency_restrictions,omitempty"`
+	CurrencyRestrictions []*CurrencyRestriction `protobuf:"bytes,1,rep,name=currency_restrictions" json:"currency_restrictions,omitempty"`
 	XXX_unrecognized     []byte                 `json:"-"`
 }
 
 func (m *GetEBalanceRestrictionsResponse) Reset()         { *m = GetEBalanceRestrictionsResponse{} }
 func (m *GetEBalanceRestrictionsResponse) String() string { return proto.CompactTextString(m) }
 func (*GetEBalanceRestrictionsResponse) ProtoMessage()    {}
-func (*GetEBalanceRestrictionsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{51}
-}
 
 func (m *GetEBalanceRestrictionsResponse) GetCurrencyRestrictions() []*CurrencyRestriction {
 	if m != nil {
@@ -2177,17 +2037,16 @@ func (m *GetEBalanceRestrictionsResponse) GetCurrencyRestrictions() []*CurrencyR
 
 // ref: bnet.protocol.account.GetGameAccountStateRequest
 type GetGameAccountStateRequest struct {
-	AccountId        *bnet_protocol.EntityId  `protobuf:"bytes,1,opt,name=account_id,json=accountId" json:"account_id,omitempty"`
-	GameAccountId    *bnet_protocol.EntityId  `protobuf:"bytes,2,opt,name=game_account_id,json=gameAccountId" json:"game_account_id,omitempty"`
+	AccountId        *bnet_protocol.EntityId  `protobuf:"bytes,1,opt,name=account_id" json:"account_id,omitempty"`
+	GameAccountId    *bnet_protocol.EntityId  `protobuf:"bytes,2,opt,name=game_account_id" json:"game_account_id,omitempty"`
 	Options          *GameAccountFieldOptions `protobuf:"bytes,10,opt,name=options" json:"options,omitempty"`
 	Tags             *GameAccountFieldTags    `protobuf:"bytes,11,opt,name=tags" json:"tags,omitempty"`
 	XXX_unrecognized []byte                   `json:"-"`
 }
 
-func (m *GetGameAccountStateRequest) Reset()                    { *m = GetGameAccountStateRequest{} }
-func (m *GetGameAccountStateRequest) String() string            { return proto.CompactTextString(m) }
-func (*GetGameAccountStateRequest) ProtoMessage()               {}
-func (*GetGameAccountStateRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{52} }
+func (m *GetGameAccountStateRequest) Reset()         { *m = GetGameAccountStateRequest{} }
+func (m *GetGameAccountStateRequest) String() string { return proto.CompactTextString(m) }
+func (*GetGameAccountStateRequest) ProtoMessage()    {}
 
 func (m *GetGameAccountStateRequest) GetAccountId() *bnet_protocol.EntityId {
 	if m != nil {
@@ -2224,10 +2083,9 @@ type GetGameAccountStateResponse struct {
 	XXX_unrecognized []byte                `json:"-"`
 }
 
-func (m *GetGameAccountStateResponse) Reset()                    { *m = GetGameAccountStateResponse{} }
-func (m *GetGameAccountStateResponse) String() string            { return proto.CompactTextString(m) }
-func (*GetGameAccountStateResponse) ProtoMessage()               {}
-func (*GetGameAccountStateResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{53} }
+func (m *GetGameAccountStateResponse) Reset()         { *m = GetGameAccountStateResponse{} }
+func (m *GetGameAccountStateResponse) String() string { return proto.CompactTextString(m) }
+func (*GetGameAccountStateResponse) ProtoMessage()    {}
 
 func (m *GetGameAccountStateResponse) GetState() *GameAccountState {
 	if m != nil {
@@ -2245,14 +2103,13 @@ func (m *GetGameAccountStateResponse) GetTags() *GameAccountFieldTags {
 
 // ref: bnet.protocol.account.GetGameSessionInfoRequest
 type GetGameSessionInfoRequest struct {
-	EntityId         *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=entity_id,json=entityId" json:"entity_id,omitempty"`
+	EntityId         *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=entity_id" json:"entity_id,omitempty"`
 	XXX_unrecognized []byte                  `json:"-"`
 }
 
-func (m *GetGameSessionInfoRequest) Reset()                    { *m = GetGameSessionInfoRequest{} }
-func (m *GetGameSessionInfoRequest) String() string            { return proto.CompactTextString(m) }
-func (*GetGameSessionInfoRequest) ProtoMessage()               {}
-func (*GetGameSessionInfoRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{54} }
+func (m *GetGameSessionInfoRequest) Reset()         { *m = GetGameSessionInfoRequest{} }
+func (m *GetGameSessionInfoRequest) String() string { return proto.CompactTextString(m) }
+func (*GetGameSessionInfoRequest) ProtoMessage()    {}
 
 func (m *GetGameSessionInfoRequest) GetEntityId() *bnet_protocol.EntityId {
 	if m != nil {
@@ -2263,14 +2120,13 @@ func (m *GetGameSessionInfoRequest) GetEntityId() *bnet_protocol.EntityId {
 
 // ref: bnet.protocol.account.GetGameSessionInfoResponse
 type GetGameSessionInfoResponse struct {
-	SessionInfo      *GameSessionInfo `protobuf:"bytes,2,opt,name=session_info,json=sessionInfo" json:"session_info,omitempty"`
+	SessionInfo      *GameSessionInfo `protobuf:"bytes,2,opt,name=session_info" json:"session_info,omitempty"`
 	XXX_unrecognized []byte           `json:"-"`
 }
 
-func (m *GetGameSessionInfoResponse) Reset()                    { *m = GetGameSessionInfoResponse{} }
-func (m *GetGameSessionInfoResponse) String() string            { return proto.CompactTextString(m) }
-func (*GetGameSessionInfoResponse) ProtoMessage()               {}
-func (*GetGameSessionInfoResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{55} }
+func (m *GetGameSessionInfoResponse) Reset()         { *m = GetGameSessionInfoResponse{} }
+func (m *GetGameSessionInfoResponse) String() string { return proto.CompactTextString(m) }
+func (*GetGameSessionInfoResponse) ProtoMessage()    {}
 
 func (m *GetGameSessionInfoResponse) GetSessionInfo() *GameSessionInfo {
 	if m != nil {
@@ -2281,17 +2137,14 @@ func (m *GetGameSessionInfoResponse) GetSessionInfo() *GameSessionInfo {
 
 // ref: bnet.protocol.account.GetGameTimeRemainingInfoRequest
 type GetGameTimeRemainingInfoRequest struct {
-	GameAccountId    *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=game_account_id,json=gameAccountId" json:"game_account_id,omitempty"`
-	AccountId        *bnet_protocol.EntityId `protobuf:"bytes,2,opt,name=account_id,json=accountId" json:"account_id,omitempty"`
+	GameAccountId    *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=game_account_id" json:"game_account_id,omitempty"`
+	AccountId        *bnet_protocol.EntityId `protobuf:"bytes,2,opt,name=account_id" json:"account_id,omitempty"`
 	XXX_unrecognized []byte                  `json:"-"`
 }
 
 func (m *GetGameTimeRemainingInfoRequest) Reset()         { *m = GetGameTimeRemainingInfoRequest{} }
 func (m *GetGameTimeRemainingInfoRequest) String() string { return proto.CompactTextString(m) }
 func (*GetGameTimeRemainingInfoRequest) ProtoMessage()    {}
-func (*GetGameTimeRemainingInfoRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{56}
-}
 
 func (m *GetGameTimeRemainingInfoRequest) GetGameAccountId() *bnet_protocol.EntityId {
 	if m != nil {
@@ -2309,16 +2162,13 @@ func (m *GetGameTimeRemainingInfoRequest) GetAccountId() *bnet_protocol.EntityId
 
 // ref: bnet.protocol.account.GetGameTimeRemainingInfoResponse
 type GetGameTimeRemainingInfoResponse struct {
-	GameTimeRemainingInfo *GameTimeRemainingInfo `protobuf:"bytes,1,opt,name=game_time_remaining_info,json=gameTimeRemainingInfo" json:"game_time_remaining_info,omitempty"`
+	GameTimeRemainingInfo *GameTimeRemainingInfo `protobuf:"bytes,1,opt,name=game_time_remaining_info" json:"game_time_remaining_info,omitempty"`
 	XXX_unrecognized      []byte                 `json:"-"`
 }
 
 func (m *GetGameTimeRemainingInfoResponse) Reset()         { *m = GetGameTimeRemainingInfoResponse{} }
 func (m *GetGameTimeRemainingInfoResponse) String() string { return proto.CompactTextString(m) }
 func (*GetGameTimeRemainingInfoResponse) ProtoMessage()    {}
-func (*GetGameTimeRemainingInfoResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor0, []int{57}
-}
 
 func (m *GetGameTimeRemainingInfoResponse) GetGameTimeRemainingInfo() *GameTimeRemainingInfo {
 	if m != nil {
@@ -2329,19 +2179,18 @@ func (m *GetGameTimeRemainingInfoResponse) GetGameTimeRemainingInfo() *GameTimeR
 
 // ref: bnet.protocol.account.GetLicensesRequest
 type GetLicensesRequest struct {
-	TargetId                  *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=target_id,json=targetId" json:"target_id,omitempty"`
-	GetAccountLicenses        *bool                   `protobuf:"varint,2,opt,name=get_account_licenses,json=getAccountLicenses" json:"get_account_licenses,omitempty"`
-	GetGameAccountLicenses    *bool                   `protobuf:"varint,3,opt,name=get_game_account_licenses,json=getGameAccountLicenses" json:"get_game_account_licenses,omitempty"`
-	GetDynamicAccountLicenses *bool                   `protobuf:"varint,4,opt,name=get_dynamic_account_licenses,json=getDynamicAccountLicenses" json:"get_dynamic_account_licenses,omitempty"`
-	ProgramId                 *uint32                 `protobuf:"fixed32,5,opt,name=program_id,json=programId" json:"program_id,omitempty"`
-	ExcludeUnknownProgram     *bool                   `protobuf:"varint,6,opt,name=exclude_unknown_program,json=excludeUnknownProgram,def=0" json:"exclude_unknown_program,omitempty"`
+	TargetId                  *bnet_protocol.EntityId `protobuf:"bytes,1,opt,name=target_id" json:"target_id,omitempty"`
+	GetAccountLicenses        *bool                   `protobuf:"varint,2,opt,name=get_account_licenses" json:"get_account_licenses,omitempty"`
+	GetGameAccountLicenses    *bool                   `protobuf:"varint,3,opt,name=get_game_account_licenses" json:"get_game_account_licenses,omitempty"`
+	GetDynamicAccountLicenses *bool                   `protobuf:"varint,4,opt,name=get_dynamic_account_licenses" json:"get_dynamic_account_licenses,omitempty"`
+	ProgramId                 *uint32                 `protobuf:"fixed32,5,opt,name=program_id" json:"program_id,omitempty"`
+	ExcludeUnknownProgram     *bool                   `protobuf:"varint,6,opt,name=exclude_unknown_program,def=0" json:"exclude_unknown_program,omitempty"`
 	XXX_unrecognized          []byte                  `json:"-"`
 }
 
-func (m *GetLicensesRequest) Reset()                    { *m = GetLicensesRequest{} }
-func (m *GetLicensesRequest) String() string            { return proto.CompactTextString(m) }
-func (*GetLicensesRequest) ProtoMessage()               {}
-func (*GetLicensesRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{58} }
+func (m *GetLicensesRequest) Reset()         { *m = GetLicensesRequest{} }
+func (m *GetLicensesRequest) String() string { return proto.CompactTextString(m) }
+func (*GetLicensesRequest) ProtoMessage()    {}
 
 const Default_GetLicensesRequest_ExcludeUnknownProgram bool = false
 
@@ -2393,10 +2242,9 @@ type GetLicensesResponse struct {
 	XXX_unrecognized []byte            `json:"-"`
 }
 
-func (m *GetLicensesResponse) Reset()                    { *m = GetLicensesResponse{} }
-func (m *GetLicensesResponse) String() string            { return proto.CompactTextString(m) }
-func (*GetLicensesResponse) ProtoMessage()               {}
-func (*GetLicensesResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{59} }
+func (m *GetLicensesResponse) Reset()         { *m = GetLicensesResponse{} }
+func (m *GetLicensesResponse) String() string { return proto.CompactTextString(m) }
+func (*GetLicensesResponse) ProtoMessage()    {}
 
 func (m *GetLicensesResponse) GetLicenses() []*AccountLicense {
 	if m != nil {
@@ -2407,15 +2255,14 @@ func (m *GetLicensesResponse) GetLicenses() []*AccountLicense {
 
 // ref: bnet.protocol.account.GetWalletListRequest
 type GetWalletListRequest struct {
-	AccountId        *AccountId `protobuf:"bytes,1,req,name=account_id,json=accountId" json:"account_id,omitempty"`
+	AccountId        *AccountId `protobuf:"bytes,1,req,name=account_id" json:"account_id,omitempty"`
 	Refresh          *bool      `protobuf:"varint,2,opt,name=refresh,def=0" json:"refresh,omitempty"`
 	XXX_unrecognized []byte     `json:"-"`
 }
 
-func (m *GetWalletListRequest) Reset()                    { *m = GetWalletListRequest{} }
-func (m *GetWalletListRequest) String() string            { return proto.CompactTextString(m) }
-func (*GetWalletListRequest) ProtoMessage()               {}
-func (*GetWalletListRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{60} }
+func (m *GetWalletListRequest) Reset()         { *m = GetWalletListRequest{} }
+func (m *GetWalletListRequest) String() string { return proto.CompactTextString(m) }
+func (*GetWalletListRequest) ProtoMessage()    {}
 
 const Default_GetWalletListRequest_Refresh bool = false
 
@@ -2439,10 +2286,9 @@ type GetWalletListResponse struct {
 	XXX_unrecognized []byte    `json:"-"`
 }
 
-func (m *GetWalletListResponse) Reset()                    { *m = GetWalletListResponse{} }
-func (m *GetWalletListResponse) String() string            { return proto.CompactTextString(m) }
-func (*GetWalletListResponse) ProtoMessage()               {}
-func (*GetWalletListResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{61} }
+func (m *GetWalletListResponse) Reset()         { *m = GetWalletListResponse{} }
+func (m *GetWalletListResponse) String() string { return proto.CompactTextString(m) }
+func (*GetWalletListResponse) ProtoMessage()    {}
 
 func (m *GetWalletListResponse) GetWallets() []*Wallet {
 	if m != nil {
@@ -2453,15 +2299,14 @@ func (m *GetWalletListResponse) GetWallets() []*Wallet {
 
 // ref: bnet.protocol.account.IsIgrAddressRequest
 type IsIgrAddressRequest struct {
-	ClientAddress    *string `protobuf:"bytes,1,opt,name=client_address,json=clientAddress" json:"client_address,omitempty"`
+	ClientAddress    *string `protobuf:"bytes,1,opt,name=client_address" json:"client_address,omitempty"`
 	Region           *uint32 `protobuf:"varint,2,opt,name=region" json:"region,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *IsIgrAddressRequest) Reset()                    { *m = IsIgrAddressRequest{} }
-func (m *IsIgrAddressRequest) String() string            { return proto.CompactTextString(m) }
-func (*IsIgrAddressRequest) ProtoMessage()               {}
-func (*IsIgrAddressRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{62} }
+func (m *IsIgrAddressRequest) Reset()         { *m = IsIgrAddressRequest{} }
+func (m *IsIgrAddressRequest) String() string { return proto.CompactTextString(m) }
+func (*IsIgrAddressRequest) ProtoMessage()    {}
 
 func (m *IsIgrAddressRequest) GetClientAddress() string {
 	if m != nil && m.ClientAddress != nil {
@@ -2480,18 +2325,17 @@ func (m *IsIgrAddressRequest) GetRegion() uint32 {
 // ref: bnet.protocol.account.ParentalControlInfo
 type ParentalControlInfo struct {
 	Timezone         *string `protobuf:"bytes,3,opt,name=timezone" json:"timezone,omitempty"`
-	MinutesPerDay    *uint32 `protobuf:"varint,4,opt,name=minutes_per_day,json=minutesPerDay" json:"minutes_per_day,omitempty"`
-	MinutesPerWeek   *uint32 `protobuf:"varint,5,opt,name=minutes_per_week,json=minutesPerWeek" json:"minutes_per_week,omitempty"`
-	CanReceiveVoice  *bool   `protobuf:"varint,6,opt,name=can_receive_voice,json=canReceiveVoice" json:"can_receive_voice,omitempty"`
-	CanSendVoice     *bool   `protobuf:"varint,7,opt,name=can_send_voice,json=canSendVoice" json:"can_send_voice,omitempty"`
-	PlaySchedule     []bool  `protobuf:"varint,8,rep,name=play_schedule,json=playSchedule" json:"play_schedule,omitempty"`
+	MinutesPerDay    *uint32 `protobuf:"varint,4,opt,name=minutes_per_day" json:"minutes_per_day,omitempty"`
+	MinutesPerWeek   *uint32 `protobuf:"varint,5,opt,name=minutes_per_week" json:"minutes_per_week,omitempty"`
+	CanReceiveVoice  *bool   `protobuf:"varint,6,opt,name=can_receive_voice" json:"can_receive_voice,omitempty"`
+	CanSendVoice     *bool   `protobuf:"varint,7,opt,name=can_send_voice" json:"can_send_voice,omitempty"`
+	PlaySchedule     []bool  `protobuf:"varint,8,rep,name=play_schedule" json:"play_schedule,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *ParentalControlInfo) Reset()                    { *m = ParentalControlInfo{} }
-func (m *ParentalControlInfo) String() string            { return proto.CompactTextString(m) }
-func (*ParentalControlInfo) ProtoMessage()               {}
-func (*ParentalControlInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{63} }
+func (m *ParentalControlInfo) Reset()         { *m = ParentalControlInfo{} }
+func (m *ParentalControlInfo) String() string { return proto.CompactTextString(m) }
+func (*ParentalControlInfo) ProtoMessage()    {}
 
 func (m *ParentalControlInfo) GetTimezone() string {
 	if m != nil && m.Timezone != nil {
@@ -2537,17 +2381,16 @@ func (m *ParentalControlInfo) GetPlaySchedule() []bool {
 
 // ref: bnet.protocol.account.PrivacyInfo
 type PrivacyInfo struct {
-	IsUsingRid                    *bool                        `protobuf:"varint,3,opt,name=is_using_rid,json=isUsingRid" json:"is_using_rid,omitempty"`
-	IsRealIdVisibleForViewFriends *bool                        `protobuf:"varint,4,opt,name=is_real_id_visible_for_view_friends,json=isRealIdVisibleForViewFriends" json:"is_real_id_visible_for_view_friends,omitempty"`
-	IsHiddenFromFriendFinder      *bool                        `protobuf:"varint,5,opt,name=is_hidden_from_friend_finder,json=isHiddenFromFriendFinder" json:"is_hidden_from_friend_finder,omitempty"`
-	GameInfoPrivacy               *PrivacyInfo_GameInfoPrivacy `protobuf:"varint,6,opt,name=game_info_privacy,json=gameInfoPrivacy,enum=bnet.protocol.account.PrivacyInfo_GameInfoPrivacy,def=1" json:"game_info_privacy,omitempty"`
+	IsUsingRid                    *bool                        `protobuf:"varint,3,opt,name=is_using_rid" json:"is_using_rid,omitempty"`
+	IsRealIdVisibleForViewFriends *bool                        `protobuf:"varint,4,opt,name=is_real_id_visible_for_view_friends" json:"is_real_id_visible_for_view_friends,omitempty"`
+	IsHiddenFromFriendFinder      *bool                        `protobuf:"varint,5,opt,name=is_hidden_from_friend_finder" json:"is_hidden_from_friend_finder,omitempty"`
+	GameInfoPrivacy               *PrivacyInfo_GameInfoPrivacy `protobuf:"varint,6,opt,name=game_info_privacy,enum=bnet.protocol.account.PrivacyInfo_GameInfoPrivacy,def=1" json:"game_info_privacy,omitempty"`
 	XXX_unrecognized              []byte                       `json:"-"`
 }
 
-func (m *PrivacyInfo) Reset()                    { *m = PrivacyInfo{} }
-func (m *PrivacyInfo) String() string            { return proto.CompactTextString(m) }
-func (*PrivacyInfo) ProtoMessage()               {}
-func (*PrivacyInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{64} }
+func (m *PrivacyInfo) Reset()         { *m = PrivacyInfo{} }
+func (m *PrivacyInfo) String() string { return proto.CompactTextString(m) }
+func (*PrivacyInfo) ProtoMessage()    {}
 
 const Default_PrivacyInfo_GameInfoPrivacy PrivacyInfo_GameInfoPrivacy = PrivacyInfo_PRIVACY_FRIENDS
 
@@ -2586,10 +2429,9 @@ type ProgramTag struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *ProgramTag) Reset()                    { *m = ProgramTag{} }
-func (m *ProgramTag) String() string            { return proto.CompactTextString(m) }
-func (*ProgramTag) ProtoMessage()               {}
-func (*ProgramTag) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{65} }
+func (m *ProgramTag) Reset()         { *m = ProgramTag{} }
+func (m *ProgramTag) String() string { return proto.CompactTextString(m) }
+func (*ProgramTag) ProtoMessage()    {}
 
 func (m *ProgramTag) GetProgram() uint32 {
 	if m != nil && m.Program != nil {
@@ -2612,10 +2454,9 @@ type RegionTag struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *RegionTag) Reset()                    { *m = RegionTag{} }
-func (m *RegionTag) String() string            { return proto.CompactTextString(m) }
-func (*RegionTag) ProtoMessage()               {}
-func (*RegionTag) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{66} }
+func (m *RegionTag) Reset()         { *m = RegionTag{} }
+func (m *RegionTag) String() string { return proto.CompactTextString(m) }
+func (*RegionTag) ProtoMessage()    {}
 
 func (m *RegionTag) GetRegion() uint32 {
 	if m != nil && m.Region != nil {
@@ -2633,19 +2474,18 @@ func (m *RegionTag) GetTag() uint32 {
 
 // ref: bnet.protocol.account.SubscriberReference
 type SubscriberReference struct {
-	ObjectId           *uint64                  `protobuf:"varint,1,opt,name=object_id,json=objectId,def=0" json:"object_id,omitempty"`
-	EntityId           *bnet_protocol.EntityId  `protobuf:"bytes,2,opt,name=entity_id,json=entityId" json:"entity_id,omitempty"`
-	AccountOptions     *AccountFieldOptions     `protobuf:"bytes,3,opt,name=account_options,json=accountOptions" json:"account_options,omitempty"`
-	AccountTags        *AccountFieldTags        `protobuf:"bytes,4,opt,name=account_tags,json=accountTags" json:"account_tags,omitempty"`
-	GameAccountOptions *GameAccountFieldOptions `protobuf:"bytes,5,opt,name=game_account_options,json=gameAccountOptions" json:"game_account_options,omitempty"`
-	GameAccountTags    *GameAccountFieldTags    `protobuf:"bytes,6,opt,name=game_account_tags,json=gameAccountTags" json:"game_account_tags,omitempty"`
+	ObjectId           *uint64                  `protobuf:"varint,1,opt,name=object_id,def=0" json:"object_id,omitempty"`
+	EntityId           *bnet_protocol.EntityId  `protobuf:"bytes,2,opt,name=entity_id" json:"entity_id,omitempty"`
+	AccountOptions     *AccountFieldOptions     `protobuf:"bytes,3,opt,name=account_options" json:"account_options,omitempty"`
+	AccountTags        *AccountFieldTags        `protobuf:"bytes,4,opt,name=account_tags" json:"account_tags,omitempty"`
+	GameAccountOptions *GameAccountFieldOptions `protobuf:"bytes,5,opt,name=game_account_options" json:"game_account_options,omitempty"`
+	GameAccountTags    *GameAccountFieldTags    `protobuf:"bytes,6,opt,name=game_account_tags" json:"game_account_tags,omitempty"`
 	XXX_unrecognized   []byte                   `json:"-"`
 }
 
-func (m *SubscriberReference) Reset()                    { *m = SubscriberReference{} }
-func (m *SubscriberReference) String() string            { return proto.CompactTextString(m) }
-func (*SubscriberReference) ProtoMessage()               {}
-func (*SubscriberReference) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{67} }
+func (m *SubscriberReference) Reset()         { *m = SubscriberReference{} }
+func (m *SubscriberReference) String() string { return proto.CompactTextString(m) }
+func (*SubscriberReference) ProtoMessage()    {}
 
 const Default_SubscriberReference_ObjectId uint64 = 0
 
@@ -2697,10 +2537,9 @@ type SubscriptionUpdateRequest struct {
 	XXX_unrecognized []byte                 `json:"-"`
 }
 
-func (m *SubscriptionUpdateRequest) Reset()                    { *m = SubscriptionUpdateRequest{} }
-func (m *SubscriptionUpdateRequest) String() string            { return proto.CompactTextString(m) }
-func (*SubscriptionUpdateRequest) ProtoMessage()               {}
-func (*SubscriptionUpdateRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{68} }
+func (m *SubscriptionUpdateRequest) Reset()         { *m = SubscriptionUpdateRequest{} }
+func (m *SubscriptionUpdateRequest) String() string { return proto.CompactTextString(m) }
+func (*SubscriptionUpdateRequest) ProtoMessage()    {}
 
 func (m *SubscriptionUpdateRequest) GetRef() []*SubscriberReference {
 	if m != nil {
@@ -2715,10 +2554,9 @@ type SubscriptionUpdateResponse struct {
 	XXX_unrecognized []byte                 `json:"-"`
 }
 
-func (m *SubscriptionUpdateResponse) Reset()                    { *m = SubscriptionUpdateResponse{} }
-func (m *SubscriptionUpdateResponse) String() string            { return proto.CompactTextString(m) }
-func (*SubscriptionUpdateResponse) ProtoMessage()               {}
-func (*SubscriptionUpdateResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{69} }
+func (m *SubscriptionUpdateResponse) Reset()         { *m = SubscriptionUpdateResponse{} }
+func (m *SubscriptionUpdateResponse) String() string { return proto.CompactTextString(m) }
+func (*SubscriptionUpdateResponse) ProtoMessage()    {}
 
 func (m *SubscriptionUpdateResponse) GetRef() []*SubscriberReference {
 	if m != nil {
@@ -2730,27 +2568,26 @@ func (m *SubscriptionUpdateResponse) GetRef() []*SubscriberReference {
 // ref: bnet.protocol.account.Wallet
 type Wallet struct {
 	Region           *uint32 `protobuf:"varint,1,req,name=region" json:"region,omitempty"`
-	WalletId         *uint64 `protobuf:"varint,2,req,name=wallet_id,json=walletId" json:"wallet_id,omitempty"`
-	WalletType       *uint32 `protobuf:"varint,3,req,name=wallet_type,json=walletType" json:"wallet_type,omitempty"`
+	WalletId         *uint64 `protobuf:"varint,2,req,name=wallet_id" json:"wallet_id,omitempty"`
+	WalletType       *uint32 `protobuf:"varint,3,req,name=wallet_type" json:"wallet_type,omitempty"`
 	Description      *string `protobuf:"bytes,4,opt,name=description" json:"description,omitempty"`
-	CountryId        *uint32 `protobuf:"varint,5,req,name=country_id,json=countryId" json:"country_id,omitempty"`
+	CountryId        *uint32 `protobuf:"varint,5,req,name=country_id" json:"country_id,omitempty"`
 	State            *string `protobuf:"bytes,6,opt,name=state" json:"state,omitempty"`
 	City             *string `protobuf:"bytes,7,opt,name=city" json:"city,omitempty"`
-	PostalCode       *string `protobuf:"bytes,8,opt,name=postal_code,json=postalCode" json:"postal_code,omitempty"`
-	PaymentInfo      []byte  `protobuf:"bytes,9,opt,name=payment_info,json=paymentInfo" json:"payment_info,omitempty"`
+	PostalCode       *string `protobuf:"bytes,8,opt,name=postal_code" json:"postal_code,omitempty"`
+	PaymentInfo      []byte  `protobuf:"bytes,9,opt,name=payment_info" json:"payment_info,omitempty"`
 	Bin              *string `protobuf:"bytes,10,opt,name=bin" json:"bin,omitempty"`
-	LocaleId         *string `protobuf:"bytes,11,opt,name=locale_id,json=localeId" json:"locale_id,omitempty"`
+	LocaleId         *string `protobuf:"bytes,11,opt,name=locale_id" json:"locale_id,omitempty"`
 	Street           *string `protobuf:"bytes,12,opt,name=street" json:"street,omitempty"`
-	FirstName        *string `protobuf:"bytes,13,opt,name=first_name,json=firstName" json:"first_name,omitempty"`
-	LastName         *string `protobuf:"bytes,14,opt,name=last_name,json=lastName" json:"last_name,omitempty"`
-	BirthDate        *uint64 `protobuf:"varint,15,opt,name=birth_date,json=birthDate" json:"birth_date,omitempty"`
+	FirstName        *string `protobuf:"bytes,13,opt,name=first_name" json:"first_name,omitempty"`
+	LastName         *string `protobuf:"bytes,14,opt,name=last_name" json:"last_name,omitempty"`
+	BirthDate        *uint64 `protobuf:"varint,15,opt,name=birth_date" json:"birth_date,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *Wallet) Reset()                    { *m = Wallet{} }
-func (m *Wallet) String() string            { return proto.CompactTextString(m) }
-func (*Wallet) ProtoMessage()               {}
-func (*Wallet) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{70} }
+func (m *Wallet) Reset()         { *m = Wallet{} }
+func (m *Wallet) String() string { return proto.CompactTextString(m) }
+func (*Wallet) ProtoMessage()    {}
 
 func (m *Wallet) GetRegion() uint32 {
 	if m != nil && m.Region != nil {
@@ -2863,10 +2700,9 @@ type Wallets struct {
 	XXX_unrecognized []byte    `json:"-"`
 }
 
-func (m *Wallets) Reset()                    { *m = Wallets{} }
-func (m *Wallets) String() string            { return proto.CompactTextString(m) }
-func (*Wallets) ProtoMessage()               {}
-func (*Wallets) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{71} }
+func (m *Wallets) Reset()         { *m = Wallets{} }
+func (m *Wallets) String() string { return proto.CompactTextString(m) }
+func (*Wallets) ProtoMessage()    {}
 
 func (m *Wallets) GetWallets() []*Wallet {
 	if m != nil {
@@ -2876,341 +2712,5 @@ func (m *Wallets) GetWallets() []*Wallet {
 }
 
 func init() {
-	proto.RegisterType((*AccountBlob)(nil), "bnet.protocol.account.AccountBlob")
-	proto.RegisterType((*AccountBlobList)(nil), "bnet.protocol.account.AccountBlobList")
-	proto.RegisterType((*AccountCredential)(nil), "bnet.protocol.account.AccountCredential")
-	proto.RegisterType((*AccountFieldOptions)(nil), "bnet.protocol.account.AccountFieldOptions")
-	proto.RegisterType((*AccountFieldTags)(nil), "bnet.protocol.account.AccountFieldTags")
-	proto.RegisterType((*AccountId)(nil), "bnet.protocol.account.AccountId")
-	proto.RegisterType((*AccountLevelInfo)(nil), "bnet.protocol.account.AccountLevelInfo")
-	proto.RegisterType((*AccountLicense)(nil), "bnet.protocol.account.AccountLicense")
-	proto.RegisterType((*AccountReference)(nil), "bnet.protocol.account.AccountReference")
-	proto.RegisterType((*AccountServiceConfig)(nil), "bnet.protocol.account.AccountServiceConfig")
-	proto.RegisterType((*AccountServiceRegion)(nil), "bnet.protocol.account.AccountServiceRegion")
-	proto.RegisterType((*AccountState)(nil), "bnet.protocol.account.AccountState")
-	proto.RegisterType((*AccountStateNotification)(nil), "bnet.protocol.account.AccountStateNotification")
-	proto.RegisterType((*AccountStateTagged)(nil), "bnet.protocol.account.AccountStateTagged")
-	proto.RegisterType((*CacheExpireRequest)(nil), "bnet.protocol.account.CacheExpireRequest")
-	proto.RegisterType((*CAIS)(nil), "bnet.protocol.account.CAIS")
-	proto.RegisterType((*CreateGameAccountRequest)(nil), "bnet.protocol.account.CreateGameAccountRequest")
-	proto.RegisterType((*CredentialUpdateRequest)(nil), "bnet.protocol.account.CredentialUpdateRequest")
-	proto.RegisterType((*CredentialUpdateResponse)(nil), "bnet.protocol.account.CredentialUpdateResponse")
-	proto.RegisterType((*CurrencyRestriction)(nil), "bnet.protocol.account.CurrencyRestriction")
-	proto.RegisterType((*FlagUpdateRequest)(nil), "bnet.protocol.account.FlagUpdateRequest")
-	proto.RegisterType((*FlagUpdateResponse)(nil), "bnet.protocol.account.FlagUpdateResponse")
-	proto.RegisterType((*ForwardCacheExpireRequest)(nil), "bnet.protocol.account.ForwardCacheExpireRequest")
-	proto.RegisterType((*GameAccountBlob)(nil), "bnet.protocol.account.GameAccountBlob")
-	proto.RegisterType((*GameAccountBlobList)(nil), "bnet.protocol.account.GameAccountBlobList")
-	proto.RegisterType((*GameAccountFieldOptions)(nil), "bnet.protocol.account.GameAccountFieldOptions")
-	proto.RegisterType((*GameAccountFieldTags)(nil), "bnet.protocol.account.GameAccountFieldTags")
-	proto.RegisterType((*GameAccountHandle)(nil), "bnet.protocol.account.GameAccountHandle")
-	proto.RegisterType((*GameAccountLink)(nil), "bnet.protocol.account.GameAccountLink")
-	proto.RegisterType((*GameAccountList)(nil), "bnet.protocol.account.GameAccountList")
-	proto.RegisterType((*GameAccountNotification)(nil), "bnet.protocol.account.GameAccountNotification")
-	proto.RegisterType((*GameAccountSessionNotification)(nil), "bnet.protocol.account.GameAccountSessionNotification")
-	proto.RegisterType((*GameAccountState)(nil), "bnet.protocol.account.GameAccountState")
-	proto.RegisterType((*GameAccountStateNotification)(nil), "bnet.protocol.account.GameAccountStateNotification")
-	proto.RegisterType((*GameAccountStateTagged)(nil), "bnet.protocol.account.GameAccountStateTagged")
-	proto.RegisterType((*GameLevelInfo)(nil), "bnet.protocol.account.GameLevelInfo")
-	proto.RegisterType((*GameSessionInfo)(nil), "bnet.protocol.account.GameSessionInfo")
-	proto.RegisterType((*GameSessionLocation)(nil), "bnet.protocol.account.GameSessionLocation")
-	proto.RegisterType((*GameSessionUpdateInfo)(nil), "bnet.protocol.account.GameSessionUpdateInfo")
-	proto.RegisterType((*GameStatus)(nil), "bnet.protocol.account.GameStatus")
-	proto.RegisterType((*GameTimeInfo)(nil), "bnet.protocol.account.GameTimeInfo")
-	proto.RegisterType((*GameTimeRemainingInfo)(nil), "bnet.protocol.account.GameTimeRemainingInfo")
-	proto.RegisterType((*GetAccountRequest)(nil), "bnet.protocol.account.GetAccountRequest")
-	proto.RegisterType((*GetAccountResponse)(nil), "bnet.protocol.account.GetAccountResponse")
-	proto.RegisterType((*GetAccountStateRequest)(nil), "bnet.protocol.account.GetAccountStateRequest")
-	proto.RegisterType((*GetAccountStateResponse)(nil), "bnet.protocol.account.GetAccountStateResponse")
-	proto.RegisterType((*GetCAISInfoRequest)(nil), "bnet.protocol.account.GetCAISInfoRequest")
-	proto.RegisterType((*GetCAISInfoResponse)(nil), "bnet.protocol.account.GetCAISInfoResponse")
-	proto.RegisterType((*GetEBalanceRequest)(nil), "bnet.protocol.account.GetEBalanceRequest")
-	proto.RegisterType((*GetEBalanceResponse)(nil), "bnet.protocol.account.GetEBalanceResponse")
-	proto.RegisterType((*GetEBalanceRestrictionsRequest)(nil), "bnet.protocol.account.GetEBalanceRestrictionsRequest")
-	proto.RegisterType((*GetEBalanceRestrictionsResponse)(nil), "bnet.protocol.account.GetEBalanceRestrictionsResponse")
-	proto.RegisterType((*GetGameAccountStateRequest)(nil), "bnet.protocol.account.GetGameAccountStateRequest")
-	proto.RegisterType((*GetGameAccountStateResponse)(nil), "bnet.protocol.account.GetGameAccountStateResponse")
-	proto.RegisterType((*GetGameSessionInfoRequest)(nil), "bnet.protocol.account.GetGameSessionInfoRequest")
-	proto.RegisterType((*GetGameSessionInfoResponse)(nil), "bnet.protocol.account.GetGameSessionInfoResponse")
-	proto.RegisterType((*GetGameTimeRemainingInfoRequest)(nil), "bnet.protocol.account.GetGameTimeRemainingInfoRequest")
-	proto.RegisterType((*GetGameTimeRemainingInfoResponse)(nil), "bnet.protocol.account.GetGameTimeRemainingInfoResponse")
-	proto.RegisterType((*GetLicensesRequest)(nil), "bnet.protocol.account.GetLicensesRequest")
-	proto.RegisterType((*GetLicensesResponse)(nil), "bnet.protocol.account.GetLicensesResponse")
-	proto.RegisterType((*GetWalletListRequest)(nil), "bnet.protocol.account.GetWalletListRequest")
-	proto.RegisterType((*GetWalletListResponse)(nil), "bnet.protocol.account.GetWalletListResponse")
-	proto.RegisterType((*IsIgrAddressRequest)(nil), "bnet.protocol.account.IsIgrAddressRequest")
-	proto.RegisterType((*ParentalControlInfo)(nil), "bnet.protocol.account.ParentalControlInfo")
-	proto.RegisterType((*PrivacyInfo)(nil), "bnet.protocol.account.PrivacyInfo")
-	proto.RegisterType((*ProgramTag)(nil), "bnet.protocol.account.ProgramTag")
-	proto.RegisterType((*RegionTag)(nil), "bnet.protocol.account.RegionTag")
-	proto.RegisterType((*SubscriberReference)(nil), "bnet.protocol.account.SubscriberReference")
-	proto.RegisterType((*SubscriptionUpdateRequest)(nil), "bnet.protocol.account.SubscriptionUpdateRequest")
-	proto.RegisterType((*SubscriptionUpdateResponse)(nil), "bnet.protocol.account.SubscriptionUpdateResponse")
-	proto.RegisterType((*Wallet)(nil), "bnet.protocol.account.Wallet")
-	proto.RegisterType((*Wallets)(nil), "bnet.protocol.account.Wallets")
 	proto.RegisterEnum("bnet.protocol.account.PrivacyInfo_GameInfoPrivacy", PrivacyInfo_GameInfoPrivacy_name, PrivacyInfo_GameInfoPrivacy_value)
-}
-
-func init() { proto.RegisterFile("bnet/protocol/account/account.proto", fileDescriptor0) }
-
-var fileDescriptor0 = []byte{
-	// 4117 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xbc, 0x5b, 0xcd, 0x73, 0x1c, 0x49,
-	0x56, 0xdf, 0xea, 0x6e, 0xa9, 0xbb, 0x5f, 0x7f, 0x2a, 0x25, 0x59, 0x25, 0x7b, 0xec, 0x69, 0x97,
-	0x67, 0xec, 0x66, 0x3c, 0x63, 0xcf, 0x7a, 0xd9, 0x9d, 0x19, 0x31, 0x83, 0xb1, 0x65, 0xc9, 0xee,
-	0x19, 0xcd, 0xd8, 0x2e, 0xd9, 0x1e, 0x06, 0x22, 0x28, 0x52, 0x5d, 0xd9, 0xad, 0xc4, 0xd5, 0x55,
-	0x4d, 0x65, 0xc9, 0xb2, 0x08, 0x4e, 0x70, 0xe2, 0x08, 0x1b, 0x5c, 0x76, 0x83, 0x08, 0x22, 0x38,
-	0x71, 0xda, 0x03, 0x1c, 0x38, 0x71, 0x65, 0xb9, 0xb3, 0x04, 0xff, 0x02, 0x41, 0x04, 0x70, 0x1e,
-	0x82, 0x08, 0x22, 0x3f, 0xaa, 0x2a, 0xab, 0xba, 0x5a, 0xd6, 0x87, 0x83, 0x93, 0x3a, 0x5f, 0xbe,
-	0xf7, 0x2a, 0xf3, 0xe5, 0xcb, 0x97, 0xef, 0xf7, 0x32, 0x05, 0xd7, 0xf6, 0x7c, 0x12, 0xdd, 0x9e,
-	0x86, 0x41, 0x14, 0x0c, 0x03, 0xef, 0x36, 0x1e, 0x0e, 0x83, 0x03, 0x3f, 0x8a, 0xff, 0xde, 0x12,
-	0x1d, 0x68, 0x95, 0x33, 0xdd, 0x8a, 0x99, 0x6e, 0xa9, 0xce, 0x8b, 0xef, 0x64, 0x65, 0x93, 0x7e,
-	0xf1, 0xc3, 0xfa, 0xc5, 0x22, 0x34, 0xee, 0x49, 0xce, 0xfb, 0x5e, 0xb0, 0x87, 0xda, 0x50, 0xa2,
-	0xae, 0x59, 0xea, 0x95, 0xfa, 0x55, 0xbb, 0x44, 0x5d, 0x74, 0x01, 0x16, 0x43, 0x32, 0xa6, 0x81,
-	0x6f, 0x96, 0x7b, 0xa5, 0x7e, 0xcb, 0x56, 0x2d, 0xb4, 0x02, 0x0b, 0x64, 0x82, 0xa9, 0x67, 0x56,
-	0x7a, 0xe5, 0x7e, 0xdd, 0x96, 0x0d, 0x4e, 0x1d, 0x79, 0x78, 0xcc, 0xcc, 0x85, 0x5e, 0xa9, 0x5f,
-	0xb1, 0x65, 0x03, 0xbd, 0x0f, 0x6d, 0x46, 0x86, 0x07, 0x21, 0x71, 0x42, 0xe2, 0x11, 0xcc, 0x88,
-	0xb9, 0xd8, 0x33, 0xfa, 0x15, 0xbb, 0x25, 0xa9, 0xb6, 0x24, 0xa2, 0x1b, 0xd0, 0x39, 0xdc, 0xa7,
-	0x11, 0xf1, 0x28, 0x8b, 0x1c, 0x16, 0xe1, 0x30, 0x32, 0xab, 0x82, 0xaf, 0x9d, 0x90, 0x77, 0x39,
-	0x15, 0x5d, 0x83, 0x56, 0xca, 0x48, 0x7c, 0xd7, 0xac, 0x09, 0xb6, 0x66, 0x42, 0xdc, 0xf2, 0x5d,
-	0x74, 0x09, 0xea, 0xa3, 0x03, 0xcf, 0x73, 0x7c, 0x3c, 0x21, 0x26, 0xf4, 0x4a, 0xfd, 0xba, 0x5d,
-	0xe3, 0x84, 0x6f, 0xf0, 0x84, 0xa0, 0x7b, 0x50, 0xf3, 0xe8, 0x90, 0xf8, 0x8c, 0x30, 0x73, 0xa5,
-	0x57, 0xee, 0x37, 0xee, 0xbc, 0x7f, 0xab, 0xd0, 0x7a, 0xb7, 0x94, 0x6d, 0x76, 0x24, 0xb7, 0x9d,
-	0x88, 0xa1, 0x2f, 0xa1, 0x31, 0x0c, 0x89, 0x4b, 0xfc, 0x88, 0x62, 0x8f, 0x99, 0xab, 0x42, 0x4b,
-	0xff, 0x78, 0x2d, 0x9b, 0x89, 0x80, 0xad, 0x0b, 0xa3, 0xaf, 0xa0, 0xa5, 0x38, 0x1d, 0x8f, 0xfa,
-	0x2f, 0x99, 0x79, 0x41, 0x68, 0xbb, 0x3e, 0x47, 0xdb, 0x43, 0x3c, 0x21, 0xc9, 0xb8, 0xfc, 0x97,
-	0x76, 0x13, 0xa7, 0x0d, 0x86, 0x2e, 0x03, 0xec, 0xe1, 0x28, 0xf2, 0x88, 0x13, 0xe1, 0xb1, 0xb9,
-	0xd6, 0x33, 0xfa, 0x75, 0xbb, 0x2e, 0x29, 0xcf, 0xf0, 0x18, 0xfd, 0x1a, 0x74, 0x5d, 0x32, 0xc2,
-	0x07, 0x5e, 0xe4, 0x0c, 0x0f, 0xc2, 0x90, 0xf8, 0xc3, 0x23, 0x73, 0xbd, 0x67, 0xf4, 0xab, 0x76,
-	0x47, 0xd1, 0x37, 0x15, 0x19, 0x5d, 0x85, 0xa6, 0x47, 0xc6, 0xd8, 0x73, 0x94, 0x07, 0x5c, 0xec,
-	0x19, 0xfd, 0x96, 0xdd, 0x10, 0x34, 0x5b, 0xba, 0x41, 0xc2, 0xe2, 0x05, 0x43, 0xec, 0x11, 0xf3,
-	0x92, 0xd0, 0x24, 0x59, 0x76, 0x04, 0x89, 0x7f, 0x70, 0x88, 0x87, 0xfb, 0xc4, 0x21, 0xaf, 0xa7,
-	0x34, 0xc4, 0x11, 0xd7, 0x74, 0x45, 0xb8, 0x47, 0x47, 0xd0, 0xb7, 0x12, 0x32, 0xfa, 0x3d, 0x58,
-	0x9d, 0xe2, 0x90, 0xf8, 0x11, 0xf6, 0x9c, 0x61, 0xe0, 0x47, 0x61, 0xe0, 0x39, 0xd4, 0x1f, 0x05,
-	0xe6, 0xbb, 0x3d, 0xa3, 0xdf, 0xb8, 0xf3, 0xc1, 0x1c, 0x7b, 0x3c, 0x51, 0x32, 0x9b, 0x52, 0x64,
-	0xe0, 0x8f, 0x02, 0x7b, 0x79, 0x3a, 0x4b, 0x44, 0x26, 0x54, 0x85, 0x44, 0x78, 0x64, 0xf6, 0x84,
-	0x5d, 0xe2, 0x26, 0x1f, 0xe4, 0x34, 0x24, 0x23, 0x12, 0x86, 0xc4, 0x8d, 0xa7, 0x7b, 0x55, 0x4c,
-	0xb7, 0x93, 0xd0, 0xe5, 0x94, 0xad, 0x01, 0x74, 0xb4, 0x0d, 0xb3, 0x43, 0x59, 0x84, 0x7e, 0x02,
-	0x95, 0x3d, 0x2f, 0xd8, 0x33, 0x0d, 0xb1, 0x6c, 0xd6, 0xf1, 0x4e, 0xc0, 0xa5, 0x6c, 0xc1, 0x6f,
-	0x7d, 0x02, 0x4b, 0x33, 0x9e, 0xa1, 0x76, 0xa0, 0x21, 0x76, 0x1b, 0xdf, 0x81, 0x08, 0x2a, 0x2e,
-	0x8e, 0xb0, 0x59, 0xea, 0x19, 0xfd, 0xa6, 0x2d, 0x7e, 0x5b, 0xff, 0x5e, 0x82, 0x65, 0x25, 0xb9,
-	0x4d, 0x89, 0xe7, 0x3e, 0x9e, 0x72, 0xfb, 0x89, 0xb5, 0xc7, 0x9e, 0xe7, 0x8c, 0x38, 0x8d, 0x99,
-	0x46, 0xcf, 0xe8, 0xd7, 0xec, 0x3a, 0xf6, 0x3c, 0xc1, 0xc4, 0xd0, 0x27, 0x60, 0x8a, 0x2e, 0x27,
-	0xf1, 0x36, 0xf2, 0x8a, 0x28, 0x13, 0x97, 0x04, 0xf3, 0xaa, 0xe8, 0x8f, 0x9d, 0x8b, 0xf7, 0x0a,
-	0xc3, 0x7d, 0x08, 0x48, 0x0a, 0x4e, 0x43, 0xfa, 0x0a, 0x0f, 0x8f, 0xa4, 0x48, 0x59, 0x88, 0x74,
-	0x45, 0xcf, 0x13, 0xd9, 0x21, 0xb8, 0xbf, 0x80, 0x4b, 0x8a, 0xbb, 0x70, 0x31, 0x2b, 0x42, 0x4c,
-	0x8e, 0xa4, 0x60, 0xe9, 0xd0, 0x0f, 0x41, 0x8e, 0xc2, 0x19, 0xe3, 0x09, 0xd1, 0x87, 0xb8, 0x28,
-	0x04, 0xe5, 0x48, 0xf8, 0x1e, 0x48, 0xc7, 0xf7, 0x01, 0x2c, 0x69, 0x22, 0x2c, 0xc2, 0xd1, 0x01,
-	0x13, 0xc1, 0xa3, 0x66, 0x77, 0x12, 0xf6, 0x5d, 0x41, 0x46, 0xb7, 0x60, 0x59, 0xe3, 0x55, 0x96,
-	0x60, 0x22, 0x86, 0xd4, 0xec, 0xa5, 0x84, 0x5b, 0xd9, 0x80, 0x59, 0x3f, 0x2f, 0x43, 0x57, 0xb7,
-	0xf5, 0x33, 0x1e, 0xd2, 0x7e, 0x04, 0x17, 0x66, 0x6d, 0x28, 0x36, 0x5c, 0x49, 0xec, 0x80, 0x65,
-	0x9c, 0x33, 0x21, 0xdf, 0x7a, 0x7d, 0xee, 0x64, 0xa9, 0xfd, 0x04, 0x7b, 0x59, 0xb0, 0xb7, 0xa7,
-	0xa9, 0xf9, 0x38, 0xe7, 0x67, 0xb0, 0x5e, 0x68, 0x3b, 0x21, 0x52, 0x11, 0x22, 0x17, 0x0a, 0x1c,
-	0x9c, 0x8b, 0xda, 0xb0, 0x92, 0xb3, 0x1b, 0x17, 0xe2, 0xd6, 0xe0, 0xbe, 0x79, 0x75, 0xde, 0x16,
-	0x0a, 0x83, 0x71, 0x88, 0x27, 0xcf, 0xf0, 0xd8, 0x5e, 0x1a, 0xeb, 0xa6, 0x15, 0xb3, 0xfd, 0x0a,
-	0xba, 0x9a, 0x61, 0xa5, 0xbe, 0xfa, 0x49, 0xf5, 0xb5, 0xc7, 0x89, 0xed, 0x85, 0xb2, 0x1d, 0x58,
-	0xd2, 0x2d, 0x2f, 0xb5, 0x35, 0x84, 0xb6, 0xde, 0x1c, 0x6d, 0x72, 0xe7, 0x71, 0x65, 0x9d, 0x71,
-	0xba, 0x34, 0x5c, 0x9b, 0x75, 0x09, 0xea, 0xaa, 0x39, 0x70, 0xb5, 0xad, 0x23, 0x0e, 0x2f, 0xeb,
-	0xbf, 0x8d, 0x64, 0xe9, 0x52, 0x5f, 0xd1, 0x63, 0x7f, 0xf9, 0x6c, 0xb1, 0xbf, 0x28, 0x86, 0x56,
-	0x8a, 0x63, 0xa8, 0x16, 0x72, 0x16, 0xde, 0x1c, 0x72, 0x16, 0x0b, 0x43, 0x0e, 0x67, 0xdd, 0x27,
-	0xd8, 0xf5, 0x08, 0x63, 0xb1, 0xd9, 0xcc, 0xb6, 0xf4, 0xee, 0x98, 0xae, 0xc6, 0x6a, 0x6d, 0x40,
-	0x3b, 0x3b, 0xec, 0x99, 0x78, 0x62, 0x42, 0x55, 0x44, 0x62, 0xc2, 0x84, 0xaf, 0x56, 0xec, 0xb8,
-	0x69, 0xfd, 0x7d, 0x6a, 0x2e, 0x9b, 0x0f, 0x80, 0xf8, 0xc3, 0x54, 0xdc, 0x50, 0x09, 0x41, 0x72,
-	0xf0, 0x97, 0xc4, 0x74, 0xd4, 0xc1, 0xff, 0x5b, 0xb0, 0xb8, 0x8f, 0x7d, 0xd7, 0x23, 0xc2, 0xa1,
-	0xe7, 0x1f, 0x84, 0xda, 0xce, 0x7a, 0x24, 0xf8, 0x6d, 0x25, 0x97, 0x3b, 0xb6, 0x2a, 0xf9, 0x63,
-	0x6b, 0x3d, 0xc9, 0x43, 0x80, 0xdb, 0x68, 0xc3, 0xf8, 0x38, 0x4e, 0x45, 0xac, 0xdf, 0x85, 0x15,
-	0xa5, 0x72, 0x97, 0x84, 0xaf, 0xe8, 0x90, 0x6c, 0x06, 0xfe, 0x88, 0x8e, 0xd1, 0x66, 0x22, 0x22,
-	0xe3, 0xf2, 0xcd, 0xe3, 0x97, 0x59, 0x09, 0x4b, 0x93, 0x27, 0xca, 0x3f, 0xcf, 0x2b, 0x57, 0x4b,
-	0x92, 0xb7, 0xea, 0x0a, 0x2c, 0xb0, 0x7d, 0x1c, 0xca, 0xd4, 0xa9, 0x6e, 0xcb, 0x86, 0xf5, 0x1f,
-	0x65, 0x68, 0xc6, 0xe2, 0x11, 0x8e, 0x08, 0x7a, 0x0e, 0xa8, 0x20, 0xf6, 0x1a, 0xc2, 0x66, 0x37,
-	0xde, 0xe0, 0x86, 0xb1, 0x07, 0xdb, 0xdd, 0x7c, 0x70, 0x41, 0x5b, 0xd0, 0xcc, 0x44, 0xe6, 0x92,
-	0x50, 0x68, 0xcd, 0xdd, 0x9c, 0x49, 0xb0, 0xb1, 0x1b, 0x5a, 0xe4, 0x99, 0x7f, 0xfe, 0x96, 0xdf,
-	0xce, 0xf9, 0xbb, 0x03, 0x9d, 0x7c, 0x4c, 0x5f, 0x10, 0x4b, 0xf3, 0xde, 0x31, 0xee, 0x92, 0xce,
-	0xbb, 0x95, 0x89, 0x4c, 0xe8, 0x3e, 0x34, 0xf4, 0x70, 0xbf, 0x78, 0x6c, 0x40, 0x4a, 0x0f, 0x00,
-	0x1b, 0xd2, 0x80, 0xc4, 0x33, 0xaf, 0xec, 0x31, 0x50, 0x3d, 0x79, 0xe6, 0xc5, 0x22, 0xbb, 0x39,
-	0xd6, 0x4f, 0x8a, 0xff, 0x35, 0xc0, 0xd4, 0x57, 0xfb, 0x9b, 0x20, 0xa2, 0x23, 0x3a, 0x94, 0xb9,
-	0xcd, 0x67, 0xb0, 0xc0, 0x07, 0x4a, 0xd4, 0x62, 0x5f, 0x7b, 0x83, 0x33, 0x72, 0x56, 0x5b, 0x4a,
-	0xf0, 0x7c, 0x97, 0x1d, 0xec, 0xb1, 0x61, 0x48, 0xf7, 0x48, 0xe8, 0x88, 0xf4, 0x5c, 0xe4, 0xbb,
-	0x29, 0x71, 0xe0, 0xa2, 0x2f, 0xa1, 0x99, 0x89, 0xa8, 0xe5, 0x93, 0xf8, 0x54, 0x72, 0xa0, 0xd9,
-	0x0d, 0x9c, 0x06, 0x55, 0xf4, 0x63, 0xb8, 0xa0, 0x74, 0x8b, 0xbc, 0xc2, 0x19, 0x06, 0x93, 0xa9,
-	0x47, 0x22, 0xe2, 0xaa, 0xb3, 0x7b, 0x55, 0xef, 0xdd, 0x8c, 0x3b, 0xad, 0x9f, 0x1b, 0x80, 0xf4,
-	0xf1, 0x3f, 0xc3, 0xe3, 0x31, 0x71, 0xd1, 0xa3, 0x34, 0xbb, 0x3d, 0xb5, 0x05, 0xe2, 0x39, 0xc9,
-	0xdd, 0xf3, 0x1b, 0x50, 0x11, 0x73, 0x2b, 0x9d, 0x6e, 0x6e, 0x42, 0xc8, 0xfa, 0x3b, 0x03, 0xd0,
-	0x66, 0x92, 0x70, 0x12, 0x9b, 0xfc, 0xe1, 0x01, 0x61, 0x11, 0xda, 0x80, 0x6a, 0x1c, 0x52, 0x8d,
-	0x63, 0x0f, 0xa1, 0xe4, 0x98, 0xb1, 0x63, 0x01, 0xf4, 0x15, 0x34, 0x75, 0xef, 0x31, 0x4b, 0xc7,
-	0x82, 0x80, 0xd9, 0xd8, 0xd7, 0xd0, 0xdc, 0x27, 0x0d, 0xac, 0x65, 0x0d, 0x51, 0x59, 0x7f, 0x0c,
-	0x95, 0xcd, 0x7b, 0x83, 0x5d, 0x8e, 0xa1, 0xa6, 0x1e, 0x3e, 0x22, 0xae, 0x33, 0xa1, 0xfe, 0x41,
-	0x44, 0x64, 0x76, 0xd7, 0xb2, 0x5b, 0x92, 0xfa, 0xb5, 0x24, 0x72, 0xb6, 0x90, 0xb0, 0x48, 0x63,
-	0x2b, 0x49, 0x36, 0x49, 0x8d, 0xd9, 0xae, 0x43, 0xc7, 0xc3, 0x2c, 0x72, 0xf6, 0x09, 0x0e, 0x5d,
-	0x27, 0xa2, 0x13, 0x19, 0xb7, 0x2b, 0x76, 0x8b, 0x93, 0x1f, 0x71, 0xea, 0x33, 0x3a, 0x21, 0xd6,
-	0x3f, 0x18, 0x60, 0x6e, 0x86, 0x04, 0x47, 0x44, 0x1b, 0x7c, 0xa1, 0xe5, 0x8c, 0xd3, 0x59, 0x2e,
-	0x85, 0x95, 0x72, 0x7c, 0x31, 0xac, 0x34, 0xa1, 0x3a, 0x95, 0xa9, 0x83, 0xca, 0x8c, 0xe2, 0x26,
-	0xba, 0x05, 0x4b, 0x21, 0xc1, 0xde, 0xc4, 0x99, 0x92, 0x70, 0x42, 0x19, 0xe3, 0xf9, 0xae, 0x70,
-	0xc7, 0xd6, 0x86, 0xf1, 0x43, 0xbb, 0x2b, 0xfa, 0x9e, 0xa4, 0x5d, 0xd6, 0x4f, 0x4b, 0xb0, 0x96,
-	0x66, 0xd5, 0xcf, 0xa7, 0x2e, 0x77, 0xa7, 0xa2, 0x91, 0x97, 0x4e, 0x37, 0xf2, 0xa7, 0xd0, 0x09,
-	0x3c, 0xd7, 0xd1, 0xb1, 0x5f, 0xe9, 0x94, 0xd8, 0xaf, 0x1d, 0x78, 0xee, 0xa6, 0x06, 0xff, 0x9e,
-	0x42, 0xc7, 0x27, 0x87, 0x19, 0x95, 0xe5, 0xd3, 0xaa, 0xf4, 0xc9, 0xa1, 0xae, 0x32, 0xb5, 0x6f,
-	0x45, 0xb7, 0xaf, 0x75, 0x51, 0xac, 0x67, 0xce, 0x28, 0x6c, 0x1a, 0xf8, 0x8c, 0x58, 0x47, 0xb0,
-	0x1c, 0xa7, 0x2d, 0x36, 0x61, 0x51, 0x48, 0x87, 0x22, 0x70, 0x5d, 0x84, 0x5a, 0x92, 0xe4, 0x18,
-	0x12, 0x47, 0xc7, 0x6d, 0x74, 0x13, 0x96, 0xf0, 0x41, 0xb4, 0xcf, 0xd5, 0x0d, 0x71, 0x14, 0x84,
-	0xce, 0x10, 0x4f, 0xd5, 0x09, 0xd8, 0xcd, 0x74, 0x6c, 0xe2, 0x29, 0x5a, 0x87, 0x1a, 0x0b, 0x46,
-	0x91, 0xe0, 0x29, 0x0b, 0x9e, 0x2a, 0x6f, 0x6f, 0xe2, 0xa9, 0xf5, 0x53, 0x03, 0x96, 0xb6, 0x3d,
-	0x3c, 0x7e, 0x7b, 0xcb, 0x34, 0xcf, 0xc1, 0x10, 0x54, 0x46, 0x9e, 0xc8, 0xbb, 0x39, 0x02, 0x15,
-	0xbf, 0x39, 0x2f, 0x1e, 0x46, 0xf4, 0x15, 0x31, 0x2b, 0xbd, 0x52, 0xbf, 0x66, 0xab, 0x96, 0xb5,
-	0x02, 0x48, 0x1f, 0x94, 0x32, 0xd3, 0x53, 0x58, 0xdf, 0x0e, 0xc2, 0x43, 0x1c, 0xba, 0x05, 0xd1,
-	0xe4, 0xd7, 0xa1, 0xce, 0xe7, 0x1c, 0x1d, 0x39, 0x2a, 0x69, 0x6a, 0xdc, 0x59, 0xcb, 0x0d, 0x7a,
-	0x4b, 0xf4, 0x0f, 0x5c, 0xbb, 0x46, 0xd4, 0x2f, 0xeb, 0x9f, 0x2b, 0xd0, 0xd1, 0x36, 0x98, 0x28,
-	0xc4, 0xe4, 0x63, 0x8b, 0xb4, 0xc0, 0x99, 0x63, 0x4b, 0x45, 0xd4, 0x41, 0x44, 0xce, 0xb6, 0xf1,
-	0x03, 0x5b, 0xb4, 0x8a, 0xb7, 0x54, 0x39, 0x4e, 0xaf, 0x66, 0xb6, 0x14, 0xb7, 0x93, 0x3a, 0x6b,
-	0x2b, 0xb2, 0x16, 0x24, 0x5b, 0x68, 0x2d, 0xad, 0xfa, 0x18, 0xfd, 0x0a, 0x97, 0x55, 0x85, 0x9f,
-	0xeb, 0xd0, 0xda, 0xa3, 0x9e, 0x47, 0xfd, 0xb1, 0x23, 0x19, 0x16, 0x63, 0xe5, 0x4d, 0x45, 0xdf,
-	0x16, 0x7c, 0x45, 0x25, 0x82, 0x6a, 0x71, 0x89, 0xe0, 0x13, 0x58, 0xcb, 0x1c, 0x4d, 0x9a, 0x04,
-	0x88, 0x08, 0x96, 0x39, 0xb9, 0x34, 0xc1, 0x1b, 0xd0, 0x39, 0xf0, 0x69, 0xc4, 0x9c, 0x90, 0x07,
-	0x56, 0x9f, 0xfa, 0x63, 0xb3, 0x21, 0x3c, 0xa3, 0x2d, 0xc8, 0x76, 0x4c, 0xe5, 0x3e, 0xad, 0x70,
-	0x8e, 0xa6, 0xbb, 0x29, 0x74, 0x77, 0x65, 0x87, 0xa6, 0xf5, 0x12, 0xd4, 0xf7, 0x82, 0xd7, 0x32,
-	0xa1, 0x31, 0x5b, 0x42, 0x5f, 0x6d, 0x2f, 0x78, 0x2d, 0x92, 0x14, 0xf4, 0x31, 0xac, 0x24, 0x9d,
-	0xba, 0xb2, 0xb6, 0x50, 0x86, 0x62, 0x3e, 0x4d, 0xdd, 0xf9, 0xeb, 0x52, 0xd6, 0x53, 0x58, 0xce,
-	0xb9, 0x92, 0x28, 0x51, 0x6c, 0x64, 0x4a, 0x14, 0x27, 0xc8, 0x6f, 0xb4, 0x32, 0xc5, 0x2f, 0x0d,
-	0x58, 0xd3, 0x7a, 0x4e, 0x53, 0x71, 0x98, 0x8b, 0xe5, 0x4b, 0x73, 0xb1, 0xfc, 0x6d, 0x58, 0xd1,
-	0x44, 0xf8, 0xd9, 0xa4, 0x57, 0x1b, 0x52, 0x80, 0xce, 0x0f, 0xa8, 0xf9, 0xe0, 0xbf, 0x52, 0x08,
-	0xfe, 0xad, 0x9f, 0x19, 0xb0, 0x92, 0x9f, 0x8a, 0x48, 0x79, 0x3e, 0x82, 0xe5, 0x02, 0xd8, 0xac,
-	0xd0, 0x7c, 0x37, 0x0f, 0x89, 0xd1, 0x4d, 0x40, 0xd9, 0xe1, 0x69, 0x60, 0x5e, 0xe4, 0xb8, 0xf1,
-	0xe8, 0x38, 0xf3, 0x75, 0x95, 0xf6, 0xa6, 0xf0, 0x59, 0xa1, 0xc5, 0x56, 0x06, 0x1a, 0x5b, 0xcf,
-	0x61, 0x69, 0x66, 0x1f, 0xe7, 0x31, 0xad, 0x7e, 0x42, 0xca, 0x2a, 0x6d, 0x72, 0x42, 0xce, 0x29,
-	0xd5, 0x5a, 0x61, 0x26, 0xb8, 0xec, 0x50, 0xff, 0xe5, 0xdb, 0x0d, 0x2e, 0x28, 0x09, 0x2e, 0x3c,
-	0xa6, 0x8b, 0xdf, 0xd6, 0xcb, 0xdc, 0x37, 0x59, 0x94, 0x19, 0x9e, 0x1e, 0x91, 0x53, 0xe8, 0x58,
-	0x39, 0x65, 0xfa, 0xa4, 0xe4, 0xac, 0x5f, 0x65, 0xfd, 0x33, 0x93, 0x76, 0x0f, 0xa0, 0x29, 0xbf,
-	0xe3, 0xb8, 0xc4, 0x8b, 0xf0, 0xc9, 0xfd, 0x5f, 0xe4, 0xf7, 0x0d, 0x29, 0xfb, 0x80, 0x8b, 0xfe,
-	0xbf, 0xa7, 0xe1, 0xd6, 0x3f, 0x1a, 0x70, 0x45, 0x1b, 0xd1, 0x2e, 0x11, 0x71, 0x38, 0x33, 0xbd,
-	0xd9, 0x85, 0x34, 0xce, 0xbe, 0x90, 0x8f, 0xa1, 0xc9, 0xe4, 0x37, 0x74, 0x14, 0xf9, 0xe1, 0x71,
-	0x88, 0x4a, 0xb2, 0xcb, 0x13, 0x52, 0xe2, 0x49, 0xa5, 0x81, 0x37, 0xac, 0xff, 0x32, 0xa0, 0xab,
-	0x4f, 0x40, 0x24, 0xf1, 0x05, 0x20, 0x50, 0x8e, 0xfa, 0x4c, 0x20, 0x70, 0x00, 0xed, 0x5c, 0x9c,
-	0x28, 0x1d, 0x8b, 0x2e, 0xf4, 0xc8, 0x21, 0xe1, 0x5b, 0x12, 0x47, 0x72, 0x78, 0x52, 0xae, 0xdc,
-	0xe9, 0xf0, 0xa4, 0xf5, 0x17, 0x25, 0x78, 0x27, 0x3f, 0xe3, 0xcc, 0x82, 0x7d, 0x91, 0x85, 0x81,
-	0x37, 0xde, 0xbc, 0x52, 0xa7, 0x87, 0x82, 0xdf, 0x16, 0x55, 0xd8, 0xe4, 0x74, 0x6e, 0xbe, 0xf9,
-	0x7b, 0xa9, 0x33, 0xe6, 0x8b, 0x6d, 0x67, 0xc5, 0x85, 0xbf, 0x34, 0xe0, 0x42, 0x7e, 0x42, 0x0a,
-	0x1b, 0x3e, 0x57, 0x71, 0xb4, 0x08, 0x20, 0x9e, 0xd8, 0x36, 0xdd, 0x71, 0xde, 0xc7, 0x0a, 0x2d,
-	0x50, 0x3a, 0xbf, 0x05, 0xac, 0x5f, 0x95, 0xa0, 0x95, 0x3d, 0xae, 0x3e, 0x04, 0x44, 0x99, 0xbc,
-	0xae, 0x22, 0xa1, 0x43, 0x5c, 0x1a, 0xc5, 0x21, 0xae, 0x66, 0x77, 0x29, 0xdb, 0x95, 0x1d, 0x5b,
-	0x92, 0xce, 0x73, 0x60, 0xca, 0x9c, 0x28, 0xa4, 0xd8, 0x53, 0x36, 0xab, 0x52, 0xf6, 0x8c, 0x37,
-	0xd1, 0xbb, 0xd0, 0xa0, 0xcc, 0xf1, 0xe8, 0x88, 0x08, 0x3c, 0xb6, 0x20, 0x7a, 0x81, 0xb2, 0x1d,
-	0x45, 0xe1, 0x6b, 0x4f, 0x79, 0xfa, 0x22, 0x53, 0x73, 0xe2, 0xaa, 0x7a, 0x78, 0x93, 0x32, 0x3b,
-	0xa1, 0xa1, 0x35, 0xa8, 0x52, 0xe6, 0xec, 0x91, 0x08, 0xab, 0xfa, 0xf7, 0x22, 0x65, 0xf7, 0x49,
-	0x84, 0x93, 0x28, 0x5d, 0x13, 0x95, 0x35, 0x99, 0x00, 0x6a, 0x67, 0x49, 0x3d, 0x8b, 0xb6, 0xf4,
-	0x44, 0x04, 0xce, 0x56, 0x24, 0xbd, 0x59, 0x94, 0x5d, 0xca, 0x94, 0x6b, 0x16, 0xad, 0xfd, 0x8f,
-	0x21, 0x0f, 0x8c, 0xdd, 0x34, 0x7a, 0xf0, 0xd4, 0x42, 0x98, 0x35, 0xc5, 0xa7, 0x2d, 0xbb, 0x2e,
-	0x28, 0x7c, 0xcb, 0xa2, 0x6d, 0xa8, 0x79, 0x81, 0xdc, 0x55, 0xc2, 0x94, 0xf3, 0xeb, 0x53, 0x9a,
-	0xe2, 0x1d, 0x25, 0x61, 0x27, 0xb2, 0x1c, 0x32, 0xef, 0x63, 0x6e, 0x32, 0x9f, 0x8c, 0xf0, 0x30,
-	0x0a, 0x42, 0x65, 0xfa, 0xd6, 0x3e, 0x66, 0xf7, 0x13, 0x22, 0xea, 0x41, 0x93, 0x32, 0xe7, 0x80,
-	0xf1, 0x64, 0x96, 0x8e, 0x43, 0x65, 0x7c, 0xa0, 0xec, 0x39, 0x27, 0x0d, 0xc6, 0x21, 0xfa, 0x14,
-	0xcc, 0x7c, 0xf5, 0x8c, 0x39, 0x0a, 0x58, 0xc8, 0xb5, 0xc8, 0xd7, 0xec, 0xd9, 0x3d, 0x09, 0x34,
-	0xf6, 0x64, 0xce, 0x96, 0x1b, 0x23, 0x37, 0x00, 0x9d, 0x3a, 0xd8, 0x75, 0x43, 0xc2, 0x64, 0x6e,
-	0x55, 0xb7, 0xeb, 0x74, 0x7a, 0x4f, 0x12, 0xf4, 0xd2, 0xb2, 0xc4, 0x38, 0x49, 0x69, 0x19, 0x41,
-	0x65, 0x48, 0xa3, 0x23, 0x61, 0xb3, 0xba, 0x2d, 0x7e, 0x5b, 0x8f, 0x60, 0xb5, 0x30, 0x62, 0xa3,
-	0xdb, 0x50, 0x19, 0x62, 0x2a, 0x2f, 0x40, 0x1a, 0x77, 0x2e, 0xcd, 0xb1, 0xe1, 0xe6, 0xbd, 0xc1,
-	0xae, 0x2d, 0x18, 0xad, 0xbf, 0x34, 0x00, 0xb4, 0xfb, 0x94, 0xab, 0xc2, 0x30, 0xec, 0x80, 0x4d,
-	0x89, 0xef, 0x26, 0xa1, 0xa0, 0x41, 0xd9, 0x6e, 0x4c, 0xe2, 0x59, 0x32, 0x77, 0x4a, 0xec, 0xfb,
-	0xc4, 0x55, 0xd6, 0xad, 0x51, 0x76, 0x5f, 0xb4, 0xd1, 0x47, 0x80, 0xa4, 0x30, 0x4b, 0xf2, 0x79,
-	0xc2, 0xd4, 0x0d, 0xf1, 0x52, 0xda, 0x23, 0x71, 0x16, 0xd3, 0x7d, 0xb6, 0x9a, 0xf1, 0x59, 0xeb,
-	0x5f, 0x0c, 0x68, 0x66, 0x12, 0xc3, 0x1f, 0xc1, 0x05, 0xbe, 0x64, 0xbe, 0x47, 0x27, 0x34, 0x22,
-	0xae, 0x33, 0xf5, 0xf0, 0x51, 0xea, 0x4c, 0x35, 0x7b, 0x99, 0xb2, 0xe7, 0x71, 0xe7, 0x13, 0x0f,
-	0x1f, 0x09, 0xb7, 0xfa, 0x00, 0x96, 0x12, 0xbe, 0x64, 0x34, 0x02, 0xd8, 0xd8, 0x9d, 0xa9, 0x62,
-	0x8a, 0xc7, 0x72, 0x03, 0x3a, 0x62, 0xea, 0x69, 0xd0, 0x53, 0x6e, 0xd1, 0xe6, 0xb3, 0x4f, 0xa9,
-	0x68, 0x03, 0xd6, 0xc5, 0xd6, 0xe5, 0xc0, 0x99, 0x3b, 0x50, 0x46, 0x44, 0xfa, 0xc6, 0x1a, 0xdf,
-	0xc6, 0xaa, 0x5f, 0x97, 0xb5, 0xfe, 0xcd, 0x90, 0x2b, 0xc7, 0x3f, 0x9c, 0xa0, 0x14, 0x31, 0xbf,
-	0x9b, 0xb0, 0xa4, 0xaa, 0x3c, 0x1a, 0xa8, 0x91, 0x65, 0xa1, 0xae, 0xea, 0x48, 0x61, 0xcd, 0x43,
-	0xe8, 0x25, 0xde, 0xe9, 0x62, 0xea, 0x1d, 0x39, 0xb3, 0xb2, 0xd2, 0x8d, 0x2e, 0xc7, 0x7c, 0x0f,
-	0x38, 0xdb, 0xd7, 0x79, 0x45, 0x03, 0xb8, 0x9a, 0x28, 0x3a, 0x24, 0xe4, 0x65, 0xa1, 0x26, 0xb9,
-	0x5b, 0xaf, 0xc4, 0x8c, 0xdf, 0x0a, 0xbe, 0xbc, 0x2a, 0xeb, 0x6f, 0xcb, 0xb0, 0xf4, 0x90, 0x44,
-	0xb9, 0xba, 0xd2, 0x67, 0x50, 0x0e, 0xc9, 0xe8, 0x64, 0x45, 0xf1, 0xe4, 0x9e, 0xc2, 0xe6, 0x32,
-	0xc8, 0x82, 0xfa, 0x88, 0x44, 0xc3, 0x7d, 0x07, 0x7b, 0x9e, 0xc0, 0x83, 0xb5, 0x8d, 0x85, 0x11,
-	0xf6, 0x78, 0x5c, 0x12, 0xf4, 0x7b, 0x9e, 0x87, 0xde, 0x03, 0x90, 0x3c, 0x02, 0x0f, 0x35, 0x74,
-	0x26, 0x29, 0x2c, 0xe0, 0x77, 0x0f, 0xa4, 0x04, 0x3f, 0x63, 0x9b, 0x3a, 0x4f, 0x55, 0x90, 0x07,
-	0x2e, 0xba, 0x0e, 0x0d, 0xc9, 0x21, 0xab, 0x76, 0x2d, 0x9d, 0x49, 0x7e, 0x61, 0x4b, 0x5c, 0x8d,
-	0xdc, 0x86, 0xae, 0xfa, 0x5e, 0x7a, 0xbd, 0xd1, 0xd6, 0x99, 0xdb, 0xf2, 0xab, 0xc9, 0x55, 0xc7,
-	0x47, 0xd0, 0x91, 0x02, 0xe9, 0xfb, 0x85, 0x8e, 0xce, 0xdf, 0x12, 0xbd, 0xdb, 0xf1, 0x5b, 0x86,
-	0x64, 0x1c, 0xf2, 0xe9, 0x40, 0x77, 0x76, 0x1c, 0xf2, 0x5d, 0xc0, 0x17, 0xb0, 0x26, 0xf9, 0x66,
-	0x82, 0x94, 0xb9, 0xa4, 0xcb, 0xac, 0x0a, 0xae, 0x5c, 0x4d, 0x9f, 0x59, 0xff, 0x59, 0x02, 0xa4,
-	0xaf, 0x95, 0xac, 0x86, 0x24, 0x57, 0xdf, 0x8d, 0x63, 0x6f, 0x1c, 0x66, 0x30, 0x25, 0xfa, 0x58,
-	0xc0, 0x9a, 0xe6, 0x09, 0xeb, 0x86, 0x99, 0x8b, 0xa7, 0x96, 0xfe, 0xe2, 0x24, 0x7b, 0x6d, 0xd4,
-	0xce, 0x5f, 0x1b, 0x65, 0x5e, 0x81, 0x74, 0x44, 0x6f, 0xfa, 0x0a, 0xe4, 0x73, 0x58, 0x88, 0x6d,
-	0x76, 0x9a, 0xe7, 0x16, 0x52, 0x68, 0xfe, 0x65, 0xc9, 0xd2, 0x5b, 0xb9, 0x2c, 0xb1, 0xfe, 0xb4,
-	0x04, 0x17, 0x52, 0x83, 0xcb, 0x4c, 0xe7, 0x3c, 0x55, 0xa6, 0x2c, 0x72, 0x14, 0xe7, 0x45, 0x11,
-	0x72, 0xd4, 0xa1, 0xd9, 0x03, 0xa8, 0x06, 0x12, 0xe7, 0x8b, 0xcd, 0x34, 0x7f, 0x52, 0x05, 0x95,
-	0x01, 0x3b, 0x16, 0x4d, 0xaa, 0xf6, 0x8d, 0xb3, 0x54, 0xed, 0xff, 0x9c, 0x63, 0xbb, 0xbc, 0x15,
-	0x94, 0xef, 0x9d, 0xe3, 0x4a, 0xe5, 0x5c, 0x37, 0x09, 0x5f, 0x8a, 0x9d, 0xc0, 0x4f, 0x44, 0xb1,
-	0x7a, 0xe7, 0x2a, 0xfd, 0x3d, 0x86, 0xe5, 0x8c, 0x2e, 0x35, 0xb5, 0x4f, 0xa1, 0xce, 0xcf, 0x5a,
-	0x1d, 0x1e, 0x1d, 0x7b, 0x32, 0xd7, 0x38, 0xb7, 0x70, 0x9b, 0xbf, 0x31, 0xc4, 0xe8, 0xb6, 0xee,
-	0x63, 0x0f, 0xf3, 0xb8, 0xa8, 0x46, 0x77, 0x17, 0x20, 0x4e, 0x86, 0x55, 0x39, 0xe1, 0x24, 0xfb,
-	0xae, 0x8e, 0x93, 0xbb, 0x75, 0xbd, 0x0c, 0x5c, 0xca, 0x95, 0x81, 0x3f, 0x86, 0x95, 0xf8, 0xb7,
-	0xb3, 0x1f, 0x4c, 0x88, 0x93, 0xf1, 0x26, 0x14, 0xf7, 0x3d, 0x0a, 0x26, 0xea, 0xfa, 0xd4, 0xba,
-	0x2d, 0xa6, 0x9d, 0x0e, 0x52, 0x4d, 0xdb, 0x84, 0xea, 0x9e, 0x24, 0xa9, 0x74, 0x27, 0x6e, 0x5a,
-	0x36, 0x5c, 0xc9, 0x0a, 0xc4, 0xf5, 0x69, 0x16, 0xcf, 0x70, 0xde, 0x20, 0x8c, 0xb9, 0x83, 0xf8,
-	0x13, 0x03, 0xde, 0x9d, 0xab, 0x54, 0x8d, 0xc8, 0x81, 0xd5, 0x44, 0x6b, 0xa8, 0x31, 0xa8, 0x42,
-	0xc2, 0xbc, 0x0d, 0x51, 0x50, 0x48, 0xb7, 0x93, 0xe1, 0xe9, 0x1f, 0xb2, 0xfe, 0xba, 0x04, 0x17,
-	0x1f, 0x92, 0x68, 0x06, 0xd4, 0xa8, 0x59, 0xfd, 0x24, 0xb7, 0x6e, 0xc7, 0xba, 0x95, 0xb6, 0x5c,
-	0x77, 0x15, 0xca, 0xd6, 0x84, 0x4b, 0xc7, 0x0b, 0xb7, 0x34, 0xac, 0x33, 0x70, 0xd1, 0xa3, 0xfc,
-	0xde, 0xbf, 0x75, 0x42, 0xe0, 0x34, 0xb3, 0xff, 0xef, 0x66, 0xf6, 0xff, 0xa9, 0xf0, 0x97, 0xdc,
-	0x6f, 0x7f, 0x65, 0xc0, 0xa5, 0x42, 0x13, 0xa9, 0x35, 0x3a, 0x27, 0xa6, 0xbe, 0x9b, 0x89, 0x05,
-	0x67, 0x18, 0xdf, 0x53, 0x58, 0x57, 0xc3, 0xd3, 0xe0, 0xcb, 0xf9, 0xc2, 0xc2, 0x38, 0x71, 0x8a,
-	0x8c, 0x4a, 0x35, 0xe1, 0x41, 0x61, 0xa1, 0xe6, 0xfa, 0x9b, 0xe1, 0xcf, 0x6c, 0x89, 0xe6, 0x67,
-	0x72, 0x0f, 0x14, 0x26, 0x98, 0x69, 0xec, 0x98, 0xf1, 0x25, 0xe3, 0x54, 0xbe, 0x94, 0x75, 0xe2,
-	0xd2, 0x49, 0x9d, 0xd8, 0xfa, 0x33, 0x03, 0x7a, 0xf3, 0x07, 0xa7, 0x8c, 0x41, 0xc0, 0x4c, 0x2b,
-	0x40, 0x49, 0x06, 0xaa, 0x47, 0xce, 0x0f, 0xdf, 0x50, 0x0b, 0xca, 0xea, 0x5d, 0x1d, 0x17, 0x91,
-	0xad, 0x7f, 0x95, 0xf9, 0x8f, 0xc2, 0xb9, 0x4c, 0x5b, 0xde, 0x08, 0x87, 0x63, 0x72, 0x12, 0xab,
-	0xd4, 0x24, 0xe7, 0xc0, 0xe5, 0xb1, 0x8a, 0x8b, 0xa4, 0x8f, 0x3e, 0x15, 0xd4, 0x56, 0x55, 0xf1,
-	0x71, 0x72, 0xe0, 0xc5, 0x9f, 0x43, 0x9f, 0xc1, 0x3a, 0x97, 0xc8, 0xac, 0x83, 0xf6, 0x8c, 0x49,
-	0xa0, 0xcb, 0x71, 0x66, 0x8f, 0x24, 0xa2, 0x77, 0xe1, 0x1d, 0x2e, 0xea, 0x1e, 0xf9, 0x78, 0x42,
-	0x87, 0xb3, 0xd2, 0x12, 0xb0, 0x71, 0xf5, 0x0f, 0x24, 0x4b, 0x5e, 0xc1, 0x65, 0x00, 0x95, 0x29,
-	0xf0, 0x49, 0x2e, 0x08, 0xd4, 0x55, 0x57, 0x94, 0x81, 0xcb, 0x13, 0x4b, 0xf2, 0x7a, 0xe8, 0x1d,
-	0xb8, 0xc4, 0x39, 0xf0, 0x5f, 0xfa, 0xc1, 0xa1, 0xef, 0xc4, 0x79, 0xc6, 0x62, 0x26, 0xb1, 0x54,
-	0x5c, 0xcf, 0x25, 0x93, 0x7a, 0x22, 0x66, 0xfd, 0xb6, 0x38, 0x0a, 0x52, 0xbb, 0xaa, 0x65, 0xd5,
-	0x2b, 0x10, 0xc6, 0xd9, 0xae, 0x42, 0x5e, 0xc3, 0xca, 0x43, 0x12, 0x7d, 0x8b, 0x3d, 0x8f, 0xc8,
-	0x72, 0xee, 0xdb, 0x3a, 0x0b, 0xdf, 0x85, 0x6a, 0x48, 0x46, 0x21, 0x61, 0xfb, 0x72, 0xc5, 0x12,
-	0x6c, 0xa0, 0xa8, 0xd6, 0x13, 0x58, 0xcd, 0x7d, 0x59, 0xcd, 0xea, 0x13, 0xa8, 0x1e, 0x0a, 0x6a,
-	0x3c, 0xa9, 0xcb, 0x73, 0xbe, 0x2b, 0x65, 0xed, 0x98, 0xdb, 0x7a, 0x06, 0xcb, 0x03, 0x36, 0x18,
-	0x87, 0x0a, 0xfc, 0xc7, 0x53, 0x79, 0x1f, 0xda, 0x43, 0x8f, 0x12, 0x3f, 0xca, 0x95, 0x09, 0x5a,
-	0x92, 0x1a, 0x97, 0x0a, 0xe6, 0xdc, 0x86, 0x5a, 0xdf, 0x1b, 0xb0, 0x5c, 0xf4, 0x04, 0xf3, 0x22,
-	0xd4, 0xf8, 0x76, 0xfa, 0xa3, 0xc0, 0x27, 0xaa, 0x88, 0x90, 0xb4, 0xd1, 0x75, 0xe8, 0xc4, 0x78,
-	0x6f, 0x4a, 0x42, 0xc7, 0xc5, 0x47, 0xea, 0x8e, 0xb9, 0xa5, 0xc8, 0x4f, 0x48, 0xf8, 0x00, 0x1f,
-	0xa1, 0x3e, 0x74, 0x75, 0x3e, 0x0e, 0x15, 0x85, 0xef, 0xb4, 0xec, 0x76, 0xca, 0xc8, 0x81, 0x21,
-	0x87, 0xdc, 0x43, 0xec, 0x73, 0x78, 0x4c, 0xe8, 0x2b, 0xe2, 0xbc, 0x0a, 0xe8, 0x90, 0x28, 0x20,
-	0xdd, 0x19, 0x62, 0xdf, 0x96, 0xf4, 0x17, 0x9c, 0x8c, 0xde, 0x83, 0x36, 0xe7, 0x65, 0xc4, 0x77,
-	0x15, 0xa3, 0x84, 0xcf, 0xcd, 0x21, 0xf6, 0x77, 0x89, 0xef, 0x4a, 0xae, 0x6b, 0x20, 0xde, 0x45,
-	0x38, 0x6c, 0xb8, 0x4f, 0xdc, 0x03, 0x8f, 0x98, 0xb5, 0x5e, 0x99, 0x33, 0x71, 0xe2, 0xae, 0xa2,
-	0x59, 0xdf, 0x97, 0xa0, 0xa1, 0x3f, 0x5b, 0xd5, 0x2b, 0x3c, 0x21, 0x75, 0xd5, 0xae, 0x8a, 0x2b,
-	0x3c, 0x36, 0x75, 0xd1, 0x97, 0x70, 0x4d, 0xc0, 0x78, 0xec, 0x39, 0xd4, 0x75, 0x5e, 0x51, 0x46,
-	0xf7, 0x3c, 0xe2, 0x8c, 0x82, 0xd0, 0x79, 0x45, 0xc9, 0xa1, 0x33, 0x0a, 0x29, 0xf1, 0xdd, 0x78,
-	0x43, 0x5d, 0xe6, 0x80, 0x1e, 0x7b, 0x03, 0xf7, 0x85, 0xe4, 0xdb, 0x0e, 0xc2, 0x17, 0x94, 0x1c,
-	0x6e, 0x4b, 0x26, 0xf4, 0x9b, 0xf0, 0x0e, 0x65, 0xce, 0x3e, 0x75, 0x5d, 0xe2, 0x3b, 0xa3, 0x30,
-	0x98, 0x28, 0x71, 0x67, 0x44, 0x7d, 0x97, 0xc4, 0x45, 0x28, 0x93, 0xb2, 0x47, 0x82, 0x65, 0x3b,
-	0x0c, 0x26, 0x52, 0x74, 0x5b, 0xf4, 0xa3, 0x40, 0x95, 0x38, 0xc5, 0xe5, 0x93, 0x7a, 0xc4, 0x25,
-	0x8c, 0xd6, 0xbe, 0x73, 0xe7, 0xcd, 0xef, 0xbe, 0x44, 0xec, 0xe3, 0x3f, 0x14, 0x6d, 0xa3, 0xf3,
-	0xc4, 0x1e, 0xbc, 0xb8, 0xb7, 0xf9, 0x9d, 0xb3, 0x6d, 0x0f, 0xb6, 0xbe, 0x79, 0xb0, 0x2b, 0x4b,
-	0x9f, 0x1a, 0x87, 0xb5, 0x23, 0x2b, 0x74, 0x1a, 0x09, 0xb5, 0x01, 0x62, 0xb1, 0xaf, 0xb7, 0xba,
-	0x3f, 0x40, 0xcb, 0x90, 0x57, 0xd3, 0x35, 0xd0, 0x0a, 0x74, 0x63, 0xe2, 0xd6, 0x8b, 0x2d, 0xfb,
-	0xbb, 0xc7, 0xdf, 0x6c, 0x75, 0x4b, 0xd6, 0xa7, 0x00, 0xe9, 0x1b, 0x51, 0x1d, 0x9a, 0x18, 0xd9,
-	0x42, 0x64, 0x17, 0xca, 0xe9, 0x3d, 0x1c, 0xff, 0x69, 0xfd, 0x18, 0xea, 0xc9, 0x7b, 0x50, 0xcd,
-	0xb1, 0xa5, 0x5c, 0x8c, 0x5c, 0x66, 0xc5, 0xfe, 0xa9, 0x0c, 0xcb, 0xbb, 0x49, 0x95, 0x3c, 0x7d,
-	0xdf, 0x78, 0x05, 0xea, 0xc1, 0xde, 0x1f, 0x90, 0x61, 0x12, 0xc0, 0xc5, 0x05, 0x76, 0x4d, 0xd2,
-	0x06, 0x6e, 0xf6, 0xfc, 0x2e, 0x9d, 0x14, 0x6b, 0xed, 0x42, 0x27, 0x0e, 0x31, 0x71, 0x16, 0x55,
-	0x3e, 0x35, 0x82, 0x6a, 0xab, 0xce, 0xf8, 0xae, 0x35, 0x7f, 0xb7, 0x54, 0x39, 0xc7, 0x13, 0xaf,
-	0xdf, 0x57, 0xcf, 0x84, 0xf3, 0xa3, 0x5c, 0x38, 0x53, 0xae, 0x87, 0xb4, 0xf3, 0x3e, 0x1e, 0x6d,
-	0x61, 0x0d, 0x7e, 0xf1, 0x2d, 0xd4, 0xe0, 0xbf, 0x83, 0x75, 0xbd, 0x40, 0x96, 0x7d, 0x33, 0xf2,
-	0xb9, 0x2c, 0x1e, 0x95, 0x8e, 0xcd, 0xce, 0x0b, 0xfc, 0x40, 0xd4, 0x8f, 0xac, 0xdf, 0x81, 0x8b,
-	0x45, 0xaa, 0x55, 0xf0, 0xfe, 0x3c, 0x2e, 0x4c, 0x9d, 0x49, 0xf7, 0x2f, 0xca, 0xb0, 0x28, 0xa3,
-	0x7a, 0xc6, 0x6b, 0xf5, 0x7f, 0xaa, 0xb9, 0x04, 0x75, 0x19, 0xef, 0x1d, 0xf5, 0x3f, 0x38, 0x15,
-	0xbb, 0x26, 0x09, 0xe2, 0xd0, 0x69, 0xa8, 0xce, 0xe8, 0x68, 0x4a, 0xd4, 0x1d, 0x2f, 0x48, 0xd2,
-	0xb3, 0xa3, 0x29, 0x41, 0x3d, 0x68, 0xb8, 0x24, 0x2d, 0x2b, 0xca, 0x27, 0xb4, 0x3a, 0x89, 0x1f,
-	0xe4, 0xaa, 0x44, 0x2c, 0x0f, 0x72, 0xae, 0xa1, 0xae, 0x28, 0x03, 0xf9, 0x86, 0x55, 0xe4, 0xd1,
-	0x8b, 0xf2, 0x69, 0xaf, 0x4c, 0x8f, 0xe3, 0x62, 0x72, 0x35, 0x2d, 0x26, 0xf3, 0xb1, 0x4c, 0x03,
-	0x26, 0x2b, 0x1f, 0x6e, 0x7c, 0xa7, 0x00, 0x92, 0xb4, 0x19, 0xb8, 0x04, 0x5d, 0x85, 0xe6, 0x14,
-	0x1f, 0x4d, 0xf8, 0xc1, 0x24, 0x12, 0xb1, 0xba, 0xf8, 0xe7, 0x85, 0x86, 0xa2, 0x89, 0x70, 0xdb,
-	0x85, 0xf2, 0x1e, 0x95, 0xaf, 0x36, 0xea, 0x36, 0xff, 0xc9, 0xa7, 0x2f, 0xff, 0x8d, 0x84, 0x8f,
-	0xae, 0x21, 0x8f, 0x1d, 0x49, 0x18, 0xb8, 0xf2, 0xf1, 0x49, 0x48, 0x48, 0x24, 0x8a, 0x46, 0x75,
-	0x5b, 0xb5, 0xf8, 0x9c, 0x46, 0x34, 0x64, 0x91, 0x2c, 0xf1, 0xb4, 0x64, 0x01, 0x48, 0x50, 0x44,
-	0x8d, 0x87, 0xeb, 0xc4, 0x71, 0x6f, 0x5b, 0xe9, 0xc4, 0xaa, 0xf3, 0x32, 0xc0, 0x1e, 0x0d, 0xa3,
-	0x7d, 0x87, 0x2f, 0xb3, 0x28, 0x0f, 0x55, 0xec, 0xba, 0xa0, 0x3c, 0xc0, 0x11, 0xb1, 0xee, 0x43,
-	0x55, 0x2e, 0x18, 0x3b, 0xf3, 0xb9, 0xfd, 0x7f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x33, 0x29, 0x30,
-	0xc9, 0xba, 0x35, 0x00, 0x00,
 }
